@@ -10,8 +10,7 @@ In order to get the code and install dependencies:
     npm install
 
 
-	By triggering “npm install” command, it will install all dependencies 
-    from package.json in the project.
+By triggering “npm install” command, it will install all dependencies from package.json in the project.
 
 Run tests:
 	To run the tests, there are following options:
