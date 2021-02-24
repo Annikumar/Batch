@@ -5,8 +5,8 @@ Prerequisite:
 
 In order to get the code and install dependencies:
 
-    git clone git clone https://project@bitbucket.org/cypress-io/testing-cypress.git
-    cd testing-cypress (project directory)
+    git clone https://[username]@bitbucket.org/batchleads/batchdialer-qa.git
+    cd batchdialer-qa (project directory)
     npm install
 
 
