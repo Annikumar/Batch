@@ -1,4 +1,5 @@
 Prerequisite:
+
     Node
     git
 
@@ -7,6 +8,7 @@ In order to get the code and install dependencies:
     git clone git clone https://project@bitbucket.org/cypress-io/testing-cypress.git
     cd testing-cypress (project directory)
     npm install
+
 
 	By triggering “npm install” command, it will install all dependencies 
     from package.json in the project.
