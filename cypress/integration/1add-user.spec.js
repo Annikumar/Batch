@@ -34,13 +34,13 @@ describe("Login Successfully and Add User", () => {
 
   it("Should Add User for Agent role", () => {
     addUser.clickingOnUserOption();
-    cy.wait(3000);
+    //cy.wait(3000);
     addUser.clickAddNewUserButton();
-    cy.log(randNum);
+    //cy.log(randNum);
     addUser.enterFirstName(fixtureData.userFirstname);
     addUser.enterLastName(fixtureData.userLastname + randNum.toString());
     addUser.selectROle("Agent");
-    cy.log(randNum);
+    //cy.log(randNum);
     addUser.enterEmail(
       fixtureData.userEmail.replace(
         "automation",
