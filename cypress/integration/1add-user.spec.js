@@ -21,6 +21,11 @@ describe("Login Successfully and Add User", () => {
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
       });
+    Cypress.Cookies.defaults({
+      preserve: (cookies) => {
+        return true;
+      },
+    });
   });
 
   it("Should Login", () => {
@@ -29,7 +34,7 @@ describe("Login Successfully and Add User", () => {
 
   it("Should Add User for Agent role", () => {
     addUser.clickingOnUserOption();
-    //cy.wait(3000);
+    cy.wait(3000);
     addUser.clickAddNewUserButton();
     //cy.log(randNum);
     addUser.enterFirstName(fixtureData.userFirstname);

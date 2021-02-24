@@ -14,7 +14,7 @@ describe("Login Successfully and Add Phone Number", () => {
       });
   });
 
-  it("Should Login", () => {
+  it.skip("Should Login", () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
