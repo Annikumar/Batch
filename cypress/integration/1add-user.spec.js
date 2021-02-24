@@ -21,6 +21,11 @@ describe("Login Successfully and Add User", () => {
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
       });
+    Cypress.Cookies.defaults({
+      preserve: (cookies) => {
+        return true;
+      },
+    });
   });
 
   it("Should Login", () => {

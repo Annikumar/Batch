@@ -13,7 +13,7 @@ describe("Login Successfully and Add Campaign", () => {
       });
   });
 
-  it("Should Login", () => {
+  it.skip("Should Login", () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -25,10 +25,10 @@ describe("Login Successfully and Add Campaign", () => {
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption("Predictive Dialer");
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId("6887");
+    addCamp.selectCallerId("2830");
     addCamp.selectCallResultsOption("Answering Machine");
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn("testing automation");
+    addCamp.selectAgentsDrpdwn("Sandeep Kumar");
     addCamp.clickCreateCampButton();
   });
 

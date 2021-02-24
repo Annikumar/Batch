@@ -13,7 +13,7 @@ describe(" Login Successfully and Add Contact", () => {
       });
   });
 
-  it("Should Login", () => {
+  it.skip("Should Login", () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 

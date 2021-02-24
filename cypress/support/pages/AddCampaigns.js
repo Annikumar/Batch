@@ -72,7 +72,7 @@ export default class AddCampaign {
   }
 
   clickCreateCampButton() {
-    cy.xpath(createCampBtn).click();
+    cy.xpath(createCampBtn).click({ force: true });
   }
 
   verifyAddedCampaign(camp) {
