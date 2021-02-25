@@ -4,7 +4,7 @@ let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
 const addCont = new Contacts();
 
-describe(" Login Successfully and Add Contact", () => {
+describe("Add Contact flow", () => {
   before(() => {
     cy.fixture("constants")
       .then((data) => (fixtureData = data))

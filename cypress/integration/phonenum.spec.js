@@ -5,7 +5,7 @@ let fixtureData;
 let num;
 const addNum = new PhoneNum();
 
-describe("Login Successfully and Add Phone Number", () => {
+describe("Add Phone Number flow", () => {
   before(() => {
     cy.fixture("constants")
       .then((data) => (fixtureData = data))

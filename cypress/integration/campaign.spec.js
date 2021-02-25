@@ -4,7 +4,7 @@ let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
 const addCamp = new Campaign();
 
-describe("Login Successfully and Add Campaign", () => {
+describe("Add Campaign flow", () => {
   before(() => {
     cy.fixture("constants")
       .then((data) => (fixtureData = data))

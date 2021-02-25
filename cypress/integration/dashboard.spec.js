@@ -5,12 +5,12 @@ const Dash = new Dashboard();
 describe("Dashboard Elements",function(){
 
 
-    it("Elements in Dashboard", function(){
+    it("verify elements in Dashboard", function(){
         Dash.clickDashboard();
         Dash.verifyDashboardElements();
     });
 
-    it("Elements in Dashboard Header", function(){
+    it("verify elements in Dashboard Header", function(){
         Dash.verifyDashboardHeaderElement();
     });
 
