@@ -18,7 +18,7 @@ const deleteToast =
   '//div[@class="Toastify__toast-body"]//div[contains(text(),"Number deleted")]';
 const assignToDrpdwn = '//div[span[contains(text(),"User extension")]]';
 
-export default class AddPhoneNum {
+export default class PhoneNum {
   clickPhoneNumberMenu() {
     cy.get(phoneNumMenu).click({ force: true });
   }

@@ -14,7 +14,7 @@ const statusDrpdwn = '.campaignForm span[title="Status"]';
 const dropdownOptions = ".ss-select-group-items";
 const pausedDrpdwn = '.campaignForm span[title="Paused"]';
 
-export default class AddCampaign {
+export default class Campaign {
   clickCampaignMenu() {
     cy.get(campaignsMenu).click({ force: true });
   }

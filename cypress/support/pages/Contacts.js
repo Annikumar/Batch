@@ -24,7 +24,7 @@ const dropBoxUpload = ".dropbox input";
 const firstNameDrpdown =
   '//div[input[@title="First Name"]]/following-sibling::div/div[contains(@class,"ss-select")]';
 const firstNameOption =
-  '//div[@class="ss-select-options"]//span/div[text()="First Name"]';
+  '//div[@class="ss-select-options"]//span/div[contains(text(),"First Name")]';
 const lastNameDrpdwn =
   '//div[input[@title="Last Name"]]/following-sibling::div/div[contains(@class,"ss-select")]';
 const lastNameOption =
@@ -40,11 +40,11 @@ const emailOption =
 const nextButton = "button.next_btn";
 const submitButton = '//button[contains(text(),"SUBMIT")]';
 const contactImportToast =
-  '//div[@class="Toastify__toast-body"]//div[contains(text(),"Contacts import started")]';
+  '//div[text()="Contacts import started"]';
 const importCmpltToast =
   '//div[@class="Toastify__toast-body"]//div[contains(text(),"Import complete")]';
 
-export default class AddContacts {
+export default class Contacts {
   clickingOnContactOption() {
     cy.get(contactsMenu).click({ force: true });
   }
@@ -69,13 +69,13 @@ export default class AddContacts {
   }
 
   enterAddress(address) {
-    cy.get(inputIddress).type(address);
+    cy.get(inputIddress).type(address, { force:true });
   }
   enterCity(city) {
-    cy.get(inputCity).type(city);
+    cy.get(inputCity).type(city, { force:true });
   }
   enterZipCode(zip) {
-    cy.get(inputZip).type(zip);
+    cy.get(inputZip).type(zip, { force:true });
   }
   enterEmail(email) {
     cy.get(inputEmail).type(email);
@@ -113,19 +113,19 @@ export default class AddContacts {
 
   selectFirstNameDropdown() {
     cy.xpath(firstNameDrpdown).click();
-    cy.xpath(firstNameOption).click({ force: true });
+    cy.contains('First Name').click({force:true});
   }
   selectLastNameDropdown() {
     cy.xpath(lastNameDrpdwn).click();
-    cy.xpath(lastNameOption).click({ force: true });
+    cy.contains('Last Name').click({force:true});
   }
   selectEmailDropdown() {
     cy.xpath(emailDrpdwn).click();
-    cy.xpath(emailOption).click({ force: true });
+    cy.contains('Email').click({force:true});
   }
   selectPhoneDropdown() {
     cy.xpath(phoneDrpdwn).click();
-    cy.xpath(phoneOption).click({ force: true });
+    cy.contains('Phone Number 1').click({force:true});
   }
   clickNextButton() {
     cy.get(nextButton).click();
@@ -134,10 +134,10 @@ export default class AddContacts {
     cy.xpath(submitButton).click({ force: true });
   }
   verifyImportStartedToast() {
-    cy.xpath(contactImportToast, { timeout: 5000 }).should("be.visible");
+    cy.xpath(contactImportToast, {timeout : 5000}).should("be.visible");
   }
   verifyImportContactCompleteToast() {
-    cy.xpath(importCmpltToast, { timeout: 5000 }).should("be.visible");
+    cy.contains('Import complete', { timeout:5000 }).should("be.visible")
   }
 
   deleteAddedContacts(fstaName, lstName) {

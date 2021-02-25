@@ -1,8 +1,8 @@
-import AddUser from "../support/pages/AddUser";
+import User from "../support/pages/User";
 
 let fixtureData;
-let randNum = Math.floor(Math.random() * 100);
-const addUser = new AddUser();
+let randNum = Math.floor(Math.random() * 100000);
+const addUser = new User();
 
 describe("Login Successfully and Add User", () => {
   before(() => {

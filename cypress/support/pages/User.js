@@ -14,7 +14,7 @@ const deleteToast =
   '//div[@class="Toastify__toast-body"]//div[contains(text(),"User deleted")]';
 const dropdownOptions = ".ss-select-group-items";
 
-export default class AddUser {
+export default class User {
   clickingOnUserOption() {
     cy.get(userMenu).click();
   }

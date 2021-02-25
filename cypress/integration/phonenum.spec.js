@@ -1,9 +1,9 @@
-import AddPhoneNum from "../support/pages/AddPhoneNum";
+import PhoneNum from "../support/pages/PhoneNum";
 import promisify from "cypress-promise";
 
 let fixtureData;
 let num;
-const addNum = new AddPhoneNum();
+const addNum = new PhoneNum();
 
 describe("Login Successfully and Add Phone Number", () => {
   before(() => {

@@ -1,8 +1,8 @@
-import AddContacts from "../support/pages/AddContacts";
+import Contacts from "../support/pages/Contacts";
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
-const addCont = new AddContacts();
+const addCont = new Contacts();
 
 describe(" Login Successfully and Add Contact", () => {
   before(() => {
@@ -68,6 +68,7 @@ describe(" Login Successfully and Add Contact", () => {
     addCont.selectEmailDropdown();
     addCont.selectPhoneDropdown();
     addCont.clickNextButton();
+    addCont.clickSubmitButton();
     addCont.clickSubmitButton();
     addCont.verifyImportStartedToast();
     addCont.verifyImportContactCompleteToast();

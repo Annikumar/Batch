@@ -1,8 +1,8 @@
-import AddCampaign from "../support/pages/AddCampaigns";
+import Campaign from "../support/pages/Campaigns";
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
-const addCamp = new AddCampaign();
+const addCamp = new Campaign();
 
 describe("Login Successfully and Add Campaign", () => {
   before(() => {
