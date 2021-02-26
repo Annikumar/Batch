@@ -1,3 +1,4 @@
+
 import Campaign from "../support/pages/Campaigns";
 
 let fixtureData;
@@ -15,6 +16,23 @@ describe("Add Campaign flow", () => {
 
   it.skip("Should Login", () => {
     cy.Login(fixtureData.username, fixtureData.password);
+  });
+
+  it("Campaign header element should visible",function(){
+    addCamp.clickCampaignMenu();
+    addCamp.verifyCampaignHeaderElement(["Active Campaigns","Paused Campaigns","Completed Campaigns","Archived Campaigns"])
+  });
+
+  it("Search box and Dropdowns on Campaign page",function(){
+    addCamp.verifySearchBox();
+    addCamp.verifyStatusBox();
+    addCamp.verifyAgentBox();
+    addCamp.verifyContactsCountSlider();
+    addCamp.verifyAddCompaignButton();
+  })
+
+  it("Verify campaign headings",function(){
+    addCamp.verifyCampaignHeaderHedings(["Name","Mode","Status","Total Leads","New Leads Left","Redials Left","Deals","Answered","Voicemail","Abandon","Agents","DNC","DNR","Created"]);
   });
 
   it("Should Add New Campaign ", () => {
@@ -55,4 +73,13 @@ describe("Add Campaign flow", () => {
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     cy.reload();
   });
+
+  it("Archive Created Campaign", function(){
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
+  });
+
+
 });

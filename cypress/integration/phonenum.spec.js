@@ -4,6 +4,7 @@ import promisify from "cypress-promise";
 let fixtureData;
 let num;
 const addNum = new PhoneNum();
+let randNum = Math.floor(Math.random() * 100000);
 
 describe("Add Phone Number flow", () => {
   before(() => {
@@ -44,4 +45,31 @@ describe("Add Phone Number flow", () => {
     addNum.handleAlertForDelete();
     addNum.verifyDeletedToast();
   });
+
+  it("Should Add New IVR",function(){
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.clickNewIvr();
+    addNum.enterName("Testing" + randNum.toString());
+    addNum.enterDescription("New Ivr");
+    addNum.selectCampaign();
+    addNum.selectNumber("(480) 240-5720");
+    addNum.clickAddNewWelcomePrompt();
+    addNum.clickTextToSpeech();
+    addNum.enterRecordingName("Test"+ randNum.toString());
+    addNum.enterRecordingText("Hey How Are You");
+    addNum.clickGenerateButton();
+    addNum.clickRecordingSaveButton();
+    addNum.clickIvrSaveButton();
+    addNum.verifySavedIvr();
+
+  });
+
+
+  it("Should delete IVR",function(){
+    addNum.deleteIVR();
+    addNum.handleAlertForDelete();
+    addNum.verifyDeletedIvr();
+  });
+
 });

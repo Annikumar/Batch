@@ -1,3 +1,5 @@
+
+
 const campaignsMenu = 'a[title="Campaigns"]';
 const addCampaign = '//button[contains(text(),"CREATE NEW CAMPAIGN")]';
 const inputName = 'input[name="name"]';
@@ -13,6 +15,14 @@ const createCampBtn = '//button[contains(text(),"CREATE CAMPAIGN")]';
 const statusDrpdwn = '.campaignForm span[title="Status"]';
 const dropdownOptions = ".ss-select-group-items";
 const pausedDrpdwn = '.campaignForm span[title="Paused"]';
+const campaignHeader = '.campaignsTop'
+const searchBox = '.search-box-wrapper'
+const Agent = 'span[title="Agent"]'
+const contactsCountSlider = '.slider-control'
+const campaignHeadings = "table[class=table] thead"
+const archiveCampaignButton = "//a[text()='Archive']"
+
+
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -117,5 +127,56 @@ export default class Campaign {
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]',
       { timeout: 5000 }
     ).should("not.be.visible");
+  }
+
+  verifyCampaignHeaderElement(element){
+    for(let i=0;i<element.length; i++){
+      cy.get(campaignHeader).should('contain.text',element[i])
+    }
+  };
+
+  verifySearchBox(){
+    cy.get(searchBox).should("be.visible");
+  }
+
+  verifyStatusBox(){
+    cy.get(statusDrpdwn).should("be.visible");
+  }
+
+  verifyAgentBox(){
+    cy.get(Agent).should("be.visible");
+  }
+
+  verifyContactsCountSlider(){
+    cy.get(contactsCountSlider).should("be.visible");
+  }
+
+  verifyAddCompaignButton(){
+    cy.xpath(addCampaign).should("be.visible");
+  }
+
+  verifyCampaignHeaderHedings(element){
+    for(let i=0;i<element.length; i++){
+      cy.get(campaignHeadings).should('contain.text',element[i])
+    }
+  };
+
+  clickEditCampaign(campaignName){
+    cy.xpath('//span[text()="'+campaignName+'"]/ancestor::tr//img[contains(@src,"edite1.svg")]').click()
+  }
+
+  clickArchiveCampaignButton(){
+    cy.xpath(archiveCampaignButton).click()
+  }
+
+  handleAlertForDelete() {
+    cy.on("	window:alert", (str) => {
+      expect(str).to.equal("Delete user?");
+    });
+    cy.on("window:confirm", () => true);
+  }
+
+  verifyArchivedCampaign(){
+    cy.xpath('//span[text()="'+campaignName+'"]/ancestor::tr//img[contains(@src,"edite1.svg")]').should("not.be.visible");
   }
 }
