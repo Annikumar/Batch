@@ -12,6 +12,13 @@ describe("Add Campaign flow", () => {
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
       });
+
+      Cypress.Cookies.defaults({
+        preserve: (cookies) => {
+          return true;
+        },
+      });
+      
   });
 
   it.skip("Should Login", () => {
@@ -35,7 +42,7 @@ describe("Add Campaign flow", () => {
     addCamp.verifyCampaignHeaderHedings(["Name","Mode","Status","Total Leads","New Leads Left","Redials Left","Deals","Answered","Voicemail","Abandon","Agents","DNC","DNR","Created"]);
   });
 
-  it("Should Add New Campaign ", () => {
+  it("Should Add Predictive Dialer New Campaign ", () => {
     addCamp.clickCampaignMenu();
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
@@ -50,7 +57,7 @@ describe("Add Campaign flow", () => {
     addCamp.clickCreateCampButton();
   });
 
-  it("Should show added contacts in table", () => {
+  it("Should show added Campaign in table", () => {
     addCamp.clickCampaignMenu();
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
   });
@@ -78,8 +85,52 @@ describe("Add Campaign flow", () => {
     addCamp.clickCampaignMenu();
     addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.clickArchiveCampaignButton();
+    cy.wait(5000)
     addCamp.handleAlertForDelete();
+    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString(), "not.exist");
   });
 
+  it("Should Add Preview Dialer New Campaign ", () => {
+    addCamp.clickCampaignMenu();
+    cy.wait(3000);
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.selectDialingModeOption("Preview Dialer");
+    addCamp.clickNextCircleArrow();
+    addCamp.selectCallerId("2830");
+    addCamp.selectCallResultsOption("Busy");
+    addCamp.clickNextCircleArrow();
+    addCamp.selectAgentsDrpdwn("Sandeep Kumar");
+    addCamp.clickCreateCampButton();
+  });
+
+  it("Should show added Preview Dialer Campaign in table", () => {
+    addCamp.clickCampaignMenu();
+    addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString() + "1");
+  });
+
+  it("Archive Created Preview Dialer Campaign", function(){
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
+    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "not.exist");
+  });
+
+
+  it("Verify status dropdown is showing Archived Campaign", function(){
+    // addCamp.clickRecycleMenu();
+    // addCamp.clickCampaignMenu();
+    addCamp.clickToSelectStatus();
+    addCamp.clickStatusArchived();
+    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "be.visible")
+  })
+
+  it("Verify search button functionality", function(){
+    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "be.visible")
+    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString(), "not.exist");
+  })
 
 });

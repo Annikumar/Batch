@@ -21,7 +21,33 @@ const Agent = 'span[title="Agent"]'
 const contactsCountSlider = '.slider-control'
 const campaignHeadings = "table[class=table] thead"
 const archiveCampaignButton = "//a[text()='Archive']"
-
+const statusArchived = "//div[text()='Archived']"
+const recycleMenu = "a[title='Recycle']"
+const timeZoneDropDown = "span[title*='Eastern Time']"
+const maxLine = "//label[text()='Max Lines Per Agent']/parent::div//input"
+const callTypeAutoAnswer = "//label[text()='Auto Answer']"
+const callTypeBeepOnce = "//label[text()='Beep Once']"
+const callTypeRingingSound = "//label[text()='Ringing Sound']"
+const AbandonmentTimeout = "//label[text()='Abandonment Timeout']/parent::div/div"
+const AnswerMachingDetectionEnable = "//label[text()='Answering Machine Detection']/parent::div/following-sibling::div/label[text()='Enable']/span"
+const AnswerMachineDetectionDisable = "//label[text()='Answering Machine Detection']/parent::div/following-sibling::div/label[text()='Disable']/span"
+const callRecordingEnable = "//label[text()='Call Recording']/parent::div/following-sibling::div/label[text()='Enable']/span"
+const callRecordingDisable = "//label[text()='Call Recording']/parent::div/following-sibling::div/label[text()='Disable']/span"
+const callerIDGroup = ".row-callerid .ss-select:not(.multiple)"
+const callerIDNumber = ".row-callerid .multiple"
+const callingHours = "//label[text()='Calling Hours']/parent::div/div"
+const callResult = "div[class='collapse show'] .row-calldisposition .ss-select"
+const MaxAttempts = "//label[text()='Max Attempts Per Record']/parent::div/div"
+const RetryTime = "//label[text()='Retry time']/parent::div/div"
+const AgentScript = ".row-agentscript .ss-select-control"
+const AgentScriptCreateNew = ".row-agentscript button"
+const contactLists = "//label[text()='Contact Lists']/parent::div/div"
+const assignAgent = "//label[text()='Assign Agents']/ancestor::div[@class='row']/following-sibling::div"
+const FedralDNCYES = "//label[text()='Scrub Federal DNC']/parent::div/following-sibling::div/label[text()='Yes']/input"
+const FedralDNCNo = "//label[text()='Scrub Federal DNC']/parent::div/following-sibling::div/label[text()='No']/input"
+const companyDNCYES = "//label[text()='Scrub Company DNC']/parent::div/following-sibling::div/label[text()='Yes']/input"
+const companyDNCNO = "//label[text()='Scrub Company DNC']/parent::div/following-sibling::div/label[text()='No']/input"
+const CancelButton = "//button[text()=' CANCEL']"
 
 
 export default class Campaign {
@@ -176,7 +202,57 @@ export default class Campaign {
     cy.on("window:confirm", () => true);
   }
 
-  verifyArchivedCampaign(){
-    cy.xpath('//span[text()="'+campaignName+'"]/ancestor::tr//img[contains(@src,"edite1.svg")]').should("not.be.visible");
+  verifyArchivedCampaign(campaignName,check){
+    cy.xpath('//*[text()="'+campaignName+'"]').should(check);
   }
+
+  clickStatusArchived(){
+    cy.xpath(statusArchived).click();
+  }
+
+  clickRecycleMenu(){
+    cy.get(recycleMenu).click();
+  }
+
+  searchCampaign(campname){
+    cy.get(searchBox).type(campname);
+  }
+
+  verifyCampaignNameField(){
+    cy.get(inputName).should("be.visible")
+  }
+
+  verifyDialModeDropdown(){
+    cy.get(dialingModeDrpdwn).should("be.visible")
+  }
+
+  newCampaignDropdown(dropdownName){
+    cy.xpath("//label[text()='"+dropdownName+"']/parent::div/div")
+  }
+
+  verifyAnswerMachineEnableButton(){
+    cy.get(AnswerMachingDetectionEnable).should("be.visible")
+  }
+  
+  verifyAnswerMachineDisableButton(){
+    cy.get(AnswerMachineDetectionDisable).should("be.visible")
+  }
+
+  verifyCallRecordingEnable(){
+    cy.get(callRecordingEnable).should("be.visible")
+  }
+
+  verifyCallRecordingDisable(){
+    cy.get(callRecordingDisable).should("be.visible")
+  }
+
+  verifyCallerIDGroup(){
+    cy.get(callerIDGroup).should("be.visible")
+  }
+
+  verifyCallOrder(order){
+    cy.get("//label[text()='"+order+"']").should("be.visible");
+  }
+
+
 }
