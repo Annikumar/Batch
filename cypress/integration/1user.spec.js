@@ -1,22 +1,22 @@
-import User from "../support/pages/User";
+import User from '../support/pages/User';
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100000);
 const addUser = new User();
 
-describe("Login Successfully and Add User", () => {
+describe('Login Successfully and Add User', () => {
   before(() => {
     // To add random number in constants.json
-    cy.readFile("cypress/fixtures/constants.json", (err, data) => {
+    cy.readFile('cypress/fixtures/constants.json', (err, data) => {
       if (err) {
         return console.error(err);
       }
     }).then((data) => {
       data.randNum = randNum;
-      cy.writeFile("cypress/fixtures/constants.json", JSON.stringify(data));
+      cy.writeFile('cypress/fixtures/constants.json', JSON.stringify(data));
     });
 
-    cy.fixture("constants")
+    cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
@@ -28,32 +28,36 @@ describe("Login Successfully and Add User", () => {
     });
   });
 
-  it("Should Login", () => {
+  after(() => {
+    cy.Logout();
+  });
+
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it("Should Add User for Agent role", () => {
+  it('Should Add User for Agent role', () => {
     addUser.clickingOnUserOption();
     cy.wait(3000);
     addUser.clickAddNewUserButton();
     //cy.log(randNum);
     addUser.enterFirstName(fixtureData.userFirstname);
     addUser.enterLastName(fixtureData.userLastname + randNum.toString());
-    addUser.selectROle("Agent");
+    addUser.selectROle('Agent');
     //cy.log(randNum);
     addUser.enterEmail(
       fixtureData.userEmail.replace(
-        "automation",
-        "automation" + randNum.toString()
+        'automation',
+        'automation' + randNum.toString()
       )
     );
     addUser.enterPassword(fixtureData.userPassword);
-    addUser.enterPhoneNumber("0123456789");
+    addUser.enterPhoneNumber('0123456789');
     addUser.clickSaveButton();
     addUser.verifySuccessToast();
   });
 
-  it("Should show added user in table", () => {
+  it('Should show added user in table', () => {
     addUser.clickingOnUserOption();
     addUser.verifyAddedUser(
       fixtureData.userFirstname,
@@ -61,7 +65,7 @@ describe("Login Successfully and Add User", () => {
     );
   });
 
-  it.skip("Should delete the added user", () => {
+  it.skip('Should delete the added user', () => {
     addUser.clickingOnUserOption();
     addUser.deleteAddedUser(
       fixtureData.userFirstname,

@@ -1,136 +1,174 @@
-
-import Campaign from "../support/pages/Campaigns";
+import Campaign from '../support/pages/Campaigns';
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
 const addCamp = new Campaign();
 
-describe("Add Campaign flow", () => {
+describe('Add Campaign flow', () => {
   before(() => {
-    cy.fixture("constants")
+    cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
       });
 
-      Cypress.Cookies.defaults({
-        preserve: (cookies) => {
-          return true;
-        },
-      });
-      
+    Cypress.Cookies.defaults({
+      preserve: (cookies) => {
+        return true;
+      },
+    });
+  });
+  after(() => {
+    cy.Logout();
   });
 
-  it.skip("Should Login", () => {
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it("Campaign header element should visible",function(){
+  it('Campaign header element should visible', function () {
     addCamp.clickCampaignMenu();
-    addCamp.verifyCampaignHeaderElement(["Active Campaigns","Paused Campaigns","Completed Campaigns","Archived Campaigns"])
+    addCamp.verifyCampaignHeaderElement([
+      'Active Campaigns',
+      'Paused Campaigns',
+      'Completed Campaigns',
+      'Archived Campaigns',
+    ]);
   });
 
-  it("Search box and Dropdowns on Campaign page",function(){
+  it('Search box and Dropdowns on Campaign page', function () {
     addCamp.verifySearchBox();
     addCamp.verifyStatusBox();
     addCamp.verifyAgentBox();
     addCamp.verifyContactsCountSlider();
     addCamp.verifyAddCompaignButton();
-  })
-
-  it("Verify campaign headings",function(){
-    addCamp.verifyCampaignHeaderHedings(["Name","Mode","Status","Total Leads","New Leads Left","Redials Left","Deals","Answered","Voicemail","Abandon","Agents","DNC","DNR","Created"]);
   });
 
-  it("Should Add Predictive Dialer New Campaign ", () => {
+  it('Verify campaign headings', function () {
+    addCamp.verifyCampaignHeaderHedings([
+      'Name',
+      'Mode',
+      'Status',
+      'Total Leads',
+      'New Leads Left',
+      'Redials Left',
+      'Deals',
+      'Answered',
+      'Voicemail',
+      'Abandon',
+      'Agents',
+      'DNC',
+      'DNR',
+      'Created',
+    ]);
+  });
+
+  it('Should Add Predictive Dialer New Campaign ', () => {
     addCamp.clickCampaignMenu();
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectDialingModeOption("Predictive Dialer");
+    addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId("2830");
-    addCamp.selectCallResultsOption("Answering Machine");
+    addCamp.selectCallerId('2830');
+    addCamp.selectCallResultsOption('Answering Machine');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn("Sandeep Kumar");
+    addCamp.selectAgentsDrpdwn('Sandeep Kumar');
     addCamp.clickCreateCampButton();
   });
 
-  it("Should show added Campaign in table", () => {
+  it('Should show added Campaign in table', () => {
     addCamp.clickCampaignMenu();
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
   });
 
-  it("Verify Campaign Status is applied correctly", () => {
+  it('Verify Campaign Status is applied correctly', () => {
     addCamp.clickCampaignMenu();
     addCamp.changesCampaignStatus(
       fixtureData.campaignName + randNum.toString(),
-      "active"
+      'active'
     );
     addCamp.clickToSelectPasused();
-    addCamp.changeCampaignStatusByDrpdwn("Paused");
+    addCamp.changeCampaignStatusByDrpdwn('Paused');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.changesCampaignStatus(
       fixtureData.campaignName + randNum.toString(),
-      "paused"
+      'paused'
     );
     addCamp.clickToSelectActive();
-    addCamp.changeCampaignStatusByDrpdwn("Active");
+    addCamp.changeCampaignStatusByDrpdwn('Active');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     cy.reload();
   });
 
-  it("Archive Created Campaign", function(){
+  it('Archive Created Campaign', function () {
     addCamp.clickCampaignMenu();
     addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.clickArchiveCampaignButton();
-    cy.wait(5000)
+    cy.wait(5000);
     addCamp.handleAlertForDelete();
-    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString(), "not.exist");
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString(),
+      'not.exist'
+    );
   });
 
-  it("Should Add Preview Dialer New Campaign ", () => {
+  it('Should Add Preview Dialer New Campaign ', () => {
     addCamp.clickCampaignMenu();
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
-    addCamp.enterName(fixtureData.campaignName + randNum.toString() + "1");
-    addCamp.selectDialingModeOption("Preview Dialer");
+    addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
+    addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId("2830");
-    addCamp.selectCallResultsOption("Busy");
+    addCamp.selectCallerId('2830');
+    addCamp.selectCallResultsOption('Busy');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn("Sandeep Kumar");
+    addCamp.selectAgentsDrpdwn('Sandeep Kumar');
     addCamp.clickCreateCampButton();
   });
 
-  it("Should show added Preview Dialer Campaign in table", () => {
+  it('Should show added Preview Dialer Campaign in table', () => {
     addCamp.clickCampaignMenu();
-    addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.verifyAddedCampaign(
+      fixtureData.campaignName + randNum.toString() + '1'
+    );
   });
 
-  it("Archive Created Preview Dialer Campaign", function(){
+  it('Archive Created Preview Dialer Campaign', function () {
     addCamp.clickCampaignMenu();
-    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + '1'
+    );
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
-    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "not.exist");
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString() + '1',
+      'not.exist'
+    );
   });
 
-
-  it("Verify status dropdown is showing Archived Campaign", function(){
+  it('Verify status dropdown is showing Archived Campaign', function () {
     // addCamp.clickRecycleMenu();
     // addCamp.clickCampaignMenu();
     addCamp.clickToSelectStatus();
     addCamp.clickStatusArchived();
-    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "be.visible")
-  })
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString() + '1',
+      'be.visible'
+    );
+  });
 
-  it("Verify search button functionality", function(){
-    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString() + "1");
-    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "be.visible")
-    addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString(), "not.exist");
-  })
-
+  it('Verify search button functionality', function () {
+    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString() + '1');
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString() + '1',
+      'be.visible'
+    );
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString(),
+      'not.exist'
+    );
+  });
 });

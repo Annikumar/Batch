@@ -24,14 +24,19 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 /// <reference types="cypress" />
+/// <reference types="cypress-xpath" />
 
-import Login from "../support/pages/Login";
+import Login from '../support/pages/Login';
+const login = new Login();
 
-Cypress.Commands.add("Login", (username, password) => {
-  const login = new Login();
+Cypress.Commands.add('Login', (username, password) => {
   login.enterEmailtoSignin(username);
   login.enterPasswordToSignin(password);
   login.clickTermsCheckBox();
   login.clickSigninButton();
   login.verifySuccessfullLogin();
+});
+
+Cypress.Commands.add('Logout', () => {
+  login.logout();
 });
