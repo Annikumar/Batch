@@ -13,6 +13,14 @@ const addedToast =
 const deleteToast =
   '//div[@class="Toastify__toast-body"]//div[contains(text(),"User deleted")]';
 const dropdownOptions = ".ss-select-group-items";
+const searchBox = ".search_bg"
+const rolesDropdown = "span[title='All Roles']"
+const groupsDropdown = "span[title='All Groups']"
+const AdminstratorRole = "//span[div[text()='Adminstrators']]"
+const Adminstrator = "//td[text()='Adminstrator']"
+const Agent = "//td[text()='Agent']"
+
+
 
 export default class User {
   clickingOnUserOption() {
@@ -84,7 +92,48 @@ export default class User {
     });
     cy.on("window:confirm", () => true);
   }
+
   verifyDeletedToast() {
     cy.xpath(deleteToast).should("be.visible");
   }
+
+  verifySearchBox(){
+    cy.get(searchBox).should("be.visible");
+  }
+
+  searchUser(user){
+    cy.get(searchBox).type(user);
+  }
+
+  verifyRoleDropdown(){
+    cy.get(rolesDropdown).should("be.visible");
+  }
+
+  verifyGroupsDropdown(){
+    cy.get(groupsDropdown).should("be.visible");
+  }
+
+  clickRoleDropdown(){
+    cy.get(rolesDropdown).click()
+  }
+
+  clickAdminstratorRole(role){
+    cy.get(dropdownOptions)
+    .contains(role)
+    .then((option) => {
+      option[0].click();
+    });
+
+    cy.xpath(Adminstrator).should("be.visible");
+    cy.xpath(Agent).should("not.exist");
+  }
+
+  verifySearchedUser() {
+    cy.xpath(
+      '//table[contains(@class,"users")]//td[text()="qa supervisor"]',
+      { timeout: 15000 }
+    ).should("be.visible");
+  }
+
+
 }

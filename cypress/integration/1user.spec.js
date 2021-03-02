@@ -70,4 +70,27 @@ describe("Login Successfully and Add User", () => {
     addUser.handleAlertForDelete();
     addUser.verifyDeletedToast();
   });
+
+  it("Verify Search Box is visible", function () {
+    addUser.verifySearchBox();
+  });
+
+  it("User should search using Search Box", function () {
+    addUser.searchUser("qa supervisor");
+    addUser.verifySearchedUser();
+  });
+
+  it("verify Dropdowns present on user page",function(){
+    addUser.verifyRoleDropdown();
+    addUser.verifyGroupsDropdown();
+  });
+
+  it("Role dropdown should show the selected role",function(){
+    addUser.clickRoleDropdown();
+    addUser.clickAdminstratorRole("Adminstrators");
+  })
+
+
+
+
 });

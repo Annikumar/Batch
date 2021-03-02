@@ -131,6 +131,60 @@ describe("Add Campaign flow", () => {
     addCamp.searchCampaign(fixtureData.campaignName + randNum.toString() + "1");
     addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString() + "1", "be.visible")
     addCamp.verifyArchivedCampaign(fixtureData.campaignName + randNum.toString(), "not.exist");
+  });
+
+  it("Verify elements on New Campaign Page", function(){
+    addCamp.clickCampaignMenu();
+    cy.wait(3000);
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString() + "1");
+    addCamp.selectDialingModeOption("Preview Dialer");
+    addCamp.verifyCampaignNameField();
+    addCamp.verifyDialModeDropdown();
+    addCamp.newCampaignDropdown(['Time Zone','Max Lines Per Agent','Abandonment Timeout','Max Ring Time Duration']);
+    // addCamp.newCampaignDropdown("Max Lines Per Agent");
+    addCamp.verifyCallTypeAutoAnswer();
+    addCamp.verifyCallTypeBeepOnce();
+    addCamp.verifyCallTypeRingingSound();
+    // addCamp.newCampaignDropdown("Abandonment Timeout");
+    // addCamp.newCampaignDropdown("Max Ring Time Duration");
+    addCamp.verifyAnswerMachineEnableButton();
+    addCamp.verifyAnswerMachineDisableButton();
+    addCamp.verifyCallRecordingEnable();
+    addCamp.verifyCallRecordingDisable();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyCallerIDGroup();
+    addCamp.verifyCallerIDNumber();
+    addCamp.verifyCallingHours();
+    addCamp.selectCallResultsOption("Busy");
+    addCamp.verifyCallResult();
+    addCamp.verifyMaxAttempts();
+    addCamp.verifyRetryTime();
+    addCamp.verifyAgentScript();
+    addCamp.verifyAgentScriptCreateNewButton();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyContactList();
+    addCamp.verifyCallOrder(['Adaptive','Highest Score Leads first','Lowest Score Leads first']);
+    addCamp.verifyAssignAgent();
+    addCamp.verifyFedralDNCYes();
+    addCamp.verifyFedralDNCNo();
+    addCamp.verifyCompanyDNCYes();
+    addCamp.verifyCompanyDNCNo();
+    addCamp.verifyCancelButton();
+  });
+
+  it("Verify Elements present in Recycle page",function(){
+    addCamp.clickRecycleMenu();
+    addCamp.verifyRecStartDate();
+    addCamp.verifyRecEndDate();
+    addCamp.verifyRecCallResult();
+    addCamp.verifyRecUseList();
+    addCamp.verifyRecCampaignName();
+    addCamp.verifyRecSkipLeads();
+    addCamp.verifyRecSkipContact();
+    addCamp.verifyRecSaveCampaignButton();
+    addCamp.verifyCancelButton();
   })
 
 });
