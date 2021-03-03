@@ -32,7 +32,7 @@ describe('Login Successfully and Add User', () => {
     cy.Logout();
   });
 
-  it.only('Should Login', () => {
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -75,55 +75,70 @@ describe('Login Successfully and Add User', () => {
     addUser.verifyDeletedToast();
   });
 
-  it("Verify Search Box is visible", function () {
+  it('Verify Search Box is visible', function () {
     addUser.verifySearchBox();
   });
 
-  it("User should search using Search Box", function () {
-    addUser.searchUser("qa supervisor");
+  it('User should search using Search Box', function () {
+    addUser.searchUser('qa supervisor');
     addUser.verifySearchedUser();
   });
 
-  it("verify Dropdowns present on user page",function(){
+  it('verify Dropdowns present on user page', function () {
     addUser.verifyRoleDropdown();
     addUser.verifyGroupsDropdown();
     addUser.verifyAddNewUserButton();
   });
 
-  it("Role dropdown should show the selected role",function(){
+  it('Role dropdown should show the selected role', function () {
     addUser.clickRoleDropdown();
-    addUser.clickAdminstratorRole("Adminstrators");
+    addUser.clickAdminstratorRole('Adminstrators');
   });
 
-  it.only("verify Agent Statuses Heading and All Statuses",function(){
+  it('verify Agent Statuses Heading and All Statuses', function () {
     addUser.clickingOnUserOption();
     addUser.verifyAgentStatusesHeading();
-    addUser.verifyAgentStatusesType(["Available","Break","Lunch","In training","Out of desk","Offline","In Meeting","PrepWork","After Call"])
-  })
+    addUser.verifyAgentStatusesType([
+      'Available',
+      'Break',
+      'Lunch',
+      'In training',
+      'Out of desk',
+      'Offline',
+      'In Meeting',
+      'PrepWork',
+      'After Call',
+    ]);
+  });
 
-  it.only("verify New user Page Element", function(){
+  it('verify New user Page Element', function () {
     addUser.clickAddNewUserButton();
-    addUser.verifyFirstName()
-    addUser.verifyLastName()
-    addUser.verifyRoleDropdownNewUser()
-    addUser.verifyEmailField()
-    addUser.verifyPasswordField()
-    addUser.verifyPhoneNumber()
-    addUser.verifyAssignToGroup()
-    addUser.verifyCancelButton()
-    addUser.verifySaveButton()
-    addUser.verifySecondPhoneField()
+    addUser.verifyFirstName();
+    addUser.verifyLastName();
+    addUser.verifyRoleDropdownNewUser();
+    addUser.verifyEmailField();
+    addUser.verifyPasswordField();
+    addUser.verifyPhoneNumber();
+    addUser.verifyAssignToGroup();
+    addUser.verifyCancelButton();
+    addUser.verifySaveButton();
+    addUser.verifySecondPhoneField();
     addUser.clickCancelButton();
-  })
+  });
 
-  it.only("Verify Elements of table headers",function(){
-    addUser.verifyUserTableHeadings(["Name","Status","Role","Group","Campaigns","Added"]);
-  })
+  it('Verify Elements of table headers', function () {
+    addUser.verifyUserTableHeadings([
+      'Name',
+      'Status',
+      'Role',
+      'Group',
+      'Campaigns',
+      'Added',
+    ]);
+  });
 
-  it.only("Verify User Edit and Delete Button", function(){
+  it('Verify User Edit and Delete Button', function () {
     addUser.verifyUserEditButton();
     addUser.verifyUserDeleteButton();
-  })
-
-
+  });
 });
