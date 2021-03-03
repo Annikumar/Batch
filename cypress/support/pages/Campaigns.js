@@ -48,6 +48,16 @@ const FedralDNCNo = "//label[text()='Scrub Federal DNC']/parent::div/following-s
 const companyDNCYES = "//label[text()='Scrub Company DNC']/parent::div/following-sibling::div/label[text()='Yes']/input"
 const companyDNCNO = "//label[text()='Scrub Company DNC']/parent::div/following-sibling::div/label[text()='No']/input"
 const CancelButton = "//button[text()=' CANCEL']"
+const RecStartDate = "//label[text()='Start Date']/parent::div/div"
+const RecEndDate = "//label[text()='End Date']/parent::div/div"
+const RecCallResult = "span[class='ss-select-placeholder']"
+const RecUseList = "//label[text()='Use Lists From']/parent::div/div"
+const RecCampaignName = "input[name='newcampaignname']"
+const RecSkipLeadsCheckbox = "input[name='skip_leads']"
+const RecSkipContacts = "input[name='skip_dnr']"
+const RecSaveCampaign = "//button[contains(text(),'SAVE CAMPAIGN')]"
+
+
 
 
 export default class Campaign {
@@ -211,7 +221,7 @@ export default class Campaign {
   }
 
   clickRecycleMenu(){
-    cy.get(recycleMenu).click();
+    cy.get(recycleMenu).click({force:true});
   }
 
   searchCampaign(campname){
@@ -223,36 +233,142 @@ export default class Campaign {
   }
 
   verifyDialModeDropdown(){
-    cy.get(dialingModeDrpdwn).should("be.visible")
+    cy.xpath(dialingModeDrpdwn).should("be.visible")
   }
 
   newCampaignDropdown(dropdownName){
-    cy.xpath("//label[text()='"+dropdownName+"']/parent::div/div")
+    for(let i=0;i<dropdownName.length;i++){
+    cy.xpath("//label[text()='"+dropdownName[i]+"']/parent::div/div").should("be.visible")
+    }
+  }
+
+  verifyCallTypeAutoAnswer(){
+    cy.xpath(callTypeAutoAnswer).should("be.visible");
+  }
+
+  verifyCallTypeBeepOnce(){
+    cy.xpath(callTypeBeepOnce).should("be.visible");
+  }
+
+  verifyCallTypeRingingSound(){
+    cy.xpath(callTypeRingingSound).should("be.visible");
   }
 
   verifyAnswerMachineEnableButton(){
-    cy.get(AnswerMachingDetectionEnable).should("be.visible")
+    cy.xpath(AnswerMachingDetectionEnable).should("be.visible")
   }
   
   verifyAnswerMachineDisableButton(){
-    cy.get(AnswerMachineDetectionDisable).should("be.visible")
+    cy.xpath(AnswerMachineDetectionDisable).should("be.visible")
   }
 
   verifyCallRecordingEnable(){
-    cy.get(callRecordingEnable).should("be.visible")
+    cy.xpath(callRecordingEnable).should("be.visible")
   }
 
   verifyCallRecordingDisable(){
-    cy.get(callRecordingDisable).should("be.visible")
+    cy.xpath(callRecordingDisable).should("be.visible")
   }
 
   verifyCallerIDGroup(){
     cy.get(callerIDGroup).should("be.visible")
   }
 
-  verifyCallOrder(order){
-    cy.get("//label[text()='"+order+"']").should("be.visible");
+  verifyCallerIDNumber(){
+    cy.get(callerIDNumber).should("be.visible");
   }
+
+  verifyCallingHours(){
+    cy.xpath(callingHours).should("be.visible");
+  }
+
+  verifyCallResult(){
+    cy.get(callResult).should("be.visible");
+  }
+
+  verifyMaxAttempts(){
+    cy.xpath(MaxAttempts).should("be.visible");
+  }
+
+  verifyRetryTime(){
+    cy.xpath(RetryTime).should("be.visible");
+  }
+
+  verifyAgentScript(){
+    cy.get(AgentScript).should("be.visible");
+  }
+
+  verifyAgentScriptCreateNewButton(){
+    cy.get(AgentScriptCreateNew).should("be.visible");
+  }
+
+  verifyContactList(){
+    cy.xpath(contactLists).should("be.visible");
+  }
+
+  verifyCallOrder(order){
+    for(let i=0;i<order.length; i++){
+    cy.xpath("//label[text()='"+order[i]+"']").should("be.visible");
+    }
+  }
+
+  verifyAssignAgent(){
+    cy.xpath(assignAgent).should("be.visible");
+  }
+
+  verifyFedralDNCYes(){
+    cy.xpath(FedralDNCYES).should("exist");
+  }
+
+  verifyFedralDNCNo(){
+    cy.xpath(FedralDNCNo).should("exist");
+  }
+
+  verifyCompanyDNCYes(){
+    cy.xpath(companyDNCYES).should("exist");
+  }
+
+  verifyCompanyDNCNo(){
+    cy.xpath(companyDNCNO).should("exist");
+  }
+
+  verifyCancelButton(){
+    cy.xpath(CancelButton).should("exist");
+  }
+
+  verifyRecStartDate(){
+    cy.xpath(RecStartDate).should("be.visible");
+  }
+
+  verifyRecEndDate(){
+    cy.xpath(RecEndDate).should("be.visible");
+  }
+
+  verifyRecCallResult(){
+    cy.get(RecCallResult).should("be.visible");
+  }
+
+  verifyRecUseList(){
+    cy.xpath(RecUseList).should("be.visible");
+  }
+
+  verifyRecCampaignName(){
+    cy.get(RecCampaignName).should("be.visible");
+  }
+
+  verifyRecSkipLeads(){
+    cy.get(RecSkipLeadsCheckbox).should("exist");
+  }
+
+  verifyRecSkipContact(){
+    cy.get(RecSkipContacts).should("exist");
+  }
+
+  verifyRecSaveCampaignButton(){
+    cy.xpath(RecSaveCampaign).should("be.visible");
+  }
+
+
 
 
 }
