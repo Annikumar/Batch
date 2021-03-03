@@ -19,6 +19,14 @@ const groupsDropdown = "span[title='All Groups']"
 const AdminstratorRole = "//span[div[text()='Adminstrators']]"
 const Adminstrator = "//td[text()='Adminstrator']"
 const Agent = "//td[text()='Agent']"
+const AgentStatuses = "//span[text()='Agent Statuses']"
+const AssignToGroup = "//div[label[text()='Assign to a Group ']]/div"
+const CancelButton = "//button[text()=' CANCEL']"
+const SecondPhone = "input[name=phone2]"
+const userTableHeading = ".users thead"
+const userEditButton = "img[src*='icon-edit']"
+const userDeleteButton = "img[src*='icon-delete']"
+
 
 
 
@@ -133,6 +141,78 @@ export default class User {
       '//table[contains(@class,"users")]//td[text()="qa supervisor"]',
       { timeout: 15000 }
     ).should("be.visible");
+  }
+
+  verifyAgentStatusesHeading(){
+    cy.xpath(AgentStatuses).should("be.visible")
+  }
+
+  verifyAgentStatusesType(statuses){
+    for(let i=0;i<statuses.length;i++){
+      cy.xpath("//td[text()='"+statuses[i]+"']").should("be.visible");
+    }
+  }
+
+  verifyFirstName(){
+    cy.get(firstName).should("be.visible");
+  }
+
+  verifyLastName(){
+    cy.get(lastName).should("be.visible");
+  }
+
+  verifyRoleDropdownNewUser(){
+    cy.xpath(roleDropdown).should("be.visible");
+  }
+
+  verifyEmailField(){
+    cy.get(inputEmail).should("be.visible");
+  }
+
+  verifyPasswordField(){
+    cy.get(inputPassword).should("be.visible");
+  }
+
+  verifyPhoneNumber(){
+    cy.get(inputPhone).should("be.visible");
+  }
+
+  verifyAssignToGroup(){
+    cy.xpath(AssignToGroup).should("be.visible");
+  }
+
+  verifyCancelButton(){
+    cy.xpath(CancelButton).should("be.visible");
+  }
+
+  clickCancelButton(){
+    cy.xpath(CancelButton).click();
+  }
+
+  verifySaveButton(){
+    cy.xpath(saveButton).should("be.visible");
+  }
+
+  verifySecondPhoneField(){
+    cy.get(SecondPhone).should("be.visible");
+  }
+
+  verifyAddNewUserButton(){
+    cy.xpath(addNewUser).should("be.visible");
+  }
+
+  verifyUserTableHeadings(heading){
+    for(let i=0;i<heading.length;i++){
+    cy.get(userTableHeading).should("contain.text",heading[i]);
+    }
+  }
+
+  verifyUserEditButton(){
+    cy.get(userEditButton).should("be.visible");
+  }
+
+  verifyUserDeleteButton(){
+    cy.get(userDeleteButton).should("be.visible");
   }
 
 
