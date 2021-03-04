@@ -54,7 +54,7 @@ describe('Add Contact flow', () => {
   it('Verifies Search Functionality', () => {
     addCont.clickingOnContactOption();
     addCont.enterKeywordToSearch('automation');
-    addCont.verifySearchResult('automation');
+    addCont.verifySearchResult('Automation');
   });
 
   it('Verifies Create New Contact Elements', () => {
