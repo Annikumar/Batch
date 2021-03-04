@@ -72,6 +72,14 @@ const deleteAddedDncValue = (title, value) =>
   value +
   "']//img";
 const selectStateDropdown = '.modal-content .ss-select';
+const ivrDropdown = (title, dropdown) =>
+  "//div[contains(@class,form-group)][.='" +
+  title +
+  "']/following-sibling::div//span[text()='" +
+  dropdown +
+  "']";
+const newDigitBtn = '//button[contains(text(),"NEW DIGIT")]';
+const addNewBtn = '//button[contains(text(),"ADD NEW")]';
 
 export default class PhoneNum {
   clickPhoneNumberMenu() {
@@ -425,5 +433,25 @@ export default class PhoneNum {
     cy.contains(state).click();
     // cy.xpath("//div[text()='" + state + "']").click();
     // cy.get(selectStateDropdown).type(state, { delay: 3000 }).type('{enter}');
+  }
+
+  verifyNewIVRBtn() {
+    cy.xpath(newIvr).should('be.visible');
+  }
+
+  verifyNewDigitBtn() {
+    cy.xpath(newDigitBtn).should('be.visible');
+  }
+
+  verifyIVRDropdown(title, dropdown) {
+    cy.xpath(ivrDropdown(title, dropdown)).should('be.visible');
+  }
+
+  verifyWelcomePromptDropdown(dropdown) {
+    cy.xpath(selectDropdown(dropdown));
+  }
+
+  verifyAddNewBtn() {
+    cy.xpath(addNewBtn).should('be.visible');
   }
 }

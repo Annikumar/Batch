@@ -54,6 +54,32 @@ describe('Add Phone Number flow', () => {
     addNum.verifyDeletedToast();
   });
 
+  it('Verifies IVR Elements', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.verifySearchBox();
+    addNum.verifyNewIVRBtn();
+    addNum.verifyTableHeaderName(['Name', 'Description', 'Modified']);
+  });
+
+  it('Verifies Add New IVR Elements', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.clickNewIvr();
+    addNum.verifyNameField();
+    addNum.verifyDescriptionField();
+    addNum.verifyExtensionsDropdown('Select Phone Group');
+    addNum.verifyExtensionsDropdown('Select Numbers');
+    addNum.verifyAssignCampaignDropdown('Select Campaign');
+    addNum.verifyIVRDropdown('After Hours', 'Hangup');
+    addNum.verifyIVRDropdown('Timeout', 'Hangup');
+    addNum.verifyNewDigitBtn();
+    addNum.verifyWelcomePromptDropdown('Select Recording');
+    addNum.verifyAddNewBtn();
+    addNum.verifySaveBtn();
+    addNum.verifyCancelBtn();
+  });
+
   it('Should Add New IVR', function () {
     addNum.clickPhoneNumberMenu();
     addNum.clickIvrAttendent();
