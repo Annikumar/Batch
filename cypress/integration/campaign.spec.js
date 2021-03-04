@@ -234,16 +234,4 @@ describe('Add Campaign flow', () => {
     addCamp.verifyRecSaveCampaignButton();
     addCamp.verifyCancelButton();
   });
-
-  it('Verify search button functionality', function () {
-    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString() + '1');
-    addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString() + '1',
-      'be.visible'
-    );
-    addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString(),
-      'not.exist'
-    );
-  });
 });

@@ -35,19 +35,20 @@ describe('Add Phone Number flow', () => {
     addNum.clickSearchButton();
     addNum.verifysearchStartedToast();
     addNum.selectPhoneNumber();
-    addNum.assignAgentUser(
-      fixtureData.userLastname + fixtureData.randNum.toString()
-    );
+    addNum.assignAgentUser('Sandeep Kumar');
     num = await addNum.getFirstPhoneNumber();
     await addNum.clickOrderNowButton();
     await addNum.closingDialog();
+    cy.log(num);
   });
 
   it('Should show added Phone number in table', () => {
     addNum.clickPhoneNumberMenu();
     addNum.verifyAddedPhoneNum(num);
+    cy.log(num);
   });
-  it.skip('Should delete the added Phone Number', () => {
+
+  it('Should delete the added Phone Number', () => {
     addNum.clickPhoneNumberMenu();
     addNum.deleteAddedPhoneNumber(num);
     addNum.handleAlertForDelete();
@@ -87,7 +88,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber('(480) 240-5720');
+    addNum.selectNumber('2830');
     addNum.clickAddNewWelcomePrompt();
     addNum.clickTextToSpeech();
     addNum.enterRecordingName('Test' + randNum.toString());
@@ -99,7 +100,7 @@ describe('Add Phone Number flow', () => {
   });
 
   it('Should delete IVR', function () {
-    addNum.deleteIVR();
+    addNum.deleteIVR('Testing' + randNum.toString());
     addNum.handleAlertForDelete();
     addNum.verifyDeletedIvr();
   });
@@ -213,5 +214,70 @@ describe('Add Phone Number flow', () => {
   it('Delete Added DNC States', () => {
     addNum.clickDeleteDncValue('States', 'Colorado');
     addNum.handleAlertForDelete();
+  });
+
+  it('Verifies Elements of Call Result Page', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.verifySearchBox();
+    addNum.verifyRadioBtn(['All', 'Active', 'Inactive']);
+    addNum.verifyAddNewCallResultBtn();
+    addNum.verifyTableHeaderName([
+      'Call Result',
+      'Number Group',
+      'Campaigns',
+      'State',
+      'Default',
+      'Global',
+      'Added',
+    ]);
+    addNum.verifyTableBodyElement([
+      'Abandoned',
+      'Answering Machine',
+      'Busy',
+      'Call Back',
+      'Disconnected Number',
+      'No Answer',
+      'Not Interested',
+      'Successful Sale',
+      'Unknown',
+      'Voicemail',
+    ]);
+  });
+
+  it('Verifies Add New Call Result Elements', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickAddNewCallResultBtn();
+    addNum.verifyNameField();
+    addNum.verifyActiveInactive('Active');
+    addNum.verifyActiveInactive('Inactive');
+    addNum.verifyNumberGroupDropdown();
+    addNum.verifyButtonColorBox();
+    addNum.verifyAssignCampaignDropdown('Select Number Group');
+    addNum.verifyShowOnNewCompaignPage('Yes');
+    addNum.verifyShowOnNewCompaignPage('No');
+    addNum.verifyAddNewRuleBtn();
+    addNum.verifyRules([
+      'Do Not Redial Contact',
+      'Do Not Redial Number',
+      'Add Contact to DNC',
+      'Add Number to DNC',
+      'Mark as Lead',
+      'Send to Email',
+    ]);
+    addNum.verifyCallResultCancelBtn();
+    addNum.verifyCallResultSaveBtn();
+  });
+
+  it('Add New Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickAddNewCallResultBtn();
+    addNum.enterName('DemoTesting');
+    addNum.chooseShowOnNewCampaignPage('Yes');
+    addNum.chooseActiveInactive('Active');
+    addNum.selectCallResultCampaignDropdown('FirstCampaign');
+    addNum.clickCallResultSaveBtn();
   });
 });

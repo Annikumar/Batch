@@ -65,9 +65,9 @@ describe('Login Successfully and Add User', () => {
     );
   });
 
-  it.skip('Should delete the added user', () => {
+  it('Should delete the added user', () => {
     addUser.clickingOnUserOption();
-    addUser.deleteAddedUser(
+    addUser.deleteAddedContact(
       fixtureData.userFirstname,
       fixtureData.userLastname + randNum.toString()
     );

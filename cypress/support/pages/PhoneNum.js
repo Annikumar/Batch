@@ -5,7 +5,7 @@ const buyDidbtn = '//button[contains(text(),"BUY DID")]';
 const stateDrpdwn =
   '//div[@class="modal-body"]//div[contains(@class,"ss-select")]//span[contains(text(),"Select state")]';
 const searchBtn = '.modal-body button svg[data-icon="search"]';
-const firstNum = '//div[@class="modal-body"]//div[@class="numbers"]/div[1]';
+const firstNum = '.number';
 const firstNumberChkBx =
   '//div[@class="modal-body"]//div[@class="numbers"]/div[1]//input';
 const orderNow = '.btn svg[data-icon="shopping-cart"]';
@@ -34,7 +34,8 @@ const recordingSaveButton =
   "//div[@class='modal-footer']//button[text()=' SAVE']";
 const ivrSaveButton = ".modal_btn button[class*='save']";
 const saved = "//div[text()='Saved']";
-const deleteIvr = "img[src*='delete.svg']";
+const deleteIvr = (x) =>
+  "//tr[contains(.,'" + x + "')]//td//img[contains(@src,'delete')]";
 const DeletedIVR = "//div[text()='IVR deleted']";
 const inboundCallMenu = 'a[title="Inbound Calls"]';
 const searchBox = '.search-box';
@@ -45,6 +46,7 @@ const selectDropdown = (dropdownName) =>
   dropdownName +
   "']";
 const ringStrategyRadioBtn = '.radio_cstm';
+const radioBtn = '.radio_cstm';
 const wrapupTimeout =
   '//div[div[label[text()="Wrapup Timeout"]]]/following-sibling::div//div[contains(@class,"ss-select") and not(contains(@class, "fakeinput"))]';
 const ringTimeDuration =
@@ -80,8 +82,67 @@ const ivrDropdown = (title, dropdown) =>
   "']";
 const newDigitBtn = '//button[contains(text(),"NEW DIGIT")]';
 const addNewBtn = '//button[contains(text(),"ADD NEW")]';
+const addNewCallResult = '.form-group button[type="button"]';
+const tableBody = '.table tbody';
+const callResultMenu = 'a[title="Call Results"]';
+const customRadioBtn = (x) =>
+  "//label[@class='radio_cstm'][contains(.,'" + x + "')]";
+const buttonColorBox = '.form-label+.disposition';
+const addNewRuleBtn = '//button[contains(text(),"ADD NEW RULE")]';
+const callResultSaveBtn = '//button[contains(text(),"Save")]';
+const callResultCancelBtn = '//button[contains(text(),"Cancel")]';
 
 export default class PhoneNum {
+  chooseActiveInactive(choice) {
+    cy.xpath(customRadioBtn(choice)).click();
+  }
+
+  verifyCallResultSaveBtn() {
+    cy.xpath(callResultSaveBtn).should('be.visible');
+  }
+
+  verifyCallResultCancelBtn() {
+    cy.xpath(callResultCancelBtn).should('be.visible');
+  }
+
+  clickCallResultSaveBtn() {
+    cy.xpath(callResultSaveBtn).click({ force: true });
+  }
+
+  chooseShowOnNewCampaignPage(choice) {
+    cy.xpath(customRadioBtn(choice)).click();
+  }
+
+  verifyAddNewRuleBtn() {
+    cy.xpath(addNewRuleBtn).should('be.visible');
+  }
+
+  verifyShowOnNewCompaignPage(choice) {
+    cy.xpath(customRadioBtn(choice)).should('be.visible');
+  }
+
+  verifyRules(rules) {
+    for (let i = 0; i < rules.length; i++) {
+      cy.xpath(customRadioBtn(rules[i])).should('be.visible');
+    }
+  }
+
+  verifyButtonColorBox() {
+    cy.get(buttonColorBox).should('be.visible');
+  }
+
+  chooseButtonColor(color) {
+    cy.get(buttonColorBox).click();
+  }
+
+  verifyNumberGroupDropdown() {
+    cy.xpath(selectDropdown('Select Number Group')).should('be.visible');
+  }
+
+  verifyActiveInactive(choice) {
+    cy.xpath(customRadioBtn(choice)).should('be.visible');
+  }
+
   clickPhoneNumberMenu() {
     cy.get(phoneNumMenu).click({ force: true });
   }
@@ -115,8 +176,14 @@ export default class PhoneNum {
   }
 
   async getFirstPhoneNumber() {
-    const totalAmt = await promisify(cy.xpath(firstNum, { timeout: 30000 }));
-    return totalAmt.text().trim();
+    return await promisify(
+      cy
+        .get(firstNum, { timeout: 30000 })
+        .first()
+        .then((el) => {
+          return el.text().trim();
+        })
+    );
   }
 
   verifysearchStartedToast() {
@@ -204,6 +271,7 @@ export default class PhoneNum {
   enterRecordingName(recording) {
     cy.get(recordingName).type(recording);
   }
+
   clickTextToSpeech() {
     cy.get(textToSpeech).click();
   }
@@ -230,8 +298,8 @@ export default class PhoneNum {
     cy.xpath(saved).should('be.visible');
   }
 
-  deleteIVR() {
-    cy.get(deleteIvr).click();
+  deleteIVR(name) {
+    cy.xpath(deleteIvr(name)).click();
   }
 
   handleAlertForDelete() {
@@ -300,8 +368,14 @@ export default class PhoneNum {
   }
 
   selectAssignCampaignDropdown(name, campaign) {
-    cy.xpath(selectDropdown(name)).click({ force: true });
+    cy.xpath(selectDropdown(name));
+    cy.wait(1000);
+    cy.contains(campaign).click();
+  }
 
+  selectCallResultCampaignDropdown(campaign) {
+    cy.xpath(selectDropdown('Select Campaigns')).click();
+    cy.wait(1000);
     cy.contains(campaign).click();
   }
 
@@ -453,5 +527,29 @@ export default class PhoneNum {
 
   verifyAddNewBtn() {
     cy.xpath(addNewBtn).should('be.visible');
+  }
+
+  verifyAddNewCallResultBtn() {
+    cy.get(addNewCallResult).should('be.visible');
+  }
+
+  clickAddNewCallResultBtn() {
+    cy.get(addNewCallResult).click();
+  }
+
+  verifyTableBodyElement(body) {
+    for (let i = 0; i < body.length; i++) {
+      cy.get(tableBody).should('contain.text', body[i]);
+    }
+  }
+
+  verifyRadioBtn(radio) {
+    for (let i = 0; i < radio.length; i++) {
+      cy.get(radioBtn).should('contain.text', radio[i]);
+    }
+  }
+
+  clickCallResultMenu() {
+    cy.get(callResultMenu).click({ force: true });
   }
 }

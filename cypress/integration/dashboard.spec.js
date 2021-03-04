@@ -10,6 +10,11 @@ describe('Dashboard Elements', function () {
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
       });
+    Cypress.Cookies.defaults({
+      preserve: (cookies) => {
+        return true;
+      },
+    });
   });
 
   after(() => {
