@@ -7,19 +7,35 @@ const logoutBtn = 'a[href*="logout"]';
 
 export default class Login {
   enterEmailtoSignin(email) {
-    cy.get(emailInputField).type(email);
+    cy.get('body').then(($body) => {
+      if ($body.find(emailInputField).length) {
+        cy.get(emailInputField).type(email);
+      }
+    });
   }
 
   enterPasswordToSignin(pswd) {
-    cy.get(passwordInputField).type(pswd);
+    cy.get('body').then(($body) => {
+      if ($body.find(passwordInputField).length) {
+        cy.get(passwordInputField).type(pswd);
+      }
+    });
   }
 
   clickTermsCheckBox() {
-    cy.get(termsCheckBox).check();
+    cy.get('body').then(($body) => {
+      if ($body.find(termsCheckBox).length) {
+        cy.get(termsCheckBox).check();
+      }
+    });
   }
 
   clickSigninButton() {
-    cy.get(signinButton).click();
+    cy.get('body').then(($body) => {
+      if ($body.find(signinButton).length) {
+        cy.get(signinButton).click();
+      }
+    });
   }
 
   verifySuccessfullLogin() {

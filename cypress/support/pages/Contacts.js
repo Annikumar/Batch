@@ -79,6 +79,18 @@ const importContactSelectCompaignDropdown =
   '//div[span[text()="Select Campaign"]]';
 const importContactOptionsCheckbox = '.radio_cstm';
 const tableBody = '.table tbody';
+const contactName = (first, last) =>
+  "//td//span[contains(@class,'fakelink')][contains(.,'" +
+  first +
+  "')][contains(.,'" +
+  last +
+  "')]";
+const phonenumber =
+  "//td[@class='contact-field'][contains(.,'Phone')][contains(.,'1')]/following-sibling::td[@class='contact-value']/span";
+const callBtn = '.stg-softphone-callbutton img';
+const callResult = (x) => "//div[@class='disposition'][text()='" + x + "']";
+const continueBtn = '//button[text()="Continue"]';
+const callStarted = '.stg-softphone-minimized';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -120,10 +132,7 @@ export default class Contacts {
     cy.get(inputPhone).type(num);
   }
   selectState(state) {
-    cy.xpath(stateDropdown).click();
-    cy.xpath(
-      '//div[@class="ss-select-dropdown"]//span/div[text()="' + state + '"]'
-    ).click();
+    cy.xpath(stateDropdown).click().contains(state).click();
   }
   clickSaveButton() {
     cy.get(saveButton).click({ force: true });
@@ -390,5 +399,34 @@ export default class Contacts {
 
   verifySearchResult(result) {
     cy.get(tableBody).should('contain.text', result);
+  }
+
+  clickOnContactName(first, last) {
+    cy.xpath(contactName(first, last)).click();
+  }
+
+  clickPhoneNumber() {
+    cy.xpath(phonenumber).click();
+  }
+
+  clickCallBtn() {
+    cy.wait(6000);
+    cy.get(callBtn).click({ force: true });
+  }
+
+  clickEndCallBtn() {
+    cy.get(callBtn).click({ force: true });
+  }
+
+  selectCallResult(Result) {
+    cy.xpath(callResult(Result)).click();
+  }
+
+  clickContinueBtn() {
+    cy.xpath(continueBtn).click();
+  }
+
+  verifyCallStarted() {
+    cy.get(callStarted).should('be.visible');
   }
 }

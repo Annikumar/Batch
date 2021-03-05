@@ -88,7 +88,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber('2830');
+    addNum.selectNumber('2821');
     addNum.clickAddNewWelcomePrompt();
     addNum.clickTextToSpeech();
     addNum.enterRecordingName('Test' + randNum.toString());
@@ -279,5 +279,12 @@ describe('Add Phone Number flow', () => {
     addNum.chooseActiveInactive('Active');
     addNum.selectCallResultCampaignDropdown('FirstCampaign');
     addNum.clickCallResultSaveBtn();
+  });
+
+  it('Delete Added Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickCallResultDeleteBtn('DemoTesting');
+    addNum.verifyCallResultDelete();
   });
 });

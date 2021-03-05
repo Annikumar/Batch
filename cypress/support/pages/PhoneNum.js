@@ -91,6 +91,8 @@ const buttonColorBox = '.form-label+.disposition';
 const addNewRuleBtn = '//button[contains(text(),"ADD NEW RULE")]';
 const callResultSaveBtn = '//button[contains(text(),"Save")]';
 const callResultCancelBtn = '//button[contains(text(),"Cancel")]';
+const callResultdeleteBtn = (callResultName) =>
+  "//tr[contains(.,'" + callResultName + "')]//img[contains(@src,'delete')]";
 
 export default class PhoneNum {
   chooseActiveInactive(choice) {
@@ -299,7 +301,7 @@ export default class PhoneNum {
   }
 
   deleteIVR(name) {
-    cy.xpath(deleteIvr(name)).click();
+    cy.xpath(deleteIvr(name)).click({ force: true });
   }
 
   handleAlertForDelete() {
@@ -551,5 +553,13 @@ export default class PhoneNum {
 
   clickCallResultMenu() {
     cy.get(callResultMenu).click({ force: true });
+  }
+
+  clickCallResultDeleteBtn(callResultName) {
+    cy.xpath(callResultdeleteBtn(callResultName)).click();
+  }
+
+  verifyCallResultDelete(callResultName) {
+    cy.xpath(callResultdeleteBtn(callResultName)).should('not.exist');
   }
 }
