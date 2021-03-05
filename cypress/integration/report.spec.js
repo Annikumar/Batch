@@ -1,4 +1,3 @@
-
 import Report from "../support/pages/Report";
 
 const report = new Report();
@@ -55,14 +54,14 @@ describe("Report Page", function () {
     ]);
   });
 
-  it("verify report table header element", function () {
+  it("verify report live table header element", function () {
     report.verifyReportTableHeaderElements([
       "Agent",
       "Phone Number",
       "Phone Type",
       "Contact",
       "Campaign",
-      "Duration"
+      "Duration",
     ]);
   });
 
@@ -88,26 +87,35 @@ describe("Report Page", function () {
       "Agent",
       "Campaign",
       "Call Result",
-      "Duration"
+      "Duration",
     ]);
   });
 
-  it("verify Dropdowns on Report Campaign",function(){
-      report.clickReportCampaignsButton()
-      report.VerifyDropdownsReportCampaign([
-        "All Statuses",
-        "All Agents",
-        "Export"
-      ]);
+  it("verify Dropdowns on Report Campaign", function () {
+    report.clickReportCampaignsButton();
+    report.VerifyDropdownsReportCampaign([
+      "All Statuses",
+      "All Agents",
+      "Export",
+    ]);
   });
 
-  it("verify table header elements of Report Campaign page",function(){
-      report.verifyReportTableHeaderElements(["Campaign","Status","Dials","Answered","NA","Agents","Contacts","Completed "])
+  it("verify table header elements of Report Campaign page", function () {
+    report.verifyReportTableHeaderElements([
+      "Campaign",
+      "Status",
+      "Dials",
+      "Answered",
+      "NA",
+      "Agents",
+      "Contacts",
+      "Completed ",
+    ]);
   });
 
-  it("Verify dropdowns of Report Agent", function(){
-      report.clickAgentButton();
-      report.verifyAgentsDropdowns(["Departments","All Campaigns","Export"]);
+  it("Verify dropdowns of Report Agent", function () {
+    report.clickAgentButton();
+    report.verifyAgentsDropdowns(["Departments", "All Campaigns", "Export"]);
   });
 
   it("verify report table header element for Report Agent", function () {
@@ -128,25 +136,28 @@ describe("Report Page", function () {
       "Calls",
       "Answered",
       "Abandon",
-      "Abandon Rate"
+      "Abandon Rate",
     ]);
   });
 
-  it("Verify dropdowns of Report Number Button",function(){
-      report.clickNumberButton();
-      report.verifyNumbersSearchBox();
-      report.verifyReportNumbersDropdowns(['Destination','Export'])
+  it("Verify dropdowns of Report Number Button", function () {
+    report.clickNumberButton();
+    report.verifyNumbersSearchBox();
+    report.verifyReportNumbersDropdowns(["Destination", "Export"]);
   });
 
   it("verify report table header element for Report Numbers", function () {
-    report.verifyReportTableHeaderElements(["Phone Number","Destination","Inbound","Outbound","Added"]);
+    report.verifyReportTableHeaderElements([
+      "Phone Number",
+      "Destination",
+      "Inbound",
+      "Outbound",
+      "Added",
+    ]);
   });
 
-  it("Verify Functionality of search Button and Designation Dropdown",function(){
-      report.searchNumber("9283662830");
-      report.verifySearchedNumber("Sandeep Kumar");
+  it("Verify Functionality of search Button and Designation Dropdown", function () {
+    report.searchNumber("9283662830");
+    report.verifySearchedNumber("Sandeep Kumar");
   });
-
-
-
 });
