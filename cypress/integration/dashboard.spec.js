@@ -46,44 +46,61 @@ describe('Dashboard Elements', function () {
     Dash.clickContinue();
   });
 
-  it('Verify functionality of Dialer button',function(){
+  it('Verify functionality of Dialer button', function () {
     Dash.clickDialer();
     Dash.verifyDialPad();
   });
 
-  it.skip('Verify user is able to make call using dialer button',() =>{
-    Dash.dialNumber()
-    Dash.clickCallButton()
+  it.skip('Verify user is able to make call using dialer button', () => {
+    Dash.dialNumber();
+    Dash.clickCallButton();
     Dash.verifyCallStarted();
     Dash.clickCallButton();
     Dash.clickAnsweringMachine();
     Dash.clickContinue();
-  })
+  });
 
-  it("Verify Task Button Functionality",() =>{
+  it('Verify Task Button Functionality', () => {
     Dash.clickTaskButton();
     Dash.verifyTask();
   });
 
-  it("Verify on click user profile show options",() =>{
+  it('Verify on click user profile show options', () => {
     Dash.clickUserProfile();
     Dash.verifyUserProfileOptions();
     Dash.clickUserProfile();
-  })
-
-  it("Verify User setting option should show these options",() =>{
-    Dash.clickUserProfile();
-    Dash.clickSettingsButton();
-    Dash.verifyUserSettingOptions(["Profile","Billing","Address Book","Voicemail","Integrations","Lead Score","Agent Scripts","Audio Library"]);
   });
 
-  it("Verify User Setting Profile Elements",() =>{
-    Dash.verifyUserSettingsProfileFields(["firstname","lastname","email","address","city","zip","phone","phone2"]);
+  it('Verify User setting option should show these options', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.verifyUserSettingOptions([
+      'Profile',
+      'Billing',
+      'Address Book',
+      'Voicemail',
+      'Integrations',
+      'Lead Score',
+      'Agent Scripts',
+      'Audio Library',
+    ]);
+  });
+
+  it('Verify User Setting Profile Elements', () => {
+    Dash.verifyUserSettingsProfileFields([
+      'firstname',
+      'lastname',
+      'email',
+      'address',
+      'city',
+      'zip',
+      'phone',
+      'phone2',
+    ]);
     Dash.verifyProfileState();
     Dash.verifyProfileTimeZone();
     Dash.verifyProfilePasswordChangeButton();
     Dash.verifyProfileAgentFeaturesEnable();
     Dash.verifyProfileAgentFeaturesDisable();
-  })
-
+  });
 });

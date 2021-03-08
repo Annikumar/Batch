@@ -193,10 +193,9 @@ describe('Add Contact flow', () => {
     addCont.clickOnContactName('Automation', 'Contact');
     addCont.clickPhoneNumber();
     addCont.clickCallBtn();
-    cy.wait(5000);
     addCont.verifyCallStarted();
     addCont.clickEndCallBtn();
-    addCont.selectCallResult('Busy');
-    addCont.clickContinueBtn();
+    // addCont.selectCallResult('Busy');
+    // addCont.clickContinueBtn();
   });
 });

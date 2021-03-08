@@ -181,9 +181,12 @@ export default class PhoneNum {
     return await promisify(
       cy
         .get(firstNum, { timeout: 30000 })
-        .first()
+        .first({ timeout: 30000 })
         .then((el) => {
-          return el.text().trim();
+          return el.get(0).innerText;
+          // if (el.is(':visible')) {
+          //   return el.text().trim();
+          // }
         })
     );
   }
