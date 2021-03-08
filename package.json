@@ -4,17 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:report": "generate-mochawesome-report",
+    "cy:run": "cypress run --reporter mocha-allure-reporter",
+    "report:allure": "allure generate allure-results --clean -o allure-report && allure open allure-report",
+    "test:run": "npm run cy:run && npm run report:allure"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^6.5.0"
+    "cypress": "^6.5.0",
+    "cypress-mochawesome-reporter": "^1.3.0"
   },
   "dependencies": {
     "cypress-file-upload": "^5.0.2",
     "cypress-promise": "^1.1.0",
-    "cypress-xpath": "^1.6.2"
+    "cypress-xpath": "^1.6.2",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-screenshots": "^1.7.3"
   }
 }

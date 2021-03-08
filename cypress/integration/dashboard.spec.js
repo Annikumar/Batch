@@ -46,47 +46,65 @@ describe('Dashboard Elements', function () {
     Dash.clickContinue();
   });
 
-  it('Verify functionality of Dialer button',function(){
+  it('Verify functionality of Dialer button', function () {
     Dash.clickDialer();
     Dash.verifyDialPad();
   });
 
-  it.skip('Verify user is able to make call using dialer button',() =>{
-    Dash.dialNumber()
-    Dash.clickCallButton()
+  it.skip('Verify user is able to make call using dialer button', () => {
+    Dash.dialNumber();
+    Dash.clickCallButton();
     Dash.verifyCallStarted();
     Dash.clickCallButton();
     Dash.clickAnsweringMachine();
     Dash.clickContinue();
-  })
+  });
 
-  it("Verify Task Button Functionality",() =>{
+  it('Verify Task Button Functionality', () => {
     Dash.clickTaskButton();
     Dash.verifyTask();
   });
 
-  it("Verify on click user profile show options",() =>{
+  it('Verify on click user profile show options', () => {
     Dash.clickUserProfile();
     Dash.verifyUserProfileOptions();
     Dash.clickUserProfile();
-  })
-
-  it("Verify User setting option should show these options",() =>{
-    Dash.clickUserProfile();
-    Dash.clickSettingsButton();
-    Dash.verifyUserSettingOptions(["Profile","Billing","Address Book","Voicemail","Integrations","Lead Score","Agent Scripts","Audio Library"]);
   });
 
-  it("Verify User Setting Profile Elements",() =>{
-    Dash.verifyUserSettingsProfileFields(["firstname","lastname","email","address","city","zip","phone","phone2"]);
+  it('Verify User setting option should show these options', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.verifyUserSettingOptions([
+      'Profile',
+      'Billing',
+      'Address Book',
+      'Voicemail',
+      'Integrations',
+      'Lead Score',
+      'Agent Scripts',
+      'Audio Library',
+    ]);
+  });
+
+  it('Verify User Setting Profile Elements', () => {
+    Dash.verifyUserSettingsProfileFields([
+      'firstname',
+      'lastname',
+      'email',
+      'address',
+      'city',
+      'zip',
+      'phone',
+      'phone2',
+    ]);
     Dash.verifyProfileState();
     Dash.verifyProfileTimeZone();
     Dash.verifyProfilePasswordChangeButton();
     Dash.verifyProfileAgentFeaturesEnable();
     Dash.verifyProfileAgentFeaturesDisable();
-  })
+  });
 
-  it("Verify User settings Billing Elements",() =>{
+  it('Verify User settings Billing Elements', () => {
     Dash.clickBilling();
     Dash.verifyBillingSingleLineDialer();
     Dash.verifyBillingMultipleLineDialer();
@@ -98,41 +116,50 @@ describe('Dashboard Elements', function () {
     Dash.verifyInvoice();
   });
 
-  it("Verify User settings Address Boook elements",() =>{
+  it('Verify User settings Address Boook elements', () => {
     Dash.clickAddressBook();
     Dash.verifyAddressBookingHeading();
     Dash.verifyAddressBookNewContactButton();
-    Dash.verifyAddressBookTableHeaderElement(["Name","Description","Phone Number","Created"]);
+    Dash.verifyAddressBookTableHeaderElement([
+      'Name',
+      'Description',
+      'Phone Number',
+      'Created',
+    ]);
   });
 
-  it("Verify User Setting Voicemail Elements",() =>{
+  it('Verify User Setting Voicemail Elements', () => {
     Dash.clickVoicemail();
     Dash.verifyVoicemailHeading();
     Dash.verifyNewMailButton();
-    Dash.verifyVoicemailTableHeading(["Name","Email","Recording","Created"]);
-  })
+    Dash.verifyVoicemailTableHeading(['Name', 'Email', 'Recording', 'Created']);
+  });
 
-  it("Verify User Setting Lead Score elements",() =>{
+  it('Verify User Setting Lead Score elements', () => {
     Dash.clickLeadScore();
     Dash.verifyLeadScoreHeading();
     Dash.verifyLeadScoringTable();
     Dash.verifyNewRulerButton();
     Dash.verifyLeadScoreExample();
-  })
+  });
 
-  it("Verify User Setting Agent Scripts Elements",() =>{
+  it('Verify User Setting Agent Scripts Elements', () => {
     Dash.clickAgentScripts();
     Dash.verifyAgentScriptHeading();
     Dash.verifyNewAgentScriptButton();
-    Dash.verifyAgentScriptTableHeading(["Script Name","Created"]);
+    Dash.verifyAgentScriptTableHeading(['Script Name', 'Created']);
   });
 
-  it("Verify User Setting Audio Library Elements",() =>{
+  it('Verify User Setting Audio Library Elements', () => {
     Dash.clickAudioLibrary();
     Dash.verifyAudioLibraryNewRecording();
     Dash.verifyAudioLibrarySearchBox();
-    Dash.verifyAudioLibraryTableHeading(["Recording Name","File Name","Audio Type","Created"]);
+    Dash.verifyAudioLibraryTableHeading([
+      'Recording Name',
+      'File Name',
+      'Audio Type',
+      'Created',
+    ]);
     Dash.verifyAudioLibraryRecordings();
   });
-
 });

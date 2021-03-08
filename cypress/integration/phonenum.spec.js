@@ -30,8 +30,7 @@ describe('Add Phone Number flow', () => {
   it('Should Buy Phone number successfully ', async () => {
     addNum.clickPhoneNumberMenu();
     addNum.clickBuyDidButton();
-    addNum.selectStateModeOption('Arizona');
-    cy.log(fixtureData.randNum);
+    addNum.selectStateModeOption('Colorado');
     addNum.clickSearchButton();
     addNum.verifysearchStartedToast();
     addNum.selectPhoneNumber();
@@ -279,5 +278,12 @@ describe('Add Phone Number flow', () => {
     addNum.chooseActiveInactive('Active');
     addNum.selectCallResultCampaignDropdown('FirstCampaign');
     addNum.clickCallResultSaveBtn();
+  });
+
+  it('Delete Added Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickCallResultDeleteBtn('DemoTesting');
+    addNum.verifyCallResultDelete('DemoTesting');
   });
 });

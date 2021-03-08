@@ -7,22 +7,47 @@ const logoutBtn = 'a[href*="logout"]';
 
 export default class Login {
   enterEmailtoSignin(email) {
+    // cy.get('body').then(($body) => {
+    //   if ($body.find(emailInputField).length) {
+    //     cy.get(emailInputField).type(email);
+    //   }
+    // });
     cy.get(emailInputField).type(email);
   }
 
   enterPasswordToSignin(pswd) {
+    // cy.get('body').then(($body) => {
+    //   if ($body.find(passwordInputField).length) {
+    //     cy.get(passwordInputField).type(pswd);
+    //   }
+    // });
     cy.get(passwordInputField).type(pswd);
   }
 
   clickTermsCheckBox() {
+    // cy.get('body').then(($body) => {
+    //   if ($body.find(termsCheckBox).length) {
+    //     cy.get(termsCheckBox).check();
+    //   }
+    // });
     cy.get(termsCheckBox).check();
   }
 
   clickSigninButton() {
+    // cy.get('body').then(($body) => {
+    //   if ($body.find(signinButton).length) {
+    //     cy.get(signinButton).click();
+    //   }
+    // });
     cy.get(signinButton).click();
   }
 
   verifySuccessfullLogin() {
+    // cy.get('body').then(($body) => {
+    //   if ($body.find(dashboardProfilePic).length) {
+    //     cy.get(dashboardProfilePic, { timeout: 10000 }).should('be.visible');
+    //   }
+    // });
     cy.get(dashboardProfilePic, { timeout: 10000 }).should('be.visible');
   }
 

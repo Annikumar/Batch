@@ -187,4 +187,15 @@ describe('Add Contact flow', () => {
     addCont.handleAlertForDelete();
     addCont.verifyDeletedToast();
   });
+
+  it('Dial a Contact Number', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickOnContactName('Automation', 'Contact');
+    addCont.clickPhoneNumber();
+    addCont.clickCallBtn();
+    addCont.verifyCallStarted();
+    addCont.clickEndCallBtn();
+    // addCont.selectCallResult('Busy');
+    // addCont.clickContinueBtn();
+  });
 });
