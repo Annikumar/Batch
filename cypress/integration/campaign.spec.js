@@ -71,7 +71,7 @@ describe('Add Campaign flow', () => {
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId('2830');
+    addCamp.selectCallerId('2821');
     addCamp.selectCallResultsOption('Answering Machine');
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Sandeep Kumar');
@@ -122,7 +122,7 @@ describe('Add Campaign flow', () => {
     addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
     addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId('2830');
+    addCamp.selectCallerId('2821');
     addCamp.selectCallResultsOption('Busy');
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Sandeep Kumar');

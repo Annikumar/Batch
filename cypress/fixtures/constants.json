@@ -1,1 +1,13 @@
-{"url":"https://qa.int.batchdialer.com/","username":"sandeep@fleekitsolutions.com","password":"Fleek@2016","userFirstname":"automation","userLastname":"testing","userEmail":"automation@email.com","userPassword":"Password1","contactEmail":"automation-contact@email.com","contactLastname":"contact","campaignName":"automationCampaign","randNum":12464}
+{
+  "url": "https://qa.int.batchdialer.com/",
+  "username": "sandeep@fleekitsolutions.com",
+  "password": "Fleek@2016",
+  "userFirstname": "demo",
+  "userLastname": "testing",
+  "userEmail": "automation@email.com",
+  "userPassword": "Password1",
+  "contactEmail": "automation-contact@email.com",
+  "contactLastname": "contact",
+  "campaignName": "automationCampaign",
+  "randNum": 26718
+}
