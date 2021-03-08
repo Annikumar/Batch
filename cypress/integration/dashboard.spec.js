@@ -86,4 +86,53 @@ describe('Dashboard Elements', function () {
     Dash.verifyProfileAgentFeaturesDisable();
   })
 
+  it("Verify User settings Billing Elements",() =>{
+    Dash.clickBilling();
+    Dash.verifyBillingSingleLineDialer();
+    Dash.verifyBillingMultipleLineDialer();
+    Dash.verifyUsageStatus();
+    Dash.verifyPaymentMethod();
+    Dash.verifyBillingAddress();
+    Dash.verifyPauseAccount();
+    Dash.verifyCancelAccount();
+    Dash.verifyInvoice();
+  });
+
+  it("Verify User settings Address Boook elements",() =>{
+    Dash.clickAddressBook();
+    Dash.verifyAddressBookingHeading();
+    Dash.verifyAddressBookNewContactButton();
+    Dash.verifyAddressBookTableHeaderElement(["Name","Description","Phone Number","Created"]);
+  });
+
+  it("Verify User Setting Voicemail Elements",() =>{
+    Dash.clickVoicemail();
+    Dash.verifyVoicemailHeading();
+    Dash.verifyNewMailButton();
+    Dash.verifyVoicemailTableHeading(["Name","Email","Recording","Created"]);
+  })
+
+  it("Verify User Setting Lead Score elements",() =>{
+    Dash.clickLeadScore();
+    Dash.verifyLeadScoreHeading();
+    Dash.verifyLeadScoringTable();
+    Dash.verifyNewRulerButton();
+    Dash.verifyLeadScoreExample();
+  })
+
+  it("Verify User Setting Agent Scripts Elements",() =>{
+    Dash.clickAgentScripts();
+    Dash.verifyAgentScriptHeading();
+    Dash.verifyNewAgentScriptButton();
+    Dash.verifyAgentScriptTableHeading(["Script Name","Created"]);
+  });
+
+  it("Verify User Setting Audio Library Elements",() =>{
+    Dash.clickAudioLibrary();
+    Dash.verifyAudioLibraryNewRecording();
+    Dash.verifyAudioLibrarySearchBox();
+    Dash.verifyAudioLibraryTableHeading(["Recording Name","File Name","Audio Type","Created"]);
+    Dash.verifyAudioLibraryRecordings();
+  });
+
 });

@@ -38,6 +38,36 @@ const ProfileTimezone = "//div[label[text()='Timezone']]/div"
 const ProfilePasswordChangeButton = "//div[label[text()='Password']]/button"
 const ProfileAgentFeaturesEnable = "//div[label[text()='Agent Features']]//label[text()='Enable']"
 const ProfileAgentFeaturesDisable = "//div[label[text()='Agent Features']]//label[text()='Disable']"
+const BillingSingleLineDialer = "//div[text()='Single Line Dialer']"
+const BillingMultiLineDialer = "//div[text()='Multi-Line Dialer']"
+const BillingUsageStatus = "//div[text()='Usage Stats']"
+const BillingPaymentMethods = "//div[text()='Payment Methods']"
+const BillingAddress = "//div[text()='Billing Address']"
+const BillingPauseAccount = "//button[text()='Pause Account']"
+const BillingCancelAccount = "//button[text()='Cancel Account']"
+const BillingInvoicing = ".profile-invoices1"
+const AddressBookHeading = "//label[text()='Address Book']"
+const AddressBookNewContact = ".addnew"
+const tableHeaderElement = ".table thead"
+const VoicemailHeading = "//label[text()='Voicemail']"
+const NewMailbox = ".addnew"
+const VoicemailTableHeader = ".voicemail thead"
+const LeadScoringHeading = "//label[text()='Lead Scoring']"
+const Ticks = ".ticks"
+const Ruler = ".ruler"
+const title = ".titles"
+const newRuleButton = "//button[text()='ADD NEW RULE']"
+const leadScoreExample = ".profile-right"
+const AgentScriptHeading = "//label[text()='Agent Scripts']"
+const NewAgentScriptButton = ".addnew"
+const AgentScriptTableHeading = ".table thead"
+const AudioLibraryNewRecording = "//button[contains(text(),'Add New Recording')]"
+const AudioLibrarySearchBox = ".search-box-wrapper"
+const AudioLibraryTableHeading = ".recordings  thead"
+const AudioLibraryRecordings = ".recordings  tbody"
+
+
+
 
 
 export default class Dashboard{
@@ -173,6 +203,136 @@ export default class Dashboard{
 
     verifyProfileAgentFeaturesDisable(){
         cy.xpath(ProfileAgentFeaturesDisable).should("be.visible");
+    }
+
+    verifyBillingSingleLineDialer(){
+        cy.xpath(BillingSingleLineDialer).should("be.visible")
+    }
+
+    verifyBillingMultipleLineDialer(){
+        cy.xpath(BillingMultiLineDialer).should("be.visible");
+    }
+
+    verifyUsageStatus(){
+        cy.xpath(BillingUsageStatus).should("be.visible");
+    }
+
+    verifyPaymentMethod(){
+        cy.xpath(BillingPaymentMethods).should("be.visible");
+    }
+
+    verifyBillingAddress(){
+        cy.xpath(BillingAddress).should("be.visible");
+    }
+
+    verifyPauseAccount(){
+        cy.xpath(BillingPauseAccount).should("be.visible");
+    }
+
+    verifyCancelAccount(){
+        cy.xpath(BillingCancelAccount).should("be.visible");
+    }
+
+    verifyInvoice(){
+        cy.get(BillingInvoicing).should("be.visible");
+    }
+    
+    verifyAddressBookingHeading(){
+        cy.xpath(AddressBookHeading).should("be.visible");
+    }
+    
+    verifyAddressBookNewContactButton(){
+        cy.get(AddressBookNewContact).should("be.visible");
+    }
+
+    verifyAddressBookTableHeaderElement(element){
+        for(let i=0;i<element.length;i++){
+            cy.get(tableHeaderElement).should("contain.text", element[i])
+        }
+    }
+
+    clickAddressBook(){
+        cy.get(UserSettingOptions).contains("Address Book").click();
+    }
+
+    verifyVoicemailHeading(){
+        cy.xpath(VoicemailHeading).should("be.visible");
+    }
+
+    verifyNewMailButton(){
+        cy.get(NewMailbox).should("be.visible");
+    }
+
+    verifyVoicemailTableHeading(element){
+        for(let i=0;i<element.length;i++){
+            cy.get(VoicemailTableHeader).should("contain.text",element[i])
+        }
+    }
+
+    clickVoicemail(){
+        cy.get(UserSettingOptions).contains("Voicemail").click();
+    }
+
+    verifyLeadScoreHeading(){
+        cy.xpath(LeadScoringHeading).should("be.visible")
+    }
+
+    verifyLeadScoringTable(){
+        cy.get(Ticks).should("be.visible");
+        cy.get(Ruler).should("be.visible");
+        cy.get(title).should("be.visible");
+    }
+
+    verifyNewRulerButton(){
+        cy.xpath(newRuleButton).should("be.visible");
+    }
+
+    verifyLeadScoreExample(){
+        cy.get(leadScoreExample).should("be.visible");
+    }
+
+    clickLeadScore(){
+        cy.get(UserSettingOptions).contains("Lead Score").click();
+    }
+
+    verifyAgentScriptHeading(){
+        cy.xpath(AgentScriptHeading).should("be.visible");
+    }
+
+    verifyNewAgentScriptButton(){
+        cy.get(NewAgentScriptButton).should("be.visible")
+    }
+
+    verifyAgentScriptTableHeading(element){
+        for(let i=0;i<element.length;i++){
+            cy.get(AgentScriptTableHeading).should("contain.text",element[i])
+        }
+    }
+
+    clickAgentScripts(){
+        cy.get(UserSettingOptions).contains("Agent Scripts").click();
+    }
+
+    verifyAudioLibraryNewRecording(){
+        cy.xpath(AudioLibraryNewRecording).should("be.visible");
+    }
+
+    verifyAudioLibrarySearchBox(){
+        cy.get(AudioLibrarySearchBox).should("be.visible");
+    }
+
+    verifyAudioLibraryTableHeading(element){
+        for(let i=0;i<element.length;i++){
+            cy.get(AudioLibraryTableHeading).should("contain.text",element[i])
+        }
+    }
+
+    verifyAudioLibraryRecordings(){
+        cy.get(AudioLibraryRecordings).should("be.visible");
+    }
+
+    clickAudioLibrary(){
+        cy.get(UserSettingOptions).contains("Audio Library").click();
     }
 
 }
