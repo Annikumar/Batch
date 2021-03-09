@@ -234,4 +234,15 @@ describe('Add Campaign flow', () => {
     addCamp.verifyRecSaveCampaignButton();
     addCamp.verifyCancelButton();
   });
+
+  it.skip('It show show Alert when No Phone Number is Purchases', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.verifyAlert();
+  });
+
+  it('On click on campaign name it should open edit campaign page', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickCampaignName('FirstCampaign');
+    addCamp.verifyCampaignNameField();
+  });
 });

@@ -198,4 +198,20 @@ describe('Add Contact flow', () => {
     // addCont.selectCallResult('Busy');
     // addCont.clickContinueBtn();
   });
+
+  it('Verify Dialed/Undialed Radio Button Functionality', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickDialedUndialedButton('Dialed');
+    addCont.verifyContact('Testing', 'User', 'not.exist');
+    addCont.verifyContact('Automation', 'Contact', 'be.visible');
+    addCont.clickDialedUndialedButton('Undialed');
+    addCont.verifyContact('Testing', 'User', 'be.visible');
+    addCont.verifyContact('Automation', 'Contact', 'not.exist');
+  });
+
+  it('Select List from Dropdown', () => {
+    addCont.clickListDropdown();
+    addCont.clickTesting();
+    addCont.verifyContact('New', 'User', 'be.visible');
+  });
 });

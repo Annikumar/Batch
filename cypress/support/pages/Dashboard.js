@@ -40,6 +40,34 @@ const ProfileAgentFeaturesEnable =
   "//div[label[text()='Agent Features']]//label[text()='Enable']";
 const ProfileAgentFeaturesDisable =
   "//div[label[text()='Agent Features']]//label[text()='Disable']";
+const BillingSingleLineDialer = "//div[text()='Single Line Dialer']";
+const BillingMultiLineDialer = "//div[text()='Multi-Line Dialer']";
+const BillingUsageStatus = "//div[text()='Usage Stats']";
+const BillingPaymentMethods = "//div[text()='Payment Methods']";
+const BillingAddress = "//div[text()='Billing Address']";
+const BillingPauseAccount = "//button[text()='Pause Account']";
+const BillingCancelAccount = "//button[text()='Cancel Account']";
+const BillingInvoicing = '.profile-invoices1';
+const AddressBookHeading = "//label[text()='Address Book']";
+const AddressBookNewContact = '.addnew';
+const tableHeaderElement = '.table thead';
+const VoicemailHeading = "//label[text()='Voicemail']";
+const NewMailbox = '.addnew';
+const VoicemailTableHeader = '.voicemail thead';
+const LeadScoringHeading = "//label[text()='Lead Scoring']";
+const Ticks = '.ticks';
+const Ruler = '.ruler';
+const title = '.titles';
+const newRuleButton = "//button[text()='ADD NEW RULE']";
+const leadScoreExample = '.profile-right';
+const AgentScriptHeading = "//label[text()='Agent Scripts']";
+const NewAgentScriptButton = '.addnew';
+const AgentScriptTableHeading = '.table thead';
+const AudioLibraryNewRecording =
+  "//button[contains(text(),'Add New Recording')]";
+const AudioLibrarySearchBox = '.search-box-wrapper';
+const AudioLibraryTableHeading = '.recordings  thead';
+const AudioLibraryRecordings = '.recordings  tbody';
 
 export default class Dashboard {
   clickDashboard() {

@@ -79,7 +79,7 @@ const importContactSelectCompaignDropdown =
   '//div[span[text()="Select Campaign"]]';
 const importContactOptionsCheckbox = '.radio_cstm';
 const tableBody = '.table tbody';
-
+const DialedRadioButton = '//label[text()="Dialed"/span';
 export default class Contacts {
   clickingOnContactOption() {
     cy.get(contactsMenu).click({ force: true });
@@ -390,5 +390,23 @@ export default class Contacts {
 
   verifySearchResult(result) {
     cy.get(tableBody).should('contain.text', result);
+  }
+
+  clickDialedUndialedButton(button) {
+    cy.xpath("//label[text()='" + button + "']/span").click();
+  }
+
+  verifyContact(firstname, lastname, status) {
+    cy.xpath(
+      '//span[contains(.,"' + firstname + '")][contains(.,"' + lastname + '")]'
+    ).should(status);
+  }
+
+  clickListDropdown() {
+    cy.xpath(allList).click();
+  }
+  clickTesting() {
+    cy.xpath("//div[text()='testing']").click();
+    cy.wait(2000);
   }
 }

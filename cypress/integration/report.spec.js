@@ -3,9 +3,9 @@ import Report from '../support/pages/Report';
 const report = new Report();
 let fixtureData;
 
-describe("Report Page", function () {
+describe('Report Page', function () {
   before(() => {
-    cy.fixture("constants")
+    cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
@@ -22,35 +22,35 @@ describe("Report Page", function () {
     cy.Logout();
   });
 
-  it("Should Login", () => {
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it("verify report header element", function () {
+  it('verify report header element', function () {
     report.clickReportMenu();
     report.reportHeaderElement([
-      "Live",
-      "Recent Contacts",
-      "Campaigns",
-      "Agents",
-      "Numbers",
+      'Live',
+      'Recent Contacts',
+      'Campaigns',
+      'Agents',
+      'Numbers',
     ]);
   });
 
-  it("verify report live elements", function () {
+  it('verify report live elements', function () {
     report.verifyReportLiveElements([
-      "Talking Time",
-      "Active Calls",
-      "Active Campaigns",
-      "Missed Calls",
-      "Abandoned Calls",
-      "Remaining Redials",
-      "Online Agents",
-      "Remaining Leads",
-      "In Queue",
-      "Paused Agents",
-      "Dialing Ratio",
-      "Avgerage Agent Wait Time",
+      'Talking Time',
+      'Active Calls',
+      'Active Campaigns',
+      'Missed Calls',
+      'Abandoned Calls',
+      'Remaining Redials',
+      'Online Agents',
+      'Remaining Leads',
+      'In Queue',
+      'Paused Agents',
+      'Dialing Ratio',
+      'Avgerage Agent Wait Time',
     ]);
   });
 
@@ -65,7 +65,7 @@ describe("Report Page", function () {
     ]);
   });
 
-  it("Verify dropdowns of Report contacts", function () {
+  it('Verify dropdowns of Report contacts', function () {
     report.clickRecentContactButton();
     report.verifyRecentContactsDropdown([
       'Inbound+Outbound',
@@ -100,7 +100,7 @@ describe("Report Page", function () {
     ]);
   });
 
-  it("verify report table header element for Report Contact", function () {
+  it('verify report table header element for Report Contact', function () {
     report.verifyReportTableHeaderElements([
       'Campaign',
       'Status',
@@ -140,7 +140,7 @@ describe("Report Page", function () {
     ]);
   });
 
-  it("verify report table header element for Report Agent", function () {
+  it('verify report table header element for Report Agent', function () {
     report.verifyReportTableHeaderElements([
       'Phone Number',
       'Destination',
