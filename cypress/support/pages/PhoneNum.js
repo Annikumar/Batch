@@ -89,10 +89,133 @@ const customRadioBtn = (x) =>
   "//label[@class='radio_cstm'][contains(.,'" + x + "')]";
 const buttonColorBox = '.form-label+.disposition';
 const addNewRuleBtn = '//button[contains(text(),"ADD NEW RULE")]';
+const newRuleOptions = (option) =>
+  "//a[@class='dropdown-item'][text()='" + option + "']";
 const callResultSaveBtn = '//button[contains(text(),"Save")]';
 const callResultCancelBtn = '//button[contains(text(),"Cancel")]';
-
+const callResultDeleteBtn = (callResult) =>
+  "//tr[contains(.,'" + callResult + "')]//img[contains(@src,'delete')]";
+const callResultEditBtn = (callResult) =>
+  "//tr[td[div[text()='" + callResult + "']]]//img[contains(@src,'edit')]";
+const addPhoneGroup = '.card-title img[src*="add"]';
+const destinationDropdown = '.modal-content .ss-select';
+const destinationOptions = (option) =>
+  "//div[contains(@class,'ss-select-option')][text()='" + option + "']";
+const addedPhoneGroup = (group) =>
+  "//div[@class='card-body']//div[contains(@class,'card-item')][contains(.,'" +
+  group +
+  "')]//img[contains(@src,'delete')]";
+const uploadFile = 'input[type="file"]';
+const uploadBtn =
+  "//div[contains(@class,'dropbox')]//button[contains(text(),'Upload')]";
+const uploadedFile = (fileName) =>
+  "//tr[contains(.,'" + fileName + "')]//img[contains(@src,'delete')]";
+const dncFileDownloadbtn = (fileName) =>
+  "//tr[contains(.,'" + fileName + "')]//img[contains(@src,'download')]";
+const dncUploadSearchBox =
+  "//div[text()='DNC File Upload']/following-sibling::div//input[contains(@class,'search-box')]";
+const callresultDropdown =
+  'div[class="collapse show"] .row-calldisposition .ss-select';
+const deleteRuleBtn = (rule) =>
+  "//div[@class='rule'][contains(.,'" +
+  rule +
+  "')]//img[contains(@src,'delete')]";
 export default class PhoneNum {
+  clickCallResultDeleteBtn(callResult) {
+    cy.xpath(callResultDeleteBtn(callResult)).click();
+  }
+
+  verifyCreatedCallResult(callResult) {
+    cy.get(callresultDropdown).click();
+    cy.contains(callResult).should('be.visible');
+  }
+
+  clickCallResultEditBtn(callResult) {
+    cy.xpath(callResultEditBtn(callResult)).click();
+  }
+
+  verifyCallResultDelete(callResult) {
+    cy.xpath(callResultEditBtn(callResult)).should('not.exist');
+  }
+
+  enterSearchKeyword(search) {
+    cy.get(searchBox).type(search);
+  }
+
+  clickAddNewRuleBtn() {
+    cy.xpath(addNewBtn).click();
+  }
+
+  selectRule(option) {
+    cy.xpath(newRuleOptions(option)).click();
+  }
+
+  clickDeleteRuleBtn(rule) {
+    cy.xpath(deleteRuleBtn(rule)).click();
+  }
+
+  verifySearchResults(callResult) {
+    cy.xpath(callResultEditBtn(callResult)).should('be.visible');
+  }
+
+  clickAddPhoneGroup() {
+    cy.get(addPhoneGroup).click({ force: true });
+  }
+
+  SelectDestination(destination) {
+    cy.get(destinationDropdown).click();
+    cy.wait(1000);
+    cy.xpath(destinationOptions(destination)).click();
+  }
+
+  verifyDestinationDropdown() {
+    cy.get(destinationDropdown).should('be.visible');
+  }
+
+  verifyAddedPhoneGroup(group) {
+    cy.xpath(addedPhoneGroup(group)).should('be.visible');
+  }
+
+  clickDeletePhoneGroup(group) {
+    cy.xpath(addedPhoneGroup(group)).click();
+  }
+
+  clickUploadFileBtn() {
+    cy.xpath(uploadFileBtn).click();
+  }
+
+  uploadDncFile(file) {
+    cy.get(uploadFile).attachFile(file);
+  }
+
+  clickUploadBtn() {
+    cy.xpath(uploadBtn).click();
+  }
+
+  clickCloseBtn() {
+    cy.xpath(closeBtn, { timeout: 5000 }).click();
+  }
+
+  verifyUploadDncFile(fileName) {
+    cy.xpath(uploadedFile(fileName)).should('be.visible');
+  }
+
+  verifyDncFileDownloadBtn(fileName) {
+    cy.xpath(dncFileDownloadbtn(fileName)).should('be.visible');
+  }
+
+  clickDeleteDncFile(fileName) {
+    cy.xpath(uploadedFile(fileName)).click();
+  }
+
+  enterFileNameToSearch(search) {
+    cy.xpath(dncUploadSearchBox).type(search);
+  }
+
+  verifySearchResult(result) {
+    cy.xpath(uploadedFile(result)).should('be.visible');
+  }
+
   chooseActiveInactive(choice) {
     cy.xpath(customRadioBtn(choice)).click();
   }
@@ -554,5 +677,12 @@ export default class PhoneNum {
 
   clickCallResultMenu() {
     cy.get(callResultMenu).click({ force: true });
+  }
+
+  handleDeleteAlert(text) {
+    cy.on('	window:alert', (str) => {
+      expect(str).to.equal(text);
+    });
+    cy.on('window:confirm', () => true);
   }
 }

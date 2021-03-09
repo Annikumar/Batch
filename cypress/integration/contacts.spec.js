@@ -188,7 +188,7 @@ describe('Add Contact flow', () => {
     addCont.verifyDeletedToast();
   });
 
-  it('Dial a Contact Number', () => {
+  it.skip('Dial a Contact Number', () => {
     addCont.clickingOnContactOption();
     addCont.clickOnContactName('Automation', 'Contact');
     addCont.clickPhoneNumber();

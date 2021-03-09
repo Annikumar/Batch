@@ -1,3 +1,4 @@
+import Campaign from '../support/pages/Campaigns';
 import PhoneNum from '../support/pages/PhoneNum';
 
 let fixtureData;
@@ -87,7 +88,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber('2830');
+    addNum.selectNumber('2821');
     addNum.clickAddNewWelcomePrompt();
     addNum.clickTextToSpeech();
     addNum.enterRecordingName('Test' + randNum.toString());
@@ -140,7 +141,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('demo testing');
     addNum.enterDescription('testing');
     addNum.selectExtensionDropdown('Select Numbers', '0160');
-    addNum.selectAssignAgent('Agents', 'anil');
+    addNum.selectAssignAgent('Agents', 'Sandeep');
     addNum.selectAssignCampaignDropdown('Select Campaign', 'FirstCampaign');
     addNum.clickCreateQueueBtn();
     addNum.verifySaved();
@@ -278,12 +279,140 @@ describe('Add Phone Number flow', () => {
     addNum.chooseActiveInactive('Active');
     addNum.selectCallResultCampaignDropdown('FirstCampaign');
     addNum.clickCallResultSaveBtn();
+    cy.wait(3000);
+  });
+
+  it('Search the Call Results', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.enterSearchKeyword('Busy');
+    addNum.verifySearchResults('Busy');
+  });
+
+  it('Should Edit the existing Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickCallResultEditBtn('Busy');
+    addNum.verifyCallResultSaveBtn();
+    addNum.clickCallResultSaveBtn();
+    cy.wait(2000);
+  });
+
+  it.skip('Should Delete the existing Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickCallResultDeleteBtn('Busy');
+    addNum.handleDeleteAlert('Delete call result?');
+    addNum.verifyCallResultDelete('Busy');
+  });
+
+  it('Verify that the created call results is reflected in the create new campaign page Call Result', () => {
+    const addCamp = new Campaign();
+    addCamp.clickCampaignMenu();
+    cy.wait(3000);
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.clickNextCircleArrow();
+    addNum.verifyCreatedCallResult('DemoTesting');
+  });
+
+  it('Add New Rule while Creating Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickAddNewCallResultBtn();
+    addNum.enterName('Testing');
+    addNum.chooseShowOnNewCampaignPage('Yes');
+    addNum.chooseActiveInactive('Active');
+    addNum.selectCallResultCampaignDropdown('FirstCampaign');
+    addNum.clickAddNewRuleBtn();
+    addNum.selectRule('Schedule a Callback');
+    addNum.clickCallResultSaveBtn();
+    cy.wait(3000);
+  });
+
+  it('Remove the added New Rule from Call Result', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickCallResultEditBtn('Testing');
+    addNum.clickDeleteRuleBtn('Schedule a callback');
+    addNum.clickCallResultSaveBtn();
   });
 
   it('Delete Added Call Result', () => {
+    cy.wait(1000);
     addNum.clickPhoneNumberMenu();
     addNum.clickCallResultMenu();
     addNum.clickCallResultDeleteBtn('DemoTesting');
+    addNum.handleDeleteAlert('Delete call result?');
+    cy.wait(2000);
+    addNum.clickCallResultDeleteBtn('Testing');
+    addNum.handleDeleteAlert('Delete call result?');
     addNum.verifyCallResultDelete('DemoTesting');
+    addNum.verifyCallResultDelete('Testing');
+  });
+
+  it('Verifies Number Group Elements', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickAddPhoneGroup();
+    addNum.verifyNameField();
+    addNum.verifyDestinationDropdown();
+    addNum.verifySaveBtn();
+    addNum.verifyCancelBtn();
+  });
+
+  it('Add a Number Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickAddPhoneGroup();
+    addNum.enterName('DemoTesting');
+    addNum.SelectDestination('Agent');
+    addNum.clickSaveBtn();
+  });
+
+  it('Verifies Added Phone Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.verifyAddedPhoneGroup('DemoTesting');
+  });
+
+  it('Delete Added Phone Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDeletePhoneGroup('DemoTesting');
+    addNum.handleDeleteAlert('Delete?');
+  });
+
+  it('Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.clickUploadFileBtn();
+    addNum.uploadDncFile('contact-sample.csv');
+    addNum.clickUploadBtn();
+    addNum.clickCloseBtn();
+  });
+
+  it('Verifies Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.verifyUploadDncFile('contact-sample.csv');
+  });
+
+  it('Verifies the Search Results', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.enterFileNameToSearch('contact');
+    addNum.verifySearchResult('contact');
+  });
+
+  it('Verifies the File Download Button', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.verifyDncFileDownloadBtn('contact-sample.csv');
+  });
+
+  it('Delete the Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.clickDeleteDncFile('contact-sample.csv');
+    addNum.handleDeleteAlert('Delete?');
   });
 });

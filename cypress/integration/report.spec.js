@@ -141,6 +141,7 @@ describe('Report Page', function () {
   });
 
   it('verify report table header element for Report Agent', function () {
+    report.clickNumberButton();
     report.verifyReportTableHeaderElements([
       'Phone Number',
       'Destination',

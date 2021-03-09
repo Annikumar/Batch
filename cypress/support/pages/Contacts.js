@@ -79,7 +79,7 @@ const importContactSelectCompaignDropdown =
   '//div[span[text()="Select Campaign"]]';
 const importContactOptionsCheckbox = '.radio_cstm';
 const tableBody = '.table tbody';
-const DialedRadioButton = '//label[text()="Dialed"/span';
+
 export default class Contacts {
   clickingOnContactOption() {
     cy.get(contactsMenu).click({ force: true });
