@@ -22,7 +22,7 @@ describe('Add Contact flow', () => {
     cy.Logout();
   });
 
-  it('Should Login', () => {
+  it.only('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -213,5 +213,23 @@ describe('Add Contact flow', () => {
     addCont.clickListDropdown();
     addCont.clickTesting();
     addCont.verifyContact('New', 'User', 'be.visible');
+  });
+
+  it.only('Verify User is able to Add contact to campaign using action button', () => {
+    //addCont.clickLists();
+    addCont.clickingOnContactOption();
+    addCont.clickContactCheckbox(['1', '2', '3']);
+    addCont.clickAction();
+    addCont.clickActionAddToCampaign();
+    addCont.selectCampaignForContact();
+    addCont.clickContinueButton();
+    addCont.verifyAddedCampaign();
+  });
+
+  it.only('Verify List elements of contact', () => {
+    addCont.clickLists();
+    addCont.verifySearchBox();
+    addCont.verifyContactCountSlider();
+    addCont.verifyListImportContactButton();
   });
 });
