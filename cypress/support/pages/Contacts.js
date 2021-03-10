@@ -79,6 +79,17 @@ const importContactSelectCompaignDropdown =
   '//div[span[text()="Select Campaign"]]';
 const importContactOptionsCheckbox = '.radio_cstm';
 const tableBody = '.table tbody';
+const contactCheckbox = (number) =>
+  '(//table[@class="table"]//span[@class="checkmark"])[' + number + ']';
+
+const lists = 'a[title="Lists"]';
+const actionCampaign = '//a[text()="Add to Campaign"]';
+const selectCampaign = '//div[text()="FirstCampaign"]';
+const CampaignDropdown = '.modal-content .ss-select-value';
+const ContinueButton = '//button[text()="Continue"]';
+const toast = '.Toastify__toast-body';
+const contactCountSlider = '.slider-container';
+const listImportContactButton = '//button[text()="IMPORT CONTACTS"]';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -408,5 +419,45 @@ export default class Contacts {
   clickTesting() {
     cy.xpath("//div[text()='testing']").click();
     cy.wait(2000);
+  }
+
+  clickContactCheckbox(number) {
+    cy.wait(3000);
+    for (let i = 0; i < number.length; i++) {
+      cy.xpath(contactCheckbox(number[i])).click();
+    }
+  }
+
+  clickLists() {
+    cy.get(lists).click({ force: true });
+  }
+
+  clickAction() {
+    cy.xpath(actionsDropdown).click();
+  }
+
+  clickActionAddToCampaign() {
+    cy.xpath(actionCampaign).click();
+  }
+
+  selectCampaignForContact() {
+    cy.get(CampaignDropdown).click();
+    cy.xpath(selectCampaign).click();
+  }
+
+  clickContinueButton() {
+    cy.xpath(ContinueButton).click();
+  }
+
+  verifyAddedCampaign() {
+    cy.get(toast).contains('Contacts added to campaign');
+  }
+
+  verifyContactCountSlider() {
+    cy.get(contactCountSlider).should('be.visible');
+  }
+
+  verifyListImportContactButton() {
+    cy.xpath(listImportContactButton).should('be.visible');
   }
 }
