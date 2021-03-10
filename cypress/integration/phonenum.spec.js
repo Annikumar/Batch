@@ -81,6 +81,36 @@ describe('Add Phone Number flow', () => {
     addNum.verifyCancelBtn();
   });
 
+  it('Upload a welcome prompt audio file', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.clickNewIvr();
+    addNum.enterName('Testing' + randNum.toString());
+    addNum.enterDescription('New Ivr');
+    addNum.selectCampaign();
+    addNum.selectNumber('2821');
+    addNum.clickAddNewWelcomePrompt();
+    addNum.uploadFile('preview.mp3');
+    addNum.enterRecordingName('preview' + randNum.toString());
+    addNum.clickRecordingSaveButton();
+    addNum.verifyUploadedWelcomePrompt('preview' + randNum.toString());
+  });
+
+  it('Add a New Digit while creating New IVR', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.clickNewIvr();
+    addNum.clickNewDigitBtn();
+    addNum.clickNewDigitBtn();
+    addNum.verifyAddedNewDigit(1);
+  });
+
+  it('Removes the Added New Digit', () => {
+    addNum.removeAddedNewDigit(1);
+    addNum.removeAddedNewDigit(2);
+    addNum.verifyDeletedDigit();
+  });
+
   it('Should Add New IVR', function () {
     addNum.clickPhoneNumberMenu();
     addNum.clickIvrAttendent();
@@ -385,7 +415,7 @@ describe('Add Phone Number flow', () => {
     addNum.clickPhoneNumberMenu();
     addNum.clickDncMenu();
     addNum.clickUploadFileBtn();
-    addNum.uploadDncFile('contact-sample.csv');
+    addNum.uploadFile('contact-sample.csv');
     addNum.clickUploadBtn();
     addNum.clickCloseBtn();
   });

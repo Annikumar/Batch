@@ -26,6 +26,17 @@ const SecondPhone = 'input[name=phone2]';
 const userTableHeading = '.users thead';
 const userEditButton = "img[src*='icon-edit']";
 const userDeleteButton = "img[src*='icon-delete']";
+const addAgentStatus =
+  "//div[contains(@class,'card-title')][.='Agent Statuses']//img[contains(@src,'add')]";
+const agentStatusName = "tbody input[type='text']";
+const agentStatusSaveBtn = 'button svg[data-icon="save"]';
+const agentStatusRemoveBtn = (status) =>
+  "//tr[td[input[@value='" + status + "']]]//img[contains(@src,'remove')]";
+const agentGroupName = '.modal-body input';
+const agentGroupRemoveBtn = (group) =>
+  "//tr[td[text()='" + group + "']]//img[contains(@src,'remove')]";
+const addAgentGroup =
+  "//div[contains(@class,'card-title')][.='Agent Groups']//img[contains(@src,'add')]";
 
 export default class User {
   clickingOnUserOption() {
@@ -210,5 +221,55 @@ export default class User {
 
   verifyUserDeleteButton() {
     cy.get(userDeleteButton).should('be.visible');
+  }
+
+  clickAddAgentStatus() {
+    cy.xpath(addAgentStatus, { timeout: 5000 }).click();
+  }
+
+  enterAgentStatusName(name) {
+    cy.get(agentStatusName).type(name);
+  }
+
+  clickOnAgentStatusSaveBtn() {
+    cy.get(agentStatusSaveBtn).click();
+  }
+
+  verifyAddedAgentStatus(name) {
+    cy.get(agentStatusName).should('have.value', name);
+  }
+
+  removeAddedAgentStatus(name) {
+    cy.xpath(agentStatusRemoveBtn(name), { timeout: 5000 }).click({
+      force: true,
+    });
+  }
+
+  verifyRemovedAgentStatus() {
+    cy.get(agentStatusName).should('not.exist');
+  }
+
+  enterAgentGroupName(name) {
+    cy.get(agentGroupName).type(name);
+  }
+
+  clickOnAgentGroupSaveBtn() {
+    cy.get(agentStatusSaveBtn).click();
+  }
+
+  verifyAddedAgentGroup(group) {
+    cy.xpath(agentGroupRemoveBtn(group)).should('be.visible');
+  }
+
+  removeAddedAgentGroup(group) {
+    cy.xpath(agentGroupRemoveBtn(group)).click();
+  }
+
+  verifyRemovedAgentGroup(group) {
+    cy.xpath(agentGroupRemoveBtn(group)).should('not.exist');
+  }
+
+  clickAddAgentGroup() {
+    cy.xpath(addAgentGroup).click();
   }
 }

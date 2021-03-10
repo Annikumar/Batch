@@ -40,11 +40,9 @@ describe('Login Successfully and Add User', () => {
     addUser.clickingOnUserOption();
     cy.wait(3000);
     addUser.clickAddNewUserButton();
-    //cy.log(randNum);
     addUser.enterFirstName(fixtureData.userFirstname);
     addUser.enterLastName(fixtureData.userLastname + randNum.toString());
     addUser.selectROle('Agent');
-    //cy.log(randNum);
     addUser.enterEmail(
       fixtureData.userEmail.replace(
         'automation',
@@ -140,5 +138,34 @@ describe('Login Successfully and Add User', () => {
   it('Verify User Edit and Delete Button', function () {
     addUser.verifyUserEditButton();
     addUser.verifyUserDeleteButton();
+  });
+
+  it('Should add a new Agent Status', () => {
+    addUser.clickingOnUserOption();
+    addUser.clickAddAgentStatus();
+    addUser.enterAgentStatusName('Working');
+    addUser.clickOnAgentStatusSaveBtn();
+    addUser.verifyAddedAgentStatus('Working');
+  });
+
+  it('Remove the Added Agent Status', () => {
+    cy.wait(1000);
+    addUser.clickingOnUserOption();
+    addUser.removeAddedAgentStatus('Working');
+    addUser.verifyRemovedAgentStatus();
+  });
+
+  it('Should add a new Agent Group', () => {
+    addUser.clickingOnUserOption();
+    addUser.clickAddAgentGroup();
+    addUser.enterAgentGroupName('Working');
+    addUser.clickOnAgentGroupSaveBtn();
+    addUser.verifyAddedAgentGroup('Working');
+  });
+
+  it('Remove the Added Agent Group', () => {
+    addUser.clickingOnUserOption();
+    addUser.removeAddedAgentGroup('Working');
+    addUser.verifyRemovedAgentGroup('Working');
   });
 });

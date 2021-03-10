@@ -25,6 +25,8 @@ const clickselectCampaign = '//span[text()="Select Campaign"]';
 const selectFromDropdown = '.ss-select-dropdown';
 const phoneNumber = '//span[text()="Select Numbers"]';
 const newWelcomePrompt = '//button[text()=" ADD NEW"]';
+const uploadedWelcomePrompt = (fileName) =>
+  "//span[contains(@class,'ss-select-value-label')][text()='" + fileName + "']";
 const recordingName = '.modal-body input[name="name"]';
 const textToSpeech = 'button[value="generate"]';
 const recordingText = 'textarea[name="text"]';
@@ -120,6 +122,12 @@ const deleteRuleBtn = (rule) =>
   "//div[@class='rule'][contains(.,'" +
   rule +
   "')]//img[contains(@src,'delete')]";
+const addedNewDigit = '.number-editor input';
+const removeNewDigit = (val) =>
+  "//div[contains(@class,'number-editor')][input[@value='" +
+  val +
+  "']]/ancestor::div[contains(@class,'form-group')]//img[contains(@src,'remove')]";
+
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
     cy.xpath(callResultDeleteBtn(callResult)).click();
@@ -184,7 +192,7 @@ export default class PhoneNum {
     cy.xpath(uploadFileBtn).click();
   }
 
-  uploadDncFile(file) {
+  uploadFile(file) {
     cy.get(uploadFile).attachFile(file);
   }
 
@@ -230,6 +238,10 @@ export default class PhoneNum {
 
   clickCallResultSaveBtn() {
     cy.xpath(callResultSaveBtn).click({ force: true });
+  }
+
+  verifyUploadedWelcomePrompt(fileName) {
+    cy.xpath(uploadedWelcomePrompt(fileName)).should('be.visible');
   }
 
   chooseShowOnNewCampaignPage(choice) {
@@ -304,10 +316,7 @@ export default class PhoneNum {
         .get(firstNum, { timeout: 30000 })
         .first({ timeout: 30000 })
         .then((el) => {
-          return el.get(0).innerText;
-          // if (el.is(':visible')) {
-          //   return el.text().trim();
-          // }
+          return el.text().trim();
         })
     );
   }
@@ -395,7 +404,7 @@ export default class PhoneNum {
   }
 
   enterRecordingName(recording) {
-    cy.get(recordingName).type(recording);
+    cy.get(recordingName).clear().type(recording);
   }
 
   clickTextToSpeech() {
@@ -494,6 +503,7 @@ export default class PhoneNum {
   }
 
   selectAssignCampaignDropdown(name, campaign) {
+    cy.wait(1000);
     cy.xpath(selectDropdown(name));
     cy.wait(1000);
     cy.contains(campaign).click();
@@ -643,6 +653,10 @@ export default class PhoneNum {
     cy.xpath(newDigitBtn).should('be.visible');
   }
 
+  clickNewDigitBtn() {
+    cy.xpath(newDigitBtn).click();
+  }
+
   verifyIVRDropdown(title, dropdown) {
     cy.xpath(ivrDropdown(title, dropdown)).should('be.visible');
   }
@@ -684,5 +698,17 @@ export default class PhoneNum {
       expect(str).to.equal(text);
     });
     cy.on('window:confirm', () => true);
+  }
+
+  verifyAddedNewDigit(val) {
+    cy.get(addedNewDigit).should('have.value', val);
+  }
+
+  verifyDeletedDigit() {
+    cy.get(addedNewDigit).should('not.exist');
+  }
+
+  removeAddedNewDigit(val) {
+    cy.xpath(removeNewDigit(val)).click();
   }
 }
