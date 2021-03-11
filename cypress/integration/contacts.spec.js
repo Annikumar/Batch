@@ -18,11 +18,11 @@ describe('Add Contact flow', () => {
     });
   });
 
-  after(() => {
-    cy.Logout();
-  });
+  // after(() => {
+  //   cy.Logout();
+  // });
 
-  it('Should Login', () => {
+  it.only('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -215,7 +215,7 @@ describe('Add Contact flow', () => {
     addCont.verifyContact('New', 'User', 'be.visible');
   });
 
-  it('Verify User is able to Add contact to campaign using action button', () => {
+  it.only('Verify User is able to Add contact to campaign using action button', () => {
     //addCont.clickLists();
     addCont.clickingOnContactOption();
     addCont.clickContactCheckbox(['1', '2', '3']);
@@ -226,10 +226,71 @@ describe('Add Contact flow', () => {
     addCont.verifyAddedCampaign();
   });
 
-  it('Verify List elements of contact', () => {
+  it.only('Verify List elements of contact', () => {
     addCont.clickLists();
     addCont.verifySearchBox();
     addCont.verifyContactCountSlider();
     addCont.verifyListImportContactButton();
   });
+
+  it.only('Verify List Header Element', () => {
+    addCont.verifyContactListHeaderElements([
+      'ID',
+      'Name',
+      'Status',
+      'Total Contacts',
+      'Mobile',
+      'Landline',
+      'Litigator',
+      'DNC',
+      'Campaigns',
+      'Health',
+      'Age',
+      'Round',
+      'Created',
+      'File',
+    ]);
+  });
+
+  it.only('verify Lists table', () => {
+    addCont.verifyListsTable();
+  });
+
+  it.only('Verify Pause and Delete Button of Lists', () => {
+    addCont.verifyListPauseButton();
+    addCont.verifyListDeleteButton();
+  });
+
+  it.only('Verify Pause Button Functionality', () => {
+    addCont.clickPauseButton();
+    addCont.verifyStatus();
+  });
+
+  // it.only('User is able to import contact from list section', () => {
+  //   addCont.clickImportContacts();
+  //   addCont.uploadFileForContact();
+  //   cy.wait(2000);
+  //   addCont.selectFirstNameDropdown();
+  //   addCont.selectLastNameDropdown();
+  //   addCont.selectEmailDropdown();
+  //   addCont.selectPhoneDropdown();
+  //   addCont.clickNextButton();
+  //   addCont.clickSubmitButton();
+  //   addCont.clickSubmitButton();
+  //   addCont.verifyImportStartedToast();
+  //   addCont.verifyImportContactCompleteToast();
+  //   cy.wait(3000);
+  // });
+
+  // it.only('Should show Imported contact in table', () => {
+  //   addCont.clickingOnContactOption();
+  //   addCont.verifyAddedContacts('Automation', 'CSV1');
+  // });
+
+  // it('User is able to delete Imported Contact', () => {
+  //   addCont.clickingOnContactOption();
+  //   addCont.deleteAddedContacts('Automation', 'CSV1');
+  //   addCont.handleAlertForDelete();
+  //   addCont.verifyDeletedToast();
+  // });
 });
