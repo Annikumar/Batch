@@ -10,6 +10,10 @@ const confirmPassword = 'input[name="password2"]';
 const continueToPlan = 'button[type="submit"]';
 const dialerPlan = (x) =>
   "//div[@class='plan'][contains(.,'" + x + "')]//button";
+const requiredFields = (validate) =>
+  "//span[@class='error-msg'][text()='" + validate + "']";
+const duplicateEmail =
+  "//div[@class='Toastify__toast-body'][contains(.,'The email is already used')]";
 
 export default class Register {
   clickSignUpBtn() {
@@ -54,5 +58,13 @@ export default class Register {
 
   choosePlan(plan) {
     cy.xpath(dialerPlan(plan)).click();
+  }
+
+  verifyRequiredFields(validate) {
+    cy.xpath(requiredFields(validate)).should('be.visible');
+  }
+
+  verifyDuplicateEmail() {
+    cy.xpath(duplicateEmail).should('be.visible');
   }
 }

@@ -128,6 +128,43 @@ describe('Dashboard Elements', function () {
     ]);
   });
 
+  it('Add a New Contact', () => {
+    Dash.clickAddressBook();
+    Dash.clickAddNewContact();
+    Dash.enterContactName('Testing');
+    Dash.enterPhoneNumber('9999999999');
+    Dash.enterDescription('This is a Testing contact');
+    Dash.clickSaveBtn();
+    Dash.verifyAddedContact('Testing');
+  });
+
+  it('Fails to Add a Duplicate Contact', () => {
+    Dash.clickAddressBook();
+    Dash.clickAddNewContact();
+    Dash.enterContactName('Testing');
+    Dash.enterPhoneNumber('9999999999');
+    Dash.enterDescription('This is a Testing contact');
+    Dash.clickSaveBtn();
+    Dash.verifyErrorMessage('Duplicate contact name');
+    Dash.clickCancelBtn();
+  });
+
+  it('Edit the Existing contact', () => {
+    Dash.clickAddressBook();
+    Dash.clickEditBtn('Testing');
+    Dash.enterContactName('DemoTesting');
+    Dash.enterPhoneNumber('9999999999');
+    Dash.enterDescription('This is the edited Contact');
+    Dash.clickSaveBtn();
+    Dash.verifyAddedContact('DemoTesting');
+  });
+
+  it('Delete the Contact', () => {
+    Dash.clickAddressBook();
+    Dash.clickDeletebtn('DemoTesting');
+    Dash.verifyContactDelete('DemoTesting');
+  });
+
   it('Verify User Setting Voicemail Elements', () => {
     Dash.clickVoicemail();
     Dash.verifyVoicemailHeading();
@@ -143,11 +180,59 @@ describe('Dashboard Elements', function () {
     Dash.verifyLeadScoreExample();
   });
 
+  it('Add a New Lead Rule', () => {
+    Dash.clickLeadScore();
+    Dash.clickNewRuleBtn();
+    Dash.clickSaveBtn();
+    Dash.verifyAddedRule('Email');
+  });
+
+  it('Remove the added Lead Rule', () => {
+    Dash.clickLeadScore();
+    Dash.clickRuleRemoveBtn('Email');
+    Dash.clickSaveBtn();
+    Dash.verifyRuleRemoved('Email');
+  });
+
   it('Verify User Setting Agent Scripts Elements', () => {
     Dash.clickAgentScripts();
     Dash.verifyAgentScriptHeading();
     Dash.verifyNewAgentScriptButton();
     Dash.verifyAgentScriptTableHeading(['Script Name', 'Created']);
+  });
+
+  it('Add a New Agent Script', () => {
+    Dash.clickAgentScripts();
+    Dash.clickNewAgentScriptBtn();
+    Dash.enterScriptName('Testing');
+    Dash.enterScriptText('This is a testing Script');
+    Dash.clickSaveBtn();
+    Dash.verifyAddedScript('Testing');
+  });
+
+  it('Add a New Agent Script with duplicate name', () => {
+    Dash.clickAgentScripts();
+    Dash.clickNewAgentScriptBtn();
+    Dash.enterScriptName('Testing');
+    Dash.enterScriptText('This is a testing Script');
+    Dash.clickSaveBtn();
+    Dash.verifyErrorMessage('Duplicate agent script name');
+    Dash.clickCancelBtn();
+  });
+
+  it('Edit the Agent Script', () => {
+    Dash.clickAgentScripts();
+    Dash.clickEditBtn('Testing');
+    Dash.enterScriptName('DemoTesting');
+    Dash.enterScriptText('This is the Edited Agent Script');
+    Dash.clickSaveBtn();
+    Dash.verifyEditScript('DemoTesting');
+  });
+
+  it('Remove the Added Agent Script', () => {
+    Dash.clickAgentScripts();
+    Dash.clickDeletebtn('DemoTesting');
+    Dash.verifyScriptDelete('DemoTesting');
   });
 
   it('Verify User Setting Audio Library Elements', () => {

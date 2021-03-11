@@ -216,9 +216,9 @@ describe('Add Contact flow', () => {
   });
 
   it('Verify User is able to Add contact to campaign using action button', () => {
-    //addCont.clickLists();
+    addCont.clickLists();
     addCont.clickingOnContactOption();
-    addCont.clickContactCheckbox(['1', '2', '3']);
+    addCont.clickContactCheckbox(['1', '2']);
     addCont.clickAction();
     addCont.clickActionAddToCampaign();
     addCont.selectCampaignForContact();

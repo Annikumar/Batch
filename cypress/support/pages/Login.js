@@ -4,6 +4,10 @@ const termsCheckBox = '.terms-row input';
 const signinButton = '.full_width_input .save';
 const dashboardProfilePic = '.profile_pic';
 const logoutBtn = 'a[href*="logout"]';
+const forgetPassword = '.login-forgot-link';
+const signUpBtn = 'a[href*="register"]';
+const errorMessage = (message) =>
+  "//div[@class='Toastify__toast-body'][contains(.,'" + message + "')]";
 
 export default class Login {
   enterEmailtoSignin(email) {
@@ -54,5 +58,25 @@ export default class Login {
   logout() {
     cy.get(dashboardProfilePic).click();
     cy.get(logoutBtn).click();
+  }
+
+  verifyErrorMessage(message) {
+    cy.xpath(errorMessage(message)).should('be.visible');
+  }
+
+  clickForgetPassword() {
+    cy.get(forgetPassword).click();
+  }
+
+  verifyForgetPasswordPage() {
+    cy.url().should('contain', 'forgot');
+  }
+
+  clickSignUpBtn() {
+    cy.get(signUpBtn).click();
+  }
+
+  verifySignUpPage() {
+    cy.url().should('contain', 'register');
   }
 }

@@ -68,6 +68,19 @@ const AudioLibraryNewRecording =
 const AudioLibrarySearchBox = '.search-box-wrapper';
 const AudioLibraryTableHeading = '.recordings  thead';
 const AudioLibraryRecordings = '.recordings  tbody';
+const saveBtn = "button svg[data-icon='save']";
+const cancelBtn = "//button[contains(text(),'CANCEL')]";
+const ruleRemoveBtn = (rule) =>
+  "//span[contains(@class,'ss-select-value-label')][text()='" +
+  rule +
+  "']/ancestor::div[@class='row']//img[@alt='Delete']";
+const scriptText = '.ProseMirror';
+const deleteBtn = (Name) =>
+  "//tr[td[text()='" + Name + "']]//img[contains(@src,'delete')]";
+const editBtn = (Name) =>
+  "//tr[td[text()='" + Name + "']]//img[contains(@src,'edit')]";
+const errorMessage = (message) =>
+  "//div[@class='Toastify__toast-body'][contains(.,'" + message + "')]";
 
 export default class Dashboard {
   clickDashboard() {
@@ -282,6 +295,10 @@ export default class Dashboard {
     cy.xpath(newRuleButton).should('be.visible');
   }
 
+  clickNewRuleBtn() {
+    cy.xpath(newRuleButton).click();
+  }
+
   verifyLeadScoreExample() {
     cy.get(leadScoreExample).should('be.visible');
   }
@@ -298,6 +315,10 @@ export default class Dashboard {
     cy.get(NewAgentScriptButton).should('be.visible');
   }
 
+  clickNewAgentScriptBtn() {
+    cy.get(NewAgentScriptButton).click();
+  }
+
   verifyAgentScriptTableHeading(element) {
     for (let i = 0; i < element.length; i++) {
       cy.get(AgentScriptTableHeading).should('contain.text', element[i]);
@@ -305,7 +326,7 @@ export default class Dashboard {
   }
 
   clickAgentScripts() {
-    cy.get(UserSettingOptions).contains('Agent Scripts').click();
+    cy.get(UserSettingOptions).contains('Agent Scripts').click({ force: true });
   }
 
   verifyAudioLibraryNewRecording() {
@@ -331,5 +352,81 @@ export default class Dashboard {
   }
   verifyProfileAgentFeaturesDisable() {
     cy.xpath(ProfileAgentFeaturesDisable).should('be.visible');
+  }
+
+  clickSaveBtn() {
+    cy.get(saveBtn).click();
+  }
+
+  verifyAddedRule(rule) {
+    cy.xpath(ruleRemoveBtn(rule)).should('exist');
+  }
+
+  clickRuleRemoveBtn(rule) {
+    cy.xpath(ruleRemoveBtn(rule)).click({ force: true });
+  }
+
+  verifyRuleRemoved(rule) {
+    cy.xpath(ruleRemoveBtn(rule)).should('not.exist');
+  }
+
+  enterScriptName(name) {
+    cy.get(UserSettingProfileFields('name')).clear().type(name);
+  }
+
+  enterScriptText(text) {
+    cy.get(scriptText).clear().type(text);
+  }
+
+  verifyAddedScript(name) {
+    cy.xpath(deleteBtn(name)).should('exist');
+  }
+
+  clickDeletebtn(name) {
+    cy.xpath(deleteBtn(name)).click();
+  }
+
+  verifyScriptDelete(name) {
+    cy.xpath(deleteBtn(name)).click();
+  }
+
+  clickEditBtn(scriptName) {
+    cy.xpath(editBtn(scriptName)).click();
+  }
+
+  verifyEditScript(name) {
+    cy.xpath(deleteBtn(name)).should('exist');
+  }
+
+  verifyErrorMessage(message) {
+    cy.xpath(errorMessage(message)).should('be.visible');
+  }
+
+  clickCancelBtn() {
+    cy.xpath(cancelBtn).click();
+  }
+
+  clickAddNewContact() {
+    cy.get(AddressBookNewContact).click();
+  }
+
+  enterContactName(name) {
+    cy.get(UserSettingProfileFields('name')).clear().type(name);
+  }
+
+  enterPhoneNumber(phone) {
+    cy.get(UserSettingProfileFields('phonenumber')).clear().type(phone);
+  }
+
+  enterDescription(description) {
+    cy.get(UserSettingProfileFields('description')).clear().type(description);
+  }
+
+  verifyAddedContact(contactName) {
+    cy.xpath(deleteBtn(contactName)).should('exist');
+  }
+
+  verifyContactDelete(contactName) {
+    cy.xpath(deleteBtn(contactName)).should('not.exist');
   }
 }

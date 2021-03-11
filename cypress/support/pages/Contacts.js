@@ -417,8 +417,14 @@ export default class Contacts {
     cy.xpath(allList).click();
   }
   clickTesting() {
-    cy.xpath("//div[text()='testing']").click();
-    cy.wait(2000);
+    cy.get('.ss-select-option').then((option) => {
+      for (let i = 0; i < option.length; i++) {
+        if (option[i].textContent.trim() === 'testing') {
+          cy.get(option[i]).scrollIntoView().click({ force: true });
+          break;
+        }
+      }
+    });
   }
 
   clickContactCheckbox(number) {
