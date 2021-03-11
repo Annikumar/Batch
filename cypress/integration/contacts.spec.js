@@ -22,7 +22,7 @@ describe('Add Contact flow', () => {
   //   cy.Logout();
   // });
 
-  it.only('Should Login', () => {
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -226,14 +226,14 @@ describe('Add Contact flow', () => {
     addCont.verifyAddedCampaign();
   });
 
-  it.only('Verify List elements of contact', () => {
+  it('Verify List elements of contact', () => {
     addCont.clickLists();
     addCont.verifySearchBox();
     addCont.verifyContactCountSlider();
     addCont.verifyListImportContactButton();
   });
 
-  it.only('Verify List Header Element', () => {
+  it('Verify List Header Element', () => {
     addCont.verifyContactListHeaderElements([
       'ID',
       'Name',
@@ -252,45 +252,45 @@ describe('Add Contact flow', () => {
     ]);
   });
 
-  it.only('verify Lists table', () => {
+  it('verify Lists table', () => {
     addCont.verifyListsTable();
   });
 
-  it.only('Verify Pause and Delete Button of Lists', () => {
+  it('Verify Pause and Delete Button of Lists', () => {
     addCont.verifyListPauseButton();
     addCont.verifyListDeleteButton();
   });
 
-  it.only('Verify Pause Button Functionality', () => {
+  it('Verify Pause Button Functionality', () => {
     addCont.clickPauseButton();
     addCont.verifyStatus();
   });
 
-  // it.only('User is able to import contact from list section', () => {
-  //   addCont.clickImportContacts();
-  //   addCont.uploadFileForContact();
-  //   cy.wait(2000);
-  //   addCont.selectFirstNameDropdown();
-  //   addCont.selectLastNameDropdown();
-  //   addCont.selectEmailDropdown();
-  //   addCont.selectPhoneDropdown();
-  //   addCont.clickNextButton();
-  //   addCont.clickSubmitButton();
-  //   addCont.clickSubmitButton();
-  //   addCont.verifyImportStartedToast();
-  //   addCont.verifyImportContactCompleteToast();
-  //   cy.wait(3000);
-  // });
+  it('User is able to import contact from list section', () => {
+    addCont.clickImportContacts();
+    addCont.uploadFileForContact();
+    cy.wait(2000);
+    addCont.selectFirstNameDropdown();
+    addCont.selectLastNameDropdown();
+    addCont.selectEmailDropdown();
+    addCont.selectPhoneDropdown();
+    addCont.clickNextButton();
+    addCont.clickSubmitButton();
+    addCont.clickSubmitButton();
+    addCont.verifyImportStartedToast();
+    addCont.verifyImportContactCompleteToast();
+    cy.wait(3000);
+  });
 
-  // it.only('Should show Imported contact in table', () => {
-  //   addCont.clickingOnContactOption();
-  //   addCont.verifyAddedContacts('Automation', 'CSV1');
-  // });
+  it('Should show Imported contact in table', () => {
+    addCont.clickingOnContactOption();
+    addCont.verifyAddedContacts('Automation', 'CSV1');
+  });
 
-  // it('User is able to delete Imported Contact', () => {
-  //   addCont.clickingOnContactOption();
-  //   addCont.deleteAddedContacts('Automation', 'CSV1');
-  //   addCont.handleAlertForDelete();
-  //   addCont.verifyDeletedToast();
-  // });
+  it('User is able to delete Imported Contact', () => {
+    addCont.clickingOnContactOption();
+    addCont.deleteAddedContacts('Automation', 'CSV1');
+    addCont.handleAlertForDelete();
+    addCont.verifyDeletedToast();
+  });
 });
