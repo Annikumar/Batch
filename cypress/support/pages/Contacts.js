@@ -90,6 +90,12 @@ const ContinueButton = '//button[text()="Continue"]';
 const toast = '.Toastify__toast-body';
 const contactCountSlider = '.slider-container';
 const listImportContactButton = '//button[text()="IMPORT CONTACTS"]';
+const listsTable = '.table tbody';
+const listPauseButton = 'svg[data-icon="pause"]';
+const listDeleteButton = 'svg[data-icon="trash-alt"]';
+const listStatus = "//td[text()='testing']/ancestor::tr/td[text()='paused']";
+const testingPauseButton =
+  '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -465,5 +471,29 @@ export default class Contacts {
 
   verifyListImportContactButton() {
     cy.xpath(listImportContactButton).should('be.visible');
+  }
+
+  verifyListsTable() {
+    cy.get(listsTable).should('be.visible');
+  }
+
+  clickImportContacts() {
+    cy.xpath(listImportContactButton).click();
+  }
+
+  verifyListPauseButton() {
+    cy.get(listPauseButton).should('be.visible');
+  }
+
+  verifyListDeleteButton() {
+    cy.get(listDeleteButton).should('be.visible');
+  }
+
+  clickPauseButton() {
+    cy.xpath(testingPauseButton).click();
+  }
+
+  verifyStatus() {
+    cy.xpath(listStatus).should('be.visible');
   }
 }
