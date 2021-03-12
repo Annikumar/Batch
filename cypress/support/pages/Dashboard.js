@@ -65,7 +65,7 @@ const NewAgentScriptButton = '.addnew';
 const AgentScriptTableHeading = '.table thead';
 const AudioLibraryNewRecording =
   "//button[contains(text(),'Add New Recording')]";
-const AudioLibrarySearchBox = '.search-box-wrapper';
+const AudioLibrarySearchBox = '.search-box-wrapper .search-box';
 const AudioLibraryTableHeading = '.recordings  thead';
 const AudioLibraryRecordings = '.recordings  tbody';
 const saveBtn = "button svg[data-icon='save']";
@@ -81,6 +81,30 @@ const editBtn = (Name) =>
   "//tr[td[text()='" + Name + "']]//img[contains(@src,'edit')]";
 const errorMessage = (message) =>
   "//div[@class='Toastify__toast-body'][contains(.,'" + message + "')]";
+const recordingDeleteBtn = (recordingName) =>
+  "//tr[td[text()='" + recordingName + "']]//img[contains(@src,'delete')]";
+const recording = (recordingName) =>
+  "//tr[td[contains(text(),'" + recordingName + "')]]";
+const uploadFile = 'input[type="file"]';
+const recordingName = '.modal-body input[name="name"]';
+const recordingSaveButton =
+  "//div[@class='modal-footer']//button[text()=' SAVE']";
+const uploadedRecording = (fileName) =>
+  "//span[contains(@class,'ss-select-value-label')][text()='" + fileName + "']";
+const textToSpeech = 'button[value="generate"]';
+const enterName = '.modal-body input[name="name"]';
+const recordingText = 'textarea[name="text"]';
+const generateButton = '//button[text()="Generate"]';
+const speech = '.progress';
+const searchClearBtn = '.search-box-wrapper button.x-close-icon';
+const softphoneCloseBtn = '.stg-softphone-right-close';
+const putSubscriptionOnHold = "//button[text()='Put Subscription On Hold']";
+const keepPhoneCheckbox = '.radio_cstm';
+const basePrice = '.price span:nth-of-type(1)';
+const totalPrice = '.total .value';
+const pauseSubscriptionBox = '.modal-content';
+const pauseSubscriptionBoxCloseBtn = '.modal-content svg[data-icon="times"]';
+const pauseMessage = '.alert-warning';
 
 export default class Dashboard {
   clickDashboard() {
@@ -215,6 +239,7 @@ export default class Dashboard {
 
   verifyBillingSingleLineDialer() {
     cy.xpath(BillingSingleLineDialer).should('be.visible');
+    this.clickCloseSoftphoneBtn();
   }
 
   verifyBillingMultipleLineDialer() {
@@ -428,5 +453,108 @@ export default class Dashboard {
 
   verifyContactDelete(contactName) {
     cy.xpath(deleteBtn(contactName)).should('not.exist');
+  }
+
+  enterNameToSearch(name) {
+    cy.get(AudioLibrarySearchBox).type(name);
+  }
+
+  verifySearchResult(recordingName) {
+    cy.xpath(recording(recordingName)).should('be.visible');
+  }
+
+  clickDeleteRecordingBtn(recordingName) {
+    cy.xpath(recordingDeleteBtn(recordingName)).click();
+  }
+
+  verifyDeletedRecording(recordingName) {
+    cy.xpath(recordingDeleteBtn(recordingName)).should('not.exist');
+  }
+
+  clickAddNewRecording() {
+    cy.xpath(AudioLibraryNewRecording).click();
+  }
+
+  uploadFile(file) {
+    cy.get(uploadFile).attachFile(file);
+  }
+
+  enterRecordingName(recording) {
+    cy.get(recordingName).clear().type(recording);
+  }
+
+  clickRecordingSaveButton() {
+    cy.xpath(recordingSaveButton).click();
+    cy.wait(2000);
+  }
+
+  verifyRecording(fileName) {
+    cy.xpath(recordingDeleteBtn(fileName)).should('be.visible');
+  }
+
+  clickTextToSpeech() {
+    cy.get(textToSpeech).click();
+  }
+
+  enterRecordingName(recording) {
+    cy.get(enterName).clear().type(recording);
+  }
+
+  enterRecordingText(text) {
+    cy.get(recordingText).type(text);
+  }
+
+  clickGenerateButton() {
+    cy.xpath(generateButton).click();
+    cy.get(speech, { timeout: 7000 }).should('be.visible');
+  }
+
+  clickSearchClearBtn() {
+    cy.get(searchClearBtn).click();
+  }
+
+  clickPauseAccountBtn() {
+    cy.xpath(BillingPauseAccount).click();
+  }
+
+  clickCloseSoftphoneBtn() {
+    cy.get('body').then(($body) => {
+      if ($body.find(softphoneCloseBtn).length) {
+        cy.get(softphoneCloseBtn).click();
+      }
+    });
+  }
+
+  clickPutSubscriptionOnHold() {
+    cy.xpath(putSubscriptionOnHold).click();
+  }
+
+  clickKeepPhoneCheckbox() {
+    cy.get(keepPhoneCheckbox).click();
+  }
+
+  compareBaseAndTotalPrice(condition) {
+    let price;
+    let total;
+    cy.get(pauseSubscriptionBox).then(($body) => {
+      price = $body.find(basePrice).text();
+      total = $body.find(totalPrice).text();
+      price = price.substring(1);
+      total = total.substring(1);
+      if (condition === 'keep phone') {
+        expect(parseInt(price)).to.lessThan(parseInt(total));
+      }
+      if (condition === 'dont keep phone') {
+        expect(price).to.equal(total);
+      }
+    });
+  }
+
+  clickClosePauseSubscriptionBox() {
+    cy.get(pauseSubscriptionBoxCloseBtn).click();
+  }
+
+  verifyAccountPauseMessage() {
+    cy.get(pauseMessage, { timeout: 20000 }).should('be.visible');
   }
 }
