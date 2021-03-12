@@ -22,11 +22,11 @@ describe('Report Page', function () {
     cy.Logout();
   });
 
-  it.only('Should Login', () => {
+  it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it.only('verify report header element', function () {
+  it('verify report header element', function () {
     report.clickReportMenu();
     report.reportHeaderElement([
       'Live',
@@ -91,7 +91,7 @@ describe('Report Page', function () {
     ]);
   });
 
-  it.only('verify Dropdowns on Report Campaign', function () {
+  it('verify Dropdowns on Report Campaign', function () {
     report.clickReportCampaignsButton();
     report.VerifyDropdownsReportCampaign([
       'All Statuses',
@@ -156,7 +156,7 @@ describe('Report Page', function () {
     report.verifySearchedNumber('Sandeep Kumar');
   });
 
-  it.only('Verify All status dropdown should show statuses', () => {
+  it('Verify All status dropdown should show statuses', () => {
     report.clickCampaignStatusDropdown();
     report.verifyStatusDropdownElements([
       'All Statuses',
@@ -167,7 +167,7 @@ describe('Report Page', function () {
     ]);
   });
 
-  it.only('Verify On click of campaign calender it should open calender', () => {
+  it('Verify On click of campaign calender it should open calender', () => {
     report.clickCampaignCalanderDropdown();
     report.verifyCalender();
   });
@@ -186,7 +186,7 @@ describe('Report Page', function () {
     report.verifyCalenderDays();
   });
 
-  it.only('Verify Status Dropdown Functionality', () => {
+  it('Verify Status Dropdown Functionality', () => {
     report.clickCampaignStatusDropdown();
     report.clickActiveStatus();
     report.verifyStatusVisible('active');
