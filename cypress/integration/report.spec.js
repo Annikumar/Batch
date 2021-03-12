@@ -172,7 +172,7 @@ describe('Report Page', function () {
     report.verifyCalender();
   });
 
-  it.only('verify Calender Elements', () => {
+  it('verify Calender Elements', () => {
     report.verifyCalenderTimeline([
       'Today',
       'This Week',
