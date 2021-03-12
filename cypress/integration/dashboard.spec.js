@@ -2,6 +2,7 @@ import Dashboard from '../support/pages/Dashboard';
 
 const Dash = new Dashboard();
 let fixtureData;
+let randNum = Math.floor(Math.random() * 100000);
 
 describe('Dashboard Elements', function () {
   before(() => {
@@ -114,6 +115,37 @@ describe('Dashboard Elements', function () {
     Dash.verifyPauseAccount();
     Dash.verifyCancelAccount();
     Dash.verifyInvoice();
+  });
+
+  it('Verifies monthly total should be greater when keeping phone', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickPauseAccountBtn();
+    cy.wait(2000);
+    Dash.compareBaseAndTotalPrice('keep phone');
+    Dash.clickClosePauseSubscriptionBox();
+  });
+
+  it('Verifies monthly total should be equal when not keeping phone', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickPauseAccountBtn();
+    cy.wait(2000);
+    Dash.clickKeepPhoneCheckbox();
+    Dash.compareBaseAndTotalPrice('dont keep phone');
+    Dash.clickClosePauseSubscriptionBox();
+  });
+
+  it('Pause Account while keeping the Phone Number', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickPauseAccountBtn();
+    cy.wait(2000);
+    Dash.clickPutSubscriptionOnHold();
+    Dash.verifyAccountPauseMessage();
   });
 
   it('Verify User settings Address Boook elements', () => {
@@ -246,5 +278,43 @@ describe('Dashboard Elements', function () {
       'Created',
     ]);
     Dash.verifyAudioLibraryRecordings();
+  });
+
+  it('Add a new Recording using Upload File', () => {
+    Dash.clickAudioLibrary();
+    Dash.clickAddNewRecording();
+    Dash.uploadFile('preview.mp3');
+    Dash.enterRecordingName('preview' + randNum.toString());
+    Dash.clickRecordingSaveButton();
+    Dash.verifyRecording('preview' + randNum.toString());
+  });
+
+  it('Add a new recording using Text to Speech', () => {
+    Dash.clickAudioLibrary();
+    Dash.clickAddNewRecording();
+    Dash.clickTextToSpeech();
+    Dash.enterRecordingName('TextSpeech' + randNum.toString());
+    Dash.enterRecordingText('Hey How Are You');
+    Dash.clickGenerateButton();
+    Dash.clickRecordingSaveButton();
+    Dash.verifyRecording('TextSpeech' + randNum.toString());
+  });
+
+  it('Verifies the Search functionality', () => {
+    Dash.clickAudioLibrary();
+    Dash.enterNameToSearch('preview' + randNum.toString());
+    Dash.verifySearchResult('preview' + randNum.toString());
+    Dash.clickSearchClearBtn();
+    Dash.enterNameToSearch('TextSpeech' + randNum.toString());
+    Dash.verifySearchResult('TextSpeech' + randNum.toString());
+    Dash.clickSearchClearBtn();
+  });
+
+  it('Delete the Recording', () => {
+    Dash.clickAudioLibrary();
+    Dash.clickDeleteRecordingBtn('preview' + randNum.toString());
+    Dash.verifyDeletedRecording('preview' + randNum.toString());
+    Dash.clickDeleteRecordingBtn('TextSpeech' + randNum.toString());
+    Dash.verifyDeletedRecording('TextSpeech' + randNum.toString());
   });
 });
