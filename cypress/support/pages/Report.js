@@ -12,6 +12,15 @@ const NumberButton = "//div[text()='Numbers']";
 const numberDropdown = '.reportNumbersForm';
 const searchBox = '.search-box-wrapper';
 const table = '.table';
+const campaignStatusDropdown =
+  "//span[text()='All Statuses']/ancestor::div[contains(@class,'inverted')]";
+const campaignCalander = '.dropdown-menu';
+const campCalanderDropdown = '.date-picker';
+const campCalanderTimeline = '.links';
+const calenderMonthDropdown = '.DayPicker-Caption';
+const calenderDays = '.DayPicker-Weekdays';
+const calenderDate = '.DayPicker-Body';
+const tableBody = '.table tbody ';
 
 export default class Report {
   clickReportMenu() {
@@ -86,5 +95,52 @@ export default class Report {
 
   verifySearchedNumber(user) {
     cy.get(table).should('contain.text', user);
+  }
+
+  clickCampaignStatusDropdown() {
+    cy.xpath(campaignStatusDropdown).click();
+  }
+
+  verifyStatusDropdownElements(element) {
+    for (let i = 0; i < element.length; i++) {
+      cy.xpath(campaignStatusDropdown).should('contain.text', element[i]);
+    }
+  }
+
+  clickCampaignCalanderDropdown() {
+    cy.get(campCalanderDropdown).click();
+  }
+
+  verifyCalender() {
+    cy.get(campaignCalander).should('be.visible');
+  }
+
+  verifyCalenderTimeline(element) {
+    for (let i = 0; i < element.length; i++) {
+      cy.get(campCalanderTimeline).should('contain.text', element[i]);
+    }
+  }
+
+  verifyCalenderMonthDropdown() {
+    cy.get(calenderMonthDropdown).should('be.visible');
+  }
+  verifyCalenderDays() {
+    cy.get(calenderDays).should('be.visible');
+  }
+
+  verifyCalenderDates() {
+    cy.get(calenderDate).should('be.visible');
+  }
+
+  clickActiveStatus() {
+    cy.get(campaignDropdown).contains('Active').click();
+  }
+
+  verifyStatusVisible(status) {
+    cy.get(tableBody).should('contain.text', status);
+  }
+
+  verifyStatusNotVisible(status) {
+    cy.get(tableBody).contains(status).should('not.exist');
   }
 }

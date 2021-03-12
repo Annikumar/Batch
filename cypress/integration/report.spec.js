@@ -22,11 +22,11 @@ describe('Report Page', function () {
     cy.Logout();
   });
 
-  it('Should Login', () => {
+  it.only('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it('verify report header element', function () {
+  it.only('verify report header element', function () {
     report.clickReportMenu();
     report.reportHeaderElement([
       'Live',
@@ -91,7 +91,7 @@ describe('Report Page', function () {
     ]);
   });
 
-  it('verify Dropdowns on Report Campaign', function () {
+  it.only('verify Dropdowns on Report Campaign', function () {
     report.clickReportCampaignsButton();
     report.VerifyDropdownsReportCampaign([
       'All Statuses',
@@ -100,7 +100,7 @@ describe('Report Page', function () {
     ]);
   });
 
-  it('verify report table header element for Report Contact', function () {
+  it('verify report table header element for Report Campaign', function () {
     report.verifyReportTableHeaderElements([
       'Campaign',
       'Status',
@@ -154,5 +154,42 @@ describe('Report Page', function () {
   it('Verify Functionality of search Button and Designation Dropdown', function () {
     report.searchNumber('9283662821');
     report.verifySearchedNumber('Sandeep Kumar');
+  });
+
+  it.only('Verify All status dropdown should show statuses', () => {
+    report.clickCampaignStatusDropdown();
+    report.verifyStatusDropdownElements([
+      'All Statuses',
+      'Active',
+      'Paused',
+      'Complete',
+      'Deleted',
+    ]);
+  });
+
+  it.only('Verify On click of campaign calender it should open calender', () => {
+    report.clickCampaignCalanderDropdown();
+    report.verifyCalender();
+  });
+
+  it.only('verify Calender Elements', () => {
+    report.verifyCalenderTimeline([
+      'Today',
+      'This Week',
+      'Past 3 Months',
+      'Past 6 Months',
+      'Past 12 Months',
+      'This Year',
+    ]);
+    report.verifyCalenderMonthDropdown();
+    report.verifyCalenderDates();
+    report.verifyCalenderDays();
+  });
+
+  it.only('Verify Status Dropdown Functionality', () => {
+    report.clickCampaignStatusDropdown();
+    report.clickActiveStatus();
+    report.verifyStatusVisible('active');
+    report.verifyStatusNotVisible('paused');
   });
 });
