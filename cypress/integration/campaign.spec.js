@@ -245,4 +245,19 @@ describe('Add Campaign flow', () => {
     addCamp.clickCampaignName('FirstCampaign');
     addCamp.verifyCampaignNameField();
   });
+
+  it('Verify all combination of filter are working properly', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.searchCampaign('FirstCampaign');
+    addCamp.clickToSelectStatus();
+    addCamp.clickActiveStatus();
+    addCamp.verifyAddedCampaign('FirstCampaign');
+  });
+
+  it('Verify Validation on required field of new campaign page', () => {
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyErrorMessage('Enter Campaign Name');
+  });
 });

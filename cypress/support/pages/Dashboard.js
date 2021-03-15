@@ -105,6 +105,7 @@ const totalPrice = '.total .value';
 const pauseSubscriptionBox = '.modal-content';
 const pauseSubscriptionBoxCloseBtn = '.modal-content svg[data-icon="times"]';
 const pauseMessage = '.alert-warning';
+const save = "//button[text()=' Save']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -556,5 +557,26 @@ export default class Dashboard {
 
   verifyAccountPauseMessage() {
     cy.get(pauseMessage, { timeout: 20000 }).should('be.visible');
+  }
+
+  clickAgentFeatureDisable() {
+    cy.xpath(ProfileAgentFeaturesDisable).click();
+  }
+  verifyDialerNotVisible() {
+    cy.get(Dialer).should('not.exist');
+  }
+
+  clickAgentFeatureEnable() {
+    cy.xpath(ProfileAgentFeaturesEnable).click();
+  }
+
+  verifyDialerVisible() {
+    cy.wait(5000);
+    cy.get(Dialer).should('be.visible');
+  }
+
+  clickSaveButton() {
+    cy.xpath(save).click();
+    cy.wait(1000);
   }
 }

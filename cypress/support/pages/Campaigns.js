@@ -65,6 +65,9 @@ const RecSkipLeadsCheckbox = "input[name='skip_leads']";
 const RecSkipContacts = "input[name='skip_dnr']";
 const RecSaveCampaign = "//button[contains(text(),'SAVE CAMPAIGN')]";
 const Alert = '.alert';
+const PauseStatus = "//div[text()='Paused']";
+const ActiveStatus = "//div[text()='Active']";
+const ErrorMessage = '.error-msg';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -388,5 +391,17 @@ export default class Campaign {
     cy.xpath(
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]/span'
     ).click();
+  }
+
+  clickPauseStatus() {
+    cy.xpath(PauseStatus).click();
+  }
+
+  clickActiveStatus() {
+    cy.xpath(ActiveStatus).click();
+  }
+
+  verifyErrorMessage(text) {
+    cy.get(ErrorMessage).should('contain.text', text);
   }
 }
