@@ -562,7 +562,6 @@ export default class Dashboard {
     cy.get(pauseMessage, { timeout: 20000 }).should('be.visible');
   }
 
-<<<<<<< HEAD
   choosePlan(planName) {
     cy.xpath(plans(planName)).click();
   }
@@ -574,7 +573,6 @@ export default class Dashboard {
   clickStartBtn() {
     cy.xpath(startBtn, { timeout: 20000 }).should('be.visible');
     cy.xpath(startBtn, { timeout: 20000 }).click();
-=======
   clickAgentFeatureDisable() {
     cy.xpath(ProfileAgentFeaturesDisable).click();
   }
@@ -594,6 +592,5 @@ export default class Dashboard {
   clickSaveButton() {
     cy.xpath(save).click();
     cy.wait(1000);
->>>>>>> origin/master
   }
 }
