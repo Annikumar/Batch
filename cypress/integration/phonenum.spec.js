@@ -343,7 +343,6 @@ describe('Add Phone Number flow', () => {
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.clickNextCircleArrow();
     addNum.verifyCreatedCallResult('DemoTesting');
   });

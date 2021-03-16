@@ -495,7 +495,7 @@ export default class PhoneNum {
       .click({ force: true })
       .type(agent)
       .type('{enter}');
-    cy.get('body').click();
+    cy.get("img[src*='question']").first().click();
   }
 
   verifyAssignCampaignDropdown(name) {
@@ -504,7 +504,7 @@ export default class PhoneNum {
 
   selectAssignCampaignDropdown(name, campaign) {
     cy.wait(1000);
-    cy.xpath(selectDropdown(name));
+    cy.xpath(selectDropdown(name)).click();
     cy.wait(1000);
     cy.contains(campaign).click();
   }
@@ -522,7 +522,7 @@ export default class PhoneNum {
   }
 
   selectRingStrategy(strategy) {
-    cy.get(ringStrategyRadioBtn).contains(strategy).click();
+    cy.get(ringStrategyRadioBtn).contains(strategy).click({});
   }
 
   verifyWrapupTimeoutDropdown() {

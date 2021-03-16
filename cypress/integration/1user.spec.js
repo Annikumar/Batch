@@ -90,7 +90,7 @@ describe('Login Successfully and Add User', () => {
 
   it('Role dropdown should show the selected role', function () {
     addUser.clickRoleDropdown();
-    addUser.clickAdminstratorRole('Adminstrators');
+    addUser.clickAdminstratorRole('Administrators');
   });
 
   it('verify Agent Statuses Heading and All Statuses', function () {

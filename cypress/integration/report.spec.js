@@ -157,6 +157,7 @@ describe('Report Page', function () {
   });
 
   it('Verify All status dropdown should show statuses', () => {
+    report.clickReportCampaignsButton();
     report.clickCampaignStatusDropdown();
     report.verifyStatusDropdownElements([
       'All Statuses',
@@ -172,7 +173,7 @@ describe('Report Page', function () {
     report.verifyCalender();
   });
 
-  it.only('verify Calender Elements', () => {
+  it('verify Calender Elements', () => {
     report.verifyCalenderTimeline([
       'Today',
       'This Week',

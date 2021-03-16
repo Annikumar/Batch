@@ -105,6 +105,9 @@ const totalPrice = '.total .value';
 const pauseSubscriptionBox = '.modal-content';
 const pauseSubscriptionBoxCloseBtn = '.modal-content svg[data-icon="times"]';
 const pauseMessage = '.alert-warning';
+const plans = (planName) => "//div[div[text()='" + planName + "']]//button";
+const continueBtn = '//button[contains(text(),"CONTINUE")]';
+const startBtn = "//button[contains(text(),'START')]";
 
 export default class Dashboard {
   clickDashboard() {
@@ -259,7 +262,7 @@ export default class Dashboard {
   }
 
   verifyPauseAccount() {
-    cy.xpath(BillingPauseAccount).should('be.visible');
+    cy.xpath(BillingPauseAccount, { timeout: 30000 }).should('be.visible');
   }
 
   verifyCancelAccount() {
@@ -556,5 +559,18 @@ export default class Dashboard {
 
   verifyAccountPauseMessage() {
     cy.get(pauseMessage, { timeout: 20000 }).should('be.visible');
+  }
+
+  choosePlan(planName) {
+    cy.xpath(plans(planName)).click();
+  }
+
+  clickContinueBtn() {
+    cy.xpath(continueBtn).click();
+  }
+
+  clickStartBtn() {
+    cy.xpath(startBtn, { timeout: 20000 }).should('be.visible');
+    cy.xpath(startBtn, { timeout: 20000 }).click();
   }
 }

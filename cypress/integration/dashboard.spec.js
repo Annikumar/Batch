@@ -145,7 +145,38 @@ describe('Dashboard Elements', function () {
     Dash.clickPauseAccountBtn();
     cy.wait(2000);
     Dash.clickPutSubscriptionOnHold();
+    Dash.clickStartBtn();
     Dash.verifyAccountPauseMessage();
+  });
+
+  it('Unpause account by choosing any Plan', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+    Dash.clickContinueBtn();
+    Dash.verifyPauseAccount();
+  });
+
+  it('Pause Account while not keeping the Phone Number', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickPauseAccountBtn();
+    cy.wait(2000);
+    Dash.clickKeepPhoneCheckbox();
+    Dash.clickPutSubscriptionOnHold();
+    Dash.clickStartBtn();
+    Dash.verifyAccountPauseMessage();
+  });
+
+  it('Unpause account by choosing any Plan', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+    Dash.clickContinueBtn();
+    Dash.verifyPauseAccount();
   });
 
   it('Verify User settings Address Boook elements', () => {
