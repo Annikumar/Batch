@@ -573,6 +573,7 @@ export default class Dashboard {
   clickStartBtn() {
     cy.xpath(startBtn, { timeout: 20000 }).should('be.visible');
     cy.xpath(startBtn, { timeout: 20000 }).click();
+  }
   clickAgentFeatureDisable() {
     cy.xpath(ProfileAgentFeaturesDisable).click();
   }
