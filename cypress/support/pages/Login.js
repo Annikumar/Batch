@@ -56,8 +56,8 @@ export default class Login {
   }
 
   logout() {
-    cy.get(dashboardProfilePic).click();
-    cy.get(logoutBtn).click();
+    cy.get(dashboardProfilePic).click({ force: true });
+    cy.get(logoutBtn).click({ force: true });
   }
 
   verifyErrorMessage(message) {
