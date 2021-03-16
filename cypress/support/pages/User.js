@@ -1,3 +1,5 @@
+import promisify from 'cypress-promise';
+
 const userMenu = 'a[title="Users"]';
 const addNewUser = '//button[contains(text(),"ADD NEW USER")]';
 const firstName = 'input[name="firstname"]';
@@ -38,9 +40,11 @@ const agentGroupRemoveBtn = (group) =>
 const addAgentGroup =
   "//div[contains(@class,'card-title')][.='Agent Groups']//img[contains(@src,'add')]";
 
+const agentCount = '.usage-stats-counter strong';
+
 export default class User {
   clickingOnUserOption() {
-    cy.get(userMenu).click();
+    cy.get(userMenu).click({ force: true });
   }
 
   clickAddNewUserButton() {
@@ -271,5 +275,20 @@ export default class User {
 
   clickAddAgentGroup() {
     cy.xpath(addAgentGroup).click();
+  }
+
+  async getTotalAgentCount() {
+    return await promisify(
+      cy.get(agentCount).then((count) => {
+        return count.text();
+      })
+    );
+  }
+
+  verifyAgentCount(count) {
+    cy.get(agentCount).then((newcount) => {
+      const newcount1 = newcount.text();
+      expect(parseInt(newcount1)).to.equal(parseInt(count) + 1);
+    });
   }
 }

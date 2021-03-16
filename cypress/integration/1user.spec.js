@@ -3,6 +3,9 @@ import User from '../support/pages/User';
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100000);
 const addUser = new User();
+import Dashboard from '../support/pages/Dashboard';
+var count;
+const Dash = new Dashboard();
 
 describe('Login Successfully and Add User', () => {
   before(() => {
@@ -167,5 +170,36 @@ describe('Login Successfully and Add User', () => {
     addUser.clickingOnUserOption();
     addUser.removeAddedAgentGroup('Working');
     addUser.verifyRemovedAgentGroup('Working');
+  });
+
+  it('Agent count should increase when admin add agent', async () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    count = await addUser.getTotalAgentCount();
+    cy.log(count);
+  });
+
+  it('Create Agent and Verify count', () => {
+    addUser.clickingOnUserOption();
+    cy.wait(3000);
+    addUser.clickAddNewUserButton();
+    addUser.enterFirstName(fixtureData.userFirstname);
+    addUser.enterLastName(fixtureData.userLastname + randNum.toString());
+    addUser.selectROle('Agent');
+    addUser.enterEmail(
+      fixtureData.userEmail.replace(
+        'automation',
+        'automation' + randNum.toString()
+      )
+    );
+    addUser.enterPassword(fixtureData.userPassword);
+    addUser.enterPhoneNumber('0123456789');
+    addUser.clickSaveButton();
+    addUser.verifySuccessToast();
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    addUser.verifyAgentCount(count);
   });
 });

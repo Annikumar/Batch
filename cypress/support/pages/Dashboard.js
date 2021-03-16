@@ -108,6 +108,7 @@ const pauseMessage = '.alert-warning';
 const plans = (planName) => "//div[div[text()='" + planName + "']]//button";
 const continueBtn = '//button[contains(text(),"CONTINUE")]';
 const startBtn = "//button[contains(text(),'START')]";
+const save = "//button[text()=' Save']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -561,6 +562,7 @@ export default class Dashboard {
     cy.get(pauseMessage, { timeout: 20000 }).should('be.visible');
   }
 
+<<<<<<< HEAD
   choosePlan(planName) {
     cy.xpath(plans(planName)).click();
   }
@@ -572,5 +574,26 @@ export default class Dashboard {
   clickStartBtn() {
     cy.xpath(startBtn, { timeout: 20000 }).should('be.visible');
     cy.xpath(startBtn, { timeout: 20000 }).click();
+=======
+  clickAgentFeatureDisable() {
+    cy.xpath(ProfileAgentFeaturesDisable).click();
+  }
+  verifyDialerNotVisible() {
+    cy.get(Dialer).should('not.exist');
+  }
+
+  clickAgentFeatureEnable() {
+    cy.xpath(ProfileAgentFeaturesEnable).click();
+  }
+
+  verifyDialerVisible() {
+    cy.wait(5000);
+    cy.get(Dialer).should('be.visible');
+  }
+
+  clickSaveButton() {
+    cy.xpath(save).click();
+    cy.wait(1000);
+>>>>>>> origin/master
   }
 }

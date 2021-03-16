@@ -68,7 +68,6 @@ describe('Add Campaign flow', () => {
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
-    addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.clickNextCircleArrow();
     addCamp.selectCallerId('2821');
@@ -244,5 +243,58 @@ describe('Add Campaign flow', () => {
     addCamp.clickCampaignMenu();
     addCamp.clickCampaignName('FirstCampaign');
     addCamp.verifyCampaignNameField();
+  });
+
+  it('Verify all combination of filter are working properly', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.searchCampaign('FirstCampaign');
+    addCamp.clickToSelectStatus();
+    addCamp.clickActiveStatus();
+    addCamp.verifyAddedCampaign('FirstCampaign');
+  });
+
+  it('Verify Validation on required field of new campaign page', () => {
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyErrorMessage('Enter Campaign Name');
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.clickNextCircleArrow();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyErrorMessage('Select at least one Call Result');
+  });
+
+  it('It should open schedule window when user click on calling hours', () => {
+    addCamp.clickCallingHours();
+    addCamp.verifySchrduleTable();
+  });
+
+  it('Verify From and To field get disable whenever user unselect check box', () => {
+    addCamp.clickScheduleCheckmark();
+    addCamp.verifyScheduleCheckbox('have.attr');
+    // addCamp.clickScheduleCancelButton();
+  });
+
+  it('Verify From and To field get enable whenever user select check box', () => {
+    addCamp.clickScheduleCheckmark();
+    addCamp.verifyScheduleCheckbox('not.have.attr');
+    addCamp.clickScheduleCancelButton();
+  });
+
+  it('Verify Select All, Apply All, Apply, Cancel Button Functionality on schedule window', () => {
+    addCamp.clickCallingHours();
+    addCamp.clickSelectAllCheckbox();
+    addCamp.clickSelectAllCheckbox();
+    addCamp.verifySelectAll('have.attr');
+    addCamp.clickSelectAllCheckbox();
+    addCamp.clickScheduleCheckmark();
+    addCamp.clickApplyToAllButton();
+    addCamp.verifySelectAll('have.attr');
+    addCamp.clickScheduleCheckmark();
+    addCamp.clickApplyButton();
+    addCamp.VerifyApplyFunctionality();
+    addCamp.clickCallingHours();
+    addCamp.clickScheduleCancelButton();
+    addCamp.verifyScheduleTableNotVisible();
   });
 });

@@ -65,6 +65,23 @@ const RecSkipLeadsCheckbox = "input[name='skip_leads']";
 const RecSkipContacts = "input[name='skip_dnr']";
 const RecSaveCampaign = "//button[contains(text(),'SAVE CAMPAIGN')]";
 const Alert = '.alert';
+const PauseStatus = "//div[text()='Paused']";
+const ActiveStatus = "//div[text()='Active']";
+const ErrorMessage = '.error-msg';
+const scheduleTable = '.schedule-table';
+const scheduleCancelButton =
+  "//div[@class='modal-footer']//button[text()=' CANCEL']";
+const scheduleCheckmark =
+  "//div[text()='Sunday']/parent::div//span[@class='checkmark']";
+const schedule =
+  "//div[text()='Sunday']/parent::div//div[contains(@class,'ss-select') and not(contains(@class,'fakeinput'))]";
+const checkSelectAll =
+  "//div[@class='schedule-table']//div[contains(@class,'ss-select') and not(contains(@class,'fakeinput'))]";
+const selectAllCheckbox =
+  "//div[text()='Select all']/parent::div//span[@class='checkmark']";
+const applyToAll = "//span[text()='Apply to all']";
+const checkApply = "//strong[text()='Sun']";
+const applyButton = "//button[text()=' APPLY']";
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -388,5 +405,62 @@ export default class Campaign {
     cy.xpath(
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]/span'
     ).click();
+  }
+
+  clickPauseStatus() {
+    cy.xpath(PauseStatus).click();
+  }
+
+  clickActiveStatus() {
+    cy.xpath(ActiveStatus).click();
+  }
+
+  verifyErrorMessage(text) {
+    cy.get(ErrorMessage).should('contain.text', text);
+  }
+
+  clickCallingHours() {
+    cy.xpath(callingHours).click();
+  }
+
+  verifySchrduleTable() {
+    cy.get(scheduleTable).should('be.visible');
+  }
+
+  clickScheduleCancelButton() {
+    cy.xpath(scheduleCancelButton).click();
+  }
+
+  clickScheduleCheckmark() {
+    cy.xpath(scheduleCheckmark).click();
+  }
+
+  verifyScheduleCheckbox(attr) {
+    cy.xpath(schedule).should(attr, 'readonly');
+  }
+
+  clickSelectAllCheckbox() {
+    cy.xpath(selectAllCheckbox).click();
+  }
+
+  verifySelectAll(attr) {
+    cy.wait(4000);
+    cy.xpath(checkSelectAll).should(attr, 'readonly');
+  }
+
+  clickApplyToAllButton() {
+    cy.xpath(applyToAll).click();
+  }
+
+  VerifyApplyFunctionality() {
+    cy.xpath(checkApply).should('be.visible');
+  }
+
+  clickApplyButton() {
+    cy.xpath(applyButton).click();
+  }
+
+  verifyScheduleTableNotVisible() {
+    cy.get(scheduleTable).should('not.exist');
   }
 }

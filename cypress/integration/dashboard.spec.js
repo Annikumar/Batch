@@ -348,4 +348,20 @@ describe('Dashboard Elements', function () {
     Dash.clickDeleteRecordingBtn('TextSpeech' + randNum.toString());
     Dash.verifyDeletedRecording('TextSpeech' + randNum.toString());
   });
+
+  it('Call feature should disable for admin if Agent Feature is Disable', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickAgentFeatureDisable();
+    Dash.clickSaveButton();
+    Dash.verifyDialerNotVisible();
+  });
+
+  it('Call feature should enable for admin if Agent Feature is Enable', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickAgentFeatureEnable();
+    Dash.clickSaveButton();
+    Dash.verifyDialerVisible();
+  });
 });
