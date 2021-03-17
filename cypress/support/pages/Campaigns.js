@@ -82,6 +82,15 @@ const selectAllCheckbox =
 const applyToAll = "//span[text()='Apply to all']";
 const checkApply = "//strong[text()='Sun']";
 const applyButton = "//button[text()=' APPLY']";
+const newScriptPopUp = '.modal-body';
+const contactListDropdown = '.ss-select-dropdown';
+const campaignSetting = '.custom_drop ';
+const campaignSettingOptions = '.dropdown-menu-right';
+const FirstCampaignMenuButton =
+  "//span[text()='FirstCampaign']/ancestor::tr//div[contains(@class,'custom_drop ')]/span";
+const campaignEditButton = "//a[text()='Edit']";
+const campaignChange =
+  "//span[text()='FirstCampaign']/ancestor::tr//td[text()='Predictive Dialer']";
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -462,5 +471,47 @@ export default class Campaign {
 
   verifyScheduleTableNotVisible() {
     cy.get(scheduleTable).should('not.exist');
+  }
+
+  clickAgentScriptCreateNewButton() {
+    cy.get(AgentScriptCreateNew).click();
+  }
+
+  verifyAgentScriptPopUp() {
+    cy.get(newScriptPopUp).should('be.visible');
+  }
+
+  verifyContactListDropdown() {
+    cy.get(contactListDropdown).should('be.visible');
+  }
+
+  clickContactListDropdown() {
+    cy.xpath(contactLists).click();
+  }
+
+  clickCampaignSetting() {
+    cy.get(campaignSetting).click();
+  }
+
+  verifyCampaignSettingOptions(option) {
+    for (let i = 0; i < option.length; i++) {
+      cy.get(campaignSettingOptions).should('contain.text', option[i]);
+    }
+  }
+
+  clickSaveCampaign() {
+    cy.xpath(RecSaveCampaign).click();
+  }
+
+  clickFirstCampaignMenuButton() {
+    cy.xpath(FirstCampaignMenuButton).click({ force: true });
+  }
+
+  clickEditCampaignNew() {
+    cy.xpath(campaignEditButton).click({ force: true });
+  }
+
+  verifyCampaignChange() {
+    cy.xpath(campaignChange).should('be.visible');
   }
 }
