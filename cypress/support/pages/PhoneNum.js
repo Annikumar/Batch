@@ -127,6 +127,17 @@ const removeNewDigit = (val) =>
   "//div[contains(@class,'number-editor')][input[@value='" +
   val +
   "']]/ancestor::div[contains(@class,'form-group')]//img[contains(@src,'remove')]";
+const contactName = '.custom_checkbox + td span:not(.fakelink)';
+const phone = '.phone-number';
+const nextPage = 'img[title="Next Page"]';
+const contactMenu = (firstName, lastName) =>
+  "//tr[td[contains(.,'" +
+  firstName +
+  "') and contains(.,'" +
+  lastName +
+  "')]]//img[contains(@src,'edit')]";
+const addToDNC = "//a[@class='dropdown-item' and (text()='Add to DNC')]";
+const cardText = '.card-text';
 
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
@@ -710,5 +721,19 @@ export default class PhoneNum {
 
   removeAddedNewDigit(val) {
     cy.xpath(removeNewDigit(val)).click();
+  }
+
+  clickContactMenu(firstName, lastName) {
+    cy.xpath(contactMenu(firstName, lastName)).click();
+  }
+
+  clickAddToDNC() {
+    cy.xpath(addToDNC).click();
+  }
+
+  verifyAddedDNCNumber(num) {
+    cy.get(cardText).then((el) => {
+      expect(el.text()).to.contains(num);
+    });
   }
 }

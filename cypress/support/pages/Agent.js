@@ -19,6 +19,20 @@ const callResultText = '.disposition';
 const editCallResultWindow = '.modal-content .call-disposition-title';
 const callResults = '.disposition-cell .disposition';
 const softphoneCloseBtn = '.stg-softphone-right-close';
+const softphone = '.stg-softphone-wrapper';
+const contactsMenu = 'a[title="Contacts"]';
+const contact = (firstName, lastName) =>
+  "//tr[td[contains(.,'" +
+  firstName +
+  "') and contains(.,'" +
+  lastName +
+  "')]]//img[contains(@src,'view')]";
+const phoneNumber =
+  "//tr[td[@class='contact-field' and contains(text(),'Phone')]]//td[@class='contact-value']";
+const callTransferBtn = 'div[title="Transfer"]';
+const callBtn = '.stg-softphone-callbutton';
+const callResultWindow = '.modal-content .call-disposition-title';
+const cancelBtn = '//button[contains(text(),"Cancel")]';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -49,6 +63,10 @@ export default class Agent {
     cy.xpath(continueBtn).click();
   }
 
+  verifyContinueBtn() {
+    cy.xpath(continueBtn).should('be.visible');
+  }
+
   clickRecentContact() {
     cy.get(recentContact).click({ force: true });
   }
@@ -58,14 +76,15 @@ export default class Agent {
   }
 
   clickEditRecentContact(firstName, lastName) {
-    this.clickCloseSoftphoneBtn();
-    cy.xpath(editContact(firstName, lastName)).click({ force: true });
+    cy.xpath(editContact(firstName, lastName)).first().click({ force: true });
   }
 
   verifyCallResult(result) {
-    cy.get(callResultText).then((el) => {
-      expect(el.text()).to.equal(result);
-    });
+    cy.get(callResultText)
+      .first()
+      .then((el) => {
+        expect(el.text()).to.equal(result);
+      });
   }
 
   verifyCallResultWindow() {
@@ -84,10 +103,46 @@ export default class Agent {
   }
 
   clickCloseSoftphoneBtn() {
-    cy.get('body').then(($body) => {
-      if ($body.find(softphoneCloseBtn).length) {
-        cy.get(softphoneCloseBtn).click();
-      }
-    });
+    cy.get(softphoneCloseBtn).click();
+  }
+
+  verifySoftphoneOpen() {
+    cy.get(softphone, { timeout: 20000 }).should('be.visible');
+  }
+
+  clickingOnContactOption() {
+    cy.get(contactsMenu).click({ force: true });
+  }
+
+  clickContactName(firstName, lastName) {
+    cy.xpath(contact(firstName, lastName)).click({ force: true });
+  }
+
+  clickPhoneNumber() {
+    cy.xpath(phoneNumber).click();
+  }
+
+  clickCallTransferBtn() {
+    cy.get(callTransferBtn).click();
+  }
+
+  clickCallBtn() {
+    cy.get(callBtn).click();
+  }
+
+  clickEndCallBtn() {
+    cy.get(callBtn).click();
+  }
+
+  verifyCallResultWindow() {
+    cy.get(callResultWindow).should('be.visible');
+  }
+
+  verifyCancelBtn() {
+    cy.xpath(cancelBtn).should('be.visible');
+  }
+
+  clickCancelBtn() {
+    cy.xpath(cancelBtn).click();
   }
 }

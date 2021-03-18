@@ -5,7 +5,7 @@ let randNum = Math.floor(Math.random() * 100000);
 const agent = new Agent();
 
 describe('Agent Profile', function () {
-  beforeEach(() => {
+  before(() => {
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -19,7 +19,7 @@ describe('Agent Profile', function () {
   });
 
   after(() => {
-    agent.selectAgentStatus('Break');
+    agent.selectAgentStatus('Offline');
     cy.Logout();
   });
 
@@ -38,6 +38,7 @@ describe('Agent Profile', function () {
     agent.verifySelectCampaignBox();
     agent.selectCampaign('FirstCampaign');
     agent.clickContinueBtn();
+    agent.clickCloseSoftphoneBtn();
   });
 
   it('Verify the Recent Contacts Page Landing', () => {
@@ -59,5 +60,38 @@ describe('Agent Profile', function () {
     agent.clickContinueBtn();
     cy.wait(2000);
     agent.verifyCallResult('Busy');
+  });
+
+  it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
+    agent.clickingOnContactOption();
+    agent.clickContactName('New', 'User');
+    agent.clickPhoneNumber();
+    agent.verifySoftphoneOpen();
+  });
+
+  it('Open the Call Result Window when Agent disconnect the Call', () => {
+    agent.clickingOnContactOption();
+    agent.clickContactName('New', 'User');
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    cy.wait(2000);
+    agent.clickEndCallBtn();
+    agent.verifyCallResultWindow();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
+  });
+
+  it('Verifies the Cal transfer Continue and Cancel Button', () => {
+    agent.clickingOnContactOption();
+    agent.clickContactName('New', 'User');
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    agent.clickCallTransferBtn();
+    agent.verifyContinueBtn();
+    agent.verifyCancelBtn();
+    agent.clickCancelBtn();
+    agent.clickEndCallBtn();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
   });
 });

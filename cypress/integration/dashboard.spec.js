@@ -364,4 +364,13 @@ describe('Dashboard Elements', function () {
     Dash.clickSaveButton();
     Dash.verifyDialerVisible();
   });
+
+  it.skip('Send Email to add a New Lead', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickAffiliateBtn();
+    Dash.enterLeadEmail('testing@email.com');
+    Dash.clickLeadSubmitBtn();
+    Dash.VerifyLeadSendMessage();
+  });
 });

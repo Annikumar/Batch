@@ -1,9 +1,13 @@
+import promisify from 'cypress-promise';
 import Campaign from '../support/pages/Campaigns';
+import Contacts from '../support/pages/Contacts';
 import PhoneNum from '../support/pages/PhoneNum';
 
 let fixtureData;
 let num;
+let phone;
 const addNum = new PhoneNum();
+const addCont = new Contacts();
 let randNum = Math.floor(Math.random() * 100000);
 
 describe('Add Phone Number flow', () => {
@@ -443,5 +447,20 @@ describe('Add Phone Number flow', () => {
     addNum.clickDncMenu();
     addNum.clickDeleteDncFile('contact-sample.csv');
     addNum.handleDeleteAlert('Delete?');
+  });
+
+  it('Add a contact Phone to DNC', async () => {
+    addCont.clickingOnContactOption();
+    addCont.enterKeywordToSearch('New User');
+    cy.wait(1000);
+    phone = await promisify(addCont.getPhoneNumber());
+  });
+  it('Check for Added contact in DNC Page', () => {
+    addNum.clickContactMenu('New', 'User');
+    addNum.clickAddToDNC();
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    cy.wait(1000);
+    addNum.verifyAddedDNCNumber(phone);
   });
 });

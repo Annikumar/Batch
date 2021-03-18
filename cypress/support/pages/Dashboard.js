@@ -109,6 +109,11 @@ const plans = (planName) => "//div[div[text()='" + planName + "']]//button";
 const continueBtn = '//button[contains(text(),"CONTINUE")]';
 const startBtn = "//button[contains(text(),'START')]";
 const save = "//button[text()=' Save']";
+const affiliate = "//button[text()='Affiliate']";
+const leadEmail = '#lead_email';
+const leadSubmitBtn = 'input[name="commit"][value="Submit"]';
+const sendLeadMessage = '//strong[text()="Thank you! The lead was submitted."]';
+const iframe = 'iframe[title="Affiliate"]';
 
 export default class Dashboard {
   clickDashboard() {
@@ -593,5 +598,48 @@ export default class Dashboard {
   clickSaveButton() {
     cy.xpath(save).click();
     cy.wait(1000);
+  }
+
+  clickAffiliateBtn() {
+    cy.xpath(affiliate).click();
+  }
+  enterLeadEmail(email) {
+    // const $iframe = cy
+    //   .get(iframe)
+    //   .its('0.contentDocument.body')
+    //   .should('be.visible')
+    //   .then(cy.wrap);
+    // // $iframe.get(leadEmail).should('be.visible');
+    // cy.log($iframe[1]);
+    // for (let i = 0; i < $iframe.length; i++) {
+    //   cy.log($iframe[i]);
+    // }
+
+    // $iframe.find('input', { timeout: 10000 }).should('be.visible').type(email);
+    cy.get(iframe).then(($iframe) => {
+      const $body = $iframe.contents().find('body');
+      let Email = cy.wrap($body);
+      Email.find(leadEmail).type(email);
+    });
+  }
+
+  clickLeadSubmitBtn() {
+    cy.get(iframe).then(($iframe) => {
+      const $body = $iframe.contents().find('body');
+      let Submit = cy.wrap($body);
+      for (let i = 0; i < Submit.length; i++) {
+        cy.log(Submit[i]);
+      }
+      cy.log(Submit);
+      Submit.find(leadSubmitBtn).click();
+    });
+  }
+
+  VerifyLeadSendMessage() {
+    cy.get(iframe).then(($iframe) => {
+      const $body = $iframe.contents().find('body');
+      let Message = cy.wrap($body);
+      Message.find(sendLeadMessage).should('be.visible');
+    });
   }
 }

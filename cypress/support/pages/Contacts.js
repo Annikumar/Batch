@@ -1,3 +1,5 @@
+import promisify from 'cypress-promise';
+
 const contactsMenu = 'a[title="Contacts"]';
 const addNewContact = '//button[contains(text(),"NEW CONTACT")]';
 const createNewOption =
@@ -96,6 +98,7 @@ const listDeleteButton = 'svg[data-icon="trash-alt"]';
 const listStatus = "//td[text()='testing']/ancestor::tr/td[text()='paused']";
 const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
+const phone = '.phone-number';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -401,8 +404,8 @@ export default class Contacts {
     cy.xpath(submitButton).should('be.visible');
   }
 
-  enterKeywordToSearch(search) {
-    cy.get(searchBox).type(search);
+  async enterKeywordToSearch(search) {
+    await promisify(cy.get(searchBox).type(search));
   }
 
   verifySearchResult(result) {
@@ -495,5 +498,18 @@ export default class Contacts {
 
   verifyStatus() {
     cy.xpath(listStatus).should('be.visible');
+  }
+
+  async getPhoneNumber() {
+    let number;
+    await promisify(
+      cy.get(phone, { timeout: 5000 }).then((el) => {
+        // await cy.log(el.text().trim());
+        number = el.text().trim();
+        cy.log(number);
+      })
+    );
+    // cy.log(number);
+    return number;
   }
 }
