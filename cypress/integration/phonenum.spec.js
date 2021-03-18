@@ -444,4 +444,11 @@ describe('Add Phone Number flow', () => {
     addNum.clickDeleteDncFile('contact-sample.csv');
     addNum.handleDeleteAlert('Delete?');
   });
+
+  it('Search phone number using search box', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.enterSearchKeyword('9283662821');
+    addNum.verifySearchedNumber();
+    addNum.verifyNumberNotVisible();
+  });
 });

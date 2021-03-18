@@ -97,6 +97,8 @@ const listStatus = "//td[text()='testing']/ancestor::tr/td[text()='paused']";
 const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 
+const errorMessage = '.error-msg';
+
 export default class Contacts {
   clickingOnContactOption() {
     cy.get(contactsMenu).click({ force: true });
@@ -495,5 +497,9 @@ export default class Contacts {
 
   verifyStatus() {
     cy.xpath(listStatus).should('be.visible');
+  }
+
+  verifyErrorMessage(msg) {
+    cy.get(errorMessage).should('contain.text', msg);
   }
 }
