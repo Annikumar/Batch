@@ -138,6 +138,8 @@ const contactMenu = (firstName, lastName) =>
   "')]]//img[contains(@src,'edit')]";
 const addToDNC = "//a[@class='dropdown-item' and (text()='Add to DNC')]";
 const cardText = '.card-text';
+const searchedNumber = "//td[text()='9283662821']";
+const searchedNumber1 = "//td[text()='9283662816']";
 
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
@@ -351,9 +353,9 @@ export default class PhoneNum {
 
   deleteAddedPhoneNumber(num) {
     cy.xpath(
-      '//table[contains(@class,"table")]//tr[td[contains(.,"' +
+      '(//table[contains(@class,"table")]//tr[td[contains(.,"' +
         num +
-        '")]]//span[img[contains(@src,"delete.svg")]]',
+        '")]]//span[img[contains(@src,"delete.svg")]])[1]',
       { timeout: 5000 }
     ).click();
   }
@@ -735,5 +737,13 @@ export default class PhoneNum {
     cy.get(cardText).then((el) => {
       expect(el.text()).to.contains(num);
     });
+  }
+  verifySearchedNumber() {
+    cy.wait(1000);
+    cy.xpath(searchedNumber).should('be.visible');
+  }
+
+  verifyNumberNotVisible() {
+    cy.xpath(searchedNumber1).should('not.exist');
   }
 }

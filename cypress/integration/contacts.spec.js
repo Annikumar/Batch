@@ -293,4 +293,12 @@ describe('Add Contact flow', () => {
     addCont.handleAlertForDelete();
     addCont.verifyDeletedToast();
   });
+
+  it('check validation on required fields of new contact', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickAddNewContactButton();
+    addCont.selctCreateNewContactOption();
+    addCont.clickSaveButton();
+    addCont.verifyErrorMessage('Enter First Name');
+  });
 });

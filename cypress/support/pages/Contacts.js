@@ -100,6 +100,8 @@ const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 const phone = '.phone-number';
 
+const errorMessage = '.error-msg';
+
 export default class Contacts {
   clickingOnContactOption() {
     cy.get(contactsMenu).click({ force: true });
@@ -511,5 +513,8 @@ export default class Contacts {
     );
     // cy.log(number);
     return number;
+  }
+  verifyErrorMessage(msg) {
+    cy.get(errorMessage).should('contain.text', msg);
   }
 }

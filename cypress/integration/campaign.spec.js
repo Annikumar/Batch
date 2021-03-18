@@ -297,4 +297,43 @@ describe('Add Campaign flow', () => {
     addCamp.clickScheduleCancelButton();
     addCamp.verifyScheduleTableNotVisible();
   });
+
+  it.skip('Verify functionality of create new button on New campaign page', () => {
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.clickAgentScriptCreateNewButton();
+    addCamp.verifyAgentScriptPopUp();
+    addCamp.clickScheduleCancelButton();
+  });
+
+  it('Verify contact list dropdown should show lists dropdown', () => {
+    addCamp.selectCallResultsOption('Busy');
+    addCamp.clickNextCircleArrow();
+    addCamp.clickContactListDropdown();
+    addCamp.verifyContactListDropdown();
+  });
+
+  it('Verify Campaign Setting Options', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickCampaignSetting();
+    addCamp.verifyCampaignSettingOptions([
+      'Edit',
+      'Recycle',
+      'Call Again',
+      'Call Again',
+      'Archive',
+    ]);
+  });
+
+  it('Verify functionality of edit Campaign button', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickFirstCampaignMenuButton();
+    addCamp.clickEditCampaignNew();
+    addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.clickSaveCampaign();
+    addCamp.verifyCampaignChange();
+    addCamp.clickFirstCampaignMenuButton();
+    addCamp.clickEditCampaignNew();
+    addCamp.selectDialingModeOption('Preview Dialer');
+    addCamp.clickSaveCampaign();
+  });
 });

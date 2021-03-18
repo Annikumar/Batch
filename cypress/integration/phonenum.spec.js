@@ -463,4 +463,10 @@ describe('Add Phone Number flow', () => {
     cy.wait(1000);
     addNum.verifyAddedDNCNumber(phone);
   });
+  it('Search phone number using search box', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.enterSearchKeyword('9283662821');
+    addNum.verifySearchedNumber();
+    addNum.verifyNumberNotVisible();
+  });
 });
