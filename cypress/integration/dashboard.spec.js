@@ -2,6 +2,7 @@ import Dashboard from '../support/pages/Dashboard';
 
 const Dash = new Dashboard();
 let fixtureData;
+let cardLast4Digit;
 let randNum = Math.floor(Math.random() * 100000);
 
 describe('Dashboard Elements', function () {
@@ -10,6 +11,9 @@ describe('Dashboard Elements', function () {
       .then((data) => (fixtureData = data))
       .then(() => {
         cy.visit(fixtureData.url, { failOnStatusCode: false });
+        cardLast4Digit = fixtureData.cardNumber.slice(
+          fixtureData.cardNumber.length - 4
+        );
       });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
@@ -43,7 +47,7 @@ describe('Dashboard Elements', function () {
 
   it('Change Admin Status', function () {
     Dash.clickStatusButton();
-    Dash.selectAvailable('Available');
+    Dash.selectAvailable('Available', 'FirstCampaign');
     Dash.clickContinue();
   });
 
@@ -117,6 +121,39 @@ describe('Dashboard Elements', function () {
     Dash.verifyInvoice();
   });
 
+  it('Add New Credit Card', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickAddNewCard();
+    Dash.enterCardName(fixtureData.cardHolderName);
+    Dash.enterCardNumber(fixtureData.cardNumber);
+    Dash.enterExpiryDate(fixtureData.cardExpiryDate);
+    Dash.enterCVC(fixtureData.cardCVC);
+    Dash.chooseCountry('United States');
+    Dash.enterBillingZip('43256');
+    Dash.clickContinue();
+    Dash.verifyAddedCard(cardLast4Digit);
+  });
+
+  it('Verify the Default Credit Card Functionality', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickCardDefaultBtn(cardLast4Digit);
+    Dash.verifyCardDefault(cardLast4Digit);
+    Dash.clickCardDefaultBtn('8210');
+    Dash.verifyCardDefault('8210');
+  });
+
+  it('Delete the Added New Credit Card', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickDeleteCardBtn(cardLast4Digit);
+    Dash.verifyCardDelete();
+  });
+
   it('Verifies monthly total should be greater when keeping phone', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
@@ -138,7 +175,7 @@ describe('Dashboard Elements', function () {
     Dash.clickClosePauseSubscriptionBox();
   });
 
-  it('Pause Account while keeping the Phone Number', () => {
+  it.skip('Pause Account while keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -149,7 +186,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it('Unpause account by choosing any Plan', () => {
+  it.skip('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -158,7 +195,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyPauseAccount();
   });
 
-  it('Pause Account while not keeping the Phone Number', () => {
+  it.skip('Pause Account while not keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -170,13 +207,21 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it('Unpause account by choosing any Plan', () => {
+  it.skip('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
     Dash.clickContinueBtn();
     Dash.verifyPauseAccount();
+  });
+
+  it('Upgrade the Plan', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+    Dash.clickContinueBtn();
   });
 
   it('Verify User settings Address Boook elements', () => {
@@ -372,5 +417,12 @@ describe('Dashboard Elements', function () {
     Dash.enterLeadEmail('testing@email.com');
     Dash.clickLeadSubmitBtn();
     Dash.VerifyLeadSendMessage();
+  });
+
+  it('download invoice and Verify', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.downloadAndVerifyInvoice();
   });
 });

@@ -117,6 +117,22 @@ const sendLeadMessage = '//strong[text()="Thank you! The lead was submitted."]';
 const iframe = 'iframe[title="Affiliate"]';
 const agentSlider = (planName) =>
   "//div[div[text()='" + planName + "']]//div[@class='rc-slider-handle']";
+const cardNumber = 'input[name="cardnumber"]';
+const expiryDate = 'input[name="exp-date"]';
+const cvc = 'input[name="cvc"]';
+const countires = '.modal-body .ss-select-value';
+const zip = 'input[name="zip"]';
+const cards = '.cardtype';
+const deleteCardBtn = (last4Digit) =>
+  "//tr[td[@class='cardtype' and contains(.,'" +
+  last4Digit +
+  "')]]//*[name()='svg'][@data-icon='trash-alt']";
+const cardDefaultBtn = (last4Digit) =>
+  "//tr[td[@class='cardtype' and contains(.,'" +
+  last4Digit +
+  "')]]//*[name()='svg'][@data-icon='star']";
+const cardDeleteToast =
+  "//div[contains(@class,'mytoast') and text()='The card has been successfully removed']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -157,13 +173,21 @@ export default class Dashboard {
     cy.get(StatusDropDown).click();
   }
 
-  selectAvailable(Status) {
+  selectAvailable(Status, campaign) {
     cy.get(SelectStatus)
       .contains(Status)
       .then((option) => {
         option[0].click();
       });
-    cy.contains('FirstCampaign').click();
+    // cy.contains('FirstCampaign').click();
+    cy.get('.row label', { timeout: 5000 }).then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim() === campaign) {
+          cy.get(el[i]).click();
+          break;
+        }
+      }
+    });
   }
 
   clickContinue() {
@@ -608,6 +632,14 @@ export default class Dashboard {
     cy.xpath(affiliate).click();
   }
   enterLeadEmail(email) {
+    const iframe = cy
+      .get('iframe[title="Affiliate"]')
+      .its('0.contentDocument')
+      .should('exist')
+      .its('body')
+      .should('not.be.undefined')
+      .then(cy.wrap);
+    iframe.find('input[name="lead[email]"]').type(email);
     // const $iframe = cy
     //   .get(iframe)
     //   .its('0.contentDocument.body')
@@ -620,11 +652,11 @@ export default class Dashboard {
     // }
 
     // $iframe.find('input', { timeout: 10000 }).should('be.visible').type(email);
-    cy.get(iframe).then(($iframe) => {
-      const $body = $iframe.contents().find('body');
-      let Email = cy.wrap($body);
-      Email.find(leadEmail).type(email);
-    });
+    // cy.get(iframe).then(($iframe) => {
+    //   const $body = $iframe.contents().find('body');
+    //   let Email = cy.wrap($body);
+    //   Email.find(leadEmail).type(email);
+    // });
   }
 
   clickLeadSubmitBtn() {
@@ -644,6 +676,110 @@ export default class Dashboard {
       const $body = $iframe.contents().find('body');
       let Message = cy.wrap($body);
       Message.find(sendLeadMessage).should('be.visible');
+    });
+  }
+
+  enterCardName(name) {
+    cy.get(enterName).type(name);
+  }
+
+  Iframe() {
+    return cy
+      .get('iframe[title*="Secure"]')
+      .its('0.contentDocument')
+      .should('exist')
+      .its('body')
+      .should('not.be.undefined')
+      .then(cy.wrap);
+  }
+
+  enterCardNumber(no) {
+    this.Iframe().find(cardNumber).type(no);
+  }
+
+  enterExpiryDate(date) {
+    const iframe = cy
+      .get('iframe[title*="Secure expiration date"]')
+      .its('0.contentDocument')
+      .should('exist')
+      .its('body')
+      .should('not.be.undefined')
+      .then(cy.wrap);
+    iframe.find(expiryDate).type(date);
+  }
+
+  enterCVC(cvv) {
+    const iframe = cy
+      .get('iframe[title*="Secure CVC"]')
+      .its('0.contentDocument')
+      .should('exist')
+      .its('body')
+      .should('not.be.undefined')
+      .then(cy.wrap);
+    iframe.find(cvc).type(cvv);
+  }
+
+  clickAddNewCard() {
+    cy.xpath(addNewCard).click();
+  }
+
+  chooseCountry(country) {
+    cy.get(countires).click();
+    cy.get('.ss-select-option').then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim() === country) {
+          cy.get(el[i]).scrollIntoView().click({ force: true });
+          break;
+        }
+      }
+    });
+  }
+
+  enterBillingZip(billingZip) {
+    cy.get(zip).type(billingZip);
+  }
+
+  verifyAddedCard(last4digit) {
+    cy.get(cards).should('contain.text', last4digit);
+  }
+
+  clickDeleteCardBtn(last4Digit) {
+    cy.xpath(deleteCardBtn(last4Digit)).click();
+  }
+
+  clickCardDefaultBtn(last4Digit) {
+    cy.xpath(cardDefaultBtn(last4Digit)).click();
+  }
+
+  verifyCardDefault(last4Digit) {
+    cy.xpath(deleteCardBtn(last4Digit)).should('not.exist');
+  }
+
+  verifyCardDelete() {
+    cy.xpath(cardDeleteToast).should('be.visible');
+  }
+
+  downloadAndVerifyInvoice() {
+    cy.get('.profile-invoices1 table tr:nth-child(1) a', {
+      timeout: 30000,
+    }).then((link) => {
+      const href = link[0].getAttribute('href');
+      let invoiceName;
+      cy.get('.profile-invoices1 table tr:nth-child(1) td:nth-of-type(2)').then(
+        (el) => {
+          invoiceName = el.text().trim();
+          cy.downloadFile(
+            href,
+            'cypress/fixtures/Download',
+            'Invoice-' + invoiceName + '.pdf'
+          );
+          cy.task('getPdfContent', 'Invoice-CC6CC398-0308.pdf').then(
+            (content) => {
+              expect(content.text).to.contains(invoiceName);
+            }
+          );
+        }
+      );
     });
   }
 }

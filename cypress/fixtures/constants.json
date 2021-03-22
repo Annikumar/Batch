@@ -9,9 +9,13 @@
   "contactEmail": "automation-contact@email.com",
   "contactLastname": "contact",
   "campaignName": "demo",
-  "randNum": 84463,
+  "randNum": 42506,
   "agentUsername": "automation90@email.com",
   "agentPassword": "Password1",
   "supervisorUsername": "xedam43281@naymio.com",
-  "supervisorPassword": "Fleek@2016"
+  "supervisorPassword": "Fleek@2016",
+  "cardNumber": "3056930009020004",
+  "cardExpiryDate": "0525",
+  "cardCVC": "656",
+  "cardHolderName": "DemoTesting"
 }
