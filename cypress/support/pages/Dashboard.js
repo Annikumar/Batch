@@ -133,6 +133,12 @@ const cardDefaultBtn = (last4Digit) =>
   "')]]//*[name()='svg'][@data-icon='star']";
 const cardDeleteToast =
   "//div[contains(@class,'mytoast') and text()='The card has been successfully removed']";
+const chaticon = 'div[id="fc_frame"]';
+const chatWindow = '.fc-conversation-view';
+const enterChat = '#app-conversation-editor p';
+const chatBoxInputEmail = '.email-input';
+const chatBoxEnterText = '.user-comment';
+const chatBoxSendMessage = '.send-message';
 
 export default class Dashboard {
   clickDashboard() {
@@ -781,5 +787,98 @@ export default class Dashboard {
         }
       );
     });
+  }
+  verifyChaticon() {
+    cy.get(chaticon).should('be.visible');
+  }
+
+  // clickChatIcon() {
+  //   cy.get(chaticon).click({ force: true });
+  //   cy.wait(3000);
+  // }
+
+  verifyChatWindow() {
+    cy.get(chatWindow).should('be.visible');
+  }
+
+  getIframeDocument = () => {
+    return (
+      cy
+        .get('iframe[id="fc_widget"]')
+        // Cypress yields jQuery element, which has the real
+        // DOM element under property "0".
+        // From the real DOM iframe element we can get
+        // the "document" element, it is stored in "contentDocument" property
+        // Cypress "its" command can access deep properties using dot notation
+        // https://on.cypress.io/its
+        .its('0.contentDocument')
+        .should('exist')
+    );
+  };
+  getIframeBody = () => {
+    // get the document
+    return (
+      this.getIframeDocument()
+        // automatically retries until body is loaded
+        .its('body')
+        .should('not.be.undefined')
+        // wraps "body" DOM element to allow
+        // chaining more Cypress commands, like ".find(...)"
+        .then(cy.wrap)
+    );
+  };
+
+  clickChatIcon() {
+    this.getIframeBody().find('.chat-content').click();
+  }
+
+  verifyChatPopUp() {
+    this.getIframeBody().find('.fc-conversation-view').should('be.visible');
+  }
+
+  verifyChatTitle() {
+    this.getIframeBody()
+      .find('.channel-title')
+      .should('contain.text', 'Customer Support');
+  }
+
+  verifyAttachmentIcon() {
+    this.getIframeBody().find('.icon-ic_attachment').should('be.visible');
+  }
+
+  verifyEmojiIcon() {
+    this.getIframeBody().find('.icon-ic_smiley').should('be.visible');
+  }
+
+  verifyCloseButton() {
+    this.getIframeBody().find('.icon-ic_close').should('be.visible');
+  }
+
+  enterChatInBox(text) {
+    this.getIframeBody().find(enterChat).type(text).type('{enter}');
+  }
+
+  enterEmailInBox(email, text) {
+    var count = 1;
+    if (this.getIframeBody().get(chatBoxInputEmail).should('not.exist')) {
+      var count = 0;
+    }
+    if (count == 1) {
+      this.getIframeBody().find(chatBoxInputEmail).type(email);
+      this.enterTextInChatBox(text);
+      this.clickSendChat();
+    }
+  }
+
+  enterTextInChatBox(text) {
+    this.getIframeBody().find(chatBoxEnterText).type(text);
+  }
+
+  clickSendChat() {
+    this.getIframeBody().find(chatBoxSendMessage).click();
+  }
+
+  verifyMessageSent(text) {
+    this.getIframeBody().find(chatWindow).should('contain.text', text);
   }
 }

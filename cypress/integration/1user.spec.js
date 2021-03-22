@@ -202,4 +202,18 @@ describe('Login Successfully and Add User', () => {
     Dash.clickBilling();
     addUser.verifyAgentCount(count);
   });
+
+  it('Verify Validation on fields on Add new user page', () => {
+    addUser.clickingOnUserOption();
+    cy.wait(3000);
+    addUser.clickAddNewUserButton();
+    addUser.clickSaveButton();
+    addUser.verifyFieldValidation([
+      'Enter First Name',
+      'Enter Last Name',
+      'Enter Password',
+      'Enter Email',
+      'Enter Phone',
+    ]);
+  });
 });

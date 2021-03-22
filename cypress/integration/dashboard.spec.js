@@ -425,4 +425,26 @@ describe('Dashboard Elements', function () {
     Dash.clickBilling();
     Dash.downloadAndVerifyInvoice();
   });
+  it('Verify chat option should be visible', () => {
+    Dash.clickDashboard();
+    Dash.verifyChaticon();
+  });
+
+  it('Verify Chat icon should open chat window', () => {
+    Dash.clickChatIcon();
+    Dash.verifyChatPopUp();
+  });
+
+  it('Verify user is able to enter chat in chat box', () => {
+    Dash.enterEmailInBox('test@test.com', 'Hello');
+    Dash.enterChatInBox('Hello');
+    Dash.verifyMessageSent('Hello');
+  });
+
+  it('Verify chat pop up Elements', () => {
+    Dash.verifyChatTitle();
+    Dash.verifyAttachmentIcon();
+    Dash.verifyEmojiIcon();
+    Dash.verifyCloseButton();
+  });
 });
