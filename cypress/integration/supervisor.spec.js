@@ -29,7 +29,7 @@ describe('SuperVisor Flow', () => {
   it('Verify View Button Functionality for Contacts', () => {
     suprevisor.clickingOnContactOption();
     cy.wait(3000);
-    suprevisor.clickViewBtn('random', 'Contact');
+    suprevisor.clickViewBtn('New', 'User');
     suprevisor.verifyViewForm();
   });
 

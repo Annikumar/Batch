@@ -48,7 +48,7 @@ const contactImportToast = '//div[text()="Contacts import started"]';
 const importCmpltToast =
   '//div[@class="Toastify__toast-body"]//div[contains(text(),"Import complete")]';
 const searchBox = '.search-box';
-const allList = '//span[text()="All Lists"]';
+const allList = '.form-group .ss-select-control';
 const newContactBtn = '.create_col button';
 const saleMadeCheckbox = 'input[name="salemade"]';
 const appointmentMadeCheckbox = 'input[name="appointmentmade"]';
@@ -95,7 +95,7 @@ const listImportContactButton = '//button[text()="IMPORT CONTACTS"]';
 const listsTable = '.table tbody';
 const listPauseButton = 'svg[data-icon="pause"]';
 const listDeleteButton = 'svg[data-icon="trash-alt"]';
-const listStatus = "//td[text()='testing']/ancestor::tr/td[text()='paused']";
+const listStatus = 'svg[data-icon="play"]';
 const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 const phone = '.phone-number';
@@ -224,7 +224,7 @@ export default class Contacts {
   }
 
   verifyAllListDropdown() {
-    cy.xpath(allList).should('be.visible');
+    cy.get(allList).should('be.visible');
   }
 
   verifyNewContactBtn() {
@@ -425,13 +425,13 @@ export default class Contacts {
   }
 
   clickListDropdown() {
-    cy.xpath(allList).click();
+    cy.get(allList).click();
   }
   clickTesting() {
     cy.get('.ss-select-option').then((option) => {
       for (let i = 0; i < option.length; i++) {
         if (option[i].textContent.trim() === 'testing') {
-          cy.get(option[i]).scrollIntoView().click({ force: true });
+          cy.get(option[i]).click();
           break;
         }
       }
@@ -495,11 +495,11 @@ export default class Contacts {
   }
 
   clickPauseButton() {
-    cy.xpath(testingPauseButton).click();
+    cy.get(listPauseButton).first().click();
   }
 
   verifyStatus() {
-    cy.xpath(listStatus).should('be.visible');
+    cy.get(listStatus).should('be.visible');
   }
 
   async getPhoneNumber() {

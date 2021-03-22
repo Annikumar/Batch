@@ -70,11 +70,11 @@ const numberField = '.modal-content input[type="text"]';
 const saveBtn = '//button[contains(text(),"SAVE")]';
 const addMoreBtn = '.modal-content img[src*="add"]';
 const deleteAddedDncValue = (title, value) =>
-  "//div[contains(@class,'card-title')][contains(.,'" +
+  "//div[span[strong[contains(text(),'" +
   title +
-  "')]/following-sibling::div[@class='card-text'][.='" +
+  "')]]]//following-sibling::div//span[text()='" +
   value +
-  "']//img";
+  "']/ancestor::div[@class='item']//img";
 const selectStateDropdown = '.modal-content .ss-select';
 const ivrDropdown = (title, dropdown) =>
   "//div[contains(@class,form-group)][.='" +

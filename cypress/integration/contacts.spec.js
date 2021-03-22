@@ -18,9 +18,9 @@ describe('Add Contact flow', () => {
     });
   });
 
-  // after(() => {
-  //   cy.Logout();
-  // });
+  after(() => {
+    cy.Logout();
+  });
 
   it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
@@ -207,11 +207,13 @@ describe('Add Contact flow', () => {
     addCont.clickDialedUndialedButton('Undialed');
     addCont.verifyContact('Testing', 'User', 'be.visible');
     addCont.verifyContact('Automation', 'Contact', 'not.exist');
+    addCont.clickDialedUndialedButton('All');
   });
 
   it('Select List from Dropdown', () => {
     addCont.clickListDropdown();
     addCont.clickTesting();
+    cy.wait(1000);
     addCont.verifyContact('New', 'User', 'be.visible');
   });
 

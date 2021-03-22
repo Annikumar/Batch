@@ -144,14 +144,7 @@ describe('Add Phone Number flow', () => {
     addNum.clickInboundCallMenu();
     addNum.verifySearchBox();
     addNum.verifyNewQueueBtn();
-    addNum.verifyTableHeaderName([
-      'Name',
-      'Calls',
-      'Answered',
-      'Unanswered',
-      'Agents',
-      'Modified',
-    ]);
+    addNum.verifyTableHeaderName(['Name', 'Campaign', 'Agents', 'Modified']);
   });
 
   it('Verifies New Queue Form Elements', () => {
@@ -210,6 +203,7 @@ describe('Add Phone Number flow', () => {
     addNum.verifyCancelBtn();
     addNum.enterDncNumber('9999999999');
     addNum.clickSaveBtn();
+    cy.wait(1000);
     addNum.verifyAddedValue('(999) 999-9999');
   });
 

@@ -58,6 +58,7 @@ const LeadScoringHeading = "//label[text()='Lead Scoring']";
 const Ticks = '.ticks';
 const Ruler = '.ruler';
 const title = '.titles';
+const addNewCard = "//button[contains(text(),'Add New Card')]";
 const newRuleButton = "//button[text()='ADD NEW RULE']";
 const leadScoreExample = '.profile-right';
 const AgentScriptHeading = "//label[text()='Agent Scripts']";
@@ -114,6 +115,8 @@ const leadEmail = '#lead_email';
 const leadSubmitBtn = 'input[name="commit"][value="Submit"]';
 const sendLeadMessage = '//strong[text()="Thank you! The lead was submitted."]';
 const iframe = 'iframe[title="Affiliate"]';
+const agentSlider = (planName) =>
+  "//div[div[text()='" + planName + "']]//div[@class='rc-slider-handle']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -276,7 +279,7 @@ export default class Dashboard {
   }
 
   verifyInvoice() {
-    cy.get(BillingInvoicing).should('be.visible');
+    cy.get(BillingInvoicing, { timeout: 30000 }).should('be.visible');
   }
 
   verifyAddressBookingHeading() {
@@ -397,7 +400,7 @@ export default class Dashboard {
   }
 
   clickRuleRemoveBtn(rule) {
-    cy.xpath(ruleRemoveBtn(rule)).click({ force: true });
+    cy.xpath(ruleRemoveBtn(rule)).click({ force: true, multiple: true });
   }
 
   verifyRuleRemoved(rule) {
@@ -568,6 +571,7 @@ export default class Dashboard {
   }
 
   choosePlan(planName) {
+    cy.get('.rc-slider-step').first().click();
     cy.xpath(plans(planName)).click();
   }
 
