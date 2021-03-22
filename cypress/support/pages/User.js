@@ -41,6 +41,7 @@ const addAgentGroup =
   "//div[contains(@class,'card-title')][.='Agent Groups']//img[contains(@src,'add')]";
 
 const agentCount = '.usage-stats-counter strong';
+const newUserWindow = '.modal-content';
 
 export default class User {
   clickingOnUserOption() {
@@ -290,5 +291,11 @@ export default class User {
       const newcount1 = newcount.text();
       expect(parseInt(newcount1)).to.equal(parseInt(count) + 1);
     });
+  }
+
+  verifyFieldValidation(ele) {
+    for (let i = 0; i < ele.length; i++) {
+      cy.get(newUserWindow).should('contain.text', ele[i]);
+    }
   }
 }

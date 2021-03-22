@@ -22,7 +22,7 @@ describe('Dashboard Elements', function () {
     cy.Logout();
   });
 
-  it('Should Login', () => {
+  it.only('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
@@ -372,5 +372,28 @@ describe('Dashboard Elements', function () {
     Dash.enterLeadEmail('testing@email.com');
     Dash.clickLeadSubmitBtn();
     Dash.VerifyLeadSendMessage();
+  });
+
+  it('Verify chat option should be visible', () => {
+    Dash.clickDashboard();
+    Dash.verifyChaticon();
+  });
+
+  it.only('Verify Chat icon should open chat window', () => {
+    Dash.clickChatIcon();
+    Dash.verifyChatPopUp();
+  });
+
+  it.only('Verify user is able to enter chat in chat box', () => {
+    Dash.enterEmailInBox('test@test.com', 'Hello');
+    Dash.enterChatInBox('Hello');
+    Dash.verifyMessageSent('Hello');
+  });
+
+  it.only('Verify chat pop up Elements', () => {
+    Dash.verifyChatTitle();
+    Dash.verifyAttachmentIcon();
+    Dash.verifyEmojiIcon();
+    Dash.verifyCloseButton();
   });
 });
