@@ -4,7 +4,7 @@ const report = new Report();
 let fixtureData;
 
 describe('Report Page', function () {
-  before(() => {
+  beforeEach(() => {
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -192,5 +192,12 @@ describe('Report Page', function () {
     report.clickActiveStatus();
     report.verifyStatusVisible('active');
     report.verifyStatusNotVisible('paused');
+  });
+
+  it.skip('Verifies the Export Functionality of Recent Contact', () => {
+    report.clickReportMenu();
+    report.clickRecentContactButton();
+    report.getDialedContactNumbers();
+    report.clickExportBtn();
   });
 });

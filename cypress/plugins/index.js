@@ -40,12 +40,16 @@ module.exports = (on, config) => {
       return parsePdf(pdfName);
     },
   });
+  on('task', {
+    parseXlsx({ filePath }) {
+      return new Promise((resolve, reject) => {
+        try {
+          const jsonData = xlsx.parse(fs.readFileSync(filePath));
+          resolve(jsonData);
+        } catch (e) {
+          reject(e);
+        }
+      });
+    },
+  });
 };
-
-// module.exports = (on, config) => {
-//   on('task', {
-//     getPdfContent(pdfName) {
-//       return String(parsePdf(pdfName));
-//     },
-//   });
-// };

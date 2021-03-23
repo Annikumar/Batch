@@ -21,6 +21,8 @@ const calenderMonthDropdown = '.DayPicker-Caption';
 const calenderDays = '.DayPicker-Weekdays';
 const calenderDate = '.DayPicker-Body';
 const tableBody = '.table tbody ';
+const dialerNumber = '.table-responsive tbody tr td:nth-child(4)';
+const exportbtn = "//button[text()='Export']";
 
 export default class Report {
   clickReportMenu() {
@@ -142,5 +144,18 @@ export default class Report {
 
   verifyStatusNotVisible(status) {
     cy.get(tableBody).contains(status).should('not.exist');
+  }
+
+  clickExportBtn() {
+    cy.xpath(exportbtn).click();
+  }
+
+  getDialedContactNumbers() {
+    cy.get(dialerNumber).then((el) => {
+      cy.log(el);
+      for (let i = 0; i < el.length; i++) {
+        cy.log(el[i].innerText);
+      }
+    });
   }
 }

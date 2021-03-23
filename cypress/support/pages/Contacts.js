@@ -99,6 +99,8 @@ const listStatus = 'svg[data-icon="play"]';
 const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 const phone = '.phone-number';
+const contactList =
+  "//tr[td[text()='longfile.csv']]//a[img[contains(@src,'csv')]]";
 
 const errorMessage = '.error-msg';
 
@@ -427,11 +429,11 @@ export default class Contacts {
   clickListDropdown() {
     cy.get(allList).click();
   }
-  clickTesting() {
+  selectContactList(listName) {
     cy.get('.ss-select-option').then((option) => {
       for (let i = 0; i < option.length; i++) {
-        if (option[i].textContent.trim() === 'testing') {
-          cy.get(option[i]).click();
+        if (option[i].textContent.trim() === listName) {
+          cy.get(option[i]).click({ force: true });
           break;
         }
       }
@@ -516,5 +518,33 @@ export default class Contacts {
   }
   verifyErrorMessage(msg) {
     cy.get(errorMessage).should('contain.text', msg);
+  }
+
+  downloadAndVerifyContactList(listName) {
+    cy.xpath(contactList).then((contact) => {
+      const href = contact[0].getAttribute('href');
+      this.clickingOnContactOption();
+      this.clickListDropdown();
+      this.selectContactList(listName);
+      cy.get('tbody .custom_checkbox + td span:not(.fakelink)').then((el) => {
+        let ContactName = [];
+        let Names = [];
+        cy.downloadFile(href, 'cypress/fixtures/Download', 'contacts.csv');
+        for (let i = 0; i < el.length; i++) {
+          ContactName.push(el[i].innerText.trim());
+        }
+        for (let i = 0; i < ContactName.length; i++) {
+          Names.push(ContactName[i].split(' '));
+        }
+        for (let i = 0; i < Names.length; i++) {
+          for (let j = 0; j < Names[i].length; j++) {
+            cy.readFile('cypress/fixtures/Download/contacts.csv').should(
+              'include',
+              Names[i][j]
+            );
+          }
+        }
+      });
+    });
   }
 }
