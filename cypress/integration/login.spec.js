@@ -16,6 +16,14 @@ describe('Add Campaign flow', () => {
     cy.Logout();
   });
 
+  it('Verify elements of login page', () => {
+    login.verifyEmailField();
+    login.verifyPasswordField();
+    login.verifyLoginButton();
+    login.verifySignupButton();
+    login.verifyForgetPassword();
+  });
+
   it('Login with Incorrect Credentials', () => {
     login.enterEmailtoSignin('test@email.com');
     login.enterPasswordToSignin('Fleek@2016');
