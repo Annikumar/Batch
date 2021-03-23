@@ -79,4 +79,24 @@ export default class Login {
   verifySignUpPage() {
     cy.url().should('contain', 'register');
   }
+
+  verifyEmailField() {
+    cy.get(emailInputField).should('be.visible');
+  }
+
+  verifyPasswordField() {
+    cy.get(passwordInputField).should('be.visible');
+  }
+
+  verifyLoginButton() {
+    cy.get(signinButton).should('be.visible');
+  }
+
+  verifySignupButton() {
+    cy.get(signUpBtn).should('be.visible');
+  }
+
+  verifyForgetPassword() {
+    cy.get(forgetPassword).should('be.visible');
+  }
 }
