@@ -48,7 +48,7 @@ describe('Dashboard Elements', function () {
   it('Change Admin Status', function () {
     Dash.clickStatusButton();
     Dash.selectAvailable('Available', 'FirstCampaign');
-    Dash.clickContinue();
+    Dash.clickConfirmButton();
   });
 
   it('Verify functionality of Dialer button', function () {
@@ -175,7 +175,7 @@ describe('Dashboard Elements', function () {
     Dash.clickClosePauseSubscriptionBox();
   });
 
-  it.skip('Pause Account while keeping the Phone Number', () => {
+  it('Pause Account while keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -186,7 +186,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it.skip('Unpause account by choosing any Plan', () => {
+  it('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -195,7 +195,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyPauseAccount();
   });
 
-  it.skip('Pause Account while not keeping the Phone Number', () => {
+  it('Pause Account while not keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -207,7 +207,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it.skip('Unpause account by choosing any Plan', () => {
+  it('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
@@ -220,7 +220,7 @@ describe('Dashboard Elements', function () {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.clickBilling();
-    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+    Dash.upgradePlan('Multi-Line Dialer'); // Single Line Dialer
     Dash.clickContinueBtn();
   });
 
@@ -417,6 +417,19 @@ describe('Dashboard Elements', function () {
     Dash.enterLeadEmail('testing@email.com');
     Dash.clickLeadSubmitBtn();
     Dash.VerifyLeadSendMessage();
+  });
+
+  it('Should open Contact Support Window when Cancelling Account', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
+    Dash.clickBilling();
+    Dash.clickCancelAccount();
+    Dash.chooseCancelAccountReason('Not using it Currently');
+    Dash.EnterConfirmCancelAccount('DELETE');
+    Dash.clickProceedWithCancel();
+    Dash.clickCancelImmediately();
+    Dash.verifyContactSupportWindow();
+    Dash.clickDialogCloseButton();
   });
 
   it('download invoice and Verify', () => {

@@ -59,6 +59,15 @@ describe('Add Phone Number flow', () => {
     addNum.verifyDeletedToast();
   });
 
+  it('Search Contact through the Area Code', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickBuyDidButton();
+    addNum.enterAreaCode('520');
+    addNum.clickSearchButton();
+    addNum.verifySearchNumber('520');
+    addNum.closingDialog();
+  });
+
   it('Verifies IVR Elements', () => {
     addNum.clickPhoneNumberMenu();
     addNum.clickIvrAttendent();

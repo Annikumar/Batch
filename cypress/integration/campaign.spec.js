@@ -68,12 +68,13 @@ describe('Add Campaign flow', () => {
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.selectCallerId('Individual Numbers', '2821');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId('2821');
     addCamp.selectCallResultsOption('Answering Machine');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Sandeep Kumar');
+    addCamp.selectAgentsDrpdwn('Individual Agents', 'Sandeep Kumar');
     addCamp.clickCreateCampButton();
   });
 
@@ -105,7 +106,6 @@ describe('Add Campaign flow', () => {
     addCamp.clickCampaignMenu();
     addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.clickArchiveCampaignButton();
-    cy.wait(5000);
     addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign(
       fixtureData.campaignName + randNum.toString(),
@@ -120,11 +120,12 @@ describe('Add Campaign flow', () => {
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
     addCamp.selectDialingModeOption('Preview Dialer');
+    addCamp.selectCallerId('Individual Numbers', '2821');
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallerId('2821');
+
     addCamp.selectCallResultsOption('Busy');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Sandeep Kumar');
+    addCamp.selectAgentsDrpdwn('Individual Agents', 'Sandeep Kumar');
     addCamp.clickCreateCampButton();
   });
 
@@ -180,44 +181,37 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.verifyCampaignNameField();
     addCamp.verifyDialModeDropdown();
-    addCamp.newCampaignDropdown([
-      'Time Zone',
-      'Max Lines Per Agent',
-      'Abandonment Timeout',
-      'Max Ring Time Duration',
+    addCamp.newCampaignDropdown(['Time Zone']);
+
+    addCamp.verifyCallOptions([
+      'Call Recording',
+      'Scrub Federal DNC',
+      'Answering Machine Detection',
+      'Scrub Company DNC',
     ]);
-    // addCamp.newCampaignDropdown("Max Lines Per Agent");
-    addCamp.verifyCallTypeAutoAnswer();
-    addCamp.verifyCallTypeBeepOnce();
-    addCamp.verifyCallTypeRingingSound();
-    // addCamp.newCampaignDropdown("Abandonment Timeout");
-    // addCamp.newCampaignDropdown("Max Ring Time Duration");
-    addCamp.verifyAnswerMachineEnableButton();
-    addCamp.verifyAnswerMachineDisableButton();
-    addCamp.verifyCallRecordingEnable();
-    addCamp.verifyCallRecordingDisable();
-    addCamp.clickNextCircleArrow();
-    addCamp.verifyCallerIDGroup();
-    addCamp.verifyCallerIDNumber();
-    addCamp.verifyCallingHours();
-    addCamp.selectCallResultsOption('Busy');
-    addCamp.verifyCallResult();
-    addCamp.verifyMaxAttempts();
-    addCamp.verifyRetryTime();
-    addCamp.verifyAgentScript();
-    addCamp.verifyAgentScriptCreateNewButton();
-    addCamp.clickNextCircleArrow();
-    addCamp.verifyContactList();
     addCamp.verifyCallOrder([
       'Adaptive',
       'Highest Score Leads first',
       'Lowest Score Leads first',
     ]);
+
+    addCamp.verifyCallerID(['Number Group', 'Individual Numbers']);
+    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyCallTypeAutoAnswer();
+    addCamp.verifyCallTypeBeepOnce();
+    addCamp.verifyCallTypeRingingSound();
+    addCamp.verifyCallingHours();
+    addCamp.selectCallResultsOption('Busy');
+    addCamp.verifyCallResult();
+    addCamp.verifyMaxAttempts();
+    addCamp.verifyRetryTime();
+    addCamp.verifySimulataneousDials();
+    addCamp.clickNextCircleArrow();
+    addCamp.verifyContactList();
+    addCamp.verifyAgentScript();
+    addCamp.verifyAgentScriptCreateNewButton();
     addCamp.verifyAssignAgent();
-    addCamp.verifyFedralDNCYes();
-    addCamp.verifyFedralDNCNo();
-    addCamp.verifyCompanyDNCYes();
-    addCamp.verifyCompanyDNCNo();
     addCamp.verifyCancelButton();
   });
 
@@ -254,19 +248,26 @@ describe('Add Campaign flow', () => {
   });
 
   it('Verify Validation on required field of new campaign page', () => {
+    addCamp.clickCampaignMenu();
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.clickNextCircleArrow();
     addCamp.verifyErrorMessage('Enter Campaign Name');
+    addCamp.verifyCallerIdError();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectCallerId('Individual Numbers', '2821');
     addCamp.clickNextCircleArrow();
-    addCamp.clickNextCircleArrow();
-    addCamp.verifyErrorMessage('Select at least one Call Result');
   });
 
   it('It should open schedule window when user click on calling hours', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.clickNextCircleArrow();
     addCamp.clickCallingHours();
-    addCamp.verifySchrduleTable();
+    addCamp.verifyScheduleTable();
   });
 
   it('Verify From and To field get disable whenever user unselect check box', () => {
@@ -298,12 +299,12 @@ describe('Add Campaign flow', () => {
     addCamp.verifyScheduleTableNotVisible();
   });
 
-  it.skip('Verify functionality of create new button on New campaign page', () => {
-    addCamp.enableAdvancedSwitchBar();
-    addCamp.clickAgentScriptCreateNewButton();
-    addCamp.verifyAgentScriptPopUp();
-    addCamp.clickScheduleCancelButton();
-  });
+  // it.skip('Verify functionality of create new button on New campaign page', () => {
+  //   addCamp.enableAdvancedSwitchBar();
+  //   addCamp.clickAgentScriptCreateNewButton();
+  //   addCamp.verifyAgentScriptPopUp();
+  //   addCamp.clickScheduleCancelButton();
+  // });
 
   it('Verify contact list dropdown should show lists dropdown', () => {
     addCamp.selectCallResultsOption('Busy');
@@ -324,7 +325,7 @@ describe('Add Campaign flow', () => {
     ]);
   });
 
-  it('Verify functionality of edit Campaign button', () => {
+  it.skip('Verify functionality of edit Campaign button', () => {
     addCamp.clickCampaignMenu();
     addCamp.clickFirstCampaignMenuButton();
     addCamp.clickEditCampaignNew();

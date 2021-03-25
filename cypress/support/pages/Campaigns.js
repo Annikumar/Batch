@@ -2,14 +2,18 @@ const campaignsMenu = 'a[title="Campaigns"]';
 const addCampaign = '//button[contains(text(),"CREATE NEW CAMPAIGN")]';
 const inputName = 'input[name="name"]';
 const switchBar = 'span.switch';
-const dialingModeDrpdwn =
-  '//label[contains(text(),"Dialing Mode")]/following-sibling::div[contains(@class,"ss-select")]';
+const radioBtn = (mode) =>
+  "//label[input[@type='radio']][contains(.,'" +
+  mode +
+  "')]//span[@class='checkmark']";
+const callerIdDropdown =
+  "//label[text()='Caller ID']/ancestor::div[contains(@class,'row')]//div[contains(@class,'ss-select-control')]";
 const nextArrow = '.collapse.show .btn-primary.circle';
 const callerIdDrpdwn =
   '//div[contains(text(),"individual numbers")]/following-sibling::div/div[contains(@class,"ss-select")]';
 const agentsDrpdwn =
   '//div[contains(@class,"ss-select-control")]/span[contains(text(),"Agents")]';
-const createCampBtn = '//button[contains(text(),"CREATE CAMPAIGN")]';
+const createCampBtn = '//button[contains(text(),"SAVE")]';
 const statusDrpdwn = '.campaignForm span[title="Status"]';
 const dropdownOptions = '.ss-select-group-items';
 const pausedDrpdwn = '.campaignForm span[title="Paused"]';
@@ -28,8 +32,7 @@ const callTypeBeepOnce = "//label[text()='Beep Once']";
 const callTypeRingingSound = "//label[text()='Ringing Sound']";
 const AbandonmentTimeout =
   "//label[text()='Abandonment Timeout']/parent::div/div";
-const AnswerMachingDetectionEnable =
-  "//label[text()='Answering Machine Detection']/parent::div/following-sibling::div/label[text()='Enable']/span";
+const callOptions = (option) => "//label[text()='" + option + "']//span";
 const AnswerMachineDetectionDisable =
   "//label[text()='Answering Machine Detection']/parent::div/following-sibling::div/label[text()='Disable']/span";
 const callRecordingEnable =
@@ -38,10 +41,13 @@ const callRecordingDisable =
   "//label[text()='Call Recording']/parent::div/following-sibling::div/label[text()='Disable']/span";
 const callerIDGroup = '.row-callerid .ss-select:not(.multiple)';
 const callerIDNumber = '.row-callerid .multiple';
-const callingHours = "//label[text()='Calling Hours']/parent::div/div";
+const callingHours = "//label[text()='Calling Hours']/parent::div/div/div";
 const callResult = "div[class='collapse show'] .row-calldisposition .ss-select";
 const MaxAttempts = "//label[text()='Max Attempts Per Record']/parent::div/div";
-const RetryTime = "//label[text()='Retry time']/parent::div/div";
+const simultaneousDials =
+  "//label[text()='Simultaneous Dials Per Agent']/parent::div/div";
+const RetryTime =
+  "//label[text()='Retry Time']/parent::div/following-sibling::div";
 const AgentScript = '.row-agentscript .ss-select-control';
 const AgentScriptCreateNew = '.row-agentscript button';
 const contactLists = "//label[text()='Contact Lists']/parent::div/div";
@@ -91,6 +97,7 @@ const FirstCampaignMenuButton =
 const campaignEditButton = "//a[text()='Edit']";
 const campaignChange =
   "//span[text()='FirstCampaign']/ancestor::tr//td[text()='Predictive Dialer']";
+const callerIdError = '.ss-select.error';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -109,27 +116,28 @@ export default class Campaign {
   }
 
   selectDialingModeOption(dialMode) {
-    cy.xpath(dialingModeDrpdwn).click();
-    cy.get(dropdownOptions)
-      .contains(dialMode)
-      .then((option) => {
-        option[0].click();
-      });
+    cy.xpath(radioBtn(dialMode)).click();
   }
+
   clickNextCircleArrow() {
     cy.get(nextArrow).click({ force: true });
   }
 
-  selectCallerId(number) {
-    cy.xpath(callerIdDrpdwn).click();
-    cy.get(dropdownOptions)
-      .contains(number)
-      .then((option) => {
-        option[0].click();
-      });
+  selectCallerId(callerMode, number) {
+    cy.xpath(radioBtn(callerMode)).click();
+    cy.xpath(callerIdDropdown).click();
+    cy.get('.ss-select-option').then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim().endsWith(number)) {
+          cy.get(el[i]).click({ force: true });
+          break;
+        }
+      }
+    });
   }
 
-  selectAgentsDrpdwn(agnts) {
+  selectAgentsDrpdwn(agentMode, agnts) {
+    cy.xpath(radioBtn(agentMode)).click();
     cy.xpath(agentsDrpdwn).click();
     cy.get(dropdownOptions)
       .contains(agnts)
@@ -249,7 +257,9 @@ export default class Campaign {
   }
 
   verifyArchivedCampaign(campaignName, check) {
-    cy.xpath('//*[text()="' + campaignName + '"]').should(check);
+    cy.xpath('//*[text()="' + campaignName + '"]')
+      .scrollIntoView()
+      .should(check);
   }
 
   clickStatusArchived() {
@@ -269,7 +279,8 @@ export default class Campaign {
   }
 
   verifyDialModeDropdown() {
-    cy.xpath(dialingModeDrpdwn).should('be.visible');
+    cy.xpath(radioBtn('Preview Dialer')).should('be.visible');
+    cy.xpath(radioBtn('Predictive Dialer')).should('be.visible');
   }
 
   newCampaignDropdown(dropdownName) {
@@ -292,8 +303,14 @@ export default class Campaign {
     cy.xpath(callTypeRingingSound).should('be.visible');
   }
 
-  verifyAnswerMachineEnableButton() {
-    cy.xpath(AnswerMachingDetectionEnable).should('be.visible');
+  verifyCallerIdError() {
+    cy.get(callerIdError).should('be.visible');
+  }
+
+  verifyCallOptions(options) {
+    for (let i = 0; i < options.length; i++) {
+      cy.xpath(callOptions(options[i])).should('be.visible');
+    }
   }
 
   verifyAnswerMachineDisableButton() {
@@ -308,8 +325,10 @@ export default class Campaign {
     cy.xpath(callRecordingDisable).should('be.visible');
   }
 
-  verifyCallerIDGroup() {
-    cy.get(callerIDGroup).should('be.visible');
+  verifyCallerID(caller) {
+    for (let i = 0; i < caller.length; i++) {
+      cy.xpath(radioBtn(caller[i])).should('be.visible');
+    }
   }
 
   verifyCallerIDNumber() {
@@ -332,6 +351,10 @@ export default class Campaign {
     cy.xpath(RetryTime).should('be.visible');
   }
 
+  verifySimulataneousDials() {
+    cy.xpath(simultaneousDials).should('be.visible');
+  }
+
   verifyAgentScript() {
     cy.get(AgentScript).should('be.visible');
   }
@@ -346,7 +369,7 @@ export default class Campaign {
 
   verifyCallOrder(order) {
     for (let i = 0; i < order.length; i++) {
-      cy.xpath("//label[text()='" + order[i] + "']").should('be.visible');
+      cy.xpath(callOptions(order[i])).should('be.visible');
     }
   }
 
@@ -432,7 +455,7 @@ export default class Campaign {
     cy.xpath(callingHours).click();
   }
 
-  verifySchrduleTable() {
+  verifyScheduleTable() {
     cy.get(scheduleTable).should('be.visible');
   }
 
@@ -490,7 +513,7 @@ export default class Campaign {
   }
 
   clickCampaignSetting() {
-    cy.get(campaignSetting).click();
+    cy.get(campaignSetting).first().click();
   }
 
   verifyCampaignSettingOptions(option) {

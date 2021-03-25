@@ -23,7 +23,7 @@ const AnsweringMachine = "//div[text()='Busy']";
 const calander = '.calendar';
 const UserProfileOptions = '.dropdown-menu.show';
 const UserSettingOptions = '.profile-buttons';
-const SettingsButton = "//span[text()='Settings']";
+const SettingsButton = 'div[href*="/settings/profile/"]';
 const UserSettingProfileFields = (val) => "input[name='" + val + "']";
 const ProfileFirstname = "input[name='firstname']";
 const ProfileLastname = "input[name='lastname']";
@@ -136,9 +136,13 @@ const cardDeleteToast =
 const chaticon = 'div[id="fc_frame"]';
 const chatWindow = '.fc-conversation-view';
 const enterChat = '#app-conversation-editor p';
-const chatBoxInputEmail = '.email-input';
+const chatBoxInputEmail = '.email-input input';
 const chatBoxEnterText = '.user-comment';
 const chatBoxSendMessage = '.send-message';
+const cancelAccountReason = (reason) =>
+  "//div[@class='radio'][contains(.,'" + reason + "')]";
+const confirmDelete = '.security input';
+const dialogCloseBtn = '.modal-body svg[data-icon="times"]';
 
 export default class Dashboard {
   clickDashboard() {
@@ -186,7 +190,8 @@ export default class Dashboard {
         option[0].click();
       });
     // cy.contains('FirstCampaign').click();
-    cy.get('.row label', { timeout: 5000 }).then((el) => {
+    cy.get('.modal-body .ss-select').click();
+    cy.get('.ss-select-option', { timeout: 5000 }).then((el) => {
       for (let i = 0; i < el.length; i++) {
         if (el[i].textContent.trim() === campaign) {
           cy.get(el[i]).click();
@@ -194,6 +199,10 @@ export default class Dashboard {
         }
       }
     });
+  }
+
+  clickConfirmButton() {
+    cy.get('.modal-footer button').click();
   }
 
   clickContinue() {
@@ -254,7 +263,7 @@ export default class Dashboard {
   }
 
   clickSettingsButton() {
-    cy.xpath(SettingsButton).click();
+    cy.get(SettingsButton).first().click();
   }
 
   verifyUserSettingsProfileFields(val) {
@@ -601,7 +610,11 @@ export default class Dashboard {
   }
 
   choosePlan(planName) {
-    cy.get('.rc-slider-step').first().click();
+    cy.xpath(plans(planName)).click();
+  }
+
+  upgradePlan(planName) {
+    cy.get('.rc-slider-step').first().click({ force: true });
     cy.xpath(plans(planName)).click();
   }
 
@@ -767,7 +780,7 @@ export default class Dashboard {
 
   downloadAndVerifyInvoice() {
     cy.get('.profile-invoices1 table tr:nth-child(1) a', {
-      timeout: 30000,
+      timeout: 60000,
     }).then((link) => {
       const href = link[0].getAttribute('href');
       let invoiceName;
@@ -779,7 +792,7 @@ export default class Dashboard {
             'cypress/fixtures/Download',
             'Invoice-' + invoiceName + '.pdf'
           );
-          cy.task('getPdfContent', 'Invoice-CC6CC398-0308.pdf').then(
+          cy.task('getPdfContent', 'Invoice-' + invoiceName + '.pdf').then(
             (content) => {
               expect(content.text).to.contains(invoiceName);
             }
@@ -859,15 +872,19 @@ export default class Dashboard {
   }
 
   enterEmailInBox(email, text) {
-    var count = 1;
-    if (this.getIframeBody().get(chatBoxInputEmail).should('not.exist')) {
-      var count = 0;
-    }
-    if (count == 1) {
-      this.getIframeBody().find(chatBoxInputEmail).type(email);
-      this.enterTextInChatBox(text);
-      this.clickSendChat();
-    }
+    this.getIframeBody()
+      .find('.fc-conversation-view')
+      .then((el) => {
+        if (el.find(chatBoxInputEmail).length) {
+          this.enterEmail(email);
+          this.enterTextInChatBox(text);
+          this.clickSendChat();
+        }
+      });
+  }
+
+  enterEmail(email) {
+    this.getIframeBody().find(chatBoxInputEmail).clear().type(email);
   }
 
   enterTextInChatBox(text) {
@@ -880,5 +897,50 @@ export default class Dashboard {
 
   verifyMessageSent(text) {
     this.getIframeBody().find(chatWindow).should('contain.text', text);
+  }
+
+  clickCancelAccount() {
+    cy.xpath(BillingCancelAccount).click({ force: true });
+  }
+
+  chooseCancelAccountReason(reason) {
+    cy.xpath(cancelAccountReason(reason)).click();
+  }
+
+  EnterConfirmCancelAccount(DELETE) {
+    cy.get(confirmDelete).type(DELETE);
+  }
+
+  clickProceedWithCancel() {
+    cy.get('button').then((button) => {
+      for (let i = 0; i < button.length; i++) {
+        if (button[i].textContent.trim() === 'Proceed With Cancellation') {
+          cy.get(button[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickCancelImmediately() {
+    cy.get('button').then((button) => {
+      for (let i = 0; i < button.length; i++) {
+        if (button[i].textContent.trim() === 'Cancel Immediately') {
+          cy.get(button[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  verifyContactSupportWindow() {
+    cy.get('.modal-content p').should(
+      'have.text',
+      'To proceed with your cancellation request, please contact support team.'
+    );
+  }
+
+  clickDialogCloseButton() {
+    cy.get(dialogCloseBtn).click();
   }
 }

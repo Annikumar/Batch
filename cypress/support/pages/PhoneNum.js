@@ -140,6 +140,7 @@ const addToDNC = "//a[@class='dropdown-item' and (text()='Add to DNC')]";
 const cardText = '.card-text';
 const searchedNumber = "//td[text()='9283662821']";
 const searchedNumber1 = "//td[text()='9283662816']";
+const areaCode = 'input[name="areacode"]';
 
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
@@ -745,5 +746,13 @@ export default class PhoneNum {
 
   verifyNumberNotVisible() {
     cy.xpath(searchedNumber1).should('not.exist');
+  }
+
+  enterAreaCode(code) {
+    cy.get(areaCode).type(code);
+  }
+
+  verifySearchNumber(code) {
+    cy.get('.number label', { timeout: 30000 }).should('contain.text', code);
   }
 }
