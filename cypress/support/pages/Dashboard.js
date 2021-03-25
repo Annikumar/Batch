@@ -139,6 +139,7 @@ const enterChat = '#app-conversation-editor p';
 const chatBoxInputEmail = '.email-input';
 const chatBoxEnterText = '.user-comment';
 const chatBoxSendMessage = '.send-message';
+const popUpHeader = '.modal-header';
 
 export default class Dashboard {
   clickDashboard() {
@@ -186,7 +187,8 @@ export default class Dashboard {
         option[0].click();
       });
     // cy.contains('FirstCampaign').click();
-    cy.get('.row label', { timeout: 5000 }).then((el) => {
+    cy.get('.modal-body .ss-select').click();
+    cy.get('.ss-select-option', { timeout: 5000 }).then((el) => {
       for (let i = 0; i < el.length; i++) {
         if (el[i].textContent.trim() === campaign) {
           cy.get(el[i]).click();
@@ -860,7 +862,12 @@ export default class Dashboard {
 
   enterEmailInBox(email, text) {
     var count = 1;
-    if (this.getIframeBody().get(chatBoxInputEmail).should('not.exist')) {
+    cy.wait(4000);
+    if (
+      this.getIframeBody()
+        .find(chatBoxInputEmail, { timeout: 4000 })
+        .should('not.exist')
+    ) {
       var count = 0;
     }
     if (count == 1) {
@@ -880,5 +887,9 @@ export default class Dashboard {
 
   verifyMessageSent(text) {
     this.getIframeBody().find(chatWindow).should('contain.text', text);
+  }
+
+  verifyPopUpHeader(heading) {
+    cy.get(popUpHeader).should('contain.text', heading);
   }
 }
