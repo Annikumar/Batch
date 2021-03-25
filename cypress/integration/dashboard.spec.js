@@ -460,4 +460,10 @@ describe('Dashboard Elements', function () {
     Dash.verifyEmojiIcon();
     Dash.verifyCloseButton();
   });
+
+  it('When admin select status as available it should show start calling in popup', () => {
+    Dash.clickStatusButton();
+    Dash.selectAvailable('Available', 'FirstCampaign');
+    Dash.verifyPopUpHeader('Start Calling');
+  });
 });

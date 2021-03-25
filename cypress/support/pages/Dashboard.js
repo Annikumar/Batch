@@ -143,6 +143,7 @@ const cancelAccountReason = (reason) =>
   "//div[@class='radio'][contains(.,'" + reason + "')]";
 const confirmDelete = '.security input';
 const dialogCloseBtn = '.modal-body svg[data-icon="times"]';
+const popUpHeader = '.modal-header';
 
 export default class Dashboard {
   clickDashboard() {
@@ -942,5 +943,8 @@ export default class Dashboard {
 
   clickDialogCloseButton() {
     cy.get(dialogCloseBtn).click();
+  }
+  verifyPopUpHeader(heading) {
+    cy.get(popUpHeader).should('contain.text', heading);
   }
 }
