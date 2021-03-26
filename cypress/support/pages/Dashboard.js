@@ -23,8 +23,10 @@ const AnsweringMachine = "//div[text()='Busy']";
 const calander = '.calendar';
 const UserProfileOptions = '.dropdown-menu.show';
 const UserSettingOptions = '.profile-buttons';
-const SettingsButton = 'div[href*="/settings/profile/"]';
+const SettingsButton = 'div[href*="settings"]';
+const profile = 'div[href*="profile"]';
 const UserSettingProfileFields = (val) => "input[name='" + val + "']";
+const billing = 'div[href*="billing"]';
 const ProfileFirstname = "input[name='firstname']";
 const ProfileLastname = "input[name='lastname']";
 const ProfileEmail = "input[name='email']";
@@ -254,7 +256,7 @@ export default class Dashboard {
   }
 
   clickBilling() {
-    cy.get(UserSettingOptions).contains('Billing').click();
+    cy.get(billing).click();
   }
 
   verifyUserSettingOptions(element) {
@@ -265,6 +267,10 @@ export default class Dashboard {
 
   clickSettingsButton() {
     cy.get(SettingsButton).first().click();
+  }
+
+  clickProfile() {
+    cy.get(profile).click();
   }
 
   verifyUserSettingsProfileFields(val) {

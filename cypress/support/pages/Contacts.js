@@ -526,23 +526,30 @@ export default class Contacts {
       this.clickingOnContactOption();
       this.clickListDropdown();
       this.selectContactList(listName);
-      cy.get('tbody .custom_checkbox + td span:not(.fakelink)').then((el) => {
-        let ContactName = [];
-        let Names = [];
+      cy.get('.phone-number').then((el) => {
+        let ContactPhoneNumbers = [];
         cy.downloadFile(href, 'cypress/fixtures/Download', 'contacts.csv');
         for (let i = 0; i < el.length; i++) {
-          ContactName.push(el[i].innerText.trim());
-        }
-        for (let i = 0; i < ContactName.length; i++) {
-          Names.push(ContactName[i].split(' '));
-        }
-        for (let i = 0; i < Names.length; i++) {
-          for (let j = 0; j < Names[i].length; j++) {
-            cy.readFile('cypress/fixtures/Download/contacts.csv').should(
-              'include',
-              Names[i][j]
-            );
+          let result = el[i].textContent.trim();
+          let number = '';
+          for (let i = 0; i < result.length; i++) {
+            if (
+              result[i] != '(' &&
+              result[i] != ')' &&
+              result[i] != ' ' &&
+              result[i] != '-'
+            ) {
+              number += result[i];
+            }
           }
+          ContactPhoneNumbers.push(number);
+        }
+        cy.log(ContactPhoneNumbers);
+        for (let i = 0; i < ContactPhoneNumbers.length; i++) {
+          cy.readFile('cypress/fixtures/Download/contacts.csv').should(
+            'include',
+            ContactPhoneNumbers[i]
+          );
         }
       });
     });

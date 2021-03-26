@@ -80,8 +80,6 @@ describe('Dashboard Elements', function () {
     Dash.clickUserProfile();
     Dash.clickSettingsButton();
     Dash.verifyUserSettingOptions([
-      'Profile',
-      'Billing',
       'Address Book',
       'Voicemail',
       'Integrations',
@@ -92,6 +90,8 @@ describe('Dashboard Elements', function () {
   });
 
   it('Verify User Setting Profile Elements', () => {
+    Dash.clickUserProfile();
+    Dash.clickProfile();
     Dash.verifyUserSettingsProfileFields([
       'firstname',
       'lastname',
@@ -110,6 +110,7 @@ describe('Dashboard Elements', function () {
   });
 
   it('Verify User settings Billing Elements', () => {
+    Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.verifyBillingSingleLineDialer();
     Dash.verifyBillingMultipleLineDialer();
@@ -123,7 +124,6 @@ describe('Dashboard Elements', function () {
 
   it('Add New Credit Card', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickAddNewCard();
     Dash.enterCardName(fixtureData.cardHolderName);
@@ -138,7 +138,6 @@ describe('Dashboard Elements', function () {
 
   it('Verify the Default Credit Card Functionality', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickCardDefaultBtn(cardLast4Digit);
     Dash.verifyCardDefault(cardLast4Digit);
@@ -148,7 +147,6 @@ describe('Dashboard Elements', function () {
 
   it('Delete the Added New Credit Card', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickDeleteCardBtn(cardLast4Digit);
     Dash.verifyCardDelete();
@@ -156,7 +154,6 @@ describe('Dashboard Elements', function () {
 
   it('Verifies monthly total should be greater when keeping phone', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
     cy.wait(2000);
@@ -166,7 +163,6 @@ describe('Dashboard Elements', function () {
 
   it('Verifies monthly total should be equal when not keeping phone', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
     cy.wait(2000);
@@ -177,7 +173,6 @@ describe('Dashboard Elements', function () {
 
   it('Pause Account while keeping the Phone Number', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
     cy.wait(2000);
@@ -188,7 +183,6 @@ describe('Dashboard Elements', function () {
 
   it('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
     Dash.clickContinueBtn();
@@ -197,7 +191,6 @@ describe('Dashboard Elements', function () {
 
   it('Pause Account while not keeping the Phone Number', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
     cy.wait(2000);
@@ -209,7 +202,6 @@ describe('Dashboard Elements', function () {
 
   it('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
     Dash.clickContinueBtn();
@@ -218,13 +210,14 @@ describe('Dashboard Elements', function () {
 
   it('Upgrade the Plan', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.upgradePlan('Multi-Line Dialer'); // Single Line Dialer
     Dash.clickContinueBtn();
   });
 
   it('Verify User settings Address Boook elements', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
     Dash.clickAddressBook();
     Dash.verifyAddressBookingHeading();
     Dash.verifyAddressBookNewContactButton();
@@ -396,7 +389,7 @@ describe('Dashboard Elements', function () {
 
   it('Call feature should disable for admin if Agent Feature is Disable', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
+    Dash.clickProfile();
     Dash.clickAgentFeatureDisable();
     Dash.clickSaveButton();
     Dash.verifyDialerNotVisible();
@@ -404,7 +397,7 @@ describe('Dashboard Elements', function () {
 
   it('Call feature should enable for admin if Agent Feature is Enable', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
+    Dash.clickProfile();
     Dash.clickAgentFeatureEnable();
     Dash.clickSaveButton();
     Dash.verifyDialerVisible();
@@ -421,7 +414,6 @@ describe('Dashboard Elements', function () {
 
   it('Should open Contact Support Window when Cancelling Account', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.clickCancelAccount();
     Dash.chooseCancelAccountReason('Not using it Currently');
@@ -434,7 +426,6 @@ describe('Dashboard Elements', function () {
 
   it('download invoice and Verify', () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     Dash.downloadAndVerifyInvoice();
   });
