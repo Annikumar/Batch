@@ -37,7 +37,7 @@ describe('Agent Profile', function () {
     agent.selectAgentStatus('Available');
     agent.verifySelectCampaignBox();
     agent.selectCampaign('FirstCampaign');
-    agent.clickContinueBtn();
+    agent.clickConfirmButton();
     agent.clickCloseSoftphoneBtn();
   });
 
@@ -48,13 +48,13 @@ describe('Agent Profile', function () {
 
   it('Verifies the Edit button functionality for Recent Contacts', () => {
     agent.clickRecentContact();
-    agent.clickEditRecentContact('New', 'User');
+    agent.clickEditRecentContact();
     agent.verifyCallResultWindow();
   });
 
   it('Edit the Call Result of Recent Contacts', () => {
     agent.clickRecentContact();
-    agent.clickEditRecentContact('New', 'User');
+    agent.clickEditRecentContact();
     agent.verifyCallResultWindow();
     agent.selectCallResult('Busy');
     agent.clickContinueBtn();
@@ -64,14 +64,16 @@ describe('Agent Profile', function () {
 
   it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
     agent.clickingOnContactOption();
-    agent.clickContactName('New', 'User');
+    // agent.enterSearch('New User');
+    agent.clickContactName();
     agent.clickPhoneNumber();
     agent.verifySoftphoneOpen();
   });
 
   it('Open the Call Result Window when Agent disconnect the Call', () => {
     agent.clickingOnContactOption();
-    agent.clickContactName('New', 'User');
+    // agent.enterSearch('New User');
+    agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();
     cy.wait(2000);
@@ -81,9 +83,10 @@ describe('Agent Profile', function () {
     agent.clickContinueBtn();
   });
 
-  it('Verifies the Cal transfer Continue and Cancel Button', () => {
+  it('Verifies the Call transfer Continue and Cancel Button', () => {
     agent.clickingOnContactOption();
-    agent.clickContactName('New', 'User');
+    // agent.enterSearch('New User');
+    agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();
     agent.clickCallTransferBtn();

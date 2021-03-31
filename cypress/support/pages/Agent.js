@@ -4,35 +4,26 @@ const campaign = (camp) =>
 const accessDenied =
   "//div[contains(@class,'card-title') and (text()='Access Denied')]";
 const statusDropdown = '.nav-item .ss-select';
-const selectCampaignBox =
-  "//div[@class='modal-content'][contains(.,'Select Campaign')]";
+const selectCampaignBox = '.modal-content .select__campaign__select';
 const continueBtn = "//button[text()='Continue']";
 const recentContact = 'a[title="Recent Contacts"]';
 const recentContactPage = '.reportCdrsForm.agent';
-const editContact = (firstName, lastName) =>
-  "//tr[td[contains(text(),'" +
-  firstName +
-  "') and contains(.,'" +
-  lastName +
-  "')]]//span[@title='Edit']";
+const editContact = 'span[title="Edit"]';
 const callResultText = '.disposition';
 const editCallResultWindow = '.modal-content .call-disposition-title';
 const callResults = '.disposition-cell .disposition';
 const softphoneCloseBtn = '.stg-softphone-right-close';
 const softphone = '.stg-softphone-wrapper';
 const contactsMenu = 'a[title="Contacts"]';
-const contact = (firstName, lastName) =>
-  "//tr[td[contains(.,'" +
-  firstName +
-  "') and contains(.,'" +
-  lastName +
-  "')]]//img[contains(@src,'view')]";
+const contact = '.contacts__name';
 const phoneNumber =
   "//tr[td[@class='contact-field' and contains(text(),'Phone')]]//td[@class='contact-value']";
 const callTransferBtn = 'div[title="Transfer"]';
 const callBtn = '.stg-softphone-callbutton';
 const callResultWindow = '.modal-content .call-disposition-title';
 const cancelBtn = '//button[contains(text(),"Cancel")]';
+const confirmButton = '//button[contains(text(),"Confirm")]';
+const searchBox = '.search-box';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -52,11 +43,19 @@ export default class Agent {
   }
 
   verifySelectCampaignBox() {
-    cy.xpath(selectCampaignBox).should('be.visible');
+    cy.get(selectCampaignBox).should('be.visible');
   }
 
   selectCampaign(campaign) {
-    cy.contains(campaign).click();
+    cy.get('.modal-body .ss-select').click();
+    cy.get('.ss-select-option', { timeout: 5000 }).then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim() === campaign) {
+          cy.get(el[i]).click();
+          break;
+        }
+      }
+    });
   }
 
   clickContinueBtn() {
@@ -76,7 +75,7 @@ export default class Agent {
   }
 
   clickEditRecentContact(firstName, lastName) {
-    cy.xpath(editContact(firstName, lastName)).first().click({ force: true });
+    cy.get(editContact).first().click({ force: true });
   }
 
   verifyCallResult(result) {
@@ -106,6 +105,14 @@ export default class Agent {
     cy.get(softphoneCloseBtn).click();
   }
 
+  enterSearch(search) {
+    cy.get(searchBox).type(search);
+  }
+
+  clickConfirmButton() {
+    cy.xpath(confirmButton).click();
+  }
+
   verifySoftphoneOpen() {
     cy.get(softphone, { timeout: 20000 }).should('be.visible');
   }
@@ -114,12 +121,12 @@ export default class Agent {
     cy.get(contactsMenu).click({ force: true });
   }
 
-  clickContactName(firstName, lastName) {
-    cy.xpath(contact(firstName, lastName)).click({ force: true });
+  clickContactName() {
+    cy.get(contact).first().click({ force: true });
   }
 
   clickPhoneNumber() {
-    cy.xpath(phoneNumber).click();
+    cy.xpath(phoneNumber).first().click();
   }
 
   clickCallTransferBtn() {

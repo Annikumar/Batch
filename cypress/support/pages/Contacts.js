@@ -420,6 +420,10 @@ export default class Contacts {
     cy.xpath("//label[text()='" + button + "']/span").click();
   }
 
+  enterSearch(search) {
+    cy.get(searchBox).type(search);
+  }
+
   verifyContact(firstname, lastname, status) {
     cy.xpath(
       '//span[contains(.,"' + firstname + '")][contains(.,"' + lastname + '")]'
@@ -507,11 +511,14 @@ export default class Contacts {
   async getPhoneNumber() {
     let number;
     await promisify(
-      cy.get(phone, { timeout: 5000 }).then((el) => {
-        // await cy.log(el.text().trim());
-        number = el.text().trim();
-        cy.log(number);
-      })
+      cy
+        .get(phone, { timeout: 5000 })
+        .first()
+        .then((el) => {
+          // await cy.log(el.text().trim());
+          number = el.text().trim();
+          cy.log(number);
+        })
     );
     // cy.log(number);
     return number;
@@ -523,12 +530,14 @@ export default class Contacts {
   downloadAndVerifyContactList(listName) {
     cy.xpath(contactList).then((contact) => {
       const href = contact[0].getAttribute('href');
+      cy.downloadFile(href, 'cypress/fixtures/Download', 'contacts.csv');
       this.clickingOnContactOption();
       this.clickListDropdown();
       this.selectContactList(listName);
+      cy.wait(2000);
       cy.get('.phone-number').then((el) => {
         let ContactPhoneNumbers = [];
-        cy.downloadFile(href, 'cypress/fixtures/Download', 'contacts.csv');
+
         for (let i = 0; i < el.length; i++) {
           let result = el[i].textContent.trim();
           let number = '';
@@ -544,13 +553,11 @@ export default class Contacts {
           }
           ContactPhoneNumbers.push(number);
         }
-        cy.log(ContactPhoneNumbers);
-        for (let i = 0; i < ContactPhoneNumbers.length; i++) {
-          cy.readFile('cypress/fixtures/Download/contacts.csv').should(
-            'include',
-            ContactPhoneNumbers[i]
-          );
-        }
+        cy.readFile('cypress/fixtures/Download/contacts.csv').then((data) => {
+          for (let i = 0; i < ContactPhoneNumbers.length; i++) {
+            expect(data).to.contain(ContactPhoneNumbers[i]);
+          }
+        });
       });
     });
   }

@@ -40,21 +40,23 @@ describe('Add Contact flow', () => {
     addCont.verifySaleMadeCheckbox();
     addCont.verifyAppointmentMadeCheckbox();
     addCont.verifyContactListHeaderElements([
-      'Name',
-      'Lead Score',
+      'Full Name',
+      'Score',
       'Phone Number',
       'Dialed',
-      'Campaigns',
+      'Campaign',
       'Lists',
       'Last Contact',
-      'Date Added',
+      'Created',
+      'Address',
+      'Email',
     ]);
   });
 
   it('Verifies Search Functionality', () => {
     addCont.clickingOnContactOption();
     addCont.enterKeywordToSearch('automation');
-    addCont.verifySearchResult('Automation');
+    addCont.verifySearchResult('automation');
   });
 
   it('Verifies Create New Contact Elements', () => {
@@ -203,8 +205,9 @@ describe('Add Contact flow', () => {
     addCont.clickingOnContactOption();
     addCont.clickDialedUndialedButton('Dialed');
     addCont.verifyContact('Testing', 'User', 'not.exist');
-    addCont.verifyContact('Automation', 'Contact', 'be.visible');
+    addCont.verifyContact('Automation', 'Contact', 'not.exist');
     addCont.clickDialedUndialedButton('Undialed');
+    addCont.enterSearch('User');
     addCont.verifyContact('Testing', 'User', 'be.visible');
     addCont.verifyContact('Automation', 'Contact', 'not.exist');
     addCont.clickDialedUndialedButton('All');
@@ -214,7 +217,7 @@ describe('Add Contact flow', () => {
     addCont.clickListDropdown();
     addCont.selectContactList('testing');
     cy.wait(1000);
-    addCont.verifyContact('New', 'User', 'be.visible');
+    addCont.verifyContact('Testing', 'User', 'be.visible');
   });
 
   it('Verify User is able to Add contact to campaign using action button', () => {

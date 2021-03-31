@@ -39,7 +39,7 @@ describe('Add Phone Number flow', () => {
     addNum.clickSearchButton();
     addNum.verifysearchStartedToast();
     addNum.selectPhoneNumber();
-    addNum.assignAgentUser('Sandeep Kumar');
+    addNum.assignAgentUser('Anil kumar');
     num = await addNum.getFirstPhoneNumber();
     await addNum.clickOrderNowButton();
     await addNum.closingDialog();
@@ -101,7 +101,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber('2821');
+    addNum.selectNumber(fixtureData.Number);
     addNum.clickAddNewWelcomePrompt();
     addNum.uploadFile('preview.mp3');
     addNum.enterRecordingName('preview' + randNum.toString());
@@ -131,7 +131,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber('2821');
+    addNum.selectNumber(fixtureData.Number);
     addNum.clickAddNewWelcomePrompt();
     addNum.clickTextToSpeech();
     addNum.enterRecordingName('Test' + randNum.toString());
@@ -176,8 +176,8 @@ describe('Add Phone Number flow', () => {
   it('Fill Form to Create New Queue', () => {
     addNum.enterName('demo testing');
     addNum.enterDescription('testing');
-    addNum.selectExtensionDropdown('Select Numbers', '0160');
-    addNum.selectAssignAgent('Agents', 'Sandeep');
+    addNum.selectExtensionDropdown('Select Numbers', fixtureData.Number);
+    addNum.selectAssignAgent('Agents', 'Anil');
     addNum.selectAssignCampaignDropdown('Select Campaign', 'FirstCampaign');
     addNum.clickCreateQueueBtn();
     addNum.verifySaved();
@@ -345,13 +345,23 @@ describe('Add Phone Number flow', () => {
 
   it('Verify that the created call results is reflected in the create new campaign page Call Result', () => {
     const addCamp = new Campaign();
+    addNum.clickPhoneNumberMenu();
+    addNum.clickCallResultMenu();
+    addNum.clickAddNewCallResultBtn();
+    addNum.enterName('TestingCallResult');
+    addNum.chooseShowOnNewCampaignPage('Yes');
+    addNum.chooseActiveInactive('Active');
+    addNum.selectCallResultCampaignDropdown('FirstCampaign');
+    addNum.clickCallResultSaveBtn();
+    cy.wait(3000);
     addCamp.clickCampaignMenu();
     cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
-    addNum.verifyCreatedCallResult('DemoTesting');
+    addNum.verifyCreatedCallResult('TestingCallResult');
   });
 
   it('Add New Rule while Creating Call Result', () => {
@@ -454,7 +464,7 @@ describe('Add Phone Number flow', () => {
 
   it('Add a contact Phone to DNC', async () => {
     addCont.clickingOnContactOption();
-    addCont.enterKeywordToSearch('New User');
+    addCont.enterKeywordToSearch('Testing');
     cy.wait(1000);
     phone = await promisify(addCont.getPhoneNumber());
   });
@@ -468,8 +478,8 @@ describe('Add Phone Number flow', () => {
   });
   it('Search phone number using search box', () => {
     addNum.clickPhoneNumberMenu();
-    addNum.enterSearchKeyword('9283662821');
-    addNum.verifySearchedNumber();
+    addNum.enterSearchKeyword(fixtureData.Number);
+    addNum.verifySearchedNumber(fixtureData.Number);
     addNum.verifyNumberNotVisible();
   });
 });

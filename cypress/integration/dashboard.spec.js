@@ -41,7 +41,7 @@ describe('Dashboard Elements', function () {
 
   it('Login As Button Functionality', function () {
     Dash.clickLoginAs();
-    Dash.searchUser('automation testing2');
+    Dash.searchUser('automation');
     Dash.verifySearchedUser();
   });
 
@@ -141,8 +141,8 @@ describe('Dashboard Elements', function () {
     Dash.clickBilling();
     Dash.clickCardDefaultBtn(cardLast4Digit);
     Dash.verifyCardDefault(cardLast4Digit);
-    Dash.clickCardDefaultBtn('8210');
-    Dash.verifyCardDefault('8210');
+    Dash.clickCardDefaultBtn('0505');
+    Dash.verifyCardDefault('0505');
   });
 
   it('Delete the Added New Credit Card', () => {
@@ -412,7 +412,7 @@ describe('Dashboard Elements', function () {
     Dash.VerifyLeadSendMessage();
   });
 
-  it('Should open Contact Support Window when Cancelling Account', () => {
+  it.skip('Should open Contact Support Window when Cancelling Account', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickCancelAccount();

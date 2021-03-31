@@ -51,7 +51,7 @@ describe('SuperVisor Flow', () => {
 
   it('Verifies the Profile Page', () => {
     suprevisor.clickUserProfile();
-    suprevisor.clickSettingsButton();
+    suprevisor.clickprofileButton();
     suprevisor.verifyProfilePage();
   });
 });

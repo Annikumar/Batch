@@ -151,9 +151,12 @@ export default class User {
   }
 
   verifySearchedUser() {
-    cy.xpath('//table[contains(@class,"users")]//td[text()="qa supervisor"]', {
-      timeout: 15000,
-    }).should('be.visible');
+    cy.xpath(
+      '//table[contains(@class,"users")]//td[contains(text(),"qa") and contains(.,"supervisor")]',
+      {
+        timeout: 15000,
+      }
+    ).should('be.visible');
   }
 
   verifyAgentStatusesHeading() {
@@ -297,5 +300,30 @@ export default class User {
     for (let i = 0; i < ele.length; i++) {
       cy.get(newUserWindow).should('contain.text', ele[i]);
     }
+  }
+
+  getPhoneNumber() {
+    cy.get('a[title="Phone System"]').click({ force: true });
+    cy.wait(2000);
+    cy.get('body').then(($body) => {
+      if ($body.find('.dispositions.table tbody tr td').length > 1) {
+        cy.xpath(
+          '(//td[span[contains(@class,"reputation")]]/preceding-sibling::td[1])[1]'
+        ).then((el) => {
+          const number = el.text().trim();
+          cy.readFile('cypress/fixtures/constants.json', (err, data) => {
+            if (err) {
+              return console.error(err);
+            }
+          }).then((data) => {
+            data.Number = number;
+            cy.writeFile(
+              'cypress/fixtures/constants.json',
+              JSON.stringify(data)
+            );
+          });
+        });
+      }
+    });
   }
 }

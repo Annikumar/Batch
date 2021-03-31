@@ -96,7 +96,7 @@ const newRuleOptions = (option) =>
 const callResultSaveBtn = '//button[contains(text(),"Save")]';
 const callResultCancelBtn = '//button[contains(text(),"Cancel")]';
 const callResultDeleteBtn = (callResult) =>
-  "//tr[contains(.,'" + callResult + "')]//img[contains(@src,'delete')]";
+  "//tr[td[div[text()='" + callResult + "']]]//img[contains(@src,'delete')]";
 const callResultEditBtn = (callResult) =>
   "//tr[td[div[text()='" + callResult + "']]]//img[contains(@src,'edit')]";
 const addPhoneGroup = '.card-title img[src*="add"]';
@@ -130,15 +130,10 @@ const removeNewDigit = (val) =>
 const contactName = '.custom_checkbox + td span:not(.fakelink)';
 const phone = '.phone-number';
 const nextPage = 'img[title="Next Page"]';
-const contactMenu = (firstName, lastName) =>
-  "//tr[td[contains(.,'" +
-  firstName +
-  "') and contains(.,'" +
-  lastName +
-  "')]]//img[contains(@src,'edit')]";
+const contactMenu = 'img[src*="edit"]';
 const addToDNC = "//a[@class='dropdown-item' and (text()='Add to DNC')]";
 const cardText = '.card-text';
-const searchedNumber = "//td[text()='9283662821']";
+const searchedNumber = (number) => "//td[text()='" + number + "']";
 const searchedNumber1 = "//td[text()='9283662816']";
 const areaCode = 'input[name="areacode"]';
 
@@ -148,8 +143,9 @@ export default class PhoneNum {
   }
 
   verifyCreatedCallResult(callResult) {
-    cy.get(callresultDropdown).click();
-    cy.contains(callResult).should('be.visible');
+    // cy.get(callresultDropdown).click();
+    // cy.get(dropdownOptions).contains(callResult).should('be.visible');
+    cy.get('.ss-select-value-label').contains(callResult).should('be.visible');
   }
 
   clickCallResultEditBtn(callResult) {
@@ -354,11 +350,13 @@ export default class PhoneNum {
 
   deleteAddedPhoneNumber(num) {
     cy.xpath(
-      '(//table[contains(@class,"table")]//tr[td[contains(.,"' +
+      '(//tr[td[contains(.,"' +
         num +
-        '")]]//span[img[contains(@src,"delete.svg")]])[1]',
+        '")]]//*[name()="svg"][@data-icon="trash-alt"])[1]',
       { timeout: 5000 }
-    ).click();
+    )
+      .scrollIntoView()
+      .click();
   }
   handleAlertForDelete() {
     cy.on('	window:alert', (str) => {
@@ -726,8 +724,8 @@ export default class PhoneNum {
     cy.xpath(removeNewDigit(val)).click();
   }
 
-  clickContactMenu(firstName, lastName) {
-    cy.xpath(contactMenu(firstName, lastName)).click();
+  clickContactMenu() {
+    cy.get(contactMenu).first().click();
   }
 
   clickAddToDNC() {
@@ -739,9 +737,9 @@ export default class PhoneNum {
       expect(el.text()).to.contains(num);
     });
   }
-  verifySearchedNumber() {
+  verifySearchedNumber(number) {
     cy.wait(1000);
-    cy.xpath(searchedNumber).should('be.visible');
+    cy.xpath(searchedNumber(number)).should('be.visible');
   }
 
   verifyNumberNotVisible() {

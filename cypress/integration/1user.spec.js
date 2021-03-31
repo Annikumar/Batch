@@ -37,6 +37,7 @@ describe('Login Successfully and Add User', () => {
 
   it('Should Login', () => {
     cy.Login(fixtureData.username, fixtureData.password);
+    addUser.getPhoneNumber();
   });
 
   it('Should Add User for Agent role', () => {
@@ -174,7 +175,6 @@ describe('Login Successfully and Add User', () => {
 
   it('Agent count should increase when admin add agent', async () => {
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     count = await addUser.getTotalAgentCount();
     cy.log(count);
@@ -198,7 +198,6 @@ describe('Login Successfully and Add User', () => {
     addUser.clickSaveButton();
     addUser.verifySuccessToast();
     Dash.clickUserProfile();
-    Dash.clickSettingsButton();
     Dash.clickBilling();
     addUser.verifyAgentCount(count);
   });

@@ -92,11 +92,18 @@ export default class Report {
   }
 
   searchNumber(num) {
-    cy.get(searchBox).type(num);
+    let number = '';
+    for (let i = 0; i < num.length; i++) {
+      if (num[i] != '(' && num[i] != ')' && num[i] != ' ' && num[i] != '-') {
+        number += num[i];
+      }
+    }
+    cy.log(number);
+    cy.get(searchBox).type(number);
   }
 
-  verifySearchedNumber(user) {
-    cy.get(table).should('contain.text', user);
+  verifySearchedNumber(number) {
+    cy.get(table).should('contain.text', number);
   }
 
   clickCampaignStatusDropdown() {

@@ -12,7 +12,7 @@ const Dialer = 'img[src*="softphone.svg"]';
 const Task = 'a[href="/tasks/"]';
 const UserProfile = '.profile_name';
 const LoginSearchBox = 'form[class="search"] input';
-const SearchedUser = 'automation testing2';
+const SearchedUser = 'AUTOMATION';
 const SelectStatus = '.ss-select-group-items';
 const ContinueButton = '//button[text()="Continue"]';
 const DialPad = '.stg-softphone-wrapper';
@@ -179,7 +179,9 @@ export default class Dashboard {
   }
 
   verifySearchedUser() {
-    cy.contains(SearchedUser).should('be.visible');
+    cy.get('.roletitle').then((el) => {
+      expect(el.text().toLowerCase()).to.contain(SearchedUser.toLowerCase());
+    });
   }
 
   clickStatusButton() {
@@ -317,7 +319,7 @@ export default class Dashboard {
   }
 
   verifyPauseAccount() {
-    cy.xpath(BillingPauseAccount, { timeout: 30000 }).should('be.visible');
+    cy.xpath(BillingPauseAccount, { timeout: 40000 }).should('be.visible');
   }
 
   verifyCancelAccount() {
@@ -617,11 +619,15 @@ export default class Dashboard {
   }
 
   choosePlan(planName) {
+    cy.reload();
+    this.clickStartBtn();
     cy.xpath(plans(planName)).click();
   }
 
   upgradePlan(planName) {
-    cy.get('.rc-slider-step').first().click({ force: true });
+    cy.reload();
+    // this.clickStartBtn();
+    cy.get('.rc-slider-step').first().click();
     cy.xpath(plans(planName)).click();
   }
 

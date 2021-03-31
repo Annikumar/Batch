@@ -70,11 +70,11 @@ describe('Add Campaign flow', () => {
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption('Predictive Dialer');
-    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
     addCamp.selectCallResultsOption('Answering Machine');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Individual Agents', 'Sandeep Kumar');
+    addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');
     addCamp.clickCreateCampButton();
   });
 
@@ -120,12 +120,12 @@ describe('Add Campaign flow', () => {
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
     addCamp.selectDialingModeOption('Preview Dialer');
-    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
 
     addCamp.selectCallResultsOption('Busy');
     addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Individual Agents', 'Sandeep Kumar');
+    addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');
     addCamp.clickCreateCampButton();
   });
 
@@ -196,7 +196,7 @@ describe('Add Campaign flow', () => {
     ]);
 
     addCamp.verifyCallerID(['Number Group', 'Individual Numbers']);
-    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
     addCamp.verifyCallTypeAutoAnswer();
     addCamp.verifyCallTypeBeepOnce();
@@ -255,7 +255,7 @@ describe('Add Campaign flow', () => {
     addCamp.verifyErrorMessage('Enter Campaign Name');
     addCamp.verifyCallerIdError();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
   });
 
@@ -264,7 +264,7 @@ describe('Add Campaign flow', () => {
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectCallerId('Individual Numbers', '2821');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
     addCamp.clickCallingHours();
     addCamp.verifyScheduleTable();

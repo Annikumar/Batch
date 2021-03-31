@@ -4,16 +4,11 @@ const createNewOption =
   '//div[contains(@class,"show")]/a[contains(text(),"Create New")]';
 const uploadFileOption =
   '//div[contains(@class,"show")]/a[contains(text(),"Upload File")]';
-const viewBtn = (firstName, lastName) =>
-  "//span[contains(text(),'" +
-  firstName +
-  "') and contains(.,'" +
-  lastName +
-  "')]/ancestor::tr//img[contains(@src,'view')]";
+const viewBtn = 'img[src*="view"]';
 const editForm = '.userSedit';
 const uploadForm = '.import_step';
 const UserProfile = '.profile_name';
-const SettingsButton = "//span[text()='Settings']";
+const profileButton = 'div[href*="profile"]';
 const profilePage = '.profile-page';
 
 export default class Suprevisor {
@@ -33,8 +28,8 @@ export default class Suprevisor {
     cy.xpath(uploadFileOption).click();
   }
 
-  clickViewBtn(firstName, lastName) {
-    cy.xpath(viewBtn(firstName, lastName)).click();
+  clickViewBtn() {
+    cy.get(viewBtn).first().click({ force: true });
   }
 
   verifyViewForm() {
@@ -53,8 +48,8 @@ export default class Suprevisor {
     cy.get(UserProfile).click();
   }
 
-  clickSettingsButton() {
-    cy.xpath(SettingsButton).click();
+  clickprofileButton() {
+    cy.get(profileButton).click();
   }
 
   verifyProfilePage() {

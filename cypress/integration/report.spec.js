@@ -4,7 +4,7 @@ const report = new Report();
 let fixtureData;
 
 describe('Report Page', function () {
-  beforeEach(() => {
+  before(() => {
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -152,8 +152,8 @@ describe('Report Page', function () {
   });
 
   it('Verify Functionality of search Button and Designation Dropdown', function () {
-    report.searchNumber('9283662821');
-    report.verifySearchedNumber('Sandeep Kumar');
+    report.searchNumber(fixtureData.Number);
+    report.verifySearchedNumber(fixtureData.Number);
   });
 
   it('Verify All status dropdown should show statuses', () => {
