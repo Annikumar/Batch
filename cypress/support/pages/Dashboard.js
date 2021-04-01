@@ -522,7 +522,7 @@ export default class Dashboard {
   }
 
   enterNameToSearch(name) {
-    cy.get(AudioLibrarySearchBox).type(name);
+    cy.get(AudioLibrarySearchBox).clear().type(name);
   }
 
   verifySearchResult(recordingName) {
