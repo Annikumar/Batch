@@ -1,4 +1,5 @@
 import Campaign from '../support/pages/Campaigns';
+import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
@@ -19,6 +20,7 @@ describe('Add Campaign flow', () => {
     });
   });
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 
@@ -336,5 +338,39 @@ describe('Add Campaign flow', () => {
     addCamp.clickEditCampaignNew();
     addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.clickSaveCampaign();
+  });
+
+  it('Create the Recycle Campaign', () => {
+    addCamp.clickCampaignMenu();
+    cy.wait(3000);
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
+    addCamp.clickNextCircleArrow();
+    addCamp.selectCallResultsOption('Answering Machine');
+    addCamp.clickNextCircleArrow();
+    addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');
+    addCamp.clickCreateCampButton();
+    cy.wait(1000);
+    addCamp.clickRecycleMenu();
+    addCamp.selectCamapignToRecycle(
+      fixtureData.campaignName + randNum.toString()
+    );
+    addCamp.selectRecycleCallResult('Busy');
+    addCamp.selectUseListsFrom('FirstCampaign');
+    addCamp.enterNewCampaignName('RecycledCampaign');
+    addCamp.clickRecycleSaveCampaign();
+    addCamp.verifySuccessToast('Recycled campaign created');
+    addCamp.verifyAddedRecycleCampaign('RecycledCampaign');
+  });
+
+  it('Archieve the Created Recycle Campaign', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
+    addCamp.verifyArchivedCampaign('RecycledCampaign', 'not.exist');
   });
 });

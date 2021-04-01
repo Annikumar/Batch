@@ -1,9 +1,10 @@
 import User from '../support/pages/User';
+import Dashboard from '../support/pages/Dashboard';
+import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100000);
 const addUser = new User();
-import Dashboard from '../support/pages/Dashboard';
 var count;
 const Dash = new Dashboard();
 
@@ -32,6 +33,7 @@ describe('Login Successfully and Add User', () => {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 
@@ -214,5 +216,6 @@ describe('Login Successfully and Add User', () => {
       'Enter Email',
       'Enter Phone',
     ]);
+    addUser.clickCancelBtn();
   });
 });

@@ -2,6 +2,7 @@ import promisify from 'cypress-promise';
 import Campaign from '../support/pages/Campaigns';
 import Contacts from '../support/pages/Contacts';
 import PhoneNum from '../support/pages/PhoneNum';
+import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let num;
@@ -25,6 +26,7 @@ describe('Add Phone Number flow', () => {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 

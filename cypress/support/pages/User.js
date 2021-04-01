@@ -24,6 +24,7 @@ const Agent = "//td[text()='Agent']";
 const AgentStatuses = "//span[text()='Agent Statuses']";
 const AssignToGroup = "//div[label[text()='Assign to a Group ']]/div";
 const CancelButton = "//button[text()=' CANCEL']";
+const cancelBtn = "//button[contains(text(),'CANCEL')]";
 const SecondPhone = 'input[name=phone2]';
 const userTableHeading = '.users thead';
 const userEditButton = "img[src*='icon-edit']";
@@ -179,6 +180,10 @@ export default class User {
 
   verifyRoleDropdownNewUser() {
     cy.xpath(roleDropdown).should('be.visible');
+  }
+
+  clickCancelBtn() {
+    cy.xpath(cancelBtn).click();
   }
 
   verifyEmailField() {

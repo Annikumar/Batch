@@ -1,4 +1,5 @@
 import Report from '../support/pages/Report';
+import { selectAgentStatus } from '../support/Utils';
 
 const report = new Report();
 let fixtureData;
@@ -19,6 +20,7 @@ describe('Report Page', function () {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 

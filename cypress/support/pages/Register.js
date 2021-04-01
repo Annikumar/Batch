@@ -13,7 +13,7 @@ const dialerPlan = (x) =>
 const requiredFields = (validate) =>
   "//span[@class='error-msg'][text()='" + validate + "']";
 const duplicateEmail =
-  "//div[@class='Toastify__toast-body'][contains(.,'The email is already used')]";
+  "//div[@class='Toastify__toast-body'][contains(.,'Email is already used')]";
 
 export default class Register {
   clickSignUpBtn() {

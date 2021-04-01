@@ -98,6 +98,17 @@ const campaignEditButton = "//a[text()='Edit']";
 const campaignChange =
   "//span[text()='FirstCampaign']/ancestor::tr//td[text()='Predictive Dialer']";
 const callerIdError = '.ss-select.error';
+const campaign = '.main_sec .ss-select:not(.multiple)';
+const options = '.ss-select-option';
+const recycleCallResult =
+  '//label[text()="Call Results"]/following-sibling::div[contains(@class,"ss-select")]';
+const questionIcon = 'img[src*="question"]';
+const useListsFrom =
+  '//label[text()="Use Lists From"]/following-sibling::div[contains(@class,"ss-select")]';
+const newCampaignName = 'input[name="newcampaignname"]';
+const saveCampaign = '.wizard-buttons button[type="submit"]';
+const successToast = '.Toastify__toast-body';
+const campaignTable = '.table tbody';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -536,5 +547,53 @@ export default class Campaign {
 
   verifyCampaignChange() {
     cy.xpath(campaignChange).should('be.visible');
+  }
+
+  selectOptions(optionName) {
+    cy.get(options).then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === optionName) {
+          cy.get(opt[i]).click({ force: true });
+          break;
+        }
+      }
+    });
+  }
+
+  selectCamapignToRecycle(campaignName) {
+    cy.get(campaign).click();
+    this.selectOptions(campaignName);
+  }
+
+  selectRecycleCallResult(callResult) {
+    cy.xpath(recycleCallResult).click();
+    this.selectOptions(callResult);
+    this.clickQuestionIcon();
+  }
+
+  clickQuestionIcon() {
+    cy.get(questionIcon).first().click();
+  }
+
+  selectUseListsFrom(listName) {
+    cy.xpath(useListsFrom).click();
+    this.selectOptions(listName);
+    this.clickQuestionIcon();
+  }
+
+  enterNewCampaignName(name) {
+    cy.get(newCampaignName).type(name);
+  }
+
+  clickRecycleSaveCampaign() {
+    cy.get(saveCampaign).click();
+  }
+
+  verifySuccessToast(message) {
+    cy.get(successToast).should('contain.text', message);
+  }
+
+  verifyAddedRecycleCampaign(campaignName) {
+    cy.get(campaignTable).should('contain.text', campaignName);
   }
 }

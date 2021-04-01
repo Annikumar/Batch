@@ -101,8 +101,18 @@ export default class Agent {
     });
   }
 
+  ChooseCallResult(result) {
+    cy.wait(2000);
+    cy.get('body').then(($body) => {
+      if ($body.find(callResults).length) {
+        this.selectCallResult(result);
+        this.clickContinueBtn();
+      }
+    });
+  }
+
   clickCloseSoftphoneBtn() {
-    cy.get(softphoneCloseBtn).click();
+    cy.get(softphoneCloseBtn, { timeout: 30000 }).click();
   }
 
   enterSearch(search) {

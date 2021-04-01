@@ -1,4 +1,5 @@
 import Dashboard from '../support/pages/Dashboard';
+import { selectAgentStatus } from '../support/Utils';
 
 const Dash = new Dashboard();
 let fixtureData;
@@ -23,6 +24,7 @@ describe('Dashboard Elements', function () {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 
@@ -456,5 +458,6 @@ describe('Dashboard Elements', function () {
     Dash.clickStatusButton();
     Dash.selectAvailable('Available', 'FirstCampaign');
     Dash.verifyPopUpHeader('Start Calling');
+    Dash.clickConfirmButton();
   });
 });

@@ -1,4 +1,5 @@
 import Contacts from '../support/pages/Contacts';
+import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let randNum = Math.floor(Math.random() * 100);
@@ -19,6 +20,7 @@ describe('Add Contact flow', () => {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 
@@ -307,9 +309,10 @@ describe('Add Contact flow', () => {
     addCont.verifyErrorMessage('Enter First Name');
   });
 
-  it('Download and Verify the Contact List', () => {
+  it.skip('Download and Verify the Contact List', () => {
     addCont.clickingOnContactOption();
     addCont.clickLists();
+    addCont.enterSearch('longfile.csv');
     addCont.downloadAndVerifyContactList('longfile.csv');
   });
 });

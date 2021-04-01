@@ -319,7 +319,7 @@ export default class Dashboard {
   }
 
   verifyPauseAccount() {
-    cy.xpath(BillingPauseAccount, { timeout: 40000 }).should('be.visible');
+    cy.xpath(BillingPauseAccount, { timeout: 60000 }).should('be.visible');
   }
 
   verifyCancelAccount() {
@@ -390,6 +390,7 @@ export default class Dashboard {
 
   clickLeadScore() {
     cy.get(UserSettingOptions).contains('Lead Score').click();
+    this.clickCloseSoftphoneBtn();
   }
 
   verifyAgentScriptHeading() {
@@ -440,7 +441,12 @@ export default class Dashboard {
   }
 
   clickSaveBtn() {
-    cy.get(saveBtn).click();
+    cy.wait(1000);
+    cy.get('body').then(($body) => {
+      if ($body.find(saveBtn).length) {
+        cy.get(saveBtn).click();
+      }
+    });
   }
 
   verifyAddedRule(rule) {
@@ -524,7 +530,7 @@ export default class Dashboard {
   }
 
   clickDeleteRecordingBtn(recordingName) {
-    cy.xpath(recordingDeleteBtn(recordingName)).click();
+    cy.xpath(recordingDeleteBtn(recordingName)).click({ force: true });
   }
 
   verifyDeletedRecording(recordingName) {

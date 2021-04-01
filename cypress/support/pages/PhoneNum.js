@@ -136,10 +136,11 @@ const cardText = '.card-text';
 const searchedNumber = (number) => "//td[text()='" + number + "']";
 const searchedNumber1 = "//td[text()='9283662816']";
 const areaCode = 'input[name="areacode"]';
+const options = '.ss-select-option';
 
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
-    cy.xpath(callResultDeleteBtn(callResult)).click();
+    cy.xpath(callResultDeleteBtn(callResult)).click({ force: true });
   }
 
   verifyCreatedCallResult(callResult) {
@@ -149,7 +150,7 @@ export default class PhoneNum {
   }
 
   clickCallResultEditBtn(callResult) {
-    cy.xpath(callResultEditBtn(callResult)).click();
+    cy.xpath(callResultEditBtn(callResult)).click({ force: true });
   }
 
   verifyCallResultDelete(callResult) {
@@ -169,7 +170,7 @@ export default class PhoneNum {
   }
 
   clickDeleteRuleBtn(rule) {
-    cy.xpath(deleteRuleBtn(rule)).click();
+    cy.xpath(deleteRuleBtn(rule)).click({ force: true });
   }
 
   verifySearchResults(callResult) {
@@ -199,7 +200,7 @@ export default class PhoneNum {
   }
 
   clickUploadFileBtn() {
-    cy.xpath(uploadFileBtn).click();
+    cy.xpath(uploadFileBtn).click({ force: true });
   }
 
   uploadFile(file) {
@@ -518,7 +519,14 @@ export default class PhoneNum {
     cy.wait(1000);
     cy.xpath(selectDropdown(name)).click();
     cy.wait(1000);
-    cy.contains(campaign).click();
+    cy.get(options).then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === campaign) {
+          cy.get(opt[i]).click({ force: true });
+          break;
+        }
+      }
+    });
   }
 
   selectCallResultCampaignDropdown(campaign) {

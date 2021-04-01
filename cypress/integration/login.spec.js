@@ -1,4 +1,5 @@
 import Login from '../support/pages/Login';
+import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 const login = new Login();
@@ -13,6 +14,7 @@ describe('Add Campaign flow', () => {
   });
 
   after(() => {
+    selectAgentStatus('Offline');
     cy.Logout();
   });
 

@@ -493,6 +493,7 @@ export default class Contacts {
   }
 
   verifyListPauseButton() {
+    cy.get(listPauseButton).first().scrollIntoView();
     cy.get(listPauseButton).should('be.visible');
   }
 
@@ -501,7 +502,7 @@ export default class Contacts {
   }
 
   clickPauseButton() {
-    cy.get(listPauseButton).first().click();
+    cy.get(listPauseButton).first().scrollIntoView().click({ force: true });
   }
 
   verifyStatus() {

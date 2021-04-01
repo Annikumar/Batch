@@ -96,7 +96,6 @@ describe('Agent Profile', function () {
     agent.clickEndCallBtn();
     agent.selectCallResult('Call Back');
     agent.clickContinueBtn();
-    // agent.selectCallResult('Call Back');
-    // agent.clickContinueBtn();
+    agent.ChooseCallResult('Call Back');
   });
 });
