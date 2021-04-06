@@ -28,6 +28,7 @@ describe('Add Contact flow', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
+  //fixed test case on 5 March according to BAT-635
   it('Verifies All Elements', () => {
     addCont.clickingOnContactOption();
     cy.wait(3000);
@@ -46,7 +47,6 @@ describe('Add Contact flow', () => {
       'Score',
       'Phone Number',
       'Dialed',
-      'Campaign',
       'Lists',
       'Last Contact',
       'Created',

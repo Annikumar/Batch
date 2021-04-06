@@ -52,6 +52,7 @@ describe('Agent Profile', function () {
     agent.verifyCallResultWindow();
   });
 
+  // Fixed Test case on 5 March accordint to BAT-750
   it('Edit the Call Result of Recent Contacts', () => {
     agent.clickRecentContact();
     agent.clickEditRecentContact();

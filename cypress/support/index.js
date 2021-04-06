@@ -23,6 +23,9 @@ let randNum = Math.floor(Math.random() * 100);
 // require('./commands')
 
 Cypress.randNum = () => `randNum-${Math.floor(Math.random() * 100)}`;
+Cypress.on('uncaught:exception', (err, runnable) => {
+  return false;
+});
 
 // cy.readFile("cypress/fixtures/constants.json", (err, data) => {
 //   if (err) {

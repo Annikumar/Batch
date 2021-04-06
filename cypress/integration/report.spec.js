@@ -178,11 +178,13 @@ describe('Report Page', function () {
   it('verify Calender Elements', () => {
     report.verifyCalenderTimeline([
       'Today',
-      'This Week',
-      'Past 3 Months',
-      'Past 6 Months',
-      'Past 12 Months',
-      'This Year',
+      'Last 7 days',
+      'Last 4 weeks',
+      'Last 3 months',
+      'Last 12 months',
+      'Month to date',
+      'Quarter to date',
+      'Year to date',
     ]);
     report.verifyCalenderMonthDropdown();
     report.verifyCalenderDates();

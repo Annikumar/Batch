@@ -6,6 +6,7 @@ const accessDenied =
 const statusDropdown = '.nav-item .ss-select';
 const selectCampaignBox = '.modal-content .select__campaign__select';
 const continueBtn = "//button[text()='Continue']";
+const doneBtn = "//button[text()='Done']";
 const recentContact = 'a[title="Recent Contacts"]';
 const recentContactPage = '.reportCdrsForm.agent';
 const editContact = 'span[title="Edit"]';
@@ -59,7 +60,7 @@ export default class Agent {
   }
 
   clickContinueBtn() {
-    cy.xpath(continueBtn).click();
+    cy.xpath(doneBtn).click();
   }
 
   verifyContinueBtn() {

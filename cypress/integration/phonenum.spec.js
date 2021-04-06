@@ -144,8 +144,18 @@ describe('Add Phone Number flow', () => {
     addNum.verifySaved();
   });
 
+  it('Edit the Existing IVR', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickIvrAttendent();
+    addNum.clickeditIVR('Testing' + randNum.toString());
+    addNum.verifyEditIVRPage();
+    addNum.enterName('-edited');
+    addNum.clickIvrSaveButton();
+    addNum.verifySaved();
+  });
+
   it('Should delete IVR', function () {
-    addNum.deleteIVR('Testing' + randNum.toString());
+    addNum.deleteIVR('Testing' + randNum.toString() + '-edited');
     addNum.handleAlertForDelete();
     addNum.verifyDeletedIvr();
   });
@@ -176,7 +186,7 @@ describe('Add Phone Number flow', () => {
   });
 
   it('Fill Form to Create New Queue', () => {
-    addNum.enterName('demo testing');
+    addNum.enterName('Demotesting');
     addNum.enterDescription('testing');
     addNum.selectExtensionDropdown('Select Numbers', fixtureData.Number);
     addNum.selectAssignAgent('Agents', 'Anil');
@@ -185,8 +195,16 @@ describe('Add Phone Number flow', () => {
     addNum.verifySaved();
   });
 
+  it('Edit the Existing Queue', () => {
+    addNum.clickeditQueue('Demotesting');
+    addNum.verifyEditQueuePage();
+    addNum.enterName('-edited');
+    addNum.clickSaveQueueBtn();
+    addNum.verifySaved();
+  });
+
   it('Delete the Created Queue', () => {
-    addNum.clickDeleteBtn('demo testing');
+    addNum.clickDeleteBtn('Demotesting-edited');
     addNum.handleAlertForDelete();
   });
 

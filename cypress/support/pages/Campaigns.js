@@ -269,6 +269,7 @@ export default class Campaign {
 
   verifyArchivedCampaign(campaignName, check) {
     cy.xpath('//*[text()="' + campaignName + '"]')
+      .first()
       .scrollIntoView()
       .should(check);
   }

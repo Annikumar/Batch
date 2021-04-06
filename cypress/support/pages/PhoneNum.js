@@ -137,6 +137,10 @@ const searchedNumber = (number) => "//td[text()='" + number + "']";
 const searchedNumber1 = "//td[text()='9283662816']";
 const areaCode = 'input[name="areacode"]';
 const options = '.ss-select-option';
+const editForm = '.edit-form';
+const edit = (editName) =>
+  '//tr[td[text()="' + editName + '"]]//img[contains(@src,"edit")]';
+const saveQueueBtn = '.save_btn';
 
 export default class PhoneNum {
   clickCallResultDeleteBtn(callResult) {
@@ -760,5 +764,25 @@ export default class PhoneNum {
 
   verifySearchNumber(code) {
     cy.get('.number label', { timeout: 30000 }).should('contain.text', code);
+  }
+
+  clickeditIVR(name) {
+    cy.xpath(edit(name)).first().click();
+  }
+
+  verifyEditIVRPage() {
+    cy.get(editForm).should('be.visible');
+  }
+
+  clickeditQueue(name) {
+    cy.xpath(edit(name)).first().click();
+  }
+
+  verifyEditQueuePage() {
+    cy.get(editForm).should('be.visible');
+  }
+
+  clickSaveQueueBtn() {
+    cy.get(saveQueueBtn).scrollIntoView().click();
   }
 }
