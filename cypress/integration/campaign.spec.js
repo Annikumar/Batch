@@ -74,7 +74,7 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption('Answering Machine');
+    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');
     addCamp.clickCreateCampButton();
@@ -102,6 +102,28 @@ describe('Add Campaign flow', () => {
     addCamp.changeCampaignStatusByDrpdwn('Active');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     cy.reload();
+  });
+
+  it.skip('Edit the Added Campaign', () => {
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditBtn();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.enterName('-edited');
+    addCamp.verifyCallResultValues(3);
+    addCamp.deleteCallResults(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.selectCallResultsOption([
+      'Invoice',
+      'Unknown',
+      'No Answer',
+      'Successful Sale',
+    ]);
+    addCamp.clickSaveCampaign();
+    addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditBtn();
+    addCamp.enableAdvancedSwitchBar();
+    addCamp.verifyCallResultValues(4);
   });
 
   it('Archive Created Campaign', function () {

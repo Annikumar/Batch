@@ -109,6 +109,9 @@ const newCampaignName = 'input[name="newcampaignname"]';
 const saveCampaign = '.wizard-buttons button[type="submit"]';
 const successToast = '.Toastify__toast-body';
 const campaignTable = '.table tbody';
+const callresultValues = '.row-calldisposition  .ss-select-value';
+const delCallResult = (callResultName) =>
+  `.ss-select-value-label[title="${callResultName}"] + .ss-select-value-delete`;
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -161,11 +164,17 @@ export default class Campaign {
     cy.get(
       'div[class="collapse show"] .row-calldisposition .ss-select'
     ).click();
-    cy.get(dropdownOptions)
-      .contains(callRslts)
-      .then((option) => {
-        option[0].click();
-      });
+    cy.get(options).then((option) => {
+      for (let i = 0; i < callRslts.length; i++) {
+        for (let j = 0; j < option.length; j++) {
+          if (option[j].textContent.trim() === callRslts[i]) {
+            cy.log(option[j].textContent.trim());
+            option[j].click();
+            break;
+          }
+        }
+      }
+    });
   }
 
   clickCreateCampButton() {
@@ -254,6 +263,10 @@ export default class Campaign {
         campaignName +
         '"]/ancestor::tr//img[contains(@src,"edite1.svg")]'
     ).click();
+  }
+
+  clickEditBtn() {
+    cy.xpath(campaignEditButton).click();
   }
 
   clickArchiveCampaignButton() {
@@ -596,5 +609,15 @@ export default class Campaign {
 
   verifyAddedRecycleCampaign(campaignName) {
     cy.get(campaignTable).should('contain.text', campaignName);
+  }
+
+  verifyCallResultValues(value) {
+    cy.get(callresultValues).should('have.length', value);
+  }
+
+  deleteCallResults(callRslt) {
+    for (let i = 0; i < callRslt.length; i++) {
+      cy.get(delCallResult(callRslt[i])).scrollIntoView().click();
+    }
   }
 }

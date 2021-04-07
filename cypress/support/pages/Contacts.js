@@ -101,8 +101,20 @@ const testingPauseButton =
 const phone = '.phone-number';
 const contactList =
   "//tr[td[text()='longfile.csv']]//a[img[contains(@src,'csv')]]";
-
+const followUpCall = '//button[contains(text(),"Follow Up Call")]';
 const errorMessage = '.error-msg';
+const contact = (firstName, lastName) =>
+  '//span[@class="contacts__name"][contains(.,"' +
+  firstName +
+  '") and contains(.,"' +
+  lastName +
+  '")]';
+const month = '.month-selector .title';
+const nextBtn = '.fa-chevron-right';
+const day = '.day';
+const saveBtn = '//button[contains(text(),"Save")]';
+const scheduledCall = '.day .item';
+const closeBtn = '//button[contains(text(),"Close")]';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -561,5 +573,52 @@ export default class Contacts {
         });
       });
     });
+  }
+
+  clickFollowUpCall() {
+    cy.xpath(followUpCall).click();
+    cy.wait(1000);
+  }
+
+  clickContactName(name) {
+    const firstLastName = name.split(' ');
+    cy.xpath(contact(firstLastName[0], firstLastName[1])).click();
+  }
+
+  selectDateForFollowUpCall(date) {
+    cy.get('.modal-content').should('be.visible');
+    const [Date, monthYear] = date.split(',');
+    cy.log(monthYear);
+    cy.log(Date);
+    for (let i = 0; i < 36; i++) {
+      cy.get(month).then(($month) => {
+        for (let i = 0; i < $month.length; i++) {
+          if ($month[0].textContent.trim() != monthYear) {
+            cy.get(nextBtn).click();
+            break;
+          }
+        }
+      });
+    }
+    cy.get(day).then(($day) => {
+      for (let i = 0; i < $day.length; i++) {
+        if ($day[i].textContent.trim() === Date) {
+          cy.get($day[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickSavebtn() {
+    cy.xpath(saveBtn).click();
+  }
+
+  verifyFollowUpCall(name) {
+    cy.get(scheduledCall).should('contain.text', `Call Back to ${name}`);
+  }
+
+  clickCloseBtn() {
+    cy.xpath(closeBtn).click({ force: true });
   }
 }
