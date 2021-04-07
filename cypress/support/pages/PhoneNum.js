@@ -314,26 +314,30 @@ export default class PhoneNum {
   }
 
   selectPhoneNumber(number) {
-    cy.xpath(firstNumberChkBx, { timeout: 14000 }).click();
+    cy.xpath(firstNumberChkBx, { timeout: 30000 }).click();
   }
 
-  async clickOrderNowButton() {
-    await promisify(cy.get(orderNow).click({ force: true }));
+  clickOrderNowButton() {
+    cy.get(orderNow).click({ force: true });
   }
 
-  async closingDialog() {
-    await promisify(cy.xpath(closeBtn).click());
+  closingDialog() {
+    cy.xpath(closeBtn).click();
   }
 
-  async getFirstPhoneNumber() {
-    return await promisify(
-      cy
-        .get(firstNum, { timeout: 30000 })
-        .first({ timeout: 30000 })
-        .then((el) => {
-          return el.text().trim();
-        })
-    );
+  getFirstPhoneNumber() {
+    cy.get(firstNum, { timeout: 30000 })
+      .first({ timeout: 30000 })
+      .then((el) => {
+        cy.readFile('cypress/fixtures/constants.json', (err, data) => {
+          if (err) {
+            return console.error(err);
+          }
+        }).then((data) => {
+          data.BuyNumber = el.text().trim();
+          cy.writeFile('cypress/fixtures/constants.json', JSON.stringify(data));
+        });
+      });
   }
 
   verifysearchStartedToast() {

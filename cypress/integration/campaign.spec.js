@@ -67,9 +67,9 @@ describe('Add Campaign flow', () => {
 
   it('Should Add Predictive Dialer New Campaign ', () => {
     addCamp.clickCampaignMenu();
-    cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
+    cy.wait(1000);
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
@@ -139,14 +139,13 @@ describe('Add Campaign flow', () => {
 
   it('Should Add Preview Dialer New Campaign ', () => {
     addCamp.clickCampaignMenu();
-    cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
+    cy.wait(1000);
     addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
     addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
-
     addCamp.selectCallResultsOption('Busy');
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');

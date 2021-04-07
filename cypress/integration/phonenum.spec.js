@@ -25,6 +25,10 @@ describe('Add Phone Number flow', () => {
     });
   });
 
+  beforeEach(() => {
+    cy.fixture('constants').then((data) => (fixtureData = data));
+  });
+
   after(() => {
     selectAgentStatus('Offline');
     cy.Logout();
@@ -34,7 +38,7 @@ describe('Add Phone Number flow', () => {
     cy.Login(fixtureData.username, fixtureData.password);
   });
 
-  it('Should Buy Phone number successfully ', async () => {
+  it('Should Buy Phone number successfully ', () => {
     addNum.clickPhoneNumberMenu();
     addNum.clickBuyDidButton();
     addNum.selectStateModeOption('Colorado');
@@ -42,22 +46,26 @@ describe('Add Phone Number flow', () => {
     addNum.verifysearchStartedToast();
     addNum.selectPhoneNumber();
     addNum.assignAgentUser('Anil kumar');
-    num = await addNum.getFirstPhoneNumber();
-    await addNum.clickOrderNowButton();
-    await addNum.closingDialog();
-    cy.log(num);
+    addNum.getFirstPhoneNumber();
+    addNum.clickOrderNowButton();
+    addNum.closingDialog();
   });
 
   it('Should show added Phone number in table', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.verifyAddedPhoneNum(num);
-    cy.log(num);
+    cy.readFile('cypress/fixtures/constants.json').then((data) => {
+      num = data.BuyNumber;
+      addNum.clickPhoneNumberMenu();
+      addNum.verifyAddedPhoneNum(num);
+      cy.log(num);
+    });
   });
 
   it('Should delete the added Phone Number', () => {
     addNum.clickPhoneNumberMenu();
-    addNum.deleteAddedPhoneNumber(num);
-    addNum.handleAlertForDelete();
+    cy.readFile('cypress/fixtures/constants.json').then((data) => {
+      addNum.deleteAddedPhoneNumber(data.BuyNumber);
+      addNum.handleAlertForDelete();
+    });
     addNum.verifyDeletedToast();
   });
 
@@ -415,8 +423,11 @@ describe('Add Phone Number flow', () => {
     cy.wait(2000);
     addNum.clickCallResultDeleteBtn('Testing');
     addNum.handleDeleteAlert('Delete call result?');
+    addNum.clickCallResultDeleteBtn('TestingCallResult');
+    addNum.handleDeleteAlert('Delete call result?');
     addNum.verifyCallResultDelete('DemoTesting');
     addNum.verifyCallResultDelete('Testing');
+    addNum.verifyCallResultDelete('TestingCallResult');
   });
 
   it('Verifies Number Group Elements', () => {
