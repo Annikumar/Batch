@@ -146,6 +146,13 @@ const cancelAccountReason = (reason) =>
 const confirmDelete = '.security input';
 const dialogCloseBtn = '.modal-body svg[data-icon="times"]';
 const popUpHeader = '.modal-header';
+const taskLeftArrow = "img[src*='left.svg']";
+const DashboardCalender = '.fakeinput__overflow';
+const CalenderMonth = '.daypicker__month-select';
+const filterStartDate = "(//div[@class='date-input-field'])[1]";
+const filterEndDate = "(//div[@class='date-input-field'])[2]";
+const filterSelectDate = (date) =>
+  "//div[@class='DayPicker-Body']//div[text()='" + date + "']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -962,7 +969,30 @@ export default class Dashboard {
   clickDialogCloseButton() {
     cy.get(dialogCloseBtn).click();
   }
+  
   verifyPopUpHeader(heading) {
     cy.get(popUpHeader).should('contain.text', heading);
   }
+
+  clickTaskLeftArrow() {
+    cy.get(taskLeftArrow).click({ force: true });
+    cy.wait(1000);
+    }
+    
+    getLastMonth() {
+    var month = Cypress.moment().subtract(1, 'month').format('MMM');
+    return month;
+    }
+    
+    verifyMonth(month) {
+    cy.get(CalenderMonth).should('contain.text', month);
+    }
+    
+    clickDashboardCalendar() {
+    cy.get(DashboardCalender).click();
+    }
+    
+    EnterFilterStartAndEndDate(date, val) {
+    cy.xpath(filterSelectDate(date)).click().should('have.class', val);
+    }
 }

@@ -3,15 +3,8 @@
   "defaultCommandTimeout": 10000,
   "viewportHeight": 768,
   "viewportWidth": 1366,
-  "reporter": "mochawesome-screenshots",
+  "reporter": "cypress-multi-reporters",
   "reporterOptions": {
-    "reportDir": "cypress/reports",
-    "reportName": "Report",
-    "jsonReport": false,
-    "takePassedScreenshot": true,
-    "clearOldScreenshots": false,
-    "shortScrFileNames": true,
-    "multiReport": true
-  },
-  "projectId": "7pkh52"
+    "configFile": "reporter-config.json"
+  }
 }

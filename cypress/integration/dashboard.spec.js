@@ -468,4 +468,16 @@ describe('Dashboard Elements', function () {
     Dash.verifyPopUpHeader('Start Calling');
     Dash.clickConfirmButton();
   });
+
+  it('Verify Calendar Month Left Arrow Functionality', () => {
+    Dash.clickDashboardCalendar();
+    var month = Dash.getLastMonth();
+    Dash.clickTaskLeftArrow();
+    Dash.verifyMonth(month);
+    });
+    
+    it('Verify Admin a Able to use Filter on Dashboard', () => {
+    Dash.EnterFilterStartAndEndDate('1', 'DayPicker-Day--start');
+    Dash.EnterFilterStartAndEndDate('25', 'DayPicker-Day--end');
+    });
 });

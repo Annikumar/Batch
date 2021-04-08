@@ -40,7 +40,7 @@ describe('Add Campaign flow', () => {
 
   it('Search box and Dropdowns on Campaign page', function () {
     addCamp.verifySearchBox();
-    addCamp.verifyStatusBox();
+    addCamp.verifyStatusBox('Status');
     addCamp.verifyAgentBox();
     addCamp.verifyContactsCountSlider();
     addCamp.verifyAddCompaignButton();
@@ -91,7 +91,7 @@ describe('Add Campaign flow', () => {
       fixtureData.campaignName + randNum.toString(),
       'active'
     );
-    addCamp.clickToSelectPasused();
+    addCamp.clickToSelectPasused('Status');
     addCamp.changeCampaignStatusByDrpdwn('Paused');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.changesCampaignStatus(
@@ -137,6 +137,17 @@ describe('Add Campaign flow', () => {
     );
   });
 
+  it('Verify User is able to Unarchive the Archived Campaign', () => {
+    addCamp.clickToSelectStatus('Status');
+    addCamp.clickStatusArchived();
+    addCamp.clickUnarchiveCampaign(
+      fixtureData.campaignName + randNum.toString()
+    );
+    addCamp.clickToSelectStatus('Archived');
+    addCamp.clickStatus();
+    addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
+  });
+
   it('Should Add Preview Dialer New Campaign ', () => {
     addCamp.clickCampaignMenu();
     addCamp.clickAddNewCampaign();
@@ -146,7 +157,7 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Preview Dialer');
     addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption('Busy');
+    addCamp.selectCallResultsOption(['Busy']);
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Individual Agents', 'Anil kumar');
     addCamp.clickCreateCampButton();
@@ -175,7 +186,7 @@ describe('Add Campaign flow', () => {
   it('Verify status dropdown is showing Archived Campaign', function () {
     // addCamp.clickRecycleMenu();
     // addCamp.clickCampaignMenu();
-    addCamp.clickToSelectStatus();
+    addCamp.clickToSelectStatus('Status');
     addCamp.clickStatusArchived();
     addCamp.verifyArchivedCampaign(
       fixtureData.campaignName + randNum.toString() + '1',
@@ -225,7 +236,7 @@ describe('Add Campaign flow', () => {
     addCamp.verifyCallTypeBeepOnce();
     addCamp.verifyCallTypeRingingSound();
     addCamp.verifyCallingHours();
-    addCamp.selectCallResultsOption('Busy');
+    addCamp.selectCallResultsOption(['Busy']);
     addCamp.verifyCallResult();
     addCamp.verifyMaxAttempts();
     addCamp.verifyRetryTime();
@@ -265,7 +276,7 @@ describe('Add Campaign flow', () => {
   it('Verify all combination of filter are working properly', () => {
     addCamp.clickCampaignMenu();
     addCamp.searchCampaign('FirstCampaign');
-    addCamp.clickToSelectStatus();
+    addCamp.clickToSelectStatus('Status');
     addCamp.clickActiveStatus();
     addCamp.verifyAddedCampaign('FirstCampaign');
   });
@@ -330,7 +341,7 @@ describe('Add Campaign flow', () => {
   // });
 
   it('Verify contact list dropdown should show lists dropdown', () => {
-    addCamp.selectCallResultsOption('Busy');
+    addCamp.selectCallResultsOption(['Busy']);
     addCamp.clickNextCircleArrow();
     addCamp.clickContactListDropdown();
     addCamp.verifyContactListDropdown();

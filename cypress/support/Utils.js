@@ -1,5 +1,8 @@
 const statusDropdown = '.nav-item .ss-select';
 
 export function selectAgentStatus(status) {
-  cy.get(statusDropdown).click().contains(status).click();
+  cy.get(statusDropdown)
+    .click({ force: true })
+    .contains(status)
+    .click({ force: true });
 }

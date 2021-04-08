@@ -14,7 +14,7 @@ const callerIdDrpdwn =
 const agentsDrpdwn =
   '//div[contains(@class,"ss-select-control")]/span[contains(text(),"Agents")]';
 const createCampBtn = '//button[contains(text(),"SAVE")]';
-const statusDrpdwn = '.campaignForm span[title="Status"]';
+const statusDrpdwn = (status) => '.campaignForm span[title="' + status + '"]';
 const dropdownOptions = '.ss-select-group-items';
 const pausedDrpdwn = '.campaignForm span[title="Paused"]';
 const campaignHeader = '.campaignsTop';
@@ -112,6 +112,7 @@ const campaignTable = '.table tbody';
 const callresultValues = '.row-calldisposition  .ss-select-value';
 const delCallResult = (callResultName) =>
   `.ss-select-value-label[title="${callResultName}"] + .ss-select-value-delete`;
+const status = "//div[text()='Status']";
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -185,19 +186,21 @@ export default class Campaign {
     cy.xpath(
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]',
       { timeout: 10000 }
-    ).should('be.visible');
+    )
+      .scrollIntoView()
+      .should('be.visible');
   }
 
-  clickToSelectPasused() {
-    cy.get(statusDrpdwn).click();
+  clickToSelectPasused(val) {
+    cy.get(statusDrpdwn(val)).click();
   }
 
   clickToSelectActive() {
     cy.get(pausedDrpdwn).click();
   }
 
-  clickToSelectStatus() {
-    cy.get(statusDrpdwn).click();
+  clickToSelectStatus(val) {
+    cy.get(statusDrpdwn(val)).click();
   }
 
   changeCampaignStatusByDrpdwn(status) {
@@ -235,8 +238,8 @@ export default class Campaign {
     cy.get(searchBox).should('be.visible');
   }
 
-  verifyStatusBox() {
-    cy.get(statusDrpdwn).should('be.visible');
+  verifyStatusBox(val) {
+    cy.get(statusDrpdwn(val)).should('be.visible');
   }
 
   verifyAgentBox() {
@@ -620,4 +623,16 @@ export default class Campaign {
       cy.get(delCallResult(callRslt[i])).scrollIntoView().click();
     }
   }
+
+  clickUnarchiveCampaign(arc) {
+    cy.xpath(
+    "//td[text()='" +
+    arc +
+    "']/parent::tr//td//*[name()='svg' and @data-icon='undo']"
+    ).click();
+    }
+    
+    clickStatus() {
+    cy.xpath(status).click();
+    }
 }
