@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precy:run": "rm -r -d cypress\\screenshots cypress\\results cypress\\reports",
+    "pretcy:run": "rm -r -d cypress\\screenshots cypress\\results cypress\\reports",
     "report-t": "npm run report:merge & npm run report:generate",
     "cy:run": "npx cypress run --browser chrome --headless --spec cypress/integration/1user.spec.js",
     "report": "npm run cy:run & npm run report:merge & npm run report:generate & npm run report:copyScreenshots",
