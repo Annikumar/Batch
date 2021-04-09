@@ -191,6 +191,14 @@ export default class Campaign {
       .should('be.visible');
   }
 
+  verifyUnarchievedCampaign(camp) {
+    cy.reload();
+    cy.xpath(
+      '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]',
+      { timeout: 10000 }
+    ).should('be.visible');
+  }
+
   clickToSelectPasused(val) {
     cy.get(statusDrpdwn(val)).click();
   }
@@ -626,13 +634,16 @@ export default class Campaign {
 
   clickUnarchiveCampaign(arc) {
     cy.xpath(
-    "//td[text()='" +
-    arc +
-    "']/parent::tr//td//*[name()='svg' and @data-icon='undo']"
-    ).click();
-    }
-    
-    clickStatus() {
+      "//td[text()='" +
+        arc +
+        "']/parent::tr//td//*[name()='svg' and @data-icon='undo']"
+    )
+      .first()
+      .scrollIntoView()
+      .click();
+  }
+
+  clickStatus() {
     cy.xpath(status).click();
-    }
+  }
 }

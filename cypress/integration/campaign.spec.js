@@ -140,12 +140,15 @@ describe('Add Campaign flow', () => {
   it('Verify User is able to Unarchive the Archived Campaign', () => {
     addCamp.clickToSelectStatus('Status');
     addCamp.clickStatusArchived();
+    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.clickUnarchiveCampaign(
       fixtureData.campaignName + randNum.toString()
     );
     addCamp.clickToSelectStatus('Archived');
     addCamp.clickStatus();
-    addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.verifyUnarchievedCampaign(
+      fixtureData.campaignName + randNum.toString()
+    );
   });
 
   it('Should Add Preview Dialer New Campaign ', () => {
@@ -199,10 +202,6 @@ describe('Add Campaign flow', () => {
     addCamp.verifyArchivedCampaign(
       fixtureData.campaignName + randNum.toString() + '1',
       'be.visible'
-    );
-    addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString(),
-      'not.exist'
     );
   });
 
@@ -374,10 +373,10 @@ describe('Add Campaign flow', () => {
 
   it('Create the Recycle Campaign', () => {
     addCamp.clickCampaignMenu();
-    cy.wait(3000);
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
-    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    cy.wait(2000);
+    addCamp.enterName(fixtureData.campaignName + randNum.toString() + 2);
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
     addCamp.clickNextCircleArrow();
@@ -388,7 +387,7 @@ describe('Add Campaign flow', () => {
     cy.wait(1000);
     addCamp.clickRecycleMenu();
     addCamp.selectCamapignToRecycle(
-      fixtureData.campaignName + randNum.toString()
+      fixtureData.campaignName + randNum.toString() + 2
     );
     addCamp.selectRecycleCallResult('Busy');
     addCamp.selectUseListsFrom('FirstCampaign');
@@ -400,7 +399,9 @@ describe('Add Campaign flow', () => {
 
   it('Archieve the Created Recycle Campaign', () => {
     addCamp.clickCampaignMenu();
-    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + 2
+    );
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign('RecycledCampaign', 'not.exist');

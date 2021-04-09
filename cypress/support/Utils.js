@@ -2,7 +2,9 @@ const statusDropdown = '.nav-item .ss-select';
 
 export function selectAgentStatus(status) {
   cy.get(statusDropdown)
-    .click({ force: true })
+    .invoke('show')
+    .click()
     .contains(status)
-    .click({ force: true });
+    .scrollIntoView()
+    .click();
 }

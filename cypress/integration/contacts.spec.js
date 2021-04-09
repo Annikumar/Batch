@@ -174,7 +174,6 @@ describe('Add Contact flow', () => {
     addCont.selectPhoneDropdown();
     addCont.clickNextButton();
     addCont.clickSubmitButton();
-    addCont.clickSubmitButton();
     addCont.verifyImportStartedToast();
     addCont.verifyImportContactCompleteToast();
     cy.wait(3000);
@@ -282,7 +281,6 @@ describe('Add Contact flow', () => {
     addCont.selectEmailDropdown();
     addCont.selectPhoneDropdown();
     addCont.clickNextButton();
-    addCont.clickSubmitButton();
     addCont.clickSubmitButton();
     addCont.verifyImportStartedToast();
     addCont.verifyImportContactCompleteToast();
