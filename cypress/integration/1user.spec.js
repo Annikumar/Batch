@@ -63,6 +63,12 @@ describe('Login Successfully and Add User', () => {
 
   it('Should show added user in table', () => {
     addUser.clickingOnUserOption();
+    addUser.searchUser(
+      fixtureData.userFirstname +
+        ' ' +
+        fixtureData.userLastname +
+        randNum.toString()
+    );
     addUser.verifyAddedUser(
       fixtureData.userFirstname,
       fixtureData.userLastname + randNum.toString()
@@ -71,6 +77,12 @@ describe('Login Successfully and Add User', () => {
 
   it('Should delete the added user', () => {
     addUser.clickingOnUserOption();
+    addUser.searchUser(
+      fixtureData.userFirstname +
+        ' ' +
+        fixtureData.userLastname +
+        randNum.toString()
+    );
     addUser.deleteAddedContact(
       fixtureData.userFirstname,
       fixtureData.userLastname + randNum.toString()

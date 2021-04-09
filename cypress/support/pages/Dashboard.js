@@ -969,7 +969,7 @@ export default class Dashboard {
   clickDialogCloseButton() {
     cy.get(dialogCloseBtn).click();
   }
-  
+
   verifyPopUpHeader(heading) {
     cy.get(popUpHeader).should('contain.text', heading);
   }
@@ -977,22 +977,37 @@ export default class Dashboard {
   clickTaskLeftArrow() {
     cy.get(taskLeftArrow).click({ force: true });
     cy.wait(1000);
-    }
-    
-    getLastMonth() {
-    var month = Cypress.moment().subtract(1, 'month').format('MMM');
-    return month;
-    }
-    
-    verifyMonth(month) {
+  }
+
+  getLastMonth() {
+    var month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const today = new Date();
+    const lastMonth = month[today.getMonth() - 1];
+    return lastMonth;
+  }
+
+  verifyMonth(month) {
     cy.get(CalenderMonth).should('contain.text', month);
-    }
-    
-    clickDashboardCalendar() {
+  }
+
+  clickDashboardCalendar() {
     cy.get(DashboardCalender).click();
-    }
-    
-    EnterFilterStartAndEndDate(date, val) {
+  }
+
+  EnterFilterStartAndEndDate(date, val) {
     cy.xpath(filterSelectDate(date)).click().should('have.class', val);
-    }
+  }
 }

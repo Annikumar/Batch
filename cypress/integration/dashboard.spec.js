@@ -474,10 +474,11 @@ describe('Dashboard Elements', function () {
     var month = Dash.getLastMonth();
     Dash.clickTaskLeftArrow();
     Dash.verifyMonth(month);
-    });
-    
-    it('Verify Admin a Able to use Filter on Dashboard', () => {
+  });
+
+  it('Verify Admin a Able to use Filter on Dashboard', () => {
     Dash.EnterFilterStartAndEndDate('1', 'DayPicker-Day--start');
     Dash.EnterFilterStartAndEndDate('25', 'DayPicker-Day--end');
-    });
+    Dash.clickDashboardCalendar();
+  });
 });

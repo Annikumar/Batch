@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pretcy:run": "rm -r -d cypress\\screenshots cypress\\results cypress\\reports",
+    "precy:run": "rm -r -d cypress/screenshots cypress/results cypress/reports",
     "report-t": "npm run report:merge & npm run report:generate",
-    "cy:run": "npx cypress run --browser chrome --headless --spec cypress/integration/1user.spec.js",
-    "report": "npm run cy:run & npm run report:merge & npm run report:generate & npm run report:copyScreenshots",
+    "cy:run": "npx cypress run --browser chrome --headless",
+    "report": "npm run cy:run ; npm run report:merge ; npm run report:generate ; npm run report:copyScreenshots",
     "report:merge": "mochawesome-merge cypress/results/json/mochawesome*.json > cypress/results/mochawesome-bundle.json",
     "report:generate": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/reports/html",
-    "report:copyScreenshots": "cp -r cypress\\screenshots cypress\\reports\\html\\cypress\\results\\screenshots"
+    "report:copyScreenshots": "cp -r cypress/screenshots cypress/reports/html/screenshots"
   },
   "keywords": [],
   "author": "",
