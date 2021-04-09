@@ -226,7 +226,7 @@ export default class Dashboard {
   }
 
   verifyDialPad() {
-    cy.get(DialPad, { timeout: 30000 }).should('be.visible');
+    cy.get(DialPad, { timeout: 30000 }).should('exist');
   }
 
   dialNumber() {

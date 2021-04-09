@@ -603,6 +603,7 @@ export default class Contacts {
     cy.get(day).then(($day) => {
       for (let i = 0; i < $day.length; i++) {
         if ($day[i].textContent.trim() === Date) {
+          cy.wait(2000);
           cy.get($day[i]).click();
           break;
         }

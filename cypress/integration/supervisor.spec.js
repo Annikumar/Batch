@@ -54,4 +54,15 @@ describe('SuperVisor Flow', () => {
     suprevisor.clickprofileButton();
     suprevisor.verifyProfilePage();
   });
+
+  it('Verify Supervisor can Login as Agent', () => {
+    suprevisor.clickDashboardMenu();
+    suprevisor.clickLoginAsBtn();
+    suprevisor.clickOpenUser();
+    suprevisor.loginWithUser('automation testing');
+    suprevisor.verifyLogin('automation testing');
+    suprevisor.clickOnProfile();
+    suprevisor.clickBackToSupervisor();
+    suprevisor.verifySupervisorProfile();
+  });
 });
