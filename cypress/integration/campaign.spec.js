@@ -200,10 +200,6 @@ describe('Add Campaign flow', () => {
       fixtureData.campaignName + randNum.toString() + '1',
       'be.visible'
     );
-    addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString(),
-      'not.exist'
-    );
   });
 
   it('Verify elements on New Campaign Page', function () {

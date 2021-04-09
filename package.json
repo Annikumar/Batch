@@ -6,7 +6,7 @@
   "scripts": {
     "precy:run": "rm -r -d cypress/screenshots cypress/results cypress/reports",
     "report-t": "npm run report:merge & npm run report:generate",
-    "cy:run": "npx cypress run --browser chrome --headless",
+    "cy:run": "npx cypress run --browser chrome --headless --config video=false",
     "report": "npm run cy:run ; npm run report:merge ; npm run report:generate ; npm run report:copyScreenshots",
     "report:merge": "mochawesome-merge cypress/results/json/mochawesome*.json > cypress/results/mochawesome-bundle.json",
     "report:generate": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/reports/html",

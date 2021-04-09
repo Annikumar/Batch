@@ -96,8 +96,8 @@ describe('Login Successfully and Add User', () => {
   });
 
   it('User should search using Search Box', function () {
-    addUser.searchUser('qa supervisor');
-    addUser.verifySearchedUser();
+    addUser.searchUser('supervisor automation');
+    addUser.verifySearchedUser('supervisor automation');
   });
 
   it('verify Dropdowns present on user page', function () {
@@ -219,6 +219,16 @@ describe('Login Successfully and Add User', () => {
   it('Verify Validation on fields on Add new user page', () => {
     addUser.clickingOnUserOption();
     cy.wait(3000);
+    addUser.searchUser(
+      fixtureData.userFirstname +
+        ' ' +
+        fixtureData.userLastname +
+        randNum.toString()
+    );
+    addUser.deleteAddedContact(
+      fixtureData.userFirstname,
+      fixtureData.userLastname + randNum.toString()
+    );
     addUser.clickAddNewUserButton();
     addUser.clickSaveButton();
     addUser.verifyFieldValidation([

@@ -626,13 +626,13 @@ export default class Campaign {
 
   clickUnarchiveCampaign(arc) {
     cy.xpath(
-    "//td[text()='" +
-    arc +
-    "']/parent::tr//td//*[name()='svg' and @data-icon='undo']"
+      "//td[text()='" +
+        arc +
+        "']/parent::tr//td//*[name()='svg' and @data-icon='undo']"
     ).click();
-    }
-    
-    clickStatus() {
+  }
+
+  clickStatus() {
     cy.xpath(status).click();
-    }
+  }
 }

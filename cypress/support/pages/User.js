@@ -106,7 +106,9 @@ export default class User {
         '") and contains(.,"' +
         lstName +
         '")]]//img[contains(@src,"delete")]'
-    ).click();
+    )
+      .first()
+      .click();
   }
 
   handleAlertForDelete() {
@@ -125,7 +127,11 @@ export default class User {
   }
 
   searchUser(user) {
-    cy.get(searchBox).type(user);
+    cy.get(searchBox).clear().type(user);
+  }
+
+  clearSearch() {
+    cy.get(searchBox).clear();
   }
 
   verifyRoleDropdown() {
@@ -137,6 +143,7 @@ export default class User {
   }
 
   clickRoleDropdown() {
+    this.clearSearch();
     cy.get(rolesDropdown).click();
   }
 
@@ -151,9 +158,14 @@ export default class User {
     cy.xpath(Agent).should('not.exist');
   }
 
-  verifySearchedUser() {
+  verifySearchedUser(user) {
+    const [firstName, lastName] = user.split(' ');
     cy.xpath(
-      '//table[contains(@class,"users")]//td[contains(text(),"qa") and contains(.,"supervisor")]',
+      '//table[contains(@class,"users")]//td[contains(text(),"' +
+        firstName +
+        '") and contains(.,"' +
+        lastName +
+        '")]',
       {
         timeout: 15000,
       }
@@ -229,6 +241,7 @@ export default class User {
   }
 
   verifyUserEditButton() {
+    cy.reload();
     cy.get(userEditButton).should('be.visible');
   }
 
