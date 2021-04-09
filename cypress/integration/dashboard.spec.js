@@ -474,10 +474,29 @@ describe('Dashboard Elements', function () {
     var month = Dash.getLastMonth();
     Dash.clickTaskLeftArrow();
     Dash.verifyMonth(month);
-    });
-    
-    it('Verify Admin a Able to use Filter on Dashboard', () => {
+  });
+
+  it('Verify Admin a Able to use Filter on Dashboard', () => {
     Dash.EnterFilterStartAndEndDate('1', 'DayPicker-Day--start');
     Dash.EnterFilterStartAndEndDate('25', 'DayPicker-Day--end');
-    });
+    Dash.clickDashboardCalendar();
+  });
+
+  it('Verify Admin is able to Switch to Agents Account', () => {
+    Dash.clickLoginAs();
+    Dash.clickLoginAsPlusIcon();
+    Dash.clickAgentOrSupervisor('automation testing');
+    Dash.verifyAgentOrSupervisorDashboard('Agent');
+  });
+
+  it('verify Admin is able to switch to Supervisor Account', () => {
+    Dash.clickUserProfile();
+    Dash.clickSwitchProfile();
+    Dash.clickLoginAs();
+    Dash.clickLoginAsPlusIcon();
+    Dash.clickAgentOrSupervisor('supervisor automation');
+    Dash.verifyAgentOrSupervisorDashboard('Supervisor');
+    Dash.clickUserProfile();
+    Dash.clickSwitchProfile();
+  });
 });

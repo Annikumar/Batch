@@ -153,6 +153,10 @@ const filterStartDate = "(//div[@class='date-input-field'])[1]";
 const filterEndDate = "(//div[@class='date-input-field'])[2]";
 const filterSelectDate = (date) =>
   "//div[@class='DayPicker-Body']//div[text()='" + date + "']";
+const loginAsPlusIcon = ".dropdown-menu svg[data-icon='plus']";
+const Agent = (user) => "//span[text()='" + user + "']";
+const AgentDashboard = (user) => "//span[text()='" + user + "']";
+const switchProfile = '.dropdown-logout__a .user__dropdown';
 
 export default class Dashboard {
   clickDashboard() {
@@ -226,7 +230,7 @@ export default class Dashboard {
   }
 
   verifyDialPad() {
-    cy.get(DialPad).should('be.visible');
+    cy.get(DialPad).should('exist');
   }
 
   dialNumber() {
@@ -969,7 +973,7 @@ export default class Dashboard {
   clickDialogCloseButton() {
     cy.get(dialogCloseBtn).click();
   }
-  
+
   verifyPopUpHeader(heading) {
     cy.get(popUpHeader).should('contain.text', heading);
   }
@@ -977,22 +981,53 @@ export default class Dashboard {
   clickTaskLeftArrow() {
     cy.get(taskLeftArrow).click({ force: true });
     cy.wait(1000);
-    }
-    
-    getLastMonth() {
-    var month = Cypress.moment().subtract(1, 'month').format('MMM');
-    return month;
-    }
-    
-    verifyMonth(month) {
+  }
+
+  getLastMonth() {
+    var month = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const today = new Date();
+    const lastMonth = month[today.getMonth() - 1];
+    return lastMonth;
+  }
+
+  verifyMonth(month) {
     cy.get(CalenderMonth).should('contain.text', month);
-    }
-    
-    clickDashboardCalendar() {
+  }
+
+  clickDashboardCalendar() {
     cy.get(DashboardCalender).click();
-    }
-    
-    EnterFilterStartAndEndDate(date, val) {
+  }
+
+  EnterFilterStartAndEndDate(date, val) {
     cy.xpath(filterSelectDate(date)).click().should('have.class', val);
-    }
+  }
+
+  clickLoginAsPlusIcon() {
+    cy.get(loginAsPlusIcon).click();
+  }
+
+  clickAgentOrSupervisor(user) {
+    cy.xpath(Agent(user)).click();
+  }
+
+  verifyAgentOrSupervisorDashboard(user) {
+    cy.xpath(AgentDashboard(user)).should('be.visible');
+  }
+
+  clickSwitchProfile() {
+    cy.get(switchProfile).click();
+  }
 }
