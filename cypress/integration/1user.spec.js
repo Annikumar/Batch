@@ -95,7 +95,8 @@ describe('Login Successfully and Add User', () => {
     addUser.verifySearchBox();
   });
 
-  it('User should search using Search Box', function () {
+  it('Verify the Search Functionality', function () {
+    addUser.clickingOnUserOption();
     addUser.searchUser('supervisor automation');
     addUser.verifySearchedUser('supervisor automation');
   });

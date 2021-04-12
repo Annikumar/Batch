@@ -25,6 +25,10 @@ const callResultWindow = '.modal-content .call-disposition-title';
 const cancelBtn = '//button[contains(text(),"Cancel")]';
 const confirmButton = '//button[contains(text(),"Confirm")]';
 const searchBox = '.search-box';
+const averageFieldBox = (text) => '//div[div[text()="' + text + '"]]';
+const callFieldBox = (text) => `//div[span[text()="${text}"]]`;
+const graphBox = (text) =>
+  `//span[text()="${text}"]/ancestor::div[contains(@class,"col")]`;
 
 export default class Agent {
   clickCampaignMenu() {
@@ -162,5 +166,53 @@ export default class Agent {
 
   clickCancelBtn() {
     cy.xpath(cancelBtn).click();
+  }
+
+  verifyAverageCallDurationBox() {
+    cy.xpath(averageFieldBox('Average Call Duration')).should('be.visible');
+  }
+
+  verifyAverageWaitTimeBox() {
+    cy.xpath(averageFieldBox('Average Wait Time')).should('be.visible');
+  }
+
+  verifyAverageAbandonTimeBox() {
+    cy.xpath(averageFieldBox('Average Abandon Time')).should('be.visible');
+  }
+
+  verifyTalkingTimeBox() {
+    cy.xpath(callFieldBox('Talking Time')).should('be.visible');
+  }
+
+  verifyActiveCampaignsBox() {
+    cy.xpath(callFieldBox('Active Campaigns')).should('be.visible');
+  }
+
+  verifyTotalCallsBox() {
+    cy.xpath(callFieldBox('Total Calls')).should('be.visible');
+  }
+
+  verifyRemainingLeadsBox() {
+    cy.xpath(callFieldBox('Remaining Leads')).should('be.visible');
+  }
+
+  verifyCallsSummaryBox() {
+    cy.xpath(graphBox('Calls Summary')).should('be.visible');
+  }
+
+  verifyCallResultsBox() {
+    cy.xpath(graphBox('Call Results')).should('be.visible');
+  }
+
+  verifyTotalCallsGraph() {
+    cy.xpath(graphBox('Total Calls')).should('be.visible');
+  }
+
+  verifyAverageCallDurationGraph() {
+    cy.xpath(graphBox('Average Call Duration')).should('be.visible');
+  }
+
+  verifyCallsLocationGraph() {
+    cy.xpath(graphBox('Calls Locations')).should('be.visible');
   }
 }

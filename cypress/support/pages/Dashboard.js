@@ -902,6 +902,17 @@ export default class Dashboard {
   }
 
   enterEmailInBox(email, text) {
+    cy.wait(2000);
+    this.getIframeBody()
+      .find('.fc-conversation-view')
+      .then(($el) => {
+        if ($el.find('.btn-csat-no').length) {
+          this.getIframeBody().find('.btn-csat-yes').click({ force: true });
+          // this.getIframeBody()
+          //   .xpath('//span[@role="button"][text()="No"]')
+          //   .click();
+        }
+      });
     this.getIframeBody()
       .find('.fc-conversation-view')
       .then((el) => {

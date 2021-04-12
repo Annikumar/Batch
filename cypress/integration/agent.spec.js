@@ -27,6 +27,21 @@ describe('Agent Profile', function () {
     cy.Login(fixtureData.agentUsername, fixtureData.agentPassword);
   });
 
+  it('Verifies the Dashboard Elements', () => {
+    agent.verifyAverageCallDurationBox();
+    agent.verifyAverageWaitTimeBox();
+    agent.verifyAverageAbandonTimeBox();
+    agent.verifyTotalCallsBox();
+    agent.verifyTalkingTimeBox();
+    // agent.verifyRemainingLeadsBox();
+    agent.verifyActiveCampaignsBox();
+    agent.verifyCallResultsBox();
+    agent.verifyCallsSummaryBox();
+    agent.verifyTotalCallsGraph();
+    agent.verifyAverageCallDurationGraph();
+    agent.verifyCallsLocationGraph();
+  });
+
   it('Agent should not access the edit/view Campaign page', () => {
     agent.clickCampaignMenu();
     agent.selectCampaignName('FirstCampaign');
