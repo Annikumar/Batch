@@ -175,7 +175,7 @@ describe('Dashboard Elements', function () {
     Dash.clickClosePauseSubscriptionBox();
   });
 
-  it('Pause Account while keeping the Phone Number', () => {
+  it.skip('Pause Account while keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
@@ -185,7 +185,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it('Unpause account by choosing any Plan', () => {
+  it.skip('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
@@ -193,7 +193,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyPauseAccount();
   });
 
-  it('Pause Account while not keeping the Phone Number', () => {
+  it.skip('Pause Account while not keeping the Phone Number', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickPauseAccountBtn();
@@ -204,7 +204,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAccountPauseMessage();
   });
 
-  it('Unpause account by choosing any Plan', () => {
+  it.skip('Unpause account by choosing any Plan', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
@@ -212,7 +212,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyPauseAccount();
   });
 
-  it('Upgrade the Plan', () => {
+  it.skip('Upgrade the Plan', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.upgradePlan('Multi-Line Dialer'); // Single Line Dialer

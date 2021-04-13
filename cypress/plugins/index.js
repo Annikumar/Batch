@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
 //
@@ -19,7 +20,7 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 };
-
+const fs1 = require('fs-extra');
 const fs = require('fs');
 const path = require('path');
 const pdf = require('pdf-parse');
@@ -52,4 +53,12 @@ module.exports = (on, config) => {
       });
     },
   });
+  function getConfigurationByFile(file) {
+    const pathToConfigFile = path.resolve('cypress/config', `${file}.json`);
+
+    return fs1.readJson(pathToConfigFile);
+  }
+  const file = config.env.configFile || 'qa';
+
+  return getConfigurationByFile(file);
 };

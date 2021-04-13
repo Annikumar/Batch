@@ -104,7 +104,7 @@ describe('Add Campaign flow', () => {
     cy.reload();
   });
 
-  it.skip('Edit the Added Campaign', () => {
+  it('Edit the Added Campaign', () => {
     addCamp.clickCampaignMenu();
     addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
     addCamp.clickEditBtn();
@@ -120,7 +120,9 @@ describe('Add Campaign flow', () => {
     ]);
     addCamp.clickSaveCampaign();
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
-    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + '-edited'
+    );
     addCamp.clickEditBtn();
     addCamp.enableAdvancedSwitchBar();
     addCamp.verifyCallResultValues(4);
@@ -128,7 +130,9 @@ describe('Add Campaign flow', () => {
 
   it('Archive Created Campaign', function () {
     addCamp.clickCampaignMenu();
-    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + '-edited'
+    );
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign(

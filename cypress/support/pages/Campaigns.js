@@ -162,9 +162,7 @@ export default class Campaign {
   }
 
   selectCallResultsOption(callRslts) {
-    cy.get(
-      'div[class="collapse show"] .row-calldisposition .ss-select'
-    ).click();
+    cy.get('.row-calldisposition .ss-select').click();
     cy.get(options).then((option) => {
       for (let i = 0; i < callRslts.length; i++) {
         for (let j = 0; j < option.length; j++) {

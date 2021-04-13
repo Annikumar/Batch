@@ -23,7 +23,7 @@ describe('Login Successfully and Add User', () => {
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
+        cy.visit('/', { failOnStatusCode: false });
       });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
