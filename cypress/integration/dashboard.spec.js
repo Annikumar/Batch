@@ -1,10 +1,12 @@
 import Dashboard from '../support/pages/Dashboard';
 import { selectAgentStatus } from '../support/Utils';
+import Contacts from '../support/pages/Contacts';
 
 const Dash = new Dashboard();
 let fixtureData;
 let cardLast4Digit;
 let randNum = Math.floor(Math.random() * 100000);
+const addCont = new Contacts();
 
 describe('Dashboard Elements', function () {
   before(() => {
@@ -498,5 +500,11 @@ describe('Dashboard Elements', function () {
     Dash.verifyAgentOrSupervisorDashboard('Supervisor');
     Dash.clickUserProfile();
     Dash.clickSwitchProfile();
+  });
+
+  it('Verify on Click of Home Button Admin should Redirect to Dashboard', () => {
+    addCont.clickingOnContactOption();
+    Dash.clickHomeButton();
+    Dash.verifyDashboardCalandar();
   });
 });

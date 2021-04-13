@@ -157,6 +157,7 @@ const loginAsPlusIcon = ".dropdown-menu svg[data-icon='plus']";
 const Agent = (user) => "//span[text()='" + user + "']";
 const AgentDashboard = (user) => "//span[text()='" + user + "']";
 const switchProfile = '.dropdown-logout__a .user__dropdown';
+const homeButton = '.breadcrumb-item .active';
 
 export default class Dashboard {
   clickDashboard() {
@@ -1029,5 +1030,12 @@ export default class Dashboard {
 
   clickSwitchProfile() {
     cy.get(switchProfile).click();
+  }
+
+  clickHomeButton() {
+    cy.get(homeButton).click();
+  }
+  verifyDashboardCalandar() {
+    cy.get(DashboardCalender).should('be.visible');
   }
 }
