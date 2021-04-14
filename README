@@ -20,8 +20,11 @@ Run tests:
            tests.this will start executing the tests related to the spec file in non-headless 
            Mode.
 	
-	npx cypress run: By triggering this command, this will start executing all tests from 
-    spec file in headless mode.
+	npm run report : By triggering this command, this will start executing all tests in the QA Environemnt from 
+    spec file in headless mode and generate the html report in cypress/reports/html/cypress/results.
+    
+    npm run report:prod : By triggering this command, this will start executing all tests in the Production Environemnt from 
+    spec file in headless mode and generate the html report in cypress/reports/html/cypress/results.
 
 
 	
