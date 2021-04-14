@@ -36,6 +36,8 @@ describe('Report Page', function () {
       'Campaigns',
       'Agents',
       'Numbers',
+      'Agents Heat Map',
+      'Floormap',
     ]);
   });
 
@@ -203,5 +205,27 @@ describe('Report Page', function () {
     report.clickRecentContactButton();
     report.getDialedContactNumbers();
     report.clickExportBtn();
+  });
+
+  it('Verify Agent Heat Map Elements', () => {
+    report.clickAgentHeatMap();
+    report.verifyAgentHeatMapDropdown();
+    report.verifyHeatMapRadioButtons(['Day', 'Week', 'Month']);
+    report.verifyHeatMapDatePicker();
+    // report.verifyHeatMapStatus([
+    //   'Available',
+    //   'Break',
+    //   'Lunch',
+    //   'In training',
+    //   'Out of desk',
+    //   'On Call',
+    //   'Wrap Up Time',
+    //   'Disconnected',
+    //   'Offline',
+    //   'In Meeting',
+    //   'Auto Pause',
+    //   'PrepWork',
+    //   'After Call',
+    // ]);
   });
 });

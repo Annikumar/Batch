@@ -23,6 +23,13 @@ const calenderDate = '.DayPicker-Body';
 const tableBody = '.table tbody ';
 const dialerNumber = '.table-responsive tbody tr td:nth-child(4)';
 const exportbtn = "//button[text()='Export']";
+const agentHeatMap = "//div[text()='Agents Heat Map']";
+const heatMapDropdown = "span[title='All Groups']";
+const heatMapRadioButtons = (radio) => "//label[text() = '" + radio + "']";
+const heatMapWeekButton = "input[value='week']";
+const heatMapMonthRadioButton = "input[value='month']";
+const heatMapDatePicker = '.datepicker__col';
+const heatMapStatus = '.reports-heat__statuses';
 
 export default class Report {
   clickReportMenu() {
@@ -164,5 +171,29 @@ export default class Report {
         cy.log(el[i].innerText);
       }
     });
+  }
+
+  clickAgentHeatMap() {
+    cy.xpath(agentHeatMap).click();
+  }
+
+  verifyAgentHeatMapDropdown() {
+    cy.get(heatMapDropdown).should('be.visible');
+  }
+
+  verifyHeatMapRadioButtons(button) {
+    for (let i = 0; i < button.length; i++) {
+      cy.xpath(heatMapRadioButtons(button[i])).should('be.visible');
+    }
+  }
+
+  verifyHeatMapDatePicker() {
+    cy.get(heatMapDatePicker).should('be.visible');
+  }
+
+  verifyHeatMapStatus(ele) {
+    for (let i = 0; i < ele.length; i++) {
+      cy.get(heatMapStatus).should('contain.text', ele[i]);
+    }
   }
 }
