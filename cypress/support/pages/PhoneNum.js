@@ -329,13 +329,13 @@ export default class PhoneNum {
     cy.get(firstNum, { timeout: 30000 })
       .first({ timeout: 30000 })
       .then((el) => {
-        cy.readFile('cypress/fixtures/constants.json', (err, data) => {
+        cy.readFile('cypress/fixtures/testData.json', (err, data) => {
           if (err) {
             return console.error(err);
           }
         }).then((data) => {
           data.BuyNumber = el.text().trim();
-          cy.writeFile('cypress/fixtures/constants.json', JSON.stringify(data));
+          cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
         });
       });
   }

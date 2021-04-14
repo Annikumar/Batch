@@ -1,4 +1,5 @@
 import Campaign from './Campaigns';
+import Contacts from './Contacts';
 import Dashboard from './Dashboard';
 import PhoneNum from './PhoneNum';
 import User from './User';
@@ -10,11 +11,27 @@ const radioBtn = (mode) =>
   "//label[input[@type='radio']][contains(.,'" +
   mode +
   "')]//span[@class='checkmark']";
+const userEditBtn = (firstName, lastName) =>
+  '//tr[td[text()="' +
+  firstName +
+  '"][text()="' +
+  lastName +
+  '"]]//img[contains(@src,"edit")]';
+const emailField = 'input[name="email"]';
+const cancelBtn = '//button[contains(text(),"CANCEL")]';
+const passwordChangeBtn = '.changebt';
+const passwordField = 'input[name="password"]';
+const saveBtn = '//button[contains(text(),"SAVE")]';
+const listSaveBtn =
+  '//div[@class="modal-dialog"]//button[contains(text(),"SAVE")]';
+const addNewbTN = '//button[contains(text(),"ADD NEW")]';
+const nameField = 'input[name="name"]';
 
 const dashboard = new Dashboard();
 const campaign = new Campaign();
 const phone = new PhoneNum();
 const user = new User();
+const contact = new Contacts();
 
 export default class Setup {
   clickCampaignMenu() {
@@ -84,19 +101,23 @@ export default class Setup {
   createCampaign(name, callResults, phone, agentName) {
     cy.wait(2000);
     this.clickCampaignMenu();
-    cy.wait(2000);
-    this.clickCampaignMenu();
-    campaign.clickAddNewCampaign();
-    campaign.enableAdvancedSwitchBar();
-    cy.wait(2000);
-    campaign.enterName(name);
-    campaign.selectDialingModeOption('Predictive Dialer');
-    campaign.selectCallerId('Individual Numbers', phone);
-    campaign.clickNextCircleArrow();
-    campaign.selectCallResultsOption(callResults);
-    campaign.clickNextCircleArrow();
-    this.selectAgentsDrpdwn('Individual Agents', agentName);
-    campaign.clickCreateCampButton();
+    cy.get('.table-responsive tbody tr td:nth-child(1)').then((el) => {
+      if (el.text().trim().includes(name)) {
+        cy.log('Campaign already exist');
+      } else {
+        campaign.clickAddNewCampaign();
+        campaign.enableAdvancedSwitchBar();
+        cy.wait(2000);
+        campaign.enterName(name);
+        campaign.selectDialingModeOption('Predictive Dialer');
+        campaign.selectCallerId('Individual Numbers', phone);
+        campaign.clickNextCircleArrow();
+        campaign.selectCallResultsOption(callResults);
+        campaign.clickNextCircleArrow();
+        this.selectAgentsDrpdwn('Individual Agents', agentName);
+        campaign.clickCreateCampButton();
+      }
+    });
   }
 
   selectAgentsDrpdwn(agentMode, name) {
@@ -114,48 +135,169 @@ export default class Setup {
     });
   }
 
-  getAgentName() {
+  getAdminName() {
     user.clickingOnUserOption();
     cy.xpath('//tr[td[text()="Administrator"]]//td[1]').then((el) => {
-      const agentName = el[0].textContent.trim();
+      const adminName = el[0].textContent.trim();
       cy.readFile('cypress/fixtures/testData.json', (err, data) => {
         if (err) {
           return console.error(err);
         }
       }).then((data) => {
-        data.AgentName = agentName;
+        data.AdminName = adminName;
         cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
       });
     });
   }
 
   addNewAgent(firstName, lastName, email, password, phone) {
-    cy.get('.table-responsive tbody tr td:nth-child(1)').then((el) => {});
-    cy.wait(3000);
     user.clickingOnUserOption();
     cy.wait(3000);
-    user.clickAddNewUserButton();
-    user.enterFirstName(firstName);
-    user.enterLastName(lastName);
-    user.selectROle('Agent');
-    user.enterEmail(email);
-    user.enterPassword(password);
-    user.enterPhoneNumber(phone);
-    user.clickSaveButton();
-    user.verifySuccessToast();
+    cy.get('.table-responsive tbody tr td:nth-child(1)').then((el) => {
+      cy.log(el.text().trim());
+      if (
+        el
+          .text()
+          .trim()
+          .includes(firstName + ' ' + lastName)
+      ) {
+        cy.log('Agent already exist');
+        cy.xpath(userEditBtn(firstName, lastName)).click();
+        cy.get(emailField).then((el) => {
+          const value = el.val();
+          cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+            if (err) {
+              return console.error(err);
+            }
+          }).then((data) => {
+            data.AgentEmail = value;
+            cy.writeFile(
+              'cypress/fixtures/testData.json',
+              JSON.stringify(data)
+            );
+          });
+        });
+        cy.get(passwordChangeBtn).click();
+        cy.get(passwordField).type(password);
+        cy.xpath(saveBtn).click();
+      } else {
+        user.clickAddNewUserButton();
+        user.enterFirstName(firstName);
+        user.enterLastName(lastName);
+        user.selectROle('Agent');
+        user.enterEmail(email);
+        user.enterPassword(password);
+        user.enterPhoneNumber(phone);
+        user.clickSaveButton();
+        user.verifySuccessToast();
+        cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+          if (err) {
+            return console.error(err);
+          }
+        }).then((data) => {
+          data.AgentEmail = email;
+          cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
+        });
+      }
+    });
   }
 
   addNewSupervisor(firstName, lastName, email, password, phone) {
+    cy.wait(1000);
     user.clickingOnUserOption();
     cy.wait(3000);
-    user.clickAddNewUserButton();
-    user.enterFirstName(firstName);
-    user.enterLastName(lastName);
-    user.selectROle('Supervisor');
-    user.enterEmail(email);
-    user.enterPassword(password);
-    user.enterPhoneNumber(phone);
-    user.clickSaveButton();
-    user.verifySuccessToast();
+    cy.get('.table-responsive tbody tr td:nth-child(1)').then((el) => {
+      if (
+        el
+          .text()
+          .trim()
+          .includes(firstName + ' ' + lastName)
+      ) {
+        cy.log('Supervisor already exist');
+        cy.xpath(userEditBtn(firstName, lastName)).click();
+        cy.get(emailField).then((el) => {
+          const value = el.val();
+          cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+            if (err) {
+              return console.error(err);
+            }
+          }).then((data) => {
+            data.SupervisorEmail = value;
+            cy.writeFile(
+              'cypress/fixtures/testData.json',
+              JSON.stringify(data)
+            );
+          });
+        });
+        cy.get(passwordChangeBtn).click();
+        cy.get(passwordField).type(password);
+        cy.xpath(saveBtn).click();
+      } else {
+        user.clickAddNewUserButton();
+        user.enterFirstName(firstName);
+        user.enterLastName(lastName);
+        user.selectROle('Supervisor');
+        user.enterEmail(email);
+        user.enterPassword(password);
+        user.enterPhoneNumber(phone);
+        user.clickSaveButton();
+        user.verifySuccessToast();
+        cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+          if (err) {
+            return console.error(err);
+          }
+        }).then((data) => {
+          data.SupervisorEmail = email;
+          cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
+        });
+      }
+    });
+  }
+
+  addNewContact(firstName, lastName, listName) {
+    contact.clickingOnContactOption();
+    cy.wait(2000);
+    cy.get('.table-responsive tbody tr').then((el) => {
+      if (el.find('.contacts__name').length) {
+        cy.get('.contacts__name').then(($el) => {
+          const text = $el.text().trim().replace(/\s+/g, ' ');
+          if (text.includes(firstName + ' ' + lastName)) {
+            cy.log('Contact already exist');
+          } else {
+            cy.log('1');
+            contact.clickAddNewContactButton();
+            contact.selctCreateNewContactOption();
+            contact.enterFirstName(firstName);
+            contact.enterLastName(lastName);
+            cy.xpath(addNewbTN).click();
+            cy.get(nameField).type(listName);
+            cy.xpath(listSaveBtn).click();
+            contact.enterAddress('anyAddress');
+            contact.enterCity('Tucson');
+            contact.selectState('Arizona');
+            contact.enterZipCode('85701');
+            contact.enterPhoneNumber('0123456789');
+            contact.clickSaveButton();
+            contact.verifySuccessToast();
+          }
+        });
+      } else {
+        cy.log('2');
+        contact.clickAddNewContactButton();
+        contact.selctCreateNewContactOption();
+        contact.enterFirstName(firstName);
+        contact.enterLastName(lastName);
+        cy.xpath(addNewbTN).click();
+        cy.get(nameField).type(listName);
+        cy.xpath(listSaveBtn).click();
+        contact.enterAddress('anyAddress');
+        contact.enterCity('Tucson');
+        contact.selectState('Arizona');
+        contact.enterZipCode('85701');
+        contact.enterPhoneNumber('0123456789');
+        contact.clickSaveButton();
+        contact.verifySuccessToast();
+      }
+    });
   }
 }

@@ -1,16 +1,13 @@
 import Login from '../support/pages/Login';
 import { selectAgentStatus } from '../support/Utils';
 
-let fixtureData;
 const login = new Login();
+let testData;
 
-describe('Add Campaign flow', () => {
+describe('Login Flow', () => {
   beforeEach(() => {
-    cy.fixture('constants')
-      .then((data) => (fixtureData = data))
-      .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
-      });
+    cy.fixture('testData').then((data) => (testData = data));
+    cy.visit('/', { failOnStatusCode: false });
   });
 
   after(() => {
@@ -45,8 +42,8 @@ describe('Add Campaign flow', () => {
   });
 
   it('SuccessFully Login', () => {
-    login.enterEmailtoSignin(fixtureData.username);
-    login.enterPasswordToSignin(fixtureData.password);
+    login.enterEmailtoSignin(testData.email);
+    login.enterPasswordToSignin(testData.password);
     login.clickTermsCheckBox();
     login.clickSigninButton();
     login.verifySuccessfullLogin();

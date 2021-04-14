@@ -8,5 +8,8 @@
   "reporterOptions": {
     "configFile": "reporter-config.json"
   },
-  "ignoreTestFiles": "0_setup.spec.js"
+  "env": {
+    "username": "testing1@test.com",
+    "password": "Fleek@2016"
+  }
 }

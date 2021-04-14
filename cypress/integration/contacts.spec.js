@@ -2,15 +2,17 @@ import Contacts from '../support/pages/Contacts';
 import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
+let testData;
 let randNum = Math.floor(Math.random() * 100);
 const addCont = new Contacts();
 
 describe('Add Contact flow', () => {
   before(() => {
+    cy.fixture('testData').then((data) => (testData = data));
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
+        cy.visit('/', { failOnStatusCode: false });
       });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
@@ -25,13 +27,13 @@ describe('Add Contact flow', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(fixtureData.username, fixtureData.password);
+    cy.Login(testData.email, testData.password);
   });
 
   //fixed test case on 5 March according to BAT-635
   it('Verifies All Elements', () => {
     addCont.clickingOnContactOption();
-    cy.wait(3000);
+    cy.wait(1000);
     addCont.verifySearchBox();
     addCont.verifyDialedRadioBtn(['All', 'Dialed', 'Undialed']);
     addCont.verifyDialedCountSlider();
@@ -57,8 +59,8 @@ describe('Add Contact flow', () => {
 
   it('Verifies Search Functionality', () => {
     addCont.clickingOnContactOption();
-    addCont.enterKeywordToSearch('automation');
-    addCont.verifySearchResult('automation');
+    addCont.enterKeywordToSearch('random');
+    addCont.verifySearchResult('random');
   });
 
   it('Verifies Create New Contact Elements', () => {
@@ -193,7 +195,7 @@ describe('Add Contact flow', () => {
 
   it.skip('Dial a Contact Number', () => {
     addCont.clickingOnContactOption();
-    addCont.clickOnContactName('Automation', 'Contact');
+    addCont.clickOnContactName('random', 'Contact');
     addCont.clickPhoneNumber();
     addCont.clickCallBtn();
     addCont.verifyCallStarted();
@@ -218,7 +220,7 @@ describe('Add Contact flow', () => {
     addCont.clickListDropdown();
     addCont.selectContactList('testing');
     cy.wait(1000);
-    addCont.verifyContact('Testing', 'User', 'be.visible');
+    addCont.verifyContact('random', 'Contact', 'be.visible');
   });
 
   it('Verify User is able to Add contact to campaign using action button', () => {
@@ -310,8 +312,8 @@ describe('Add Contact flow', () => {
   it.skip('Download and Verify the Contact List', () => {
     addCont.clickingOnContactOption();
     addCont.clickLists();
-    addCont.enterSearch('longfile.csv');
-    addCont.downloadAndVerifyContactList('longfile.csv');
+    addCont.enterSearch('testing');
+    addCont.downloadAndVerifyContactList('testing');
   });
 
   it('Schedule a Follow Up Call', () => {

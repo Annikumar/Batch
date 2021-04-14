@@ -8,15 +8,6 @@ const supervisorEmail = 'random' + randNum + 1 + '@email.com';
 
 describe('Setup Account for Testing', () => {
   before(() => {
-    cy.readFile('cypress/fixtures/testData.json', (err, data) => {
-      if (err) {
-        return console.error(err);
-      }
-    }).then((data) => {
-      data.AgentEmail = agentEmail;
-      data.SupervisorEmail = supervisorEmail;
-      cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
-    });
     cy.visit('/');
     cy.fixture('testData').then((data) => (testData = data));
     Cypress.Cookies.defaults({
@@ -24,6 +15,10 @@ describe('Setup Account for Testing', () => {
         return true;
       },
     });
+  });
+
+  after(() => {
+    cy.Logout();
   });
 
   it('login successfully', () => {
@@ -34,24 +29,25 @@ describe('Setup Account for Testing', () => {
     const [supervisorFirstName, supervisorlastName] = testData.supervisor.split(
       ' '
     );
+    const [contactFirstName, contactlastName] = testData.Contact.split(' ');
 
     setup.addNewAgent(
       agentFirstName,
       agentlastName,
-      testData.AgentEmail,
-      'Fleek@2016',
+      agentEmail,
+      testData.password,
       '0123456789'
     );
     setup.addNewSupervisor(
       supervisorFirstName,
       supervisorlastName,
-      testData.SupervisorEmail,
-      'Fleek@2016',
+      supervisorEmail,
+      testData.password,
       '0123456789'
     );
-    setup.getAgentName();
+    setup.getAdminName();
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
-      setup.BuyNewPhoneNumber(data.AgentName);
+      setup.BuyNewPhoneNumber(data.AdminName);
     });
     setup.getPhoneNumber();
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
@@ -59,8 +55,10 @@ describe('Setup Account for Testing', () => {
         testData.campaign,
         ['Answering Machine', 'Busy', 'Call Back'],
         data.Number,
-        [data.AgentName, data.agent]
+        [data.AdminName, data.agent]
       );
     });
+    cy.wait(2000);
+    setup.addNewContact(contactFirstName, contactlastName, testData.ListName);
   });
 });

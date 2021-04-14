@@ -3,6 +3,7 @@ import Dashboard from '../support/pages/Dashboard';
 import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
+let testData;
 let randNum = Math.floor(Math.random() * 100000);
 const addUser = new User();
 var count;
@@ -19,6 +20,8 @@ describe('Login Successfully and Add User', () => {
       data.randNum = randNum;
       cy.writeFile('cypress/fixtures/constants.json', JSON.stringify(data));
     });
+
+    cy.fixture('testData').then((data) => (testData = data));
 
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
@@ -38,7 +41,7 @@ describe('Login Successfully and Add User', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(fixtureData.username, fixtureData.password);
+    cy.Login(testData.email, testData.password);
     addUser.getPhoneNumber();
   });
 

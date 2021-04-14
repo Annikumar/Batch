@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://app.batchdialer.com",
   "env": {
-    "userName": "anil.kumar+1@fleekitsolutions.com",
+    "username": "anil.kumar+1@fleekitsolutions.com",
     "password": "Fleek@2016"
   }
 }

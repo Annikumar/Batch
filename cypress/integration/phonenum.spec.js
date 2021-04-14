@@ -5,6 +5,7 @@ import PhoneNum from '../support/pages/PhoneNum';
 import { selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
+let testData;
 let num;
 let phone;
 const addNum = new PhoneNum();
@@ -13,11 +14,9 @@ let randNum = Math.floor(Math.random() * 100000);
 
 describe('Add Phone Number flow', () => {
   before(() => {
-    cy.fixture('constants')
-      .then((data) => (fixtureData = data))
-      .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
-      });
+    cy.fixture('constants').then((data) => (fixtureData = data));
+    cy.fixture('testData').then((data) => (testData = data));
+    cy.visit('/', { failOnStatusCode: false });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
         return true;
@@ -35,7 +34,7 @@ describe('Add Phone Number flow', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(fixtureData.username, fixtureData.password);
+    cy.Login(testData.email, testData.password);
   });
 
   it('Should Buy Phone number successfully ', () => {
@@ -45,14 +44,14 @@ describe('Add Phone Number flow', () => {
     addNum.clickSearchButton();
     addNum.verifysearchStartedToast();
     addNum.selectPhoneNumber();
-    addNum.assignAgentUser('Anil kumar');
+    addNum.assignAgentUser(testData.AdminName);
     addNum.getFirstPhoneNumber();
     addNum.clickOrderNowButton();
     addNum.closingDialog();
   });
 
   it('Should show added Phone number in table', () => {
-    cy.readFile('cypress/fixtures/constants.json').then((data) => {
+    cy.readFile('cypress/fixtures/testData.json').then((data) => {
       num = data.BuyNumber;
       addNum.clickPhoneNumberMenu();
       addNum.verifyAddedPhoneNum(num);
@@ -62,7 +61,7 @@ describe('Add Phone Number flow', () => {
 
   it('Should delete the added Phone Number', () => {
     addNum.clickPhoneNumberMenu();
-    cy.readFile('cypress/fixtures/constants.json').then((data) => {
+    cy.readFile('cypress/fixtures/testData.json').then((data) => {
       addNum.deleteAddedPhoneNumber(data.BuyNumber);
       addNum.handleAlertForDelete();
     });
@@ -111,7 +110,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber(fixtureData.Number);
+    addNum.selectNumber(testData.Number);
     addNum.clickAddNewWelcomePrompt();
     addNum.uploadFile('preview.mp3');
     addNum.enterRecordingName('preview' + randNum.toString());
@@ -141,7 +140,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing' + randNum.toString());
     addNum.enterDescription('New Ivr');
     addNum.selectCampaign();
-    addNum.selectNumber(fixtureData.Number);
+    addNum.selectNumber(testData.Number);
     addNum.clickAddNewWelcomePrompt();
     addNum.clickTextToSpeech();
     addNum.enterRecordingName('Test' + randNum.toString());
@@ -379,7 +378,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('TestingCallResult');
     addNum.chooseShowOnNewCampaignPage('Yes');
     addNum.chooseActiveInactive('Active');
-    addNum.selectCallResultCampaignDropdown('FirstCampaign');
+    addNum.selectCallResultCampaignDropdown(testData.campaign);
     addNum.clickCallResultSaveBtn();
     cy.wait(3000);
     addCamp.clickCampaignMenu();
@@ -387,7 +386,7 @@ describe('Add Phone Number flow', () => {
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectCallerId('Individual Numbers', fixtureData.Number);
+    addCamp.selectCallerId('Individual Numbers', testData.Number);
     addCamp.clickNextCircleArrow();
     addNum.verifyCreatedCallResult('TestingCallResult');
   });
@@ -399,7 +398,7 @@ describe('Add Phone Number flow', () => {
     addNum.enterName('Testing');
     addNum.chooseShowOnNewCampaignPage('Yes');
     addNum.chooseActiveInactive('Active');
-    addNum.selectCallResultCampaignDropdown('FirstCampaign');
+    addNum.selectCallResultCampaignDropdown(testData.campaign);
     addNum.clickAddNewRuleBtn();
     addNum.selectRule('Schedule a Callback');
     addNum.clickCallResultSaveBtn();
@@ -495,12 +494,12 @@ describe('Add Phone Number flow', () => {
 
   it('Add a contact Phone to DNC', async () => {
     addCont.clickingOnContactOption();
-    addCont.enterKeywordToSearch('Testing');
+    addCont.enterKeywordToSearch('random');
     cy.wait(1000);
     phone = await promisify(addCont.getPhoneNumber());
   });
   it('Check for Added contact in DNC Page', () => {
-    addNum.clickContactMenu('New', 'User');
+    addNum.clickContactMenu('random', 'Contact');
     addNum.clickAddToDNC();
     addNum.clickPhoneNumberMenu();
     addNum.clickDncMenu();
@@ -509,8 +508,8 @@ describe('Add Phone Number flow', () => {
   });
   it('Search phone number using search box', () => {
     addNum.clickPhoneNumberMenu();
-    addNum.enterSearchKeyword(fixtureData.Number);
-    addNum.verifySearchedNumber(fixtureData.Number);
+    addNum.enterSearchKeyword(testData.Number);
+    addNum.verifySearchedNumber(testData.Number);
     addNum.verifyNumberNotVisible();
   });
 });

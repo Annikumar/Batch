@@ -1,16 +1,15 @@
 import Suprevisor from '../support/pages/Supervisor';
 
-let fixtureData;
+let testData;
 const suprevisor = new Suprevisor();
 let randNum = Math.floor(Math.random() * 100000);
 
 describe('SuperVisor Flow', () => {
   before(() => {
-    cy.fixture('constants')
-      .then((data) => (fixtureData = data))
-      .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
-      });
+    cy.readFile('cypress/fixtures/tesData.json').then(
+      (data) => (testData = data)
+    );
+    cy.visit('/', { failOnStatusCode: false });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
         return true;
@@ -23,7 +22,7 @@ describe('SuperVisor Flow', () => {
   });
 
   it('Supervisor Should Login Successfully', () => {
-    cy.Login(fixtureData.supervisorUsername, fixtureData.supervisorPassword);
+    cy.Login(testData.SupervisorEmail, testData.password);
   });
 
   it('Verify View Button Functionality for Contacts', () => {
