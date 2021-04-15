@@ -7,7 +7,9 @@ let testData;
 
 describe('Report Page', function () {
   before(() => {
-    cy.fixture('testData').then((data) => (testData = data));
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -27,7 +29,7 @@ describe('Report Page', function () {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
   it('verify report header element', function () {
@@ -156,8 +158,8 @@ describe('Report Page', function () {
   });
 
   it('Verify Functionality of search Button and Designation Dropdown', function () {
-    report.searchNumber(fixtureData.Number);
-    report.verifySearchedNumber(fixtureData.Number);
+    report.searchNumber(testData.Number);
+    report.verifySearchedNumber(testData.Number);
   });
 
   it('Verify All status dropdown should show statuses', () => {

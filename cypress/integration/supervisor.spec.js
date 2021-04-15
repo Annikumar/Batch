@@ -6,7 +6,7 @@ let randNum = Math.floor(Math.random() * 100000);
 
 describe('SuperVisor Flow', () => {
   before(() => {
-    cy.readFile('cypress/fixtures/tesData.json').then(
+    cy.readFile('cypress/fixtures/testData.json').then(
       (data) => (testData = data)
     );
     cy.visit('/', { failOnStatusCode: false });
@@ -54,7 +54,7 @@ describe('SuperVisor Flow', () => {
     suprevisor.verifyProfilePage();
   });
 
-  it('Verify Supervisor can Login as Agent', () => {
+  it.skip('Verify Supervisor can Login as Agent', () => {
     suprevisor.clickDashboardMenu();
     suprevisor.clickLoginAsBtn();
     suprevisor.clickOpenUser();

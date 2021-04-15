@@ -8,7 +8,9 @@ const addCamp = new Campaign();
 
 describe('Add Campaign flow', () => {
   before(() => {
-    cy.fixture('testData').then((data) => (testData = data));
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -27,7 +29,7 @@ describe('Add Campaign flow', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
   it('Campaign header element should visible', function () {
@@ -115,7 +117,7 @@ describe('Add Campaign flow', () => {
     addCamp.verifyCallResultValues(4);
     addCamp.deleteCallResults(['Answering Machine', 'Busy', 'Call Back']);
     addCamp.selectCallResultsOption([
-      'Invoice',
+      'Voicemail',
       'Unknown',
       'No Answer',
       'Successful Sale',
@@ -138,7 +140,7 @@ describe('Add Campaign flow', () => {
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString(),
+      fixtureData.campaignName + randNum.toString() + '-edited',
       'not.exist'
     );
   });
@@ -146,14 +148,16 @@ describe('Add Campaign flow', () => {
   it('Verify User is able to Unarchive the Archived Campaign', () => {
     addCamp.clickToSelectStatus('Status');
     addCamp.clickStatusArchived();
-    addCamp.searchCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.searchCampaign(
+      fixtureData.campaignName + randNum.toString() + '-edited'
+    );
     addCamp.clickUnarchiveCampaign(
-      fixtureData.campaignName + randNum.toString()
+      fixtureData.campaignName + randNum.toString() + '-edited'
     );
     addCamp.clickToSelectStatus('Archived');
     addCamp.clickStatus();
     addCamp.verifyUnarchievedCampaign(
-      fixtureData.campaignName + randNum.toString()
+      fixtureData.campaignName + randNum.toString() + '-edited'
     );
   });
 

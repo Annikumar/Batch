@@ -11,7 +11,9 @@ const addCont = new Contacts();
 
 describe('Dashboard Elements', function () {
   before(() => {
-    cy.fixture('testData').then((data) => (testData = data));
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -33,7 +35,7 @@ describe('Dashboard Elements', function () {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
   it('verify elements in Dashboard', function () {
@@ -401,7 +403,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyDeletedRecording('TextSpeech' + randNum.toString());
   });
 
-  it('Call feature should disable for admin if Agent Feature is Disable', () => {
+  it.skip('Call feature should disable for admin if Agent Feature is Disable', () => {
     Dash.clickUserProfile();
     Dash.clickProfile();
     Dash.clickAgentFeatureDisable();
@@ -409,7 +411,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyDialerNotVisible();
   });
 
-  it('Call feature should enable for admin if Agent Feature is Enable', () => {
+  it.skip('Call feature should enable for admin if Agent Feature is Enable', () => {
     Dash.clickUserProfile();
     Dash.clickProfile();
     Dash.clickAgentFeatureEnable();
@@ -454,7 +456,7 @@ describe('Dashboard Elements', function () {
   });
 
   it('Verify user is able to enter chat in chat box', () => {
-    Dash.enterEmailInBox('test@test.com', 'Hello');
+    Dash.enterEmailInBox(testData.email, 'Hello');
     Dash.enterChatInBox('Hello');
     Dash.verifyMessageSent('Hello');
   });
