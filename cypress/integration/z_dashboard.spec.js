@@ -4,16 +4,18 @@ import Contacts from '../support/pages/Contacts';
 
 const Dash = new Dashboard();
 let fixtureData;
+let testData;
 let cardLast4Digit;
 let randNum = Math.floor(Math.random() * 100000);
 const addCont = new Contacts();
 
 describe('Dashboard Elements', function () {
   before(() => {
+    cy.fixture('testData').then((data) => (testData = data));
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
+        cy.visit('/', { failOnStatusCode: false });
         cardLast4Digit = fixtureData.cardNumber.slice(
           fixtureData.cardNumber.length - 4
         );
@@ -31,7 +33,7 @@ describe('Dashboard Elements', function () {
   });
 
   it('Should Login', () => {
-    cy.Login(fixtureData.username, fixtureData.password);
+    cy.Login(testData.email, testData.password);
   });
 
   it('verify elements in Dashboard', function () {
@@ -51,7 +53,7 @@ describe('Dashboard Elements', function () {
 
   it('Change Admin Status', function () {
     Dash.clickStatusButton();
-    Dash.selectAvailable('Available', 'FirstCampaign');
+    Dash.selectAvailable('Available', testData.campaign);
     Dash.clickConfirmButton();
   });
 
@@ -126,7 +128,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyInvoice();
   });
 
-  it('Add New Credit Card', () => {
+  it.skip('Add New Credit Card', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickAddNewCard();
@@ -140,7 +142,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyAddedCard(cardLast4Digit);
   });
 
-  it('Verify the Default Credit Card Functionality', () => {
+  it.skip('Verify the Default Credit Card Functionality', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickCardDefaultBtn(cardLast4Digit);
@@ -149,7 +151,7 @@ describe('Dashboard Elements', function () {
     Dash.verifyCardDefault('0505');
   });
 
-  it('Delete the Added New Credit Card', () => {
+  it.skip('Delete the Added New Credit Card', () => {
     Dash.clickUserProfile();
     Dash.clickBilling();
     Dash.clickDeleteCardBtn(cardLast4Digit);
@@ -466,7 +468,7 @@ describe('Dashboard Elements', function () {
 
   it('When admin select status as available it should show start calling in popup', () => {
     Dash.clickStatusButton();
-    Dash.selectAvailable('Available', 'FirstCampaign');
+    Dash.selectAvailable('Available', testData.campaign);
     Dash.verifyPopUpHeader('Start Calling');
     Dash.clickConfirmButton();
   });
@@ -484,14 +486,14 @@ describe('Dashboard Elements', function () {
     Dash.clickDashboardCalendar();
   });
 
-  it('Verify Admin is able to Switch to Agents Account', () => {
+  it.skip('Verify Admin is able to Switch to Agents Account', () => {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor('automation testing');
     Dash.verifyAgentOrSupervisorDashboard('Agent');
   });
 
-  it('verify Admin is able to switch to Supervisor Account', () => {
+  it.skip('verify Admin is able to switch to Supervisor Account', () => {
     Dash.clickUserProfile();
     Dash.clickSwitchProfile();
     Dash.clickLoginAs();

@@ -1,11 +1,15 @@
 {
-  "Number": "(719) 696-7680",
+  "Number": "(970) 568-5744",
   "campaign": "FirstCampaign",
   "agent": "automation testing",
   "supervisor": "supervisor automation",
-  "email": "anil.kumar+5@fleekitsolutions.com",
+  "email": "testing1@test.com",
   "password": "Fleek@2016",
-  "AgentName": "Anni kumar",
-  "AgentEmail": "random31@email.com",
-  "SupervisorEmail": "random271@email.com"
+  "AdminName": "testing kumar",
+  "AgentEmail": "random387@email.com",
+  "SupervisorEmail": "random3871@email.com",
+  "Contact": "random Contact",
+  "ListName": "testing",
+  "AdminEmail": "random6001@email.com",
+  "BuyNumber": "(970) 568-5744"
 }

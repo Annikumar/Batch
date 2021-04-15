@@ -3,13 +3,15 @@ import { selectAgentStatus } from '../support/Utils';
 
 const report = new Report();
 let fixtureData;
+let testData;
 
 describe('Report Page', function () {
   before(() => {
+    cy.fixture('testData').then((data) => (testData = data));
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
+        cy.visit('/', { failOnStatusCode: false });
       });
 
     Cypress.Cookies.defaults({
@@ -25,7 +27,7 @@ describe('Report Page', function () {
   });
 
   it('Should Login', () => {
-    cy.Login(fixtureData.username, fixtureData.password);
+    cy.Login(testData.email, testData.password);
   });
 
   it('verify report header element', function () {
