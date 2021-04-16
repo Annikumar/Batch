@@ -22,7 +22,7 @@ describe('Setup Account for Testing', () => {
   });
 
   it('login successfully', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
   it('Setup Account', () => {
     const [agentFirstName, agentlastName] = testData.agent.split(' ');

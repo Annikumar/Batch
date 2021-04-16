@@ -8,7 +8,9 @@ const addCont = new Contacts();
 
 describe('Add Contact flow', () => {
   before(() => {
-    cy.fixture('testData').then((data) => (testData = data));
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     cy.fixture('constants')
       .then((data) => (fixtureData = data))
       .then(() => {
@@ -27,7 +29,7 @@ describe('Add Contact flow', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
   //fixed test case on 5 March according to BAT-635
@@ -204,7 +206,7 @@ describe('Add Contact flow', () => {
     // addCont.clickContinueBtn();
   });
 
-  it('Verify Dialed/Undialed Radio Button Functionality', () => {
+  it.skip('Verify Dialed/Undialed Radio Button Functionality', () => {
     addCont.clickingOnContactOption();
     addCont.clickDialedUndialedButton('Dialed');
     addCont.verifyContact('Testing', 'User', 'not.exist');

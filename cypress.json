@@ -9,7 +9,7 @@
     "configFile": "reporter-config.json"
   },
   "env": {
-    "username": "testing1@test.com",
+    "username": "testing01@email.com",
     "password": "Fleek@2016"
   }
 }

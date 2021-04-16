@@ -41,7 +41,7 @@ describe('Login Successfully and Add User', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
     addUser.getPhoneNumber();
   });
 

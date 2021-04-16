@@ -1,7 +1,7 @@
 {
   "baseUrl": "https://qa.int.batchdialer.com",
   "env": {
-    "username": "testing@test.com",
+    "username": "testing01@email.com",
     "password": "Fleek@2016"
   }
 }

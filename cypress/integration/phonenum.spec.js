@@ -15,7 +15,9 @@ let randNum = Math.floor(Math.random() * 100000);
 describe('Add Phone Number flow', () => {
   before(() => {
     cy.fixture('constants').then((data) => (fixtureData = data));
-    cy.fixture('testData').then((data) => (testData = data));
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     cy.visit('/', { failOnStatusCode: false });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
@@ -34,7 +36,7 @@ describe('Add Phone Number flow', () => {
   });
 
   it('Should Login', () => {
-    cy.Login(testData.email, testData.password);
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
   it('Should Buy Phone number successfully ', () => {
