@@ -30,6 +30,10 @@ const callFieldBox = (text) => `//div[span[text()="${text}"]]`;
 const graphBox = (text) =>
   `//span[text()="${text}"]/ancestor::div[contains(@class,"col")]`;
 
+const selectAgent =
+  "//label[text()='Assign Agents']/ancestor::div[@class='card-body']//span[text()='Agents']";
+const clickAgent = "//div[text()='automation testing']";
+
 export default class Agent {
   clickCampaignMenu() {
     cy.get(campaignsMenu).click({ force: true });
@@ -214,5 +218,17 @@ export default class Agent {
 
   verifyCallsLocationGraph() {
     cy.xpath(graphBox('Calls Locations')).should('be.visible');
+  }
+
+  selectAgent() {
+    cy.xpath(selectAgent).click();
+  }
+
+  ClickAgent() {
+    cy.xpath(clickAgent).click();
+  }
+
+  verifyCampaign(cmpname) {
+    cy.xpath(campaign(cmpname)).should('be.visible');
   }
 }

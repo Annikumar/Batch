@@ -1,14 +1,18 @@
 import Agent from '../support/pages/Agent';
+import Campaign from '../support/pages/Campaigns';
 
 let testData;
 let randNum = Math.floor(Math.random() * 100000);
 const agent = new Agent();
-
+const addCamp = new Campaign();
+let fixtureData;
 describe('Agent Profile', function () {
   before(() => {
     cy.readFile('cypress/fixtures/testData.json').then(
       (data) => (testData = data)
     );
+    cy.fixture('constants').then((data) => (fixtureData = data));
+
     cy.visit('/', { failOnStatusCode: false });
     Cypress.Cookies.defaults({
       preserve: (cookies) => {
@@ -17,10 +21,10 @@ describe('Agent Profile', function () {
     });
   });
 
-  after(() => {
-    agent.selectAgentStatus('Offline');
-    cy.Logout();
-  });
+  // after(() => {
+  //   agent.selectAgentStatus('Offline');
+  //   cy.Logout();
+  // });
 
   it('Agent Should Login Successfully', () => {
     cy.Login(testData.AgentEmail, testData.password);
@@ -112,5 +116,41 @@ describe('Agent Profile', function () {
     agent.selectCallResult('Call Back');
     agent.clickContinueBtn();
     agent.ChooseCallResult('Call Back');
+  });
+
+  it.skip('Verify When Admin Assign Campaign to user it should show in agent Profile', () => {
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
+    addCamp.clickCampaignMenu();
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    cy.wait(2000);
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.selectCallerId('Individual Numbers', testData.Number);
+    addCamp.clickNextCircleArrow();
+    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.clickNextCircleArrow();
+    addCamp.selectAgentsDrpdwn('Individual Agents', testData.agent);
+    // agent.selectAgent();
+    // agent.ClickAgent();
+    addCamp.clickCreateCampButton();
+    cy.Logout();
+    cy.wait(4000);
+    cy.visit('/', { failOnStatusCode: false });
+    cy.Login(testData.AgentEmail, testData.password);
+    agent.clickCampaignMenu();
+    agent.verifyCampaign(fixtureData.campaignName + randNum.toString());
+    cy.Logout();
+    cy.wait(4000);
+    cy.visit('/', { failOnStatusCode: false });
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString(),
+      'not.exist'
+    );
   });
 });
