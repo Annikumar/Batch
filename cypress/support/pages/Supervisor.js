@@ -14,7 +14,7 @@ const loginAsBtn = '.dropdown-usertree';
 const openUserPlusBtn = '.role-title + span';
 const userList = '.roletitle';
 const profileName = '.name';
-const backToSupervisor = '.dropdown-logout__a  .user__dropdown';
+const backToSupervisor = '.nav-item a[href*="logout"]';
 const dashboard = 'a[title="Dashboard"]';
 const supervisor = '.supervisor';
 

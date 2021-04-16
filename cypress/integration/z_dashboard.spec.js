@@ -488,22 +488,24 @@ describe('Dashboard Elements', function () {
     Dash.clickDashboardCalendar();
   });
 
-  it.skip('Verify Admin is able to Switch to Agents Account', () => {
+  // Fixed according to the BAT-747
+  it('Verify Admin is able to Switch to Agents Account', () => {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
-    Dash.clickAgentOrSupervisor('automation testing');
-    Dash.verifyAgentOrSupervisorDashboard('Agent');
+    Dash.clickAgentOrSupervisor(testData.agent);
+    Dash.verifyUserDashboardName(testData.agent);
+    Dash.clickBackToAdmin();
+    Dash.verifyUserDashboardName(testData.AdminName);
   });
 
-  it.skip('verify Admin is able to switch to Supervisor Account', () => {
-    Dash.clickUserProfile();
-    Dash.clickSwitchProfile();
+  // Fixed according to the BAT-747
+  it('verify Admin is able to switch to Supervisor Account', () => {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
-    Dash.clickAgentOrSupervisor('supervisor automation');
-    Dash.verifyAgentOrSupervisorDashboard('Supervisor');
-    Dash.clickUserProfile();
-    Dash.clickSwitchProfile();
+    Dash.clickAgentOrSupervisor(testData.supervisor);
+    Dash.verifyUserDashboardName(testData.supervisor);
+    Dash.clickBackToAdmin();
+    Dash.verifyUserDashboardName(testData.AdminName);
   });
 
   it('Verify on Click of Home Button Admin should Redirect to Dashboard', () => {

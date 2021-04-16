@@ -155,8 +155,8 @@ const filterSelectDate = (date) =>
   "//div[@class='DayPicker-Body']//div[text()='" + date + "']";
 const loginAsPlusIcon = ".dropdown-menu svg[data-icon='plus']";
 const Agent = (user) => "//span[text()='" + user + "']";
-const AgentDashboard = (user) => "//span[text()='" + user + "']";
-const switchProfile = '.dropdown-logout__a .user__dropdown';
+const dashboardName = '.name';
+const backToAdmin = '.nav-item a[href*="logout"]';
 const homeButton = '.breadcrumb-item .active';
 
 export default class Dashboard {
@@ -1035,12 +1035,12 @@ export default class Dashboard {
     cy.xpath(Agent(user)).click();
   }
 
-  verifyAgentOrSupervisorDashboard(user) {
-    cy.xpath(AgentDashboard(user)).should('be.visible');
+  verifyUserDashboardName(user) {
+    cy.get(dashboardName, { timeout: 10000 }).should('have.text', user);
   }
 
-  clickSwitchProfile() {
-    cy.get(switchProfile).click();
+  clickBackToAdmin() {
+    cy.get(backToAdmin).click();
   }
 
   clickHomeButton() {

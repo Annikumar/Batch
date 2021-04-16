@@ -54,13 +54,12 @@ describe('SuperVisor Flow', () => {
     suprevisor.verifyProfilePage();
   });
 
-  it.skip('Verify Supervisor can Login as Agent', () => {
+  it('Verify Supervisor can Login as Agent', () => {
     suprevisor.clickDashboardMenu();
     suprevisor.clickLoginAsBtn();
     suprevisor.clickOpenUser();
-    suprevisor.loginWithUser('automation testing');
-    suprevisor.verifyLogin('automation testing');
-    suprevisor.clickOnProfile();
+    suprevisor.loginWithUser(testData.agent);
+    suprevisor.verifyLogin(testData.agent);
     suprevisor.clickBackToSupervisor();
     suprevisor.verifySupervisorProfile();
   });

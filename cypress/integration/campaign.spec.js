@@ -190,6 +190,11 @@ describe('Add Campaign flow', () => {
     );
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + '-edited'
+    );
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign(
       fixtureData.campaignName + randNum.toString() + '1',
       'not.exist'
