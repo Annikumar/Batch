@@ -30,6 +30,9 @@ const heatMapWeekButton = "input[value='week']";
 const heatMapMonthRadioButton = "input[value='month']";
 const heatMapDatePicker = '.datepicker__col';
 const heatMapStatus = '.reports-heat__statuses';
+const FloorMap = "//div[text()='Floormap']";
+const FloorViewDropdown = "//label[text()='Floor View']/parent::div//button";
+const addNewFloor = "//button[contains(text(),' Add New Floor')]";
 
 export default class Report {
   clickReportMenu() {
@@ -195,5 +198,17 @@ export default class Report {
     for (let i = 0; i < ele.length; i++) {
       cy.get(heatMapStatus).should('contain.text', ele[i]);
     }
+  }
+
+  clickFloorMap() {
+    cy.xpath(FloorMap).click();
+  }
+
+  verifyFloorMapViewDropdown() {
+    cy.xpath(FloorViewDropdown).should('be.visible');
+  }
+
+  verifyAddNewFloorButton() {
+    cy.xpath(addNewFloor).should('be.visible');
   }
 }

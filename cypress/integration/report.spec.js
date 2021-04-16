@@ -230,4 +230,10 @@ describe('Report Page', function () {
     //   'After Call',
     // ]);
   });
+
+  it('Verify Floor Map Elements', () => {
+    report.clickFloorMap();
+    report.verifyFloorMapViewDropdown();
+    report.verifyAddNewFloorButton();
+  });
 });
