@@ -33,6 +33,8 @@ const graphBox = (text) =>
 const selectAgent =
   "//label[text()='Assign Agents']/ancestor::div[@class='card-body']//span[text()='Agents']";
 const clickAgent = "//div[text()='automation testing']";
+const RecentContactInboundOutbound = "span[title='Inbound+Outbound']";
+const RecentContactTableHeader = '.table thead';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -230,5 +232,25 @@ export default class Agent {
 
   verifyCampaign(cmpname) {
     cy.xpath(campaign(cmpname)).should('be.visible');
+  }
+
+  verifyAverageCallDuration() {
+    cy.xpath(averageCallDuration).should('be.visible');
+  }
+
+  verifyAverageWaitTime() {
+    cy.xpath(averageWaitTime).should('be.visible');
+  }
+
+  verifyRecentContactDropdown(cont) {
+    for (let i = 0; i < cont.length; i++) {
+      cy.get(recentContactPage).should('contain.text', cont[i]);
+    }
+  }
+
+  verifyTableHeaderElements(ele) {
+    for (let i = 0; i < ele.length; i++) {
+      cy.get(RecentContactTableHeader).should('contain.text', ele[i]);
+    }
   }
 }

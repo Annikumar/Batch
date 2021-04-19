@@ -153,4 +153,28 @@ describe('Agent Profile', function () {
       'not.exist'
     );
   });
+
+  it('Verify Recent Contact dropdowns should be visible', () => {
+    agent.clickRecentContact();
+    agent.verifyRecentContactDropdown([
+      'Inbound+Outbound',
+      'Call Results',
+      'All Campaigns',
+      'All Durations',
+      '',
+    ]);
+  });
+
+  it('Verify Recent Contact Table Header Element', () => {
+    agent.verifyTableHeaderElements([
+      'Call Type',
+      'Date/Time',
+      'Call From',
+      'Customer Number',
+      'Customer Name',
+      'Campaign',
+      'Call Result',
+      'Duration',
+    ]);
+  });
 });
