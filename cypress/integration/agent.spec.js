@@ -55,6 +55,67 @@ describe('Agent Profile', function () {
     agent.clickCloseSoftphoneBtn();
   });
 
+  it('Verify the Active Campaign count when Agent become available', () => {
+    agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    agent.verifyActiveCampaignCount();
+  });
+
+  it('Verify the Total Calls should increase when agent call a contact', () => {
+    agent.getTotalCallsCount();
+    agent.clickingOnContactOption();
+    // agent.enterSearch('New User');
+    agent.clickContactName();
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    cy.wait(1000);
+    agent.clickEndCallBtn();
+    agent.verifyCallResultWindow();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
+    agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    cy.readFile('cypress/fixtures/testData.json').then((data) => {
+      agent.verifyTotalCallsCount(data.TotalCallsCount);
+    });
+  });
+
+  it('Schedules Follow Up Call for a Contact', () => {
+    agent.clickingOnContactOption();
+    agent.enterSearch(testData.Contact);
+    agent.clickOnContactName(testData.Contact);
+    agent.clickFollowUpCall();
+    agent.selectDateToFollowUpCall('4,May 2021');
+    cy.wait(1000);
+    agent.clickSaveButton();
+    cy.wait(1000);
+    agent.verifyScheduledFollowUpCall(testData.Contact);
+    agent.clickCloseButton();
+  });
+
+  it('Add a Note to the Contact', () => {
+    agent.clickingOnContactOption();
+    agent.enterSearch(testData.Contact);
+    agent.clickOnContactName(testData.Contact);
+    agent.clickNotesBtn();
+    agent.clickAddNewNoteBtn();
+    agent.enterNote('Hello');
+    cy.wait(1000);
+    agent.clickSaveButton();
+    agent.verifyAddedNote('Hello', 'exist');
+  });
+
+  it('Delete the Added Note', () => {
+    agent.clickingOnContactOption();
+    agent.enterSearch(testData.Contact);
+    agent.clickOnContactName(testData.Contact);
+    agent.clickNotesBtn();
+    agent.clickDeletNoteBtn('Hello');
+    agent.verifyAddedNote('Hello', 'not.exist');
+  });
+
   it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
     agent.clickingOnContactOption();
     // agent.enterSearch('New User');

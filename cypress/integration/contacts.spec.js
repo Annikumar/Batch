@@ -320,12 +320,13 @@ describe('Add Contact flow', () => {
 
   it('Schedule a Follow Up Call', () => {
     addCont.clickingOnContactOption();
-    addCont.clickContactName('random Contact');
+    addCont.enterSearch(testData.Contact);
+    addCont.clickContactName(testData.Contact);
     addCont.clickFollowUpCall();
     addCont.selectDateForFollowUpCall('4,June 2021');
     addCont.clickSavebtn();
     cy.wait(1000);
-    addCont.verifyFollowUpCall('random Contact');
+    addCont.verifyFollowUpCall(testData.Contact);
     addCont.clickCloseBtn();
   });
 });
