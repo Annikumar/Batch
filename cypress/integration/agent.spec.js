@@ -177,4 +177,36 @@ describe('Agent Profile', function () {
       'Duration',
     ]);
   });
+
+  it('Verify Table In Header Calender and Export should be Visible', () => {
+    agent.clickTimeInStatusButton();
+    agent.verifyTableInStatusCalender();
+    agent.verifyTableInStatusExport();
+  });
+
+  it('Verify Table In Status Table Header Elements', () => {
+    agent.verifyTableInStatusTableHeader([
+      'Agent',
+      'Logged Time',
+      'Calls',
+      'Answered',
+      'Abandon',
+      'Abandon Rate',
+      'Available',
+      'Break',
+      'Lunch',
+      'In training',
+      'Out of desk',
+      'On Call',
+      'Wrap Up Time',
+      'In Meeting',
+      'Auto Pause',
+      'PrepWork',
+      'After Call',
+    ]);
+  });
+
+  it('Verify Table In Status Table Data should be visible', () => {
+    agent.verifyTableInStatusTableData();
+  });
 });

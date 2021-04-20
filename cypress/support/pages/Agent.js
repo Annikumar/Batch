@@ -35,6 +35,11 @@ const selectAgent =
 const clickAgent = "//div[text()='automation testing']";
 const RecentContactInboundOutbound = "span[title='Inbound+Outbound']";
 const RecentContactTableHeader = '.table thead';
+const timeInStatus = "//div[text()='Time In Status']";
+const TISCalender = '.date-picker';
+const TISExport = "//button[text()='Export']";
+const TISTableHeader = '.report-agents__table thead';
+const TISTableData = '.reports-agents__agent-row';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -252,5 +257,26 @@ export default class Agent {
     for (let i = 0; i < ele.length; i++) {
       cy.get(RecentContactTableHeader).should('contain.text', ele[i]);
     }
+  }
+
+  clickTimeInStatusButton() {
+    cy.xpath(timeInStatus).click();
+  }
+
+  verifyTableInStatusCalender() {
+    cy.get(TISCalender).should('be.visible');
+  }
+
+  verifyTableInStatusExport() {
+    cy.xpath(TISExport).should('be.visible');
+  }
+
+  verifyTableInStatusTableHeader(head) {
+    for (let i = 0; i < head.length; i++)
+      cy.get(TISTableHeader).should('contain.text', head[i]);
+  }
+
+  verifyTableInStatusTableData() {
+    cy.get(TISTableData).should('be.visible');
   }
 }
