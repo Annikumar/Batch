@@ -18,7 +18,7 @@ const softphone = '.stg-softphone-wrapper';
 const contactsMenu = 'a[title="Contacts"]';
 const contact = '.contacts__name';
 const phoneNumber =
-  "//tr[td[@class='contact-field' and contains(text(),'Phone')]]//td[@class='contact-value']";
+  "//tr[td[@class='contact-field' and contains(.,'Phone')]]//td[contains(@class,'contact-value')]//span";
 const callTransferBtn = 'div[title="Transfer"]';
 const callBtn = '.stg-softphone-callbutton';
 const callResultWindow = '.modal-content .call-disposition-title';

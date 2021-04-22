@@ -17,6 +17,24 @@ const profileName = '.name';
 const backToSupervisor = '.nav-item a[href*="logout"]';
 const dashboard = 'a[title="Dashboard"]';
 const supervisor = '.supervisor';
+const reportsMenu = 'a[title="Reports"]';
+const reportsHeader = '.reports-top-bar span';
+const accessDenied = '.card-title';
+const reportLiveBox = '.report-live-buttons .label';
+const inboundOutboundDropdown =
+  '.ss-select-value-label[title="Inbound+Outbound"]';
+const allDurationsDropdown = '.ss-select-value-label[title="All Durations"]';
+const callResultsDropdown =
+  '//div[contains(@class,"ss-select-control")][contains(text(),"Call Results")]';
+const allAgentsDropdown =
+  '//div[contains(@class,"ss-select-control")][span[text()="All Agents"]]';
+const allCampaignsDropdown =
+  '//div[contains(@class,"ss-select-control")][span[text()="All Campaigns"]]';
+const datePicker = '.date-picker';
+const exportBtn = '//button[text()="Export"]';
+const tableHeader = '.table thead';
+const departmentsDropdown =
+  '//span[text()="Departments"]/parent::div[contains(@class,"ss-select-control")]';
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -103,5 +121,80 @@ export default class Suprevisor {
 
   verifyProfilePage() {
     cy.get(profilePage).should('be.visible');
+  }
+
+  clickReportsMenu() {
+    cy.get(reportsMenu).click({ force: true });
+  }
+
+  verifyReportsHeaderElements(header) {
+    for (let i = 0; i < header.length; i++) {
+      cy.get(reportsHeader).should('contain.text', header[i]);
+    }
+  }
+
+  clickReportsHeader(header) {
+    cy.get(reportsHeader).then((heading) => {
+      for (let i = 0; i < heading.length; i++) {
+        if (heading[i].textContent.trim() === header) {
+          heading[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  verifyFloorMapAccessDenied() {
+    cy.get(accessDenied).should('have.text', 'Access Denied');
+  }
+
+  verifyReportLiveElements(elements) {
+    for (let i = 0; i < elements.length; i++) {
+      cy.get(reportLiveBox).should('contain', elements[i]);
+    }
+  }
+
+  verifyExportButton() {
+    cy.xpath(exportBtn).should('be.visible');
+  }
+
+  verifyDatePicker() {
+    cy.get(datePicker).should('be.visible');
+  }
+
+  verifyInboundOutboundDropdown() {
+    cy.get(inboundOutboundDropdown).should('be.visible');
+  }
+
+  verifyAllAgentsDropdown() {
+    cy.xpath(allAgentsDropdown).should('be.visible');
+  }
+
+  verifyAllCampaignsDropdown() {
+    cy.xpath(allCampaignsDropdown).should('be.visible');
+  }
+
+  verifyCallResultsDropdown() {
+    cy.xpath(callResultsDropdown).should('be.visible');
+  }
+
+  verifyAllDurationsDropdown() {
+    cy.get(allDurationsDropdown).should('be.visible');
+  }
+
+  verifyRecentContactsTableHeadings(heading) {
+    for (let i = 0; i < heading.length; i++) {
+      cy.get(tableHeader).should('contain.text', heading[i]);
+    }
+  }
+
+  verifyDepartmentsDropdown() {
+    cy.xpath(departmentsDropdown).should('be.visible');
+  }
+
+  verifyAgentsTableHeadings(heading) {
+    for (let i = 0; i < heading.length; i++) {
+      cy.get(tableHeader).should('contain.text', heading[i]);
+    }
   }
 }
