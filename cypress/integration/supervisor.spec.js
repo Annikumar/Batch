@@ -164,4 +164,34 @@ describe('SuperVisor Flow', () => {
       'After Call',
     ]);
   });
+
+  it('Verify the Agents Name in Reports Agent section', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.verifyReportsAgentName(testData.agent);
+    suprevisor.verifyReportsAgentName(testData.AdminName);
+  });
+
+  it('verify the Agents Details in the Reports Agent section', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.clickAgentsDetailsPlusBtn();
+    suprevisor.verifyAgentsDetails([
+      'Answered',
+      'Appointments',
+      'Leads',
+      'Total',
+      'Available',
+      'Break',
+      'Lunch',
+      'In training',
+      'Out of desk',
+      'On Call',
+      'Wrap Up Time',
+      'In Meeting',
+      'Auto Pause',
+      'PrepWork',
+      'After Call',
+    ]);
+  });
 });

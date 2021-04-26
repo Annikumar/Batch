@@ -74,9 +74,9 @@ describe('Agent Profile', function () {
     agent.verifyCallResultWindow();
     agent.selectCallResult('Call Back');
     agent.clickContinueBtn();
-    agent.clickDashboardMenu();
     cy.reload();
-    cy.wait(1000);
+    agent.clickDashboardMenu();
+    cy.wait(2000);
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
       agent.verifyTotalCallsCount(data.TotalCallsCount);
     });
@@ -157,6 +157,7 @@ describe('Agent Profile', function () {
     agent.clickContinueBtn();
     cy.wait(2000);
     agent.verifyCallResult('Busy');
+    agent.ChooseCallResult('Call Back');
   });
 
   it('Verifies the Call transfer Continue and Cancel Button', () => {

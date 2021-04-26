@@ -71,12 +71,10 @@ describe('Add Contact flow', () => {
     addCont.clickAddNewContactButton();
     addCont.selctCreateNewContactOption();
     addCont.verifyContactListDropdown();
-    addCont.verifyAddNewContactListBtn();
     addCont.verifyFirstNameField();
     addCont.verifyLastNameField();
     addCont.verifyEmailField();
     addCont.verifyPhoneNumberFields();
-    addCont.verifyLeadSourceField();
     addCont.verifyAddressField();
     addCont.verifyCityField();
     addCont.verifyStateDropdown();
@@ -143,7 +141,7 @@ describe('Add Contact flow', () => {
         'automation-contact' + randNum.toString()
       )
     );
-    addCont.enterPhoneNumber('0123456789');
+    addCont.enterPhoneNumber('9999999999');
     addCont.clickSaveButton();
     addCont.verifySuccessToast();
   });
@@ -220,7 +218,7 @@ describe('Add Contact flow', () => {
 
   it('Select List from Dropdown', () => {
     addCont.clickListDropdown();
-    addCont.selectContactList('testing');
+    addCont.selectContactList(testData.ListName);
     cy.wait(1000);
     addCont.verifyContact('random', 'Contact', 'be.visible');
   });
@@ -307,15 +305,16 @@ describe('Add Contact flow', () => {
     addCont.clickingOnContactOption();
     addCont.clickAddNewContactButton();
     addCont.selctCreateNewContactOption();
+    addCont.enterLastName('test');
     addCont.clickSaveButton();
     addCont.verifyErrorMessage('Enter First Name');
   });
 
-  it.skip('Download and Verify the Contact List', () => {
+  it('Download and Verify the Contact List', () => {
     addCont.clickingOnContactOption();
     addCont.clickLists();
-    addCont.enterSearch('testing');
-    addCont.downloadAndVerifyContactList('testing');
+    addCont.enterSearch(testData.ListName);
+    addCont.downloadAndVerifyContactList(testData.ListName);
   });
 
   it('Schedule a Follow Up Call', () => {

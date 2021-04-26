@@ -78,7 +78,12 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', testData.Number);
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.selectCallResultsOption([
+      'Answering Machine',
+      'No Answer',
+      'Successful Sale',
+      'Voicemail',
+    ]);
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Individual Agents', testData.AdminName);
     addCamp.clickCreateCampButton();
@@ -114,8 +119,13 @@ describe('Add Campaign flow', () => {
     addCamp.clickEditBtn();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName('-edited');
-    addCamp.verifyCallResultValues(4);
-    addCamp.deleteCallResults(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.verifyCallResultValues(5);
+    addCamp.deleteCallResults([
+      'Answering Machine',
+      'No Answer',
+      'Successful Sale',
+      'Voicemail',
+    ]);
     addCamp.selectCallResultsOption([
       'Voicemail',
       'Unknown',

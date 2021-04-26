@@ -598,7 +598,7 @@ export default class Dashboard {
   clickCloseSoftphoneBtn() {
     cy.get('body').then(($body) => {
       if ($body.find(softphoneCloseBtn).length) {
-        cy.get(softphoneCloseBtn).click();
+        cy.get(softphoneCloseBtn).click({ force: true });
       }
     });
   }

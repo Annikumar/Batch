@@ -35,6 +35,9 @@ const exportBtn = '//button[text()="Export"]';
 const tableHeader = '.table thead';
 const departmentsDropdown =
   '//span[text()="Departments"]/parent::div[contains(@class,"ss-select-control")]';
+const agentsName = '.reports-agents__agent-name';
+const agentsDetailsPlusBtn = '.reports-agents__agent-row .fa-plus';
+const agentsDetailsName = '.reports-agents__grid .reports-agents__grid-item';
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -195,6 +198,20 @@ export default class Suprevisor {
   verifyAgentsTableHeadings(heading) {
     for (let i = 0; i < heading.length; i++) {
       cy.get(tableHeader).should('contain.text', heading[i]);
+    }
+  }
+
+  verifyReportsAgentName(name) {
+    cy.get(agentsName).should('contain.text', name);
+  }
+
+  clickAgentsDetailsPlusBtn() {
+    cy.get(agentsDetailsPlusBtn).first().click();
+  }
+
+  verifyAgentsDetails(data) {
+    for (let i = 0; i < data.length; i++) {
+      cy.get(agentsDetailsName).should('contain.text', data[i]);
     }
   }
 }

@@ -254,7 +254,7 @@ export default class Setup {
     });
   }
 
-  addNewContact(firstName, lastName, listName) {
+  addNewContact(firstName, lastName) {
     contact.clickingOnContactOption();
     cy.wait(2000);
     cy.get('.table-responsive tbody tr').then((el) => {
@@ -266,38 +266,40 @@ export default class Setup {
           } else {
             cy.log('1');
             contact.clickAddNewContactButton();
-            contact.selctCreateNewContactOption();
-            contact.enterFirstName(firstName);
-            contact.enterLastName(lastName);
-            cy.xpath(addNewbTN).click();
-            cy.get(nameField).type(listName);
-            cy.xpath(listSaveBtn).click();
-            contact.enterAddress('anyAddress');
-            contact.enterCity('Tucson');
-            contact.selectState('Arizona');
-            contact.enterZipCode('85701');
-            contact.enterPhoneNumber('0123456789');
-            contact.clickSaveButton();
-            contact.verifySuccessToast();
+            contact.selectUploadFileOption();
+            this.uploadFileForContact();
+            cy.wait(2000);
+            contact.selectFirstNameDropdown();
+            contact.selectLastNameDropdown();
+            contact.selectEmailDropdown();
+            contact.selectPhoneDropdown();
+            contact.clickNextButton();
+            contact.clickSubmitButton();
+            contact.verifyImportStartedToast();
+            contact.verifyImportContactCompleteToast();
+            cy.wait(3000);
           }
         });
       } else {
         cy.log('2');
         contact.clickAddNewContactButton();
-        contact.selctCreateNewContactOption();
-        contact.enterFirstName(firstName);
-        contact.enterLastName(lastName);
-        cy.xpath(addNewbTN).click();
-        cy.get(nameField).type(listName);
-        cy.xpath(listSaveBtn).click();
-        contact.enterAddress('anyAddress');
-        contact.enterCity('Tucson');
-        contact.selectState('Arizona');
-        contact.enterZipCode('85701');
-        contact.enterPhoneNumber('0123456789');
-        contact.clickSaveButton();
-        contact.verifySuccessToast();
+        contact.selectUploadFileOption();
+        this.uploadFileForContact();
+        cy.wait(2000);
+        contact.selectFirstNameDropdown();
+        contact.selectLastNameDropdown();
+        contact.selectEmailDropdown();
+        contact.selectPhoneDropdown();
+        contact.clickNextButton();
+        contact.clickSubmitButton();
+        contact.verifyImportStartedToast();
+        contact.verifyImportContactCompleteToast();
+        cy.wait(3000);
       }
     });
+  }
+
+  uploadFileForContact() {
+    cy.get('.dropbox input').attachFile('testing.csv');
   }
 }

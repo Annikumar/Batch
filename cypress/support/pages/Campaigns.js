@@ -21,7 +21,7 @@ const campaignHeader = '.campaignsTop';
 const searchBox = '.search-box-wrapper';
 const Agent = 'span[title="Agent"]';
 const contactsCountSlider = '.slider-control';
-const campaignHeadings = 'table[class=table] thead';
+const campaignHeadings = '.table thead';
 const archiveCampaignButton = "//a[text()='Archive']";
 const statusArchived = "//div[text()='Archived']";
 const recycleMenu = "a[title='Recycle']";
@@ -124,7 +124,7 @@ export default class Campaign {
   }
 
   enterName(name) {
-    cy.get(inputName).type(name);
+    cy.get(inputName).wait(500).type(name, { delay: 200 });
   }
   enableAdvancedSwitchBar() {
     cy.get(switchBar).click();
@@ -221,7 +221,7 @@ export default class Campaign {
     cy.xpath(
       '//tr[td[span[contains(text(),"' +
         campName +
-        '")]]]//td/div[contains(@class,"progress-status") and contains(@class,"' +
+        '")]]]//td//div[contains(@class,"progress-status") and contains(@class,"' +
         status +
         '")]'
     ).click();
@@ -279,7 +279,7 @@ export default class Campaign {
   }
 
   clickArchiveCampaignButton() {
-    cy.xpath(archiveCampaignButton).click();
+    cy.wait(500).xpath(archiveCampaignButton).click();
   }
 
   handleAlertForDelete() {
@@ -291,9 +291,7 @@ export default class Campaign {
 
   verifyArchivedCampaign(campaignName, check) {
     cy.xpath('//*[text()="' + campaignName + '"]')
-      .first()
-      .scrollIntoView()
-      .should(check);
+    .should(check);
   }
 
   clickStatusArchived() {

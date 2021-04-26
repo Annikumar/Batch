@@ -4,16 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precy:run": "rm -r -d cypress/screenshots cypress/results cypress/reports",
-    "precypress:run": "rm -r -d cypress/screenshots cypress/results cypress/reports",
+    "precy:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/reports/*",
+    "precypress:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/reports/*",
     "report-t": "npm run report:merge & npm run report:generate",
     "cy:run": "npx cypress run --browser chrome --headless --config video=false",
     "cypress:run": "npx cypress run --browser chrome --headless --config video=false --env configFile=prod",
     "report": "npm run cy:run ; npm run report:merge ; npm run report:generate ; npm run report:copyScreenshots",
-    "report:prod": "npm run cypress:run ; npm run report:merge ; npm run report:generate ; npm run report:copyScreenshots",
+    "report:prod": "npm run cypress:run ; npm run report:merge ; npm run report:generate:prod ; npm run report:copyScreenshots:prod",
     "report:merge": "mochawesome-merge cypress/results/json/mochawesome*.json > cypress/results/mochawesome-bundle.json",
-    "report:generate": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/reports/html",
-    "report:copyScreenshots": "cp -r cypress/screenshots cypress/reports/html/screenshots"
+    "report:generate": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/QAreports/html",
+    "report:copyScreenshots": "cp -r cypress/screenshots cypress/QAreports/html/screenshots",
+    "report:generate:prod": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/ProdReports/html",
+    "report:copyScreenshots:prod": "cp -r cypress/screenshots cypress/ProdReports/html/screenshots"
   },
   "keywords": [],
   "author": "",

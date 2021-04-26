@@ -34,7 +34,7 @@ const activeCampaignCount =
 const dashboard = 'a[title="Dashboard"]';
 const totalCallsCount =
   '//span[text()="Total Calls"]/preceding-sibling::span[not(@class="icon")]';
-const followUpCall = '//button[contains(text(),"Follow Up Call")]';
+const followUpCall = '.contact-view__calendar-btn';
 const contactName = (firstName, lastname) =>
   '//span[text()="' + firstName + '" and text()="' + lastname + '"]';
 const month = '.month-selector .title';
@@ -120,7 +120,7 @@ export default class Agent {
     cy.get(callResults).then(($el) => {
       for (let i = 0; i < $el.length; i++) {
         if ($el[i].textContent === result) {
-          cy.get($el[i]).click();
+          $el[i].click();
           break;
         }
       }
@@ -128,7 +128,7 @@ export default class Agent {
   }
 
   ChooseCallResult(result) {
-    cy.wait(2000);
+    cy.wait(3000);
     cy.get('body').then(($body) => {
       if ($body.find(callResults).length) {
         this.selectCallResult(result);
@@ -138,7 +138,7 @@ export default class Agent {
   }
 
   clickCloseSoftphoneBtn() {
-    cy.get(softphoneCloseBtn, { timeout: 30000 }).click();
+    cy.get(softphoneCloseBtn, { timeout: 30000 }).click({ force: true });
   }
 
   enterSearch(search) {
@@ -268,7 +268,7 @@ export default class Agent {
   }
 
   clickFollowUpCall() {
-    cy.xpath(followUpCall).click();
+    cy.get(followUpCall).click();
   }
 
   selectDateToFollowUpCall(date) {
