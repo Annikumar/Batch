@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precy:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/reports/*",
-    "precypress:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/reports/*",
+    "precy:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/QAreports/*",
+    "precypress:run": "rm -r -f cypress/screenshots/* cypress/results/* cypress/ProdReports/*",
     "report-t": "npm run report:merge & npm run report:generate",
     "cy:run": "npx cypress run --browser chrome --headless --config video=false",
     "cypress:run": "npx cypress run --browser chrome --headless --config video=false --env configFile=prod",
@@ -15,7 +15,9 @@
     "report:generate": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/QAreports/html",
     "report:copyScreenshots": "cp -r cypress/screenshots cypress/QAreports/html/screenshots",
     "report:generate:prod": "marge --inline cypress/results/mochawesome-bundle.json -o cypress/ProdReports/html",
-    "report:copyScreenshots:prod": "cp -r cypress/screenshots cypress/ProdReports/html/screenshots"
+    "report:copyScreenshots:prod": "cp -r cypress/screenshots cypress/ProdReports/html/screenshots",
+    "login": "npx cypress run --browser chrome --headless --config video=false --spec cypress/integration/login.spec.js",
+    "login:prod": "npx cypress run --browser chrome --headless --config video=false --spec cypress/integration/login.spec.js --env configFile=prod"
   },
   "keywords": [],
   "author": "",

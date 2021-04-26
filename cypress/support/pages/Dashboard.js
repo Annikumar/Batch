@@ -76,7 +76,7 @@ const cancelBtn = "//button[contains(text(),'CANCEL')]";
 const ruleRemoveBtn = (rule) =>
   "//span[contains(@class,'ss-select-value-label')][text()='" +
   rule +
-  "']/ancestor::div[@class='row']//img[@alt='Delete']";
+  "']/ancestor::div[contains(@class,'lead__score-middle')]//img[@alt='Delete']";
 const scriptText = '.ProseMirror';
 const deleteBtn = (Name) =>
   "//tr[td[text()='" + Name + "']]//img[contains(@src,'delete')]";

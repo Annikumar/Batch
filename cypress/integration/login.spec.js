@@ -42,8 +42,8 @@ describe('Login Flow', () => {
   });
 
   it('SuccessFully Login', () => {
-    login.enterEmailtoSignin(testData.email);
-    login.enterPasswordToSignin(testData.password);
+    login.enterEmailtoSignin(Cypress.env('username'));
+    login.enterPasswordToSignin(Cypress.env('password'));
     login.clickTermsCheckBox();
     login.clickSigninButton();
     login.verifySuccessfullLogin();

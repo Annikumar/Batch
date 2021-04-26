@@ -113,6 +113,9 @@ const callresultValues = '.row-calldisposition  .ss-select-value';
 const delCallResult = (callResultName) =>
   `.ss-select-value-label[title="${callResultName}"] + .ss-select-value-delete`;
 const status = "//div[text()='Status']";
+const recycleOption = '//a[@class="dropdown-item" and text()="Recycle"]';
+const recycleCampaignMenuBtn = (campaignName) =>
+  '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -274,6 +277,14 @@ export default class Campaign {
     ).click();
   }
 
+  clickRecycleCampaignMenuBtn(name) {
+    cy.xpath(recycleCampaignMenuBtn(name)).click();
+  }
+
+  clickRecycleOption() {
+    cy.xpath(recycleOption).click();
+  }
+
   clickEditBtn() {
     cy.xpath(campaignEditButton).click();
   }
@@ -290,8 +301,7 @@ export default class Campaign {
   }
 
   verifyArchivedCampaign(campaignName, check) {
-    cy.xpath('//*[text()="' + campaignName + '"]')
-    .should(check);
+    cy.xpath('//*[text()="' + campaignName + '"]').should(check);
   }
 
   clickStatusArchived() {
