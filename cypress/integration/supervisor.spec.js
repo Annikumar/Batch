@@ -194,4 +194,58 @@ describe('SuperVisor Flow', () => {
       'After Call',
     ]);
   });
+
+  it('Verify the Elements of Campaign section of Reports page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Campaigns');
+    suprevisor.verifyAllStatusDropdown();
+    suprevisor.verifyAllAgentsDropdown();
+    suprevisor.verifyExportButton();
+    suprevisor.verifyDatePicker();
+  });
+
+  it('Verify the Table headings of the Campaing section of Reports page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Campaigns');
+    suprevisor.verifyCampaignsTableHeading([
+      'Campaign',
+      'Status',
+      'Dials',
+      'Answered',
+      'BU',
+      'CB',
+      'NA',
+      'Agents',
+      'Contacts',
+      'Completed',
+    ]);
+  });
+
+  it('Verify the Elements of Number section in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Numbers');
+    suprevisor.verifySearchBox();
+    suprevisor.verifyDatePicker();
+    suprevisor.verifyExportButton();
+  });
+
+  it('Verify the Table headings og Number section in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Numbers');
+    suprevisor.verifyNumberSectionTableHeadings([
+      'Phone Number',
+      'Destination',
+      'Inbound',
+      'Outbound',
+      'Added',
+    ]);
+  });
+
+  it('Verify the Elements of Agent Heap Map in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents Heat Map');
+    suprevisor.verifyAllGroupsDropdown();
+    suprevisor.verifyReportHeatRangePicker();
+    suprevisor.verifyRangeSelectRadioBtns(['Day', 'Week', 'Month']);
+  });
 });

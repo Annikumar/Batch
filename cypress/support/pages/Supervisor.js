@@ -38,6 +38,14 @@ const departmentsDropdown =
 const agentsName = '.reports-agents__agent-name';
 const agentsDetailsPlusBtn = '.reports-agents__agent-row .fa-plus';
 const agentsDetailsName = '.reports-agents__grid .reports-agents__grid-item';
+const allStatusDropdown =
+  '//div[contains(@class,"ss-select-control")][span[text()="All Statuses"]]';
+const searchField = '.search-box';
+const allGroupsDropdown =
+  '//div[contains(@class,"ss-select-control")]//span[text()="All Groups"]';
+const heatRangePicker = '.reports-heat__range-picker';
+const rangeSelectRadioBtn = (range) =>
+  `//label[@class="radio_cstm"][text()="${range}"]//span[@class="checkmark"]`;
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -212,6 +220,40 @@ export default class Suprevisor {
   verifyAgentsDetails(data) {
     for (let i = 0; i < data.length; i++) {
       cy.get(agentsDetailsName).should('contain.text', data[i]);
+    }
+  }
+
+  verifyAllStatusDropdown() {
+    cy.xpath(allStatusDropdown).should('be.visible');
+  }
+
+  verifyCampaignsTableHeading(heading) {
+    for (let i = 0; i < heading.length; i++) {
+      cy.get(tableHeader).should('contain.text', heading[i]);
+    }
+  }
+
+  verifySearchBox() {
+    cy.get(searchField).should('be.visible');
+  }
+
+  verifyNumberSectionTableHeadings(heading) {
+    for (let i = 0; i < heading.length; i++) {
+      cy.get(tableHeader).should('contain.text', heading[i]);
+    }
+  }
+
+  verifyAllGroupsDropdown() {
+    cy.xpath(allGroupsDropdown).should('be.visible');
+  }
+
+  verifyReportHeatRangePicker() {
+    cy.get(heatRangePicker).should('be.visible');
+  }
+
+  verifyRangeSelectRadioBtns(range) {
+    for (let i = 0; i < range.length; i++) {
+      cy.xpath(rangeSelectRadioBtn(range[i])).should('be.visible');
     }
   }
 }
