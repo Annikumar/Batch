@@ -23,12 +23,12 @@ describe('Add Contact flow', () => {
     });
   });
 
-  after(() => {
-    selectAgentStatus('Offline');
-    cy.Logout();
-  });
+  // after(() => {
+  //   selectAgentStatus('Offline');
+  //   cy.Logout();
+  // });
 
-  it('Should Login', () => {
+  it.only('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
@@ -327,5 +327,26 @@ describe('Add Contact flow', () => {
     cy.wait(1000);
     addCont.verifyFollowUpCall('random Contact');
     addCont.clickCloseBtn();
+  });
+
+  it.only('Verify Cancel button should close the notes window', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickContactName('random Contact');
+    addCont.clickNotes();
+    addCont.clickAddNewNotes();
+    addCont.clickCloseBtn();
+    addCont.verifyNotesWindowNotVisible();
+  });
+
+  it.only('Verify Admin is able to add notes in Contacts', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickContactName('random Contact');
+    addCont.clickNotes();
+    addCont.clickAddNewNotes();
+    addCont.enterNotes();
+    addCont.clickNotesBullets();
+    cy.wait(3000);
+    addCont.clickSavebtn();
+    addCont.verifyAddedNote();
   });
 });
