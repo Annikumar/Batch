@@ -490,7 +490,7 @@ export default class Dashboard {
   }
 
   verifyScriptDelete(name) {
-    cy.xpath(deleteBtn(name)).click();
+    cy.xpath(deleteBtn(name)).should('not.exist');
   }
 
   clickEditBtn(scriptName) {

@@ -87,7 +87,7 @@ describe('Agent Profile', function () {
     agent.enterSearch(testData.Contact);
     agent.clickOnContactName(testData.Contact);
     agent.clickFollowUpCall();
-    agent.selectDateToFollowUpCall('4,May 2021');
+    agent.selectDateToFollowUpCall('10,May 2021');
     cy.wait(1000);
     agent.clickSaveButton();
     cy.wait(1000);

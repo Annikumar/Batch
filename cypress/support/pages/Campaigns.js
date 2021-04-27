@@ -282,7 +282,14 @@ export default class Campaign {
   }
 
   clickRecycleOption() {
-    cy.xpath(recycleOption).click();
+    // cy.xpath(recycleOption).first().click();
+    cy.get('.dropdown-menu.show .dropdown-item').then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim() === 'Recycle') {
+          el[i].click();
+        }
+      }
+    });
   }
 
   clickEditBtn() {
