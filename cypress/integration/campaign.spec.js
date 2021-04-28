@@ -78,7 +78,12 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', testData.Number);
     addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.selectCallResultsOption([
+      'Answering Machine',
+      'No Answer',
+      'Successful Sale',
+      'Voicemail',
+    ]);
     addCamp.clickNextCircleArrow();
     addCamp.selectAgentsDrpdwn('Individual Agents', testData.AdminName);
     addCamp.clickCreateCampButton();
@@ -114,8 +119,13 @@ describe('Add Campaign flow', () => {
     addCamp.clickEditBtn();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName('-edited');
-    addCamp.verifyCallResultValues(4);
-    addCamp.deleteCallResults(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.verifyCallResultValues(5);
+    addCamp.deleteCallResults([
+      'Answering Machine',
+      'No Answer',
+      'Successful Sale',
+      'Voicemail',
+    ]);
     addCamp.selectCallResultsOption([
       'Voicemail',
       'Unknown',
@@ -190,6 +200,11 @@ describe('Add Campaign flow', () => {
     );
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
+    addCamp.clickEditCampaign(
+      fixtureData.campaignName + randNum.toString() + '-edited'
+    );
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign(
       fixtureData.campaignName + randNum.toString() + '1',
       'not.exist'
@@ -259,7 +274,9 @@ describe('Add Campaign flow', () => {
   });
 
   it('Verify Elements present in Recycle page', function () {
-    addCamp.clickRecycleMenu();
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(testData.campaign);
+    addCamp.clickRecycleOption();
     addCamp.verifyRecStartDate();
     addCamp.verifyRecEndDate();
     addCamp.verifyRecCallResult();
@@ -383,24 +400,9 @@ describe('Add Campaign flow', () => {
 
   it('Create the Recycle Campaign', () => {
     addCamp.clickCampaignMenu();
-    addCamp.clickAddNewCampaign();
-    addCamp.enableAdvancedSwitchBar();
-    cy.wait(2000);
-    addCamp.enterName(fixtureData.campaignName + randNum.toString() + 2);
-    addCamp.selectDialingModeOption('Predictive Dialer');
-    addCamp.selectCallerId('Individual Numbers', testData.Number);
-    addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption(['Answering Machine']);
-    addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Individual Agents', testData.AdminName);
-    addCamp.clickCreateCampButton();
-    cy.wait(1000);
-    addCamp.clickRecycleMenu();
-    addCamp.selectCamapignToRecycle(
-      fixtureData.campaignName + randNum.toString() + 2
-    );
+    addCamp.clickEditCampaign(testData.campaign);
+    addCamp.clickRecycleOption();
     addCamp.selectRecycleCallResult('Busy');
-    addCamp.selectUseListsFrom(testData.campaign);
     addCamp.enterNewCampaignName('RecycledCampaign');
     addCamp.clickRecycleSaveCampaign();
     addCamp.verifySuccessToast('Recycled campaign created');
@@ -409,9 +411,7 @@ describe('Add Campaign flow', () => {
 
   it('Archieve the Created Recycle Campaign', () => {
     addCamp.clickCampaignMenu();
-    addCamp.clickEditCampaign(
-      fixtureData.campaignName + randNum.toString() + 2
-    );
+    addCamp.clickRecycleCampaignMenuBtn('RecycledCampaign');
     addCamp.clickArchiveCampaignButton();
     addCamp.handleAlertForDelete();
     addCamp.verifyArchivedCampaign('RecycledCampaign', 'not.exist');

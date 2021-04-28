@@ -86,6 +86,7 @@ describe('Login Successfully and Add User', () => {
         fixtureData.userLastname +
         randNum.toString()
     );
+    cy.wait(2000);
     addUser.deleteAddedContact(
       fixtureData.userFirstname,
       fixtureData.userLastname + randNum.toString()
@@ -229,6 +230,7 @@ describe('Login Successfully and Add User', () => {
         fixtureData.userLastname +
         randNum.toString()
     );
+    cy.wait(2000);
     addUser.deleteAddedContact(
       fixtureData.userFirstname,
       fixtureData.userLastname + randNum.toString()

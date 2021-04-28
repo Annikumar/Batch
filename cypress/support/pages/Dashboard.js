@@ -76,7 +76,7 @@ const cancelBtn = "//button[contains(text(),'CANCEL')]";
 const ruleRemoveBtn = (rule) =>
   "//span[contains(@class,'ss-select-value-label')][text()='" +
   rule +
-  "']/ancestor::div[@class='row']//img[@alt='Delete']";
+  "']/ancestor::div[contains(@class,'lead__score-middle')]//img[@alt='Delete']";
 const scriptText = '.ProseMirror';
 const deleteBtn = (Name) =>
   "//tr[td[text()='" + Name + "']]//img[contains(@src,'delete')]";
@@ -155,8 +155,8 @@ const filterSelectDate = (date) =>
   "//div[@class='DayPicker-Body']//div[text()='" + date + "']";
 const loginAsPlusIcon = ".dropdown-menu svg[data-icon='plus']";
 const Agent = (user) => "//span[text()='" + user + "']";
-const AgentDashboard = (user) => "//span[text()='" + user + "']";
-const switchProfile = '.dropdown-logout__a .user__dropdown';
+const dashboardName = '.name';
+const backToAdmin = '.nav-item a[href*="logout"]';
 const homeButton = '.breadcrumb-item .active';
 
 export default class Dashboard {
@@ -490,7 +490,7 @@ export default class Dashboard {
   }
 
   verifyScriptDelete(name) {
-    cy.xpath(deleteBtn(name)).click();
+    cy.xpath(deleteBtn(name)).should('not.exist');
   }
 
   clickEditBtn(scriptName) {
@@ -598,7 +598,7 @@ export default class Dashboard {
   clickCloseSoftphoneBtn() {
     cy.get('body').then(($body) => {
       if ($body.find(softphoneCloseBtn).length) {
-        cy.get(softphoneCloseBtn).click();
+        cy.get(softphoneCloseBtn).click({ force: true });
       }
     });
   }
@@ -1035,12 +1035,12 @@ export default class Dashboard {
     cy.xpath(Agent(user)).click();
   }
 
-  verifyAgentOrSupervisorDashboard(user) {
-    cy.xpath(AgentDashboard(user)).should('be.visible');
+  verifyUserDashboardName(user) {
+    cy.get(dashboardName, { timeout: 10000 }).should('have.text', user);
   }
 
-  clickSwitchProfile() {
-    cy.get(switchProfile).click();
+  clickBackToAdmin() {
+    cy.get(backToAdmin).click();
   }
 
   clickHomeButton() {

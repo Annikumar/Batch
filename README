@@ -13,18 +13,23 @@ In order to get the code and install dependencies:
 By triggering “npm install” command, it will install all dependencies from package.json in the project.
 
 Run tests:
-	To run the tests, there are following options:
+To run the tests, there are following options:
+this will launch the test runner. Test runner contains all test files  
+from where one can select and run any particular test file or can run entire tests.
+This will start executing the tests related to the spec file in non-headless Mode.
+           
+	npx cypress open: 
+           
+By triggering this command, this will start executing all tests in the QA Environemnt from 
+spec file in headless mode and generate the html report in cypress/QAreports/html/.
+
+	npm run report 
     
-	npx cypress open: this will launch the test runner. Test runner contains all test files  
-           from where one can select and run any particular test file or can run entire 
-           tests.this will start executing the tests related to the spec file in non-headless 
-           Mode.
-	
-	npm run report : By triggering this command, this will start executing all tests in the QA Environemnt from 
-    spec file in headless mode and generate the html report in cypress/reports/html/cypress/results.
+By triggering this command, this will start executing all tests in the Production Environemnt from 
+spec file in headless mode and generate the html report in cypress/ProdReports/html/. 
+
+    npm run report:prod
     
-    npm run report:prod : By triggering this command, this will start executing all tests in the Production Environemnt from 
-    spec file in headless mode and generate the html report in cypress/reports/html/cypress/results.
 
 
 	

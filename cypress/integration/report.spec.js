@@ -58,7 +58,7 @@ describe('Report Page', function () {
       'In Queue',
       'Paused Agents',
       'Dialing Ratio',
-      'Avgerage Agent Wait Time',
+      'Average Agent Wait Time',
     ]);
   });
 

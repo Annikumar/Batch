@@ -59,6 +59,6 @@ describe('Setup Account for Testing', () => {
       );
     });
     cy.wait(2000);
-    setup.addNewContact(contactFirstName, contactlastName, testData.ListName);
+    setup.addNewContact(contactFirstName, contactlastName);
   });
 });

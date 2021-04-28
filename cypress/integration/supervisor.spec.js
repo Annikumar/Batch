@@ -54,14 +54,198 @@ describe('SuperVisor Flow', () => {
     suprevisor.verifyProfilePage();
   });
 
-  it.skip('Verify Supervisor can Login as Agent', () => {
+  // Fixed according to the BAT-747
+  it('Verify Supervisor can Login as Agent', () => {
     suprevisor.clickDashboardMenu();
     suprevisor.clickLoginAsBtn();
     suprevisor.clickOpenUser();
-    suprevisor.loginWithUser('automation testing');
-    suprevisor.verifyLogin('automation testing');
+    suprevisor.loginWithUser(testData.agent);
+    suprevisor.verifyLogin(testData.agent);
     suprevisor.clickOnProfile();
     suprevisor.clickBackToSupervisor();
     suprevisor.verifySupervisorProfile();
+  });
+
+  it('Verify the Reports Header Elements', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.verifyReportsHeaderElements([
+      'Live',
+      'Recent Contacts',
+      'Campaigns',
+      'Agents',
+      'Numbers',
+      'Agents Heat Map',
+      'Floormap',
+    ]);
+  });
+
+  it(`Verifies that the Supervisor don't have access to FloorMap`, () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Floormap');
+    suprevisor.verifyFloorMapAccessDenied();
+  });
+
+  it('Verify the Live section Elements of Report', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Live');
+    suprevisor.verifyReportLiveElements([
+      'Talking Time',
+      'Active Calls',
+      'Active Campaigns',
+      'Missed Calls',
+      'Abandoned Calls',
+      'Remaining Redials',
+      'Online Agents',
+      'Remaining Leads',
+      'In Queue',
+      'Paused Agents',
+      'Dialing Ratio',
+      'Average Agent Wait Time',
+    ]);
+  });
+
+  it('Verify the Recent Contact Elements of Report Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Recent Contacts');
+    suprevisor.verifyInboundOutboundDropdown();
+    suprevisor.verifyAllAgentsDropdown();
+    suprevisor.verifyCallResultsDropdown();
+    suprevisor.verifyAllDurationsDropdown();
+    suprevisor.verifyAllCampaignsDropdown();
+    suprevisor.verifyDatePicker();
+    suprevisor.verifyExportButton();
+  });
+
+  it('Verify the Recent Contacts Table Headings', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Recent Contacts');
+    suprevisor.verifyRecentContactsTableHeadings([
+      'Call Type',
+      'Date/Time',
+      'Call From',
+      'Customer Number',
+      'Customer Name',
+      'Agent',
+      'Campaign',
+      'Call Result',
+      'Duration',
+    ]);
+  });
+
+  it('Verify the Elements of Agent Section for Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.verifyDepartmentsDropdown();
+    suprevisor.verifyAllCampaignsDropdown();
+    suprevisor.verifyDatePicker();
+    suprevisor.verifyExportButton();
+  });
+
+  it('Verify the Agents Table Headings', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.verifyRecentContactsTableHeadings([
+      'Agent',
+      'Logged Time',
+      'Calls',
+      'Answered',
+      'Abandon',
+      'Abandon Rate',
+      'Available',
+      'Break',
+      'Lunch',
+      'In training',
+      'Out of desk',
+      'On Call',
+      'Wrap Up Time',
+      'In Meeting',
+      'Auto Pause',
+      'PrepWork',
+      'After Call',
+    ]);
+  });
+
+  it('Verify the Agents Name in Reports Agent section', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.verifyReportsAgentName(testData.agent);
+    suprevisor.verifyReportsAgentName(testData.AdminName);
+  });
+
+  it('verify the Agents Details in the Reports Agent section', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents');
+    suprevisor.clickAgentsDetailsPlusBtn();
+    suprevisor.verifyAgentsDetails([
+      'Answered',
+      'Appointments',
+      'Leads',
+      'Total',
+      'Available',
+      'Break',
+      'Lunch',
+      'In training',
+      'Out of desk',
+      'On Call',
+      'Wrap Up Time',
+      'In Meeting',
+      'Auto Pause',
+      'PrepWork',
+      'After Call',
+    ]);
+  });
+
+  it('Verify the Elements of Campaign section of Reports page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Campaigns');
+    suprevisor.verifyAllStatusDropdown();
+    suprevisor.verifyAllAgentsDropdown();
+    suprevisor.verifyExportButton();
+    suprevisor.verifyDatePicker();
+  });
+
+  it('Verify the Table headings of the Campaing section of Reports page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Campaigns');
+    suprevisor.verifyCampaignsTableHeading([
+      'Campaign',
+      'Status',
+      'Dials',
+      'Answered',
+      'BU',
+      'CB',
+      'NA',
+      'Agents',
+      'Contacts',
+      'Completed',
+    ]);
+  });
+
+  it('Verify the Elements of Number section in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Numbers');
+    suprevisor.verifySearchBox();
+    suprevisor.verifyDatePicker();
+    suprevisor.verifyExportButton();
+  });
+
+  it('Verify the Table headings og Number section in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Numbers');
+    suprevisor.verifyNumberSectionTableHeadings([
+      'Phone Number',
+      'Destination',
+      'Inbound',
+      'Outbound',
+      'Added',
+    ]);
+  });
+
+  it('Verify the Elements of Agent Heap Map in Reports Page', () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Agents Heat Map');
+    suprevisor.verifyAllGroupsDropdown();
+    suprevisor.verifyReportHeatRangePicker();
+    suprevisor.verifyRangeSelectRadioBtns(['Day', 'Week', 'Month']);
   });
 });

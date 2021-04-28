@@ -18,7 +18,7 @@ const softphone = '.stg-softphone-wrapper';
 const contactsMenu = 'a[title="Contacts"]';
 const contact = '.contacts__name';
 const phoneNumber =
-  "//tr[td[@class='contact-field' and contains(text(),'Phone')]]//td[@class='contact-value']";
+  "//tr[td[@class='contact-field' and contains(.,'Phone')]]//td[contains(@class,'contact-value')]//span";
 const callTransferBtn = 'div[title="Transfer"]';
 const callBtn = '.stg-softphone-callbutton';
 const callResultWindow = '.modal-content .call-disposition-title';
@@ -29,6 +29,27 @@ const averageFieldBox = (text) => '//div[div[text()="' + text + '"]]';
 const callFieldBox = (text) => `//div[span[text()="${text}"]]`;
 const graphBox = (text) =>
   `//span[text()="${text}"]/ancestor::div[contains(@class,"col")]`;
+const activeCampaignCount =
+  '//span[text()="Active Campaigns"]/preceding-sibling::span[not(@class="icon")]';
+const dashboard = 'a[title="Dashboard"]';
+const totalCallsCount =
+  '//span[text()="Total Calls"]/preceding-sibling::span[not(@class="icon")]';
+const followUpCall = '.contact-view__calendar-btn';
+const contactName = (firstName, lastname) =>
+  '//span[text()="' + firstName + '" and text()="' + lastname + '"]';
+const month = '.month-selector .title';
+const nextButton = '.fa-chevron-right';
+const day = '.day';
+const saveBtn = 'button svg[data-icon="save"]';
+const savedScheduledCall = '.day .item';
+const closeBtn = '//button[contains(text(),"Close")]';
+const notesBtn = '//button[text()="Notes"]';
+const addNewNoteBtn = '//button[text()="Add New Note"]';
+const noteTextField = 'div.ProseMirror';
+const deleteNoteBtn = (note) =>
+  '//div[contains(@class,"comment-item-body") and span[p[text()="' +
+  note +
+  '"]]]/parent::div/preceding-sibling::div//span//*[name()="svg"][@data-icon="trash"]';
 
 const selectAgent =
   "//label[text()='Assign Agents']/ancestor::div[@class='card-body']//span[text()='Agents']";
@@ -179,7 +200,7 @@ export default class Agent {
     cy.get(callResults).then(($el) => {
       for (let i = 0; i < $el.length; i++) {
         if ($el[i].textContent === result) {
-          cy.get($el[i]).click();
+          $el[i].click();
           break;
         }
       }
@@ -187,7 +208,7 @@ export default class Agent {
   }
 
   ChooseCallResult(result) {
-    cy.wait(2000);
+    cy.wait(3000);
     cy.get('body').then(($body) => {
       if ($body.find(callResults).length) {
         this.selectCallResult(result);
@@ -197,7 +218,7 @@ export default class Agent {
   }
 
   clickCloseSoftphoneBtn() {
-    cy.get(softphoneCloseBtn, { timeout: 30000 }).click();
+    cy.get(softphoneCloseBtn, { timeout: 30000 }).click({ force: true });
   }
 
   enterSearch(search) {
@@ -572,4 +593,98 @@ clickOnactivitiesBtn() {
 verifyActivitiesPage(activityText) {
   cy.get(activitiesPage).should('contain.text',activityText);
 }
+  verifyActiveCampaignCount() {
+    cy.xpath(activeCampaignCount).then((el) => {
+      expect(parseInt(el.text().trim())).to.equal(1);
+    });
+  }
+
+  clickDashboardMenu() {
+    cy.get(dashboard).click({ force: true });
+  }
+
+  getTotalCallsCount() {
+    cy.xpath(totalCallsCount).then((count) => {
+      cy.readFile('cypress/fixtures/testData.json').then((data) => {
+        data.TotalCallsCount = count.text().trim();
+        cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
+      });
+    });
+  }
+
+  verifyTotalCallsCount(count) {
+    cy.xpath(totalCallsCount).then((el) => {
+      expect(parseInt(el.text().trim())).greaterThan(parseInt(count));
+    });
+  }
+
+  clickOnContactName(contact) {
+    const [firstName, lastName] = contact.split(' ');
+    cy.xpath(contactName(firstName, lastName)).click();
+  }
+
+  clickFollowUpCall() {
+    cy.get(followUpCall).click();
+  }
+
+  selectDateToFollowUpCall(date) {
+    cy.get('.modal-content').should('be.visible');
+    const [Date, monthYear] = date.split(',');
+    cy.log(monthYear);
+    cy.log(Date);
+    for (let i = 0; i < 36; i++) {
+      cy.get(month).then(($month) => {
+        for (let i = 0; i < $month.length; i++) {
+          if ($month[i].textContent.trim() != monthYear) {
+            cy.get(nextButton).click();
+            break;
+          }
+        }
+      });
+    }
+    cy.get(day).then(($day) => {
+      for (let i = 0; i < $day.length; i++) {
+        if ($day[i].textContent.trim() === Date) {
+          cy.wait(2000);
+          cy.get($day[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickSaveButton() {
+    cy.get(saveBtn).click();
+  }
+
+  verifyScheduledFollowUpCall(contact) {
+    cy.get(savedScheduledCall).should(
+      'contain.text',
+      `Call Back to ${contact}`
+    );
+  }
+
+  clickCloseButton() {
+    cy.xpath(closeBtn).click();
+  }
+
+  clickNotesBtn() {
+    cy.xpath(notesBtn).click();
+  }
+
+  clickAddNewNoteBtn() {
+    cy.xpath(addNewNoteBtn).click();
+  }
+
+  enterNote(note) {
+    cy.get(noteTextField).type(note);
+  }
+
+  clickDeletNoteBtn(note) {
+    cy.xpath(deleteNoteBtn(note)).click();
+  }
+
+  verifyAddedNote(note, condition) {
+    cy.xpath(deleteNoteBtn(note)).should(condition);
+  }
 }

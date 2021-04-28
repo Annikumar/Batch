@@ -12,8 +12,7 @@ const inputEmail = 'input[name="email"]';
 const inputPhone = 'input[name="phonenumber1"]';
 const inputAddress = 'input[name="address"]';
 const inputCity = 'input[name="city"]';
-const stateDropdown =
-  '//div[input[@name="address"]]/following-sibling::div/label[contains(.,"State")]/following-sibling::div[contains(@class,"ss-select")]';
+const stateDropdown = '//div[span[text()="State"]]';
 const inputZip = 'input[name="postalcode"]';
 const cancelBtn = 'button[class^="cancel"]';
 const saveButton = 'button[type="submit"]';
@@ -61,8 +60,8 @@ const dialedCountSlider =
 const leadScoreSlider =
   '//div[text()="Lead Score"]/ancestor::div[@class="slider-control"]';
 const contactsListHeader = '.table thead';
-const phoneNumberFields = (x) =>
-  "input[placeholder='Phone Number'][name='phonenumber" + x + "']";
+const phoneNumberFields =
+  "input[placeholder='Phone Number'][name='phonenumber1']";
 const leadSourceField = 'input[placeholder="Lead Source"]';
 const mailingAddressField = 'input[name="mailingaddress"]';
 const mailingZipField = 'input[name="mailingpostalcode"]';
@@ -99,10 +98,10 @@ const listStatus = 'svg[data-icon="play"]';
 const testingPauseButton =
   '//tr[td[text()="testing"]]//span//*[name()="svg" and @data-icon="pause"]';
 const phone = '.phone-number';
-const contactList =
-  "//tr[td[text()='longfile.csv']]//a[img[contains(@src,'csv')]]";
-const followUpCall = '//button[contains(text(),"Follow Up Call")]';
-const errorMessage = '.error-msg';
+const contactList = (listName) =>
+  "//tr[td[text()='" + listName + "']]//a[img[contains(@src,'csv')]]";
+const followUpCall = '.contact-view__calendar-btn';
+const errorMessage = '.custom-input__tooltip';
 const contact = (firstName, lastName) =>
   '//span[@class="contacts__name"][contains(.,"' +
   firstName +
@@ -121,6 +120,12 @@ const notesTextBox = '.ProseMirror';
 const AddedNote = '.comment-item-body';
 const notesWindow = '.modal-content';
 const notesBullets = 'svg[data-icon="list-ul"]';
+const fieldsEditBtn = (fieldName) =>
+  `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//*[name()="svg"]`;
+const phoneEditBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"contact__custom-input__edit")]/*[name()="svg"]`;
+const phoneSaveBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"custom-input__buttons")]/*[name()="svg"][1]`;
+const fieldsSaveBtn = (fieldName) =>
+  `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//td[@class="custom-input__buttons"]/*[name()="svg"][1]`;
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -140,36 +145,58 @@ export default class Contacts {
   }
 
   enterFirstName(fstName) {
+    cy.xpath(fieldsEditBtn('First name')).click();
     cy.get(firstName).type(fstName);
+    cy.xpath(fieldsSaveBtn('First name')).click();
   }
+
   enterLastName(lstName) {
+    cy.xpath(fieldsEditBtn('Last name')).click();
     cy.get(lastName).type(lstName);
+    cy.xpath(fieldsSaveBtn('Last name')).click();
   }
 
   enterAddress(address) {
+    cy.xpath(fieldsEditBtn('Address')).click();
     cy.get(inputAddress).type(address, { force: true });
+    cy.xpath(fieldsSaveBtn('Address')).click();
   }
+
   enterCity(city) {
+    cy.xpath(fieldsEditBtn('City')).click();
     cy.get(inputCity).type(city, { force: true });
+    cy.xpath(fieldsSaveBtn('City')).click();
   }
+
   enterZipCode(zip) {
+    cy.xpath(fieldsEditBtn('Postal Code')).click();
     cy.get(inputZip).type(zip, { force: true });
+    cy.xpath(fieldsSaveBtn('Postal Code')).click();
   }
+
   enterEmail(email) {
+    cy.xpath(fieldsEditBtn('Email')).click();
     cy.get(inputEmail).type(email);
+    cy.xpath(fieldsSaveBtn('Email')).click();
   }
+
   enterPhoneNumber(num) {
+    cy.xpath(phoneEditBtn).click();
     cy.get(inputPhone).type(num);
+    cy.xpath(phoneSaveBtn).click();
   }
+
   selectState(state) {
     cy.xpath(stateDropdown).click();
     cy.xpath(
       '//div[@class="ss-select-dropdown"]//span/div[text()="' + state + '"]'
     ).click();
   }
+
   clickSaveButton() {
     cy.get(saveButton).click({ force: true });
   }
+
   verifySuccessToast() {
     cy.xpath(contactSavedToast, { timeout: 7000 }).should('be.visible');
   }
@@ -225,7 +252,9 @@ export default class Contacts {
         '") and contains(.,"' +
         lstName +
         '")]]//img[contains(@src,"edit")]'
-    ).click();
+    )
+      .scrollIntoView()
+      .click();
     cy.xpath(deletOption).click();
   }
 
@@ -297,21 +326,23 @@ export default class Contacts {
   }
 
   verifyFirstNameField() {
+    cy.xpath(fieldsEditBtn('First name')).click();
     cy.get(firstName).should('be.visible');
   }
 
   verifyLastNameField() {
+    cy.xpath(fieldsEditBtn('Last name')).click();
     cy.get(lastName).should('be.visible');
   }
 
   verifyEmailField() {
+    cy.xpath(fieldsEditBtn('Email')).click();
     cy.get(inputEmail).should('be.visible');
   }
 
   verifyPhoneNumberFields() {
-    for (let i = 1; i < 11; i++) {
-      cy.get(phoneNumberFields(i)).should('be.visible');
-    }
+    cy.xpath(phoneEditBtn).click();
+    cy.get(phoneNumberFields).should('be.visible');
   }
 
   verifyLeadSourceField() {
@@ -319,10 +350,12 @@ export default class Contacts {
   }
 
   verifyAddressField() {
+    cy.xpath(fieldsEditBtn('Address')).click();
     cy.get(inputAddress).should('be.visible');
   }
 
   verifyCityField() {
+    cy.xpath(fieldsEditBtn('City')).click();
     cy.get(inputCity).should('be.visible');
   }
 
@@ -331,18 +364,22 @@ export default class Contacts {
   }
 
   verifyZipField() {
+    cy.xpath(fieldsEditBtn('Postal Code')).click();
     cy.get(inputZip).should('be.visible');
   }
 
   verifyMailingAddressField() {
+    cy.xpath(fieldsEditBtn('Mailing Address')).click();
     cy.get(mailingAddressField).should('be.visible');
   }
 
   verifyMailingCityField() {
+    cy.xpath(fieldsEditBtn('Mailing City')).click();
     cy.get(mailingCityField).should('be.visible');
   }
 
   verifyMailingZipField() {
+    cy.xpath(fieldsEditBtn('Mailing Postal Code')).click();
     cy.get(mailingZipField).should('be.visible');
   }
 
@@ -351,7 +388,7 @@ export default class Contacts {
   }
 
   verifySaveBtn() {
-    cy.get(saveButton).should('be.visible').and('be.enabled');
+    cy.get(saveButton).should('be.visible');
   }
 
   verifyCancelBtn() {
@@ -363,7 +400,7 @@ export default class Contacts {
   }
 
   verifyAddNewContactListBtn() {
-    cy.xpath(addNewContactListBtn).should('be.visible').and('be.enabled');
+    cy.xpath(addNewContactListBtn).should('be.visible');
   }
 
   verifyImportContactsHeader(heading) {
@@ -547,7 +584,7 @@ export default class Contacts {
   }
 
   downloadAndVerifyContactList(listName) {
-    cy.xpath(contactList).then((contact) => {
+    cy.xpath(contactList(listName)).then((contact) => {
       const href = contact[0].getAttribute('href');
       cy.downloadFile(href, 'cypress/fixtures/Download', 'contacts.csv');
       this.clickingOnContactOption();
@@ -582,7 +619,7 @@ export default class Contacts {
   }
 
   clickFollowUpCall() {
-    cy.xpath(followUpCall).click();
+    cy.get(followUpCall).click();
     cy.wait(1000);
   }
 

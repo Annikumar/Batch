@@ -21,7 +21,7 @@ const campaignHeader = '.campaignsTop';
 const searchBox = '.search-box-wrapper';
 const Agent = 'span[title="Agent"]';
 const contactsCountSlider = '.slider-control';
-const campaignHeadings = 'table[class=table] thead';
+const campaignHeadings = '.table thead';
 const archiveCampaignButton = "//a[text()='Archive']";
 const statusArchived = "//div[text()='Archived']";
 const recycleMenu = "a[title='Recycle']";
@@ -113,6 +113,9 @@ const callresultValues = '.row-calldisposition  .ss-select-value';
 const delCallResult = (callResultName) =>
   `.ss-select-value-label[title="${callResultName}"] + .ss-select-value-delete`;
 const status = "//div[text()='Status']";
+const recycleOption = '//a[@class="dropdown-item" and text()="Recycle"]';
+const recycleCampaignMenuBtn = (campaignName) =>
+  '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -124,7 +127,7 @@ export default class Campaign {
   }
 
   enterName(name) {
-    cy.get(inputName).type(name);
+    cy.get(inputName).wait(500).type(name, { delay: 200 });
   }
   enableAdvancedSwitchBar() {
     cy.get(switchBar).click();
@@ -221,7 +224,7 @@ export default class Campaign {
     cy.xpath(
       '//tr[td[span[contains(text(),"' +
         campName +
-        '")]]]//td/div[contains(@class,"progress-status") and contains(@class,"' +
+        '")]]]//td//div[contains(@class,"progress-status") and contains(@class,"' +
         status +
         '")]'
     ).click();
@@ -274,12 +277,27 @@ export default class Campaign {
     ).click();
   }
 
+  clickRecycleCampaignMenuBtn(name) {
+    cy.xpath(recycleCampaignMenuBtn(name)).click();
+  }
+
+  clickRecycleOption() {
+    // cy.xpath(recycleOption).first().click();
+    cy.get('.dropdown-menu.show .dropdown-item').then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        if (el[i].textContent.trim() === 'Recycle') {
+          el[i].click();
+        }
+      }
+    });
+  }
+
   clickEditBtn() {
     cy.xpath(campaignEditButton).click();
   }
 
   clickArchiveCampaignButton() {
-    cy.xpath(archiveCampaignButton).click();
+    cy.wait(500).xpath(archiveCampaignButton).click();
   }
 
   handleAlertForDelete() {
@@ -290,10 +308,7 @@ export default class Campaign {
   }
 
   verifyArchivedCampaign(campaignName, check) {
-    cy.xpath('//*[text()="' + campaignName + '"]')
-      .first()
-      .scrollIntoView()
-      .should(check);
+    cy.xpath('//*[text()="' + campaignName + '"]').should(check);
   }
 
   clickStatusArchived() {
