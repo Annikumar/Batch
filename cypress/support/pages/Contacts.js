@@ -114,6 +114,12 @@ const day = '.day';
 const saveBtn = '//button[contains(text(),"Save")]';
 const scheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';
+const notes = "//button[text()='Notes']";
+const addNewNotes = "//button[text()='Add New Note']";
+const notesTextBox = '.ProseMirror';
+const AddedNote = '.comment-item-body';
+const notesWindow = '.modal-content';
+const notesBullets = 'svg[data-icon="list-ul"]';
 const fieldsEditBtn = (fieldName) =>
   `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//*[name()="svg"]`;
 const phoneEditBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"contact__custom-input__edit")]/*[name()="svg"]`;
@@ -658,5 +664,29 @@ export default class Contacts {
 
   clickCloseBtn() {
     cy.xpath(closeBtn).click({ force: true });
+  }
+
+  clickNotes() {
+    cy.xpath(notes).click();
+  }
+
+  clickAddNewNotes() {
+    cy.xpath(addNewNotes).click();
+  }
+
+  enterNotes() {
+    cy.get(notesTextBox).type('Testing note for Contact');
+  }
+
+  verifyAddedNote() {
+    cy.get(AddedNote).should('be.visible');
+  }
+
+  verifyNotesWindowNotVisible() {
+    cy.get(notesWindow).should('not.exist');
+  }
+
+  clickNotesBullets() {
+    cy.get(notesBullets).click();
   }
 }
