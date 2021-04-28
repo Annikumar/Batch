@@ -98,7 +98,7 @@ describe('Registration', () => {
       Cypress.env('Coupon')
     );
     register.clickAgreeCheckbox();
-    // register.clickSubscribeBtn();
-    // login.verifySuccessfullLogin();
+    register.clickSubscribeBtn();
+    login.verifySuccessfullLogin();
   });
 });
