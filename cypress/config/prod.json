@@ -2,6 +2,13 @@
   "baseUrl": "https://app.batchdialer.com",
   "env": {
     "username": "anil.kumar+1@fleekitsolutions.com",
-    "password": "Fleek@2016"
+    "password": "Fleek@2016",
+    "CardName": "Aaron Johnson",
+    "CardNumber": "370021456584257",
+    "ExpiryDate": "03/23",
+    "CVC": "2410",
+    "Country": "United States",
+    "BillingZip": "85326",
+    "Coupon": "QA999"
   }
 }

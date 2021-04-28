@@ -46,6 +46,10 @@ const allGroupsDropdown =
 const heatRangePicker = '.reports-heat__range-picker';
 const rangeSelectRadioBtn = (range) =>
   `//label[@class="radio_cstm"][text()="${range}"]//span[@class="checkmark"]`;
+const dashboardElementsBox = (elementName) =>
+  `//div[text()="${elementName}"]/ancestor::div[contains(@class,"col")]`;
+const dashboardGraphElements = (elementName) =>
+  `//span[text()="${elementName}"]/ancestor::div[contains(@class,"col")]`;
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -254,6 +258,18 @@ export default class Suprevisor {
   verifyRangeSelectRadioBtns(range) {
     for (let i = 0; i < range.length; i++) {
       cy.xpath(rangeSelectRadioBtn(range[i])).should('be.visible');
+    }
+  }
+
+  verifyDashboardElementsBox(elementsName) {
+    for (let i = 0; i < elementsName.length; i++) {
+      cy.xpath(dashboardElementsBox(elementsName[i])).should('be.visible');
+    }
+  }
+
+  verifyDashboardGraphElementsBox(elementsName) {
+    for (let i = 0; i < elementsName.length; i++) {
+      cy.xpath(dashboardGraphElements(elementsName[i])).should('be.visible');
     }
   }
 }

@@ -24,11 +24,11 @@ describe('Login Flow', () => {
   });
 
   it('Login with Incorrect Credentials', () => {
-    login.enterEmailtoSignin('test@email.com');
+    login.enterEmailtoSignin('test2ing@email.com');
     login.enterPasswordToSignin('Fleek@2016');
     login.clickTermsCheckBox();
     login.clickSigninButton();
-    login.verifyErrorMessage('User test@email.com not found');
+    login.verifyErrorMessage('User test2ing@email.com not found');
   });
 
   it('Verify the Forget Password Button', () => {

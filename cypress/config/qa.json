@@ -2,6 +2,12 @@
   "baseUrl": "https://qa.int.batchdialer.com",
   "env": {
     "username": "testing01@email.com",
-    "password": "Fleek@2016"
+    "password": "Fleek@2016",
+    "CardName": "Testing",
+    "CardNumber": "5200828282828210",
+    "ExpiryDate": "12/25",
+    "CVC": "656",
+    "Country": "United States",
+    "BillingZip": "85326"
   }
 }

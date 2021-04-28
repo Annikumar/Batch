@@ -50,12 +50,3 @@ Cypress.on('test:after:run', (test, runnable) => {
     addContext({ test }, imageUrl);
   }
 });
-
-// cy.readFile("cypress/fixtures/constants.json", (err, data) => {
-//   if (err) {
-//     return console.error(err);
-//   }
-// }).then((data) => {
-//   data.randNum = randNum;
-//   cy.writeFile("cypress/fixtures/constants.json", JSON.stringify(data));
-// });

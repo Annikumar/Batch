@@ -25,6 +25,32 @@ describe('SuperVisor Flow', () => {
     cy.Login(testData.SupervisorEmail, testData.password);
   });
 
+  it('Verify the Dashboard Elements', () => {
+    suprevisor.verifyDashboardElementsBox([
+      'Average Call Duration',
+      'Average Wait Time',
+      'Average Abandon Time',
+      'Average Calls Per Agent Daily',
+      'Active Campaigns',
+      'Active agents',
+      'Active Numbers',
+      'Total DNC',
+      'Total Calls',
+      'Total Connects',
+      'Leads Generated',
+      'Average Agent Wait Time',
+    ]);
+    suprevisor.verifyDashboardGraphElementsBox([
+      'Calls Summary',
+      'Responsiveness',
+      'Agents',
+      'Total Calls',
+      'Call Results',
+      'Calls Locations',
+      'Average Call Duration',
+    ]);
+  });
+
   it('Verify View Button Functionality for Contacts', () => {
     suprevisor.clickingOnContactOption();
     cy.wait(3000);

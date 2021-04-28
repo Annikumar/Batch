@@ -1,14 +1,18 @@
+import Login from '../support/pages/Login';
 import Register from '../support/pages/Register';
 
 const register = new Register();
+const login = new Login();
 let fixtureData;
+let testData;
+const randomNumber = Math.floor(Math.random() * 100000);
 describe('Registration', () => {
   beforeEach(() => {
-    cy.fixture('constants')
-      .then((data) => (fixtureData = data))
-      .then(() => {
-        cy.visit(fixtureData.url, { failOnStatusCode: false });
-      });
+    cy.fixture('constants').then((data) => (fixtureData = data));
+    cy.visit('/');
+    cy.readFile('cypress/fixtures/testData.json').then(
+      (data) => (testData = data)
+    );
     // Cypress.Cookies.defaults({
     //   preserve: (cookies) => {
     //     return true;
@@ -16,9 +20,9 @@ describe('Registration', () => {
     // });
   });
 
-  //   after(() => {
-  //     cy.Logout();
-  //   });
+  after(() => {
+    cy.Logout();
+  });
 
   it('Verifies Required Fields', () => {
     register.clickSignUpBtn();
@@ -37,7 +41,7 @@ describe('Registration', () => {
     register.enterCompanyName('Fleek+5');
     register.selectIndustry('Other');
     register.enterPhoneNumber('9999999');
-    register.enterEmail('test@email.com');
+    register.enterEmail('test+' + randomNumber + '@email.com');
     register.enterPassword('Fleek@2016');
     register.enterConfirmPassword('Fleek@2016');
     register.clickContinueToPlanBtn();
@@ -62,7 +66,7 @@ describe('Registration', () => {
     register.clickSignUpBtn();
     register.enterFirstName('Demo');
     register.enterLastName('testing');
-    register.enterCompanyName('Fleek+5');
+    register.enterCompanyName('Fleek+' + randomNumber + '');
     register.selectIndustry('Other');
     register.enterPhoneNumber('9999999999');
     register.enterEmail('anil.kumar+1@fleekitsolutions.com');
@@ -76,13 +80,25 @@ describe('Registration', () => {
     register.clickSignUpBtn();
     register.enterFirstName('Demo');
     register.enterLastName('testing');
-    register.enterCompanyName('Fleek+5');
+    register.enterCompanyName('Fleek+' + randomNumber + '');
     register.selectIndustry('Other');
     register.enterPhoneNumber('9999999999');
-    register.enterEmail('test@email.com');
+    register.enterEmail('testing+' + randomNumber + '@test.com');
     register.enterPassword('Fleek@2016');
     register.enterConfirmPassword('Fleek@2016');
     register.clickContinueToPlanBtn();
     register.choosePlan('Single Line Dialer'); //Multi-Line Dialer
+    register.enterCardDetailsForSignUp(
+      Cypress.env('CardName'),
+      Cypress.env('CardNumber'),
+      Cypress.env('ExpiryDate'),
+      Cypress.env('CVC'),
+      Cypress.env('Country'),
+      Cypress.env('BillingZip'),
+      Cypress.env('Coupon')
+    );
+    register.clickAgreeCheckbox();
+    // register.clickSubscribeBtn();
+    // login.verifySuccessfullLogin();
   });
 });
