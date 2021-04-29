@@ -22,8 +22,8 @@ describe('Agent Profile', function () {
   });
 
   after(() => {
-  agent.selectAgentStatus('Offline');
-   cy.Logout();
+    agent.selectAgentStatus('Offline');
+    cy.Logout();
   });
 
   it('Agent Should Login Successfully', () => {
@@ -78,9 +78,15 @@ describe('Agent Profile', function () {
     agent.verifyCallResultWindow();
     agent.selectCallResult('Call Back');
     agent.clickContinueBtn();
-    cy.reload();
     agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    agent.clickingOnContactOption();
     cy.wait(2000);
+    agent.clickRecentContact();
+    cy.wait(2000);
+    agent.clickDashboardMenu();
+    cy.wait(1000);
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
       agent.verifyTotalCallsCount(data.TotalCallsCount);
     });
@@ -271,7 +277,7 @@ describe('Agent Profile', function () {
   it('Verify Table In Status Table Data should be visible', () => {
     agent.verifyTableInStatusTableData();
   });
-  it('Verify Elements On Contact Page', ()=> {
+  it('Verify Elements On Contact Page', () => {
     agent.clickOnContactButton();
     agent.verifySearchBox();
     agent.checkRoundAndCheckBtns();
@@ -292,15 +298,14 @@ describe('Agent Profile', function () {
       'Lists',
       'Created',
     ]);
-    
   });
-  it('Verify Refersh Button On Contact Page Table Header', ()=>{
+  it('Verify Refersh Button On Contact Page Table Header', () => {
     agent.verifyRefreshBtn();
   });
-  it('Verify All List Button On Contact Page Table', () =>{
+  it('Verify All List Button On Contact Page Table', () => {
     agent.verifyListButton();
   });
-  it('Verify The Elements On Campaign Page', () =>{
+  it('Verify The Elements On Campaign Page', () => {
     agent.clickCampaignMenu();
     agent.verifyEquityBox([
       'Active Campaigns',
@@ -311,7 +316,6 @@ describe('Agent Profile', function () {
     agent.verifySearchBoxOnCampaign();
     agent.veriffyStatusBtn();
     agent.verifyAgentBtn();
-    
   });
   it('Verify The Table On Campaign Table Header Element', () => {
     agent.verfyCampaignTableHeader([
@@ -330,14 +334,11 @@ describe('Agent Profile', function () {
       'DNR',
       'Created',
     ]);
-  })
+  });
   it('Verify The Elements On The Page Of View Contact On Contact Page', () => {
     agent.clickingOnContactOption();
     agent.clickContactName();
-    agent.vierifyTheHeaderOfViewContact([
-      'Address',
-      'Phone',
-    ]);
+    agent.vierifyTheHeaderOfViewContact(['Address', 'Phone']);
     agent.verifyContactViewBtn();
     agent.verifyZillowBtn();
     agent.verifyGoogleMapsBtn();
@@ -348,7 +349,7 @@ describe('Agent Profile', function () {
     agent.verifyCampaignBtn();
     agent.verifyNotesBtn();
   });
-  it('Verify The Elements On Edit Form Of View Contact', () =>{
+  it('Verify The Elements On Edit Form Of View Contact', () => {
     agent.verifyEdiitFormOnViewContact([
       'First name',
       'Last name',
@@ -374,7 +375,7 @@ describe('Agent Profile', function () {
   });
   it('Verify Activities Page On View Contact Page', () => {
     agent.clickOnactivitiesBtn();
-    agent.verifyActivitiesPage("Recent Activities");
+    agent.verifyActivitiesPage('Recent Activities');
   });
 
   it('Verify The Campaign Page On View Contact Of Contacts', () => {
@@ -385,8 +386,7 @@ describe('Agent Profile', function () {
       'Agent',
       'Disposition',
       'Date',
-
-    ]);    
+    ]);
   });
   it('Verify Note Page Is Opening On the View Contact', () => {
     agent.clickOnNotesBtnOnViewContact();
@@ -410,7 +410,7 @@ describe('Agent Profile', function () {
       'Timezone',
       'Profile Photo',
       'Password',
-    ]);    
+    ]);
   });
   it('Verify The Elements On Agent Profile', () => {
     agent.verifyAgentFirstNameInputBox();
@@ -419,7 +419,7 @@ describe('Agent Profile', function () {
     agent.verifyAgentAddressInputBox();
     agent.verifyAgentCityInputBox();
     agent.verifyAgentStateDropDown();
-    agent.verifyAgentZipCodeInputBox()
+    agent.verifyAgentZipCodeInputBox();
     agent.verifyAgentMobileNumberInputBox();
     agent.verifyAgentLandLineNumberInputBox();
     agent.verifyAgentTimeZoneDropDown();
@@ -432,7 +432,6 @@ describe('Agent Profile', function () {
 
     agent.verifyTesxtOnChangeCampaignPage('Start Calling');
     agent.verifyConfirmBtnOnChangeCamp();
-    
   });
   it('Verify The Header Of Calender', () => {
     agent.openCalender();
@@ -445,7 +444,6 @@ describe('Agent Profile', function () {
       'Thursday',
       'Friday',
       'Saturday',
-
     ]);
   });
   it('Verify Elements Of Calendar On Dashboard', () => {
@@ -469,9 +467,9 @@ describe('Agent Profile', function () {
       'Thu',
       'Fri',
       'Sat',
-      'Sun',      
+      'Sun',
     ]);
-    agent. verifyMonthChangeBnts();
+    agent.verifyMonthChangeBnts();
     agent.verifyMonthYearStatusBar();
   });
   it('Verify The Summary Of Agent In Time In Status Of Recent Contacts', () => {
@@ -493,8 +491,6 @@ describe('Agent Profile', function () {
       'Auto Pause',
       'PrepWork',
       'After Call',
-
     ]);
   });
 });
-

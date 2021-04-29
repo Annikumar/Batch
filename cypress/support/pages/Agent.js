@@ -62,74 +62,90 @@ const TISExport = "//button[text()='Export']";
 const TISTableHeader = '.report-agents__table thead';
 const TISTableData = '.reports-agents__agent-row';
 const clickContact = "[viewBox='0 0 45 45']";
-const searchBoxOnContact = "[placeholder='Search...']"
-const roundBtns = ".checkmark"
-const selectSelfMadeOnly = "//*[@id='root']/section/div/div[1]/form/div[2]/div[1]/div/label/span";
-const selectAppointmentMadeOnly = "//*[@id='root']/section/div/div[1]/form/div[2]/div[2]/div/label/span";
-const allBtn = "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[1]/span";
-const dialedBtn = "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[2]/span";
-const undialedBtn = "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[3]/span";
-const contactTable = ".table thead";
+const searchBoxOnContact = "[placeholder='Search...']";
+const roundBtns = '.checkmark';
+const selectSelfMadeOnly =
+  "//*[@id='root']/section/div/div[1]/form/div[2]/div[1]/div/label/span";
+const selectAppointmentMadeOnly =
+  "//*[@id='root']/section/div/div[1]/form/div[2]/div[2]/div/label/span";
+const allBtn =
+  "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[1]/span";
+const dialedBtn =
+  "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[2]/span";
+const undialedBtn =
+  "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[3]/span";
+const contactTable = '.table thead';
 const refreshBtn = "[title='Refresh']";
-const allListBtn = "//*[@id='root']/section/div/div[1]/form/div[1]/div[4]/div/div";
-const equityBox = ".equity_box";
+const allListBtn =
+  "//*[@id='root']/section/div/div[1]/form/div[1]/div[4]/div/div";
+const equityBox = '.equity_box';
 const statusBtn = "[title='Status']";
 const agentBtn = "[title='Agent']";
-const campaignTableHeader = ".table thead";
-const viewContactHeader = ".contact-view-address-bar";
+const campaignTableHeader = '.table thead';
+const viewContactHeader = '.contact-view-address-bar';
 const contactNameImg = "[src='/img/contact-details.svg']";
-const scoreImg = ".score-small-value";
+const scoreImg = '.score-small-value';
 const callsInfo = "[alt='Calls']";
 const voiceMailInfo = "[alt='Voicemail']";
 const leadInfoBtn = ".btn-primary[type='button']";
-const propertyDetailsBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[2]";
-const activitiesBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[3]";
-const campaignsBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[4]";
-const notesBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[5]";
-const editFormOnViewContact = ".contact-field";
-const saveBtn = ".contact__save-btn";
-const contactCalengerViewBtn = ".contact-view__calendar-btn";
+const propertyDetailsBtn =
+  "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[2]";
+const activitiesBtn =
+  "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[3]";
+const campaignsBtn =
+  "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[4]";
+const editFormOnViewContact = '.contact-field';
+// const saveBtn = '.contact__save-btn';
+const contactCalengerViewBtn = '.contact-view__calendar-btn';
 const gooleMapsBtn = "[alt='Google Maps']";
 const zillowBtn = "[alt='Zillow']";
-const scriptBody = ".card-body";
-const scriptMinimizeBtn = ".script__hide-btn";
-const agentProfileDropDown = ".profile_drop";
+const scriptBody = '.card-body';
+const scriptMinimizeBtn = '.script__hide-btn';
+const agentProfileDropDown = '.profile_drop';
 const agentProfile = "[href='/profile/']";
-const agentProfilepage = ".profile-content";
+const agentProfilepage = '.profile-content';
 const agentFirstName = "[name='firstname']";
 const agentLastName = "[name='lastname']";
 const agentEmail = "[name='email']";
 const agentAddress = "[name='address']";
 const agentCity = "[name='city']";
-const agentStateDropDown = "//*[@id='root']/section/div/div/div[1]/div[3]/div[3]/div/div";
+const agentStateDropDown =
+  "//*[@id='root']/section/div/div/div[1]/div[3]/div[3]/div/div";
 const agentZipCodeInputBox = "[name='zip']";
 const agentMobileNumber = "[name='phone']";
 const agentLandLineNumber = "[name='phone2']";
 const agentTimeZone = "[title='(UTC-05:00) Eastern Time']";
-const agentProfilePicChangeBtn = "//*[@id='root']/section/div/div/div[1]/div[5]/div/div/button";
-const agentPasswordChangeBtn = "//*[@id='root']/section/div/div/div[1]/div[6]/div[1]/button";
-const changeCampaignBtn = "//*[@id='navbarSupportedContent']/ul/li[6]/div/div/a[1]";
-const changeCampaignBody = ".modal-content";
+const agentProfilePicChangeBtn =
+  "//*[@id='root']/section/div/div/div[1]/div[5]/div/div/button";
+const agentPasswordChangeBtn =
+  "//*[@id='root']/section/div/div/div[1]/div[6]/div[1]/button";
+const changeCampaignBtn =
+  "//*[@id='navbarSupportedContent']/ul/li[6]/div/div/a[1]";
+const changeCampaignBody = '.modal-content';
 const confirmBtnOnChangeCamp = "//button[contains(text(),'Confirm')]";
 const calenderBtn = ".nav-link[href='/tasks/']";
 const dateChangeBar = "//*[@id='root']/section/div/div/div[1]/div[1]/span[2]";
-const verifyCalaenderDays = ".titles";
+const verifyCalaenderDays = '.titles';
 const DashboardBtn = "//*[@id='root']/div[1]/div[2]/ul/li[1]/a/span";
-const calenderOnDashBoard = "//div[@class='fakeinput inverted fakeinput__overflow']";
-const calenderSideBar = ".links";
+const calenderOnDashBoard =
+  "//div[@class='fakeinput inverted fakeinput__overflow']";
+const calenderSideBar = '.links';
 const calenderFromDateToDate = "[placeholder='MM/DD/YYYY']";
-const daysOfCalender = ".DayPicker-WeekdaysRow";
-const monthChangeBnts = "//*[@id='root']/section/div/div/div[1]/div[2]/div/div/div/div/div[2]/div[2]/div/div/div/div/form/div/img";
+const daysOfCalender = '.DayPicker-WeekdaysRow';
+const monthChangeBnts =
+  "//*[@id='root']/section/div/div/div[1]/div[2]/div/div/div/div/div[2]/div[2]/div/div/div/div/form/div/img";
 const monthYearStatusBar = '.daypicker__month-select';
 const agentDetailsPlusBtn = "[data-icon='plus']";
-const agentCallDetails = ".reports-agents__summary";
-const campaignBtnOnViewContact = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[4]";
-const viewContactCampaignTableHeader = ".table thead";
-const notesBtnOnViewContact = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[5]";
-const addNewNoteBtn = "//button[text()='Add New Note']";
-const addNewNotePage = ".modal-content";
+const agentCallDetails = '.reports-agents__summary';
+const campaignBtnOnViewContact =
+  "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[4]";
+const viewContactCampaignTableHeader = '.table thead';
+const notesBtnOnViewContact =
+  "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[5]";
+// const addNewNoteBtn = "//button[text()='Add New Note']";
+const addNewNotePage = '.modal-content';
 const addNoteCloseBtn = "//button[contains(text(),' Close')]";
-const activitiesPage = ".userSedit";
+const activitiesPage = '.userSedit';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -370,28 +386,26 @@ export default class Agent {
     cy.get(TISTableData).should('be.visible');
   }
   clickOnContactButton() {
-    cy.get(clickContact).click()
+    cy.get(clickContact).click();
   }
   verifySearchBox() {
     cy.get(searchBoxOnContact).should('be.visible');
   }
   checkRoundAndCheckBtns() {
     cy.get(roundBtns).click({ multiple: true }).should('be.visible');
-       
   }
   clickOnSelfMadeButton() {
     cy.xpath(selectSelfMadeOnly).click();
-
   }
-  clickOnAppointmentMadeOnlyBtn(){
-    cy.xpath(selectAppointmentMadeOnly).click(); 
+  clickOnAppointmentMadeOnlyBtn() {
+    cy.xpath(selectAppointmentMadeOnly).click();
   }
   selectAllRoundBtn() {
     cy.xpath(allBtn).click();
   }
   veirifyConatactTableHeader(contactHeader) {
     for (let i = 0; i < contactHeader.length; i++)
-    cy.get(contactTable).should('contain.text', contactHeader[i]);
+      cy.get(contactTable).should('contain.text', contactHeader[i]);
   }
   verifyRefreshBtn() {
     cy.get(refreshBtn).should('be.visible');
@@ -399,9 +413,9 @@ export default class Agent {
   verifyListButton() {
     cy.xpath(allListBtn).should('be.visible');
   }
-  verifyEquityBox(eqBox){
+  verifyEquityBox(eqBox) {
     for (let i = 0; i < eqBox.length; i++)
-    cy.get(equityBox).should('contain.text', eqBox[i]);
+      cy.get(equityBox).should('contain.text', eqBox[i]);
   }
   verifySearchBoxOnCampaign() {
     cy.get(searchBox).should('be.visible');
@@ -414,51 +428,51 @@ export default class Agent {
   }
   verfyCampaignTableHeader(CampHeader) {
     for (let i = 0; i < CampHeader.length; i++)
-    cy.get(campaignTableHeader).should('contain.text', CampHeader[i]);
+      cy.get(campaignTableHeader).should('contain.text', CampHeader[i]);
   }
   vierifyTheHeaderOfViewContact(headViewCon) {
-    for(let i = 0; i< headViewCon.length; i++){
+    for (let i = 0; i < headViewCon.length; i++) {
       cy.get(viewContactHeader).should('contain.text', headViewCon[i]);
     }
     cy.get(contactNameImg).should('be.visible');
-    cy.get(scoreImg).should('be.visible');  
+    cy.get(scoreImg).should('be.visible');
   }
-  verifyContactViewBtn(){
+  verifyContactViewBtn() {
     cy.get(contactCalengerViewBtn).should('be.visible');
   }
-  verifyZillowBtn(){
+  verifyZillowBtn() {
     cy.get(zillowBtn).should('be.visible');
   }
-  verifyGoogleMapsBtn(){
+  verifyGoogleMapsBtn() {
     cy.get(gooleMapsBtn).should('be.visible');
   }
-  verifyLeadInfoBtn(){
+  verifyLeadInfoBtn() {
     cy.get(leadInfoBtn).should('be.visible');
   }
-  verifyCallsInfoInHeder(){
+  verifyCallsInfoInHeder() {
     cy.get(callsInfo).should('be.visible');
   }
-  verifyVoiceMailInfo(){
+  verifyVoiceMailInfo() {
     cy.get(voiceMailInfo).should('be.visible');
   }
-  verifyPropertyDetailsBtn(){
+  verifyPropertyDetailsBtn() {
     cy.xpath(propertyDetailsBtn).should('be.visible');
   }
-  verifyActivitiesBtn(){
-   cy.xpath(activitiesBtn).should('be.visible');
+  verifyActivitiesBtn() {
+    cy.xpath(activitiesBtn).should('be.visible');
   }
-  verifyCampaignBtn(){
+  verifyCampaignBtn() {
     cy.xpath(campaignsBtn).should('be.visible');
   }
   verifyNotesBtn() {
     cy.xpath(notesBtn).should('be.visible');
   }
-  verifyEdiitFormOnViewContact(editForm){
-    for( let i = 0; i < editForm.length; i++) {
+  verifyEdiitFormOnViewContact(editForm) {
+    for (let i = 0; i < editForm.length; i++) {
       cy.get(editFormOnViewContact).should('contain.text', editForm[i]);
     }
   }
-  verifySaveBtn() { 
+  verifySaveBtn() {
     cy.get(saveBtn).should('be.visible');
   }
   verifyScriptBody() {
@@ -474,8 +488,8 @@ export default class Agent {
     cy.get(agentProfile).click();
   }
   verifyElementsOfAgentProfile(profileElement) {
-    for( let i=0; i< profileElement.length; i++ ) {
-      cy.get(agentProfilepage).should('contain.text',profileElement[i]);
+    for (let i = 0; i < profileElement.length; i++) {
+      cy.get(agentProfilepage).should('contain.text', profileElement[i]);
     }
   }
   verifyAgentFirstNameInputBox() {
@@ -512,18 +526,16 @@ export default class Agent {
     cy.xpath(agentProfilePicChangeBtn).should('be.visible');
   }
   verifyAgentPasswordChangeBtn() {
-    cy.xpath(agentPasswordChangeBtn).should('be.visible')
+    cy.xpath(agentPasswordChangeBtn).should('be.visible');
   }
   clickOnChangeCampaignBtn() {
-    cy.get(".dropdown-item").contains('Change Campaign').click();
+    cy.get('.dropdown-item').contains('Change Campaign').click();
   }
   verifyTesxtOnChangeCampaignPage(campText) {
-    cy.get(changeCampaignBody).should('contain.text',campText);
-    
+    cy.get(changeCampaignBody).should('contain.text', campText);
   }
   verifyConfirmBtnOnChangeCamp() {
     cy.xpath(confirmBtnOnChangeCamp).should('be.visible').click();
-    
   }
   openCalender() {
     cy.get(calenderBtn).click();
@@ -532,9 +544,9 @@ export default class Agent {
     cy.xpath(dateChangeBar).should('be.visible');
   }
   verifyDaysOfcalender(days) {
-    for( let i = 0; i < days.length; i++) {
+    for (let i = 0; i < days.length; i++) {
       cy.get(verifyCalaenderDays).should('contain.text', days[i]);
-    }    
+    }
   }
   clickOnDashboardBtn() {
     cy.xpath(DashboardBtn).click();
@@ -543,17 +555,17 @@ export default class Agent {
     cy.xpath(calenderOnDashBoard).should('be.visible').click();
   }
   verifyCalenderSideBar(sideBar) {
-    for( let i=0; i<sideBar.length; i++){
-      cy.get(calenderSideBar).should('be.visible',sideBar[i]);
-    }    
+    for (let i = 0; i < sideBar.length; i++) {
+      cy.get(calenderSideBar).should('be.visible', sideBar[i]);
+    }
   }
   verifyCalenderFromDateToDate() {
     cy.get(calenderFromDateToDate).should('be.visible');
   }
   verifyDaysOfCalender(days) {
-    for(let i = 0; i < days.length; i++){
-      cy.get(daysOfCalender).should('contain.text',days[i]);
-    }    
+    for (let i = 0; i < days.length; i++) {
+      cy.get(daysOfCalender).should('contain.text', days[i]);
+    }
   }
   verifyMonthChangeBnts() {
     cy.xpath(monthChangeBnts).should('be.visible');
@@ -563,17 +575,20 @@ export default class Agent {
   }
   clickOnAgentDetailsPlusBtn(agent_Details) {
     cy.get(agentDetailsPlusBtn).click();
-    for(let i=0; i < agent_Details.length; i++){
-      cy.get(agentCallDetails).should('contain.text',agent_Details[i]);
-    }    
+    for (let i = 0; i < agent_Details.length; i++) {
+      cy.get(agentCallDetails).should('contain.text', agent_Details[i]);
+    }
   }
   clickOnCampaignBtnOnViewContact() {
     cy.xpath(campaignBtnOnViewContact).click();
   }
   verifyViewContactCampaignTableHeader(headerElements) {
-    for(let i = 0; i < headerElements.length; i++ ){
-      cy.get(viewContactCampaignTableHeader).should('contain.text',headerElements[i]);
-    }    
+    for (let i = 0; i < headerElements.length; i++) {
+      cy.get(viewContactCampaignTableHeader).should(
+        'contain.text',
+        headerElements[i]
+      );
+    }
   }
   clickOnNotesBtnOnViewContact() {
     cy.xpath(notesBtnOnViewContact).click();
@@ -581,18 +596,20 @@ export default class Agent {
   clickOnAddNewNoteBtn() {
     cy.xpath(addNewNoteBtn).click();
   }
-verifyAddNewNotePage() {
-  cy.get(addNewNotePage).should('be.visible').should('contain.text','New Note');
+  verifyAddNewNotePage() {
+    cy.get(addNewNotePage)
+      .should('be.visible')
+      .should('contain.text', 'New Note');
   }
-clickOnAddNoteCloseBtn() {
-  cy.xpath(addNoteCloseBtn).click({ force: true });
-}
-clickOnactivitiesBtn() {
-  cy.xpath(activitiesBtn).click();
-}
-verifyActivitiesPage(activityText) {
-  cy.get(activitiesPage).should('contain.text',activityText);
-}
+  clickOnAddNoteCloseBtn() {
+    cy.xpath(addNoteCloseBtn).click({ force: true });
+  }
+  clickOnactivitiesBtn() {
+    cy.xpath(activitiesBtn).click();
+  }
+  verifyActivitiesPage(activityText) {
+    cy.get(activitiesPage).should('contain.text', activityText);
+  }
   verifyActiveCampaignCount() {
     cy.xpath(activeCampaignCount).then((el) => {
       expect(parseInt(el.text().trim())).to.equal(1);
