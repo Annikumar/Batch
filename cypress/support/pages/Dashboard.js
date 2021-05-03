@@ -158,6 +158,9 @@ const Agent = (user) => "//span[text()='" + user + "']";
 const dashboardName = '.name';
 const backToAdmin = '.nav-item a[href*="logout"]';
 const homeButton = '.breadcrumb-item .active';
+const profilePicture = '.avatar-edit input';
+const crop = "svg[data-icon='save']";
+const profileSaved = "//div[text()='Profile Saved']";
 
 export default class Dashboard {
   clickDashboard() {
@@ -1034,5 +1037,21 @@ export default class Dashboard {
   }
   verifyDashboardCalandar() {
     cy.get(DashboardCalender).should('be.visible');
+  }
+
+  addProfilePicture() {
+    cy.get(profilePicture).attachFile('tree.jpg');
+  }
+
+  clickCrop() {
+    cy.get(crop).click();
+  }
+
+  VerifyProfilePicture() {
+    cy.xpath(profileSaved).should('be.visible');
+  }
+
+  addProfilePictureSecond() {
+    cy.get(profilePicture).attachFile('stock-photo.jpg');
   }
 }

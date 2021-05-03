@@ -513,4 +513,21 @@ describe('Dashboard Elements', function () {
     Dash.clickHomeButton();
     Dash.verifyDashboardCalandar();
   });
+
+  it.skip('Verify User is able to add profile picture', () => {
+    Dash.clickDashboard();
+    Dash.clickUserProfile();
+    Dash.clickProfile();
+    Dash.addProfilePicture();
+    Dash.clickCrop();
+    Dash.clickSaveBtn();
+    Dash.VerifyProfilePicture();
+  });
+
+  it.skip('Verify User is able to change profile Picture', () => {
+    Dash.addProfilePictureSecond();
+    Dash.clickCrop();
+    Dash.clickSaveBtn();
+    Dash.VerifyProfilePicture();
+  });
 });

@@ -85,7 +85,7 @@ const leadInfoBtn = ".btn-primary[type='button']";
 const propertyDetailsBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[2]";
 const activitiesBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[3]";
 const campaignsBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[4]";
-const notesBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[5]";
+//const notesBtn = "//*[@id='root']/section/div/div/div/div[2]/div[1]/div/div/div[1]/button[5]";
 const editFormOnViewContact = ".contact-field";
 const saveBtn = ".contact__save-btn";
 const contactCalengerViewBtn = ".contact-view__calendar-btn";
