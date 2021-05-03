@@ -28,7 +28,7 @@ describe('Add Contact flow', () => {
   //   cy.Logout();
   // });
 
-  it.only('Should Login', () => {
+  it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
@@ -329,7 +329,7 @@ describe('Add Contact flow', () => {
     addCont.clickCloseBtn();
   });
 
-  it.only('Verify Cancel button should close the notes window', () => {
+  it('Verify Cancel button should close the notes window', () => {
     addCont.clickingOnContactOption();
     addCont.clickContactName('random Contact');
     addCont.clickNotes();
@@ -338,7 +338,7 @@ describe('Add Contact flow', () => {
     addCont.verifyNotesWindowNotVisible();
   });
 
-  it.only('Verify Admin is able to add notes in Contacts', () => {
+  it('Verify Admin is able to add notes in Contacts', () => {
     addCont.clickingOnContactOption();
     addCont.clickContactName('random Contact');
     addCont.clickNotes();

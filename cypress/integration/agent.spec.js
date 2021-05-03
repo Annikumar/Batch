@@ -140,7 +140,7 @@ describe('Agent Profile', function () {
     agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();
-    cy.wait(1000);
+    cy.wait(2000);
     agent.clickEndCallBtn();
     agent.verifyCallResultWindow();
     agent.selectCallResult('Call Back');
