@@ -49,9 +49,9 @@ describe('Login Successfully and Add User', () => {
     addUser.clickingOnUserOption();
     cy.wait(3000);
     addUser.clickAddNewUserButton();
+    addUser.clickAddAgent();
     addUser.enterFirstName(fixtureData.userFirstname);
     addUser.enterLastName(fixtureData.userLastname + randNum.toString());
-    addUser.selectROle('Agent');
     addUser.enterEmail(
       fixtureData.userEmail.replace(
         'automation',
@@ -132,8 +132,9 @@ describe('Login Successfully and Add User', () => {
     ]);
   });
 
-  it('verify New user Page Element', function () {
+  it('verify Add New Agent Page Element', function () {
     addUser.clickAddNewUserButton();
+    addUser.clickAddAgent();
     addUser.verifyFirstName();
     addUser.verifyLastName();
     addUser.verifyRoleDropdownNewUser();
@@ -141,6 +142,21 @@ describe('Login Successfully and Add User', () => {
     addUser.verifyPasswordField();
     addUser.verifyPhoneNumber();
     addUser.verifyAssignToGroup();
+    addUser.verifyCancelButton();
+    addUser.verifySaveButton();
+    addUser.verifySecondPhoneField();
+    addUser.clickCancelButton();
+  });
+
+  it('verify Add New Supervisor Page Element', function () {
+    addUser.clickAddNewUserButton();
+    addUser.clickAddSupervisor();
+    addUser.verifyFirstName();
+    addUser.verifyLastName();
+    addUser.verifyRoleDropdownNewUser();
+    addUser.verifyEmailField();
+    addUser.verifyPasswordField();
+    addUser.verifyPhoneNumber();
     addUser.verifyCancelButton();
     addUser.verifySaveButton();
     addUser.verifySecondPhoneField();
@@ -203,9 +219,9 @@ describe('Login Successfully and Add User', () => {
     addUser.clickingOnUserOption();
     cy.wait(3000);
     addUser.clickAddNewUserButton();
+    addUser.clickAddAgent();
     addUser.enterFirstName(fixtureData.userFirstname);
     addUser.enterLastName(fixtureData.userLastname + randNum.toString());
-    addUser.selectROle('Agent');
     addUser.enterEmail(
       fixtureData.userEmail.replace(
         'automation',
