@@ -252,6 +252,7 @@ describe('Login Successfully and Add User', () => {
       fixtureData.userLastname + randNum.toString()
     );
     addUser.clickAddNewUserButton();
+    addUser.clickAddAgent();
     addUser.clickSaveButton();
     addUser.verifyFieldValidation([
       'Enter First Name',

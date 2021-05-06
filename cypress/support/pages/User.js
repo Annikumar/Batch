@@ -40,7 +40,7 @@ const agentGroupRemoveBtn = (group) =>
   "//tr[td[text()='" + group + "']]//img[contains(@src,'remove')]";
 const addAgentGroup =
   "//div[contains(@class,'card-title')][.='Agent Groups']//img[contains(@src,'add')]";
-const addAgent = 'a[data-key="agent"]';
+const addAgent = 'div.show a.dropdown-item';
 const addSupervisor = 'a[data-key="supervisor"]';
 const agentCount = '.usage-stats-counter strong';
 const newUserWindow = '.modal-content';
@@ -56,7 +56,14 @@ export default class User {
   }
 
   clickAddAgent() {
-    cy.get(addAgent).click();
+    cy.get(addAgent).then((user) => {
+      for (let i = 0; i < user.length; i++) {
+        if (user[i].textContent.trim() === 'Agent') {
+          user[i].click();
+          break;
+        }
+      }
+    });
   }
 
   clickAddSupervisor() {
