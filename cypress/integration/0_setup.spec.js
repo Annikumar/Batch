@@ -53,7 +53,19 @@ describe('Setup Account for Testing', () => {
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
       setup.createCampaign(
         testData.campaign,
-        ['Answering Machine', 'Busy', 'Call Back'],
+        [
+          'Abandoned',
+          'Answering Machine',
+          'Busy',
+          'Call Back',
+          'Disconnected Number',
+          'Do Not Call',
+          'No Answer',
+          'Not Interested',
+          'Successful sale',
+          'Unknown',
+          'Voicemail',
+        ],
         data.Number,
         [data.AdminName, data.agent]
       );

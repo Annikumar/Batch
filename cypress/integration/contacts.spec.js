@@ -322,7 +322,7 @@ describe('Add Contact flow', () => {
     addCont.enterSearch(testData.Contact);
     addCont.clickContactName(testData.Contact);
     addCont.clickFollowUpCall();
-    addCont.selectDateForFollowUpCall('10,June 2021');
+    addCont.selectDateForFollowUpCall('15,June 2021');
     addCont.clickSavebtn();
     cy.wait(1000);
     addCont.verifyFollowUpCall(testData.Contact);

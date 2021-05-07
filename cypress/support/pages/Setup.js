@@ -182,9 +182,9 @@ export default class Setup {
         cy.xpath(saveBtn).click();
       } else {
         user.clickAddNewUserButton();
+        user.clickAddAgent();
         user.enterFirstName(firstName);
         user.enterLastName(lastName);
-        user.selectROle('Agent');
         user.enterEmail(email);
         user.enterPassword(password);
         user.enterPhoneNumber(phone);
@@ -234,9 +234,9 @@ export default class Setup {
         cy.xpath(saveBtn).click();
       } else {
         user.clickAddNewUserButton();
+        user.clickAddSupervisor();
         user.enterFirstName(firstName);
         user.enterLastName(lastName);
-        user.selectROle('Supervisor');
         user.enterEmail(email);
         user.enterPassword(password);
         user.enterPhoneNumber(phone);

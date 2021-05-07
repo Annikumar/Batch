@@ -22,8 +22,8 @@ describe('Agent Profile', function () {
   });
 
   after(() => {
-  agent.selectAgentStatus('Offline');
-   cy.Logout();
+    agent.selectAgentStatus('Offline');
+    cy.Logout();
   });
 
   it('Agent Should Login Successfully', () => {
@@ -78,9 +78,15 @@ describe('Agent Profile', function () {
     agent.verifyCallResultWindow();
     agent.selectCallResult('Call Back');
     agent.clickContinueBtn();
-    cy.reload();
     agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    agent.clickingOnContactOption();
     cy.wait(2000);
+    agent.clickRecentContact();
+    cy.wait(2000);
+    agent.clickDashboardMenu();
+    cy.wait(1000);
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
       agent.verifyTotalCallsCount(data.TotalCallsCount);
     });
@@ -91,7 +97,7 @@ describe('Agent Profile', function () {
     agent.enterSearch(testData.Contact);
     agent.clickOnContactName(testData.Contact);
     agent.clickFollowUpCall();
-    agent.selectDateToFollowUpCall('10,May 2021');
+    agent.selectDateToFollowUpCall('10,July 2021');
     cy.wait(1000);
     agent.clickSaveButton();
     cy.wait(1000);
@@ -118,102 +124,6 @@ describe('Agent Profile', function () {
     agent.clickNotesBtn();
     agent.clickDeletNoteBtn('Hello');
     agent.verifyAddedNote('Hello', 'not.exist');
-  });
-
-  it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
-    agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
-    agent.clickContactName();
-    agent.clickPhoneNumber();
-    agent.verifySoftphoneOpen();
-  });
-
-  it('Open the Call Result Window when Agent disconnect the Call', () => {
-    agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
-    agent.clickContactName();
-    agent.clickPhoneNumber();
-    agent.clickCallBtn();
-    cy.wait(1000);
-    agent.clickEndCallBtn();
-    agent.verifyCallResultWindow();
-    agent.selectCallResult('Call Back');
-    agent.clickContinueBtn();
-  });
-
-  it('Verify the Recent Contacts Page Landing', () => {
-    agent.clickRecentContact();
-    agent.verifyRecentContactPage();
-  });
-
-  it('Verifies the Edit button functionality for Recent Contacts', () => {
-    agent.clickRecentContact();
-    agent.clickEditRecentContact();
-    agent.verifyCallResultWindow();
-  });
-
-  // Fixed Test case on 5 March accordint to BAT-750
-  it('Edit the Call Result of Recent Contacts', () => {
-    agent.clickRecentContact();
-    agent.clickEditRecentContact();
-    agent.verifyCallResultWindow();
-    agent.selectCallResult('Busy');
-    agent.clickContinueBtn();
-    cy.wait(2000);
-    agent.verifyCallResult('Busy');
-    agent.ChooseCallResult('Call Back');
-  });
-
-  it('Verifies the Call transfer Continue and Cancel Button', () => {
-    agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
-    agent.clickContactName();
-    agent.clickPhoneNumber();
-    agent.clickCallBtn();
-    agent.clickCallTransferBtn();
-    agent.verifyContinueBtn();
-    agent.verifyCancelBtn();
-    agent.clickCancelBtn();
-    agent.clickEndCallBtn();
-    agent.selectCallResult('Call Back');
-    agent.clickContinueBtn();
-    agent.ChooseCallResult('Call Back');
-  });
-
-  it.skip('Verify When Admin Assign Campaign to user it should show in agent Profile', () => {
-    cy.Login(Cypress.env('username'), Cypress.env('password'));
-    addCamp.clickCampaignMenu();
-    addCamp.clickAddNewCampaign();
-    addCamp.enableAdvancedSwitchBar();
-    cy.wait(2000);
-    addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectDialingModeOption('Predictive Dialer');
-    addCamp.selectCallerId('Individual Numbers', testData.Number);
-    addCamp.clickNextCircleArrow();
-    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
-    addCamp.clickNextCircleArrow();
-    addCamp.selectAgentsDrpdwn('Individual Agents', testData.agent);
-    // agent.selectAgent();
-    // agent.ClickAgent();
-    addCamp.clickCreateCampButton();
-    cy.Logout();
-    cy.wait(4000);
-    cy.visit('/', { failOnStatusCode: false });
-    cy.Login(testData.AgentEmail, testData.password);
-    agent.clickCampaignMenu();
-    agent.verifyCampaign(fixtureData.campaignName + randNum.toString());
-    cy.Logout();
-    cy.wait(4000);
-    cy.visit('/', { failOnStatusCode: false });
-    cy.Login(Cypress.env('username'), Cypress.env('password'));
-    addCamp.clickCampaignMenu();
-    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
-    addCamp.clickArchiveCampaignButton();
-    addCamp.handleAlertForDelete();
-    addCamp.verifyArchivedCampaign(
-      fixtureData.campaignName + randNum.toString(),
-      'not.exist'
-    );
   });
 
   it('Verify Recent Contact dropdowns should be visible', () => {
@@ -271,7 +181,7 @@ describe('Agent Profile', function () {
   it('Verify Table In Status Table Data should be visible', () => {
     agent.verifyTableInStatusTableData();
   });
-  it('Verify Elements On Contact Page', ()=> {
+  it('Verify Elements On Contact Page', () => {
     agent.clickOnContactButton();
     agent.verifySearchBox();
     agent.checkRoundAndCheckBtns();
@@ -292,15 +202,14 @@ describe('Agent Profile', function () {
       'Lists',
       'Created',
     ]);
-    
   });
-  it('Verify Refersh Button On Contact Page Table Header', ()=>{
+  it('Verify Refersh Button On Contact Page Table Header', () => {
     agent.verifyRefreshBtn();
   });
-  it('Verify All List Button On Contact Page Table', () =>{
+  it('Verify All List Button On Contact Page Table', () => {
     agent.verifyListButton();
   });
-  it('Verify The Elements On Campaign Page', () =>{
+  it('Verify The Elements On Campaign Page', () => {
     agent.clickCampaignMenu();
     agent.verifyEquityBox([
       'Active Campaigns',
@@ -311,7 +220,6 @@ describe('Agent Profile', function () {
     agent.verifySearchBoxOnCampaign();
     agent.veriffyStatusBtn();
     agent.verifyAgentBtn();
-    
   });
   it('Verify The Table On Campaign Table Header Element', () => {
     agent.verfyCampaignTableHeader([
@@ -330,14 +238,11 @@ describe('Agent Profile', function () {
       'DNR',
       'Created',
     ]);
-  })
+  });
   it('Verify The Elements On The Page Of View Contact On Contact Page', () => {
     agent.clickingOnContactOption();
     agent.clickContactName();
-    agent.vierifyTheHeaderOfViewContact([
-      'Address',
-      'Phone',
-    ]);
+    agent.vierifyTheHeaderOfViewContact(['Address', 'Phone']);
     agent.verifyContactViewBtn();
     agent.verifyZillowBtn();
     agent.verifyGoogleMapsBtn();
@@ -348,7 +253,7 @@ describe('Agent Profile', function () {
     agent.verifyCampaignBtn();
     agent.verifyNotesBtn();
   });
-  it('Verify The Elements On Edit Form Of View Contact', () =>{
+  it('Verify The Elements On Edit Form Of View Contact', () => {
     agent.verifyEdiitFormOnViewContact([
       'First name',
       'Last name',
@@ -374,7 +279,7 @@ describe('Agent Profile', function () {
   });
   it('Verify Activities Page On View Contact Page', () => {
     agent.clickOnactivitiesBtn();
-    agent.verifyActivitiesPage("Recent Activities");
+    agent.verifyActivitiesPage('Recent Activities');
   });
 
   it('Verify The Campaign Page On View Contact Of Contacts', () => {
@@ -385,8 +290,7 @@ describe('Agent Profile', function () {
       'Agent',
       'Disposition',
       'Date',
-
-    ]);    
+    ]);
   });
   it('Verify Note Page Is Opening On the View Contact', () => {
     agent.clickOnNotesBtnOnViewContact();
@@ -410,7 +314,7 @@ describe('Agent Profile', function () {
       'Timezone',
       'Profile Photo',
       'Password',
-    ]);    
+    ]);
   });
   it('Verify The Elements On Agent Profile', () => {
     agent.verifyAgentFirstNameInputBox();
@@ -419,7 +323,7 @@ describe('Agent Profile', function () {
     agent.verifyAgentAddressInputBox();
     agent.verifyAgentCityInputBox();
     agent.verifyAgentStateDropDown();
-    agent.verifyAgentZipCodeInputBox()
+    agent.verifyAgentZipCodeInputBox();
     agent.verifyAgentMobileNumberInputBox();
     agent.verifyAgentLandLineNumberInputBox();
     agent.verifyAgentTimeZoneDropDown();
@@ -432,7 +336,6 @@ describe('Agent Profile', function () {
 
     agent.verifyTesxtOnChangeCampaignPage('Start Calling');
     agent.verifyConfirmBtnOnChangeCamp();
-    
   });
   it('Verify The Header Of Calender', () => {
     agent.openCalender();
@@ -445,7 +348,6 @@ describe('Agent Profile', function () {
       'Thursday',
       'Friday',
       'Saturday',
-
     ]);
   });
   it('Verify Elements Of Calendar On Dashboard', () => {
@@ -469,9 +371,9 @@ describe('Agent Profile', function () {
       'Thu',
       'Fri',
       'Sat',
-      'Sun',      
+      'Sun',
     ]);
-    agent. verifyMonthChangeBnts();
+    agent.verifyMonthChangeBnts();
     agent.verifyMonthYearStatusBar();
   });
   it('Verify The Summary Of Agent In Time In Status Of Recent Contacts', () => {
@@ -493,8 +395,103 @@ describe('Agent Profile', function () {
       'Auto Pause',
       'PrepWork',
       'After Call',
-
     ]);
   });
-});
 
+  it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
+    agent.clickingOnContactOption();
+    // agent.enterSearch('New User');
+    agent.clickContactName();
+    agent.clickPhoneNumber();
+    agent.verifySoftphoneOpen();
+  });
+
+  it('Open the Call Result Window when Agent disconnect the Call', () => {
+    agent.clickingOnContactOption();
+    // agent.enterSearch('New User');
+    agent.clickContactName();
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    cy.wait(2000);
+    agent.clickEndCallBtn();
+    agent.verifyCallResultWindow();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
+  });
+
+  it('Verify the Recent Contacts Page Landing', () => {
+    agent.clickRecentContact();
+    agent.verifyRecentContactPage();
+  });
+
+  it('Verifies the Edit button functionality for Recent Contacts', () => {
+    agent.clickRecentContact();
+    agent.clickEditRecentContact();
+    agent.verifyCallResultWindow();
+  });
+
+  // Fixed Test case on 5 March accordint to BAT-750
+  it('Edit the Call Result of Recent Contacts', () => {
+    agent.clickRecentContact();
+    agent.clickEditRecentContact();
+    agent.verifyCallResultWindow();
+    agent.selectCallResult('Busy');
+    agent.clickContinueBtn();
+    cy.wait(2000);
+    agent.verifyCallResult('Busy');
+    agent.ChooseCallResult('Call Back');
+  });
+
+  it.skip('Verify When Admin Assign Campaign to user it should show in agent Profile', () => {
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
+    addCamp.clickCampaignMenu();
+    addCamp.clickAddNewCampaign();
+    addCamp.enableAdvancedSwitchBar();
+    cy.wait(2000);
+    addCamp.enterName(fixtureData.campaignName + randNum.toString());
+    addCamp.selectDialingModeOption('Predictive Dialer');
+    addCamp.selectCallerId('Individual Numbers', testData.Number);
+    addCamp.clickNextCircleArrow();
+    addCamp.selectCallResultsOption(['Answering Machine', 'Busy', 'Call Back']);
+    addCamp.clickNextCircleArrow();
+    addCamp.selectAgentsDrpdwn('Individual Agents', testData.agent);
+    // agent.selectAgent();
+    // agent.ClickAgent();
+    addCamp.clickCreateCampButton();
+    cy.Logout();
+    cy.wait(4000);
+    cy.visit('/', { failOnStatusCode: false });
+    cy.Login(testData.AgentEmail, testData.password);
+    agent.clickCampaignMenu();
+    agent.verifyCampaign(fixtureData.campaignName + randNum.toString());
+    cy.Logout();
+    cy.wait(4000);
+    cy.visit('/', { failOnStatusCode: false });
+    cy.Login(Cypress.env('username'), Cypress.env('password'));
+    addCamp.clickCampaignMenu();
+    addCamp.clickEditCampaign(fixtureData.campaignName + randNum.toString());
+    addCamp.clickArchiveCampaignButton();
+    addCamp.handleAlertForDelete();
+    addCamp.verifyArchivedCampaign(
+      fixtureData.campaignName + randNum.toString(),
+      'not.exist'
+    );
+  });
+
+  it('Verifies the Call transfer Continue and Cancel Button', () => {
+    agent.ChooseCallResult('Call Back');
+    agent.clickingOnContactOption();
+    // agent.enterSearch('New User');
+    agent.clickContactName();
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    agent.clickCallTransferBtn();
+    agent.verifyContinueBtn();
+    agent.verifyCancelBtn();
+    agent.clickCancelBtn();
+    agent.clickEndCallBtn();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
+    agent.ChooseCallResult('Call Back');
+  });
+});

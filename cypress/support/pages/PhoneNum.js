@@ -745,7 +745,7 @@ export default class PhoneNum {
   }
 
   clickAddToDNC() {
-    cy.xpath(addToDNC).click();
+    cy.xpath(addToDNC).click({ force: true });
   }
 
   verifyAddedDNCNumber(num) {
