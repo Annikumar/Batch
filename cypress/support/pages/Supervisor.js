@@ -218,7 +218,7 @@ export default class Suprevisor {
   }
 
   clickAgentsDetailsPlusBtn() {
-    cy.get(agentsDetailsPlusBtn).first().click();
+    cy.get(agentsDetailsPlusBtn).first().click({ force: true });
   }
 
   verifyAgentsDetails(data) {

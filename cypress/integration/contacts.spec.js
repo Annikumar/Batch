@@ -23,10 +23,10 @@ describe('Add Contact flow', () => {
     });
   });
 
-  // after(() => {
-  //   selectAgentStatus('Offline');
-  //   cy.Logout();
-  // });
+  after(() => {
+    selectAgentStatus('Offline');
+    cy.Logout();
+  });
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
@@ -322,7 +322,7 @@ describe('Add Contact flow', () => {
     addCont.enterSearch(testData.Contact);
     addCont.clickContactName(testData.Contact);
     addCont.clickFollowUpCall();
-    addCont.selectDateForFollowUpCall('15,June 2021');
+    addCont.selectDateForFollowUpCall();
     addCont.clickSavebtn();
     cy.wait(1000);
     addCont.verifyFollowUpCall(testData.Contact);

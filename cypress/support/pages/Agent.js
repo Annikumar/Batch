@@ -644,11 +644,15 @@ export default class Agent {
     cy.get(followUpCall).click();
   }
 
-  selectDateToFollowUpCall(date) {
+  selectDateToFollowUpCall() {
+    const today = new Date();
+    const date = today.getDate();
+    const Month = today.toLocaleString('default', { month: 'long' });
+    const year = today.getFullYear();
+    const monthYear = `${Month} ${year}`;
     cy.get('.modal-content').should('be.visible');
-    const [Date, monthYear] = date.split(',');
     cy.log(monthYear);
-    cy.log(Date);
+    cy.log(date);
     for (let i = 0; i < 36; i++) {
       cy.get(month).then(($month) => {
         for (let i = 0; i < $month.length; i++) {
@@ -661,9 +665,11 @@ export default class Agent {
     }
     cy.get(day).then(($day) => {
       for (let i = 0; i < $day.length; i++) {
-        if ($day[i].textContent.trim() === Date) {
-          cy.wait(2000);
-          cy.get($day[i]).click();
+        if ($day[i].textContent.trim() === date.toString()) {
+          cy.wait(1000);
+          cy.log($day[i].textContent.trim());
+          cy.log(date);
+          $day[i].click();
           break;
         }
       }

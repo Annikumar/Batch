@@ -51,47 +51,6 @@ describe('Agent Profile', function () {
     agent.verifyAccessDeniedMsg();
   });
 
-  it('Verify it open Select Campaign Window when selecting Available Status', () => {
-    agent.selectAgentStatus('Available');
-    agent.verifySelectCampaignBox();
-    agent.selectCampaign(testData.campaign);
-    agent.clickConfirmButton();
-    agent.clickCloseSoftphoneBtn();
-  });
-
-  it('Verify the Active Campaign count when Agent become available', () => {
-    agent.clickDashboardMenu();
-    cy.reload();
-    cy.wait(1000);
-    agent.verifyActiveCampaignCount();
-  });
-
-  it('Verify the Total Calls should increase when agent call a contact', () => {
-    agent.getTotalCallsCount();
-    agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
-    agent.clickContactName();
-    agent.clickPhoneNumber();
-    agent.clickCallBtn();
-    cy.wait(1000);
-    agent.clickEndCallBtn();
-    agent.verifyCallResultWindow();
-    agent.selectCallResult('Call Back');
-    agent.clickContinueBtn();
-    agent.clickDashboardMenu();
-    cy.reload();
-    cy.wait(1000);
-    agent.clickingOnContactOption();
-    cy.wait(2000);
-    agent.clickRecentContact();
-    cy.wait(2000);
-    agent.clickDashboardMenu();
-    cy.wait(1000);
-    cy.readFile('cypress/fixtures/testData.json').then((data) => {
-      agent.verifyTotalCallsCount(data.TotalCallsCount);
-    });
-  });
-
   it('Schedules Follow Up Call for a Contact', () => {
     agent.clickingOnContactOption();
     agent.enterSearch(testData.Contact);
@@ -330,13 +289,7 @@ describe('Agent Profile', function () {
     agent.verifyAgentProfilePicChangeBtn();
     agent.verifyAgentPasswordChangeBtn();
   });
-  it('Verify The Change Campaign Page Elements', () => {
-    agent.clickOnAgentProfileDropDown();
-    agent.clickOnChangeCampaignBtn();
 
-    agent.verifyTesxtOnChangeCampaignPage('Start Calling');
-    agent.verifyConfirmBtnOnChangeCamp();
-  });
   it('Verify The Header Of Calender', () => {
     agent.openCalender();
     agent.verifyDateChangeBar();
@@ -396,6 +349,29 @@ describe('Agent Profile', function () {
       'PrepWork',
       'After Call',
     ]);
+  });
+
+  it('Verify it open Select Campaign Window when selecting Available Status', () => {
+    agent.selectAgentStatus('Available');
+    agent.verifySelectCampaignBox();
+    agent.selectCampaign(testData.campaign);
+    agent.clickConfirmButton();
+    agent.clickCloseSoftphoneBtn();
+  });
+
+  it('Verify The Change Campaign Page Elements', () => {
+    agent.clickOnAgentProfileDropDown();
+    agent.clickOnChangeCampaignBtn();
+
+    agent.verifyTesxtOnChangeCampaignPage('Start Calling');
+    agent.verifyConfirmBtnOnChangeCamp();
+  });
+
+  it('Verify the Active Campaign count when Agent become available', () => {
+    agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    agent.verifyActiveCampaignCount();
   });
 
   it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
@@ -476,6 +452,33 @@ describe('Agent Profile', function () {
       fixtureData.campaignName + randNum.toString(),
       'not.exist'
     );
+  });
+
+  it('Verify the Total Calls should increase when agent call a contact', () => {
+    agent.clickDashboardMenu();
+    agent.getTotalCallsCount();
+    agent.clickingOnContactOption();
+    // agent.enterSearch('New User');
+    agent.clickContactName();
+    agent.clickPhoneNumber();
+    agent.clickCallBtn();
+    cy.wait(1000);
+    agent.clickEndCallBtn();
+    agent.verifyCallResultWindow();
+    agent.selectCallResult('Call Back');
+    agent.clickContinueBtn();
+    agent.clickDashboardMenu();
+    cy.reload();
+    cy.wait(1000);
+    agent.clickingOnContactOption();
+    cy.wait(2000);
+    agent.clickRecentContact();
+    cy.wait(2000);
+    agent.clickDashboardMenu();
+    cy.wait(1000);
+    cy.readFile('cypress/fixtures/testData.json').then((data) => {
+      agent.verifyTotalCallsCount(data.TotalCallsCount);
+    });
   });
 
   it('Verifies the Call transfer Continue and Cancel Button', () => {

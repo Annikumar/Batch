@@ -110,7 +110,7 @@ const contact = (firstName, lastName) =>
   '")]';
 const month = '.month-selector .title';
 const nextBtn = '.fa-chevron-right';
-const day = '.day';
+const day = '.day .title';
 const saveBtn = '//button[contains(text(),"Save")]';
 const scheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';
@@ -628,30 +628,38 @@ export default class Contacts {
     cy.xpath(contact(firstLastName[0], firstLastName[1])).click();
   }
 
-  selectDateForFollowUpCall(date) {
+  selectDateForFollowUpCall() {
+    const today = new Date();
+    const date = today.getDate();
+    const Month = today.toLocaleString('default', { month: 'long' });
+    const year = today.getFullYear();
+    const monthYear = `${Month} ${year}`;
     cy.get('.modal-content').should('be.visible');
-    const [Date, monthYear] = date.split(',');
     cy.log(monthYear);
-    cy.log(Date);
+    cy.log(date);
     for (let i = 0; i < 36; i++) {
       cy.get(month).then(($month) => {
         for (let i = 0; i < $month.length; i++) {
-          if ($month[0].textContent.trim() != monthYear) {
-            cy.get(nextBtn).click();
+          if ($month[i].textContent.trim() != monthYear) {
+            cy.get(nextButton).click();
             break;
           }
         }
       });
     }
-    cy.get(day).then(($day) => {
-      for (let i = 0; i < $day.length; i++) {
-        if ($day[i].textContent.trim() === Date) {
-          cy.wait(2000);
-          cy.get($day[i]).click();
-          break;
+    cy.get(day)
+      .invoke('show')
+      .then(($day) => {
+        for (let i = 0; i < $day.length; i++) {
+          if ($day[i].textContent.trim() === date.toString()) {
+            cy.wait(1000);
+            cy.log($day[i].textContent.trim());
+            cy.log(date);
+            $day[i].click();
+            break;
+          }
         }
-      }
-    });
+      });
   }
 
   clickSavebtn() {
