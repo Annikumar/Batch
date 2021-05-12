@@ -331,6 +331,7 @@ describe('Add Contact flow', () => {
 
   it('Verify Cancel button should close the notes window', () => {
     addCont.clickingOnContactOption();
+    addCont.enterSearch(testData.Contact);
     addCont.clickContactName('random Contact');
     addCont.clickNotes();
     addCont.clickAddNewNotes();
@@ -340,6 +341,7 @@ describe('Add Contact flow', () => {
 
   it('Verify Admin is able to add notes in Contacts', () => {
     addCont.clickingOnContactOption();
+    addCont.enterSearch(testData.Contact);
     addCont.clickContactName('random Contact');
     addCont.clickNotes();
     addCont.clickAddNewNotes();

@@ -69,6 +69,7 @@ const AgentScriptTableHeading = '.table thead';
 const AudioLibraryNewRecording =
   "//button[contains(text(),'Add New Recording')]";
 const AudioLibrarySearchBox = '.search-box-wrapper .search-box';
+const searchBox = '.search-box';
 const AudioLibraryTableHeading = '.recordings  thead';
 const AudioLibraryRecordings = '.recordings  tbody';
 const saveBtn = "button svg[data-icon='save']";
@@ -158,6 +159,20 @@ const Agent = (user) => "//span[text()='" + user + "']";
 const dashboardName = '.name';
 const backToAdmin = '.nav-item a[href*="logout"]';
 const homeButton = '.breadcrumb-item .active';
+const radioBtn = (btnName) =>
+  `//label[text()="${btnName}"]//span[@class="checkmark"]`;
+const addNewBtn = '//button[contains(text(),"Add New")]';
+const refreshBtn = 'span[title="Refresh"]';
+const leadItems = '.lead-item .lead-item__label';
+const leadSheetName = '.lead-edit__header .custom-input__text';
+const leadSheetNameField = '.lead-edit__header .custom-input__text input';
+const saveFieldBtn = '.custom-input__save';
+const leadItemsName = (itemName) =>
+  `//div[@class="lead-edit__list"]//span[contains(@class,"custom-input__text")][text()="${itemName}"]`;
+const leadSaveBtn = 'button[type="submit"]';
+const leadItemsNameField = '.lead-edit__list .lead-edit__custom-input input';
+const leadSheetDeleteBtn = (sheetName) =>
+  `//tr[td[text()="${sheetName}"]]//img[contains(@src,"delete")]`;
 
 export default class Dashboard {
   clickDashboard() {
@@ -196,8 +211,32 @@ export default class Dashboard {
     });
   }
 
+  verifyRefreshBtn() {
+    cy.get(refreshBtn).should('be.visible');
+  }
+
+  clickSaveFieldBtn() {
+    cy.get(saveFieldBtn).click();
+  }
+
   clickStatusButton() {
     cy.get(StatusDropDown).click();
+  }
+
+  clickLeadItemsNameField(name) {
+    cy.xpath(leadItemsName(name)).first().click();
+  }
+
+  enterLeadItemsName(name) {
+    cy.get(leadItemsNameField).first().type(name);
+  }
+
+  clickLeadSaveBtn() {
+    cy.get(leadSaveBtn).click();
+  }
+
+  clickAddNewLeadSheet() {
+    cy.xpath(addNewBtn).click();
   }
 
   selectAvailable(Status, campaign) {
@@ -218,12 +257,32 @@ export default class Dashboard {
     });
   }
 
+  verifyLeadSheetTableHeadings(heading) {
+    for (let i = 0; i < heading.length; i++) {
+      cy.get(tableHeaderElement).should('contain.text', heading[i]);
+    }
+  }
+
   clickConfirmButton() {
     cy.get('.modal-footer button').click();
   }
 
+  verifyAddNewLeadSheetBtn() {
+    cy.xpath(addNewBtn).should('be.visible');
+  }
+
   clickContinue() {
     cy.xpath(ContinueButton).click();
+  }
+
+  VerifyRadioBtn(btnName) {
+    for (let i = 0; i < btnName.length; i++) {
+      cy.xpath(radioBtn(btnName[i])).should('be.visible');
+    }
+  }
+
+  verifysearchBox() {
+    cy.get(searchBox).should('be.visible');
   }
 
   clickDialer() {
@@ -253,6 +312,18 @@ export default class Dashboard {
     cy.xpath(AnsweringMachine).click();
   }
 
+  verifyAddedLeadSheet(sheetName) {
+    cy.xpath(leadSheetDeleteBtn(sheetName)).should('be.visible');
+  }
+
+  clickDeleteLeadSheet(sheetName) {
+    cy.xpath(leadSheetDeleteBtn(sheetName)).click();
+  }
+
+  verifyDeletedLeadSheet(sheetName) {
+    cy.xpath(leadSheetDeleteBtn(sheetName)).should('not.exist');
+  }
+
   clickTaskButton() {
     cy.get(Task).click();
   }
@@ -265,12 +336,31 @@ export default class Dashboard {
     cy.get(UserProfile).click();
   }
 
+  selectLeadItem(leadItemName) {
+    cy.get(leadItems).then((lead) => {
+      for (let i = 0; i < lead.length; i++) {
+        if (lead[i].textContent.trim() === leadItemName) {
+          cy.get(lead[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
   verifyUserProfileOptions() {
     cy.get(UserProfileOptions).should('be.visible');
   }
 
   clickBilling() {
     cy.get(billing).click();
+  }
+
+  clickLeadSheetName() {
+    cy.get(leadSheetName).click();
+  }
+
+  enterLeadSheetName(name) {
+    cy.get(leadSheetNameField).type(name);
   }
 
   verifyUserSettingOptions(element) {
@@ -358,6 +448,10 @@ export default class Dashboard {
 
   clickAddressBook() {
     cy.get(UserSettingOptions).contains('Address Book').click();
+  }
+
+  clickLeadSheets() {
+    cy.get(UserSettingOptions).contains('Lead Sheets').click();
   }
 
   verifyVoicemailHeading() {

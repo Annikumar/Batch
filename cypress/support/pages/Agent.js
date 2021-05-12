@@ -39,7 +39,7 @@ const contactName = (firstName, lastname) =>
   '//span[text()="' + firstName + '" and text()="' + lastname + '"]';
 const month = '.month-selector .title';
 const nextButton = '.fa-chevron-right';
-const day = '.day';
+const day = '.day .title';
 const saveBtn = 'button svg[data-icon="save"]';
 const savedScheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';

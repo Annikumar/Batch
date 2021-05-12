@@ -105,10 +105,10 @@ describe('SuperVisor Flow', () => {
     ]);
   });
 
-  it(`Verifies that the Supervisor don't have access to FloorMap`, () => {
+  it(`Verifies the Floor Map Elements for Supervisor`, () => {
     suprevisor.clickReportsMenu();
     suprevisor.clickReportsHeader('Floormap');
-    suprevisor.verifyFloorMapAccessDenied();
+    suprevisor.verifyAddNewFloorButton();
   });
 
   it('Verify the Live section Elements of Report', () => {

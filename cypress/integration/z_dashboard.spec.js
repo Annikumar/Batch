@@ -38,190 +38,192 @@ describe('Dashboard Elements', function () {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
-  it('verify elements in Dashboard', function () {
-    Dash.clickDashboard();
-    Dash.verifyDashboardElements();
-  });
+  // it('verify elements in Dashboard', function () {
+  //   Dash.clickDashboard();
+  //   Dash.verifyDashboardElements();
+  // });
 
-  it('verify elements in Dashboard Header', function () {
-    Dash.verifyDashboardHeaderElement();
-  });
+  // it('verify elements in Dashboard Header', function () {
+  //   Dash.verifyDashboardHeaderElement();
+  // });
 
-  it('Login As Button Functionality', function () {
-    Dash.clickLoginAs();
-    Dash.searchUser('automation');
-    Dash.verifySearchedUser();
-  });
+  // it('Login As Button Functionality', function () {
+  //   Dash.clickLoginAs();
+  //   Dash.searchUser('automation');
+  //   Dash.verifySearchedUser();
+  // });
 
-  it('Change Admin Status', function () {
-    Dash.clickStatusButton();
-    Dash.selectAvailable('Available', testData.campaign);
-    Dash.clickConfirmButton();
-  });
+  // it('Change Admin Status', function () {
+  //   Dash.clickStatusButton();
+  //   Dash.selectAvailable('Available', testData.campaign);
+  //   Dash.clickConfirmButton();
+  // });
 
-  it('Verify functionality of Dialer button', function () {
-    Dash.clickDialer();
-    Dash.verifyDialPad();
-  });
+  // it('Verify functionality of Dialer button', function () {
+  //   Dash.clickDialer();
+  //   Dash.verifyDialPad();
+  // });
 
-  it.skip('Verify user is able to make call using dialer button', () => {
-    Dash.dialNumber();
-    Dash.clickCallButton();
-    Dash.verifyCallStarted();
-    Dash.clickCallButton();
-    Dash.clickAnsweringMachine();
-    Dash.clickContinue();
-  });
+  // it.skip('Verify user is able to make call using dialer button', () => {
+  //   Dash.dialNumber();
+  //   Dash.clickCallButton();
+  //   Dash.verifyCallStarted();
+  //   Dash.clickCallButton();
+  //   Dash.clickAnsweringMachine();
+  //   Dash.clickContinue();
+  // });
 
-  it('Verify Task Button Functionality', () => {
-    Dash.clickTaskButton();
-    Dash.verifyTask();
-  });
+  // it('Verify Task Button Functionality', () => {
+  //   Dash.clickTaskButton();
+  //   Dash.verifyTask();
+  // });
 
-  it('Verify on click user profile show options', () => {
-    Dash.clickUserProfile();
-    Dash.verifyUserProfileOptions();
-    Dash.clickUserProfile();
-  });
+  // it('Verify on click user profile show options', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.verifyUserProfileOptions();
+  //   Dash.clickUserProfile();
+  // });
 
-  it('Verify User setting option should show these options', () => {
-    Dash.clickUserProfile();
-    Dash.clickSettingsButton();
-    Dash.verifyUserSettingOptions([
-      'Address Book',
-      'Voicemail',
-      'Integrations',
-      'Lead Score',
-      'Agent Scripts',
-      'Audio Library',
-    ]);
-  });
+  // it('Verify User setting option should show these options', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickSettingsButton();
+  //   Dash.verifyUserSettingOptions([
+  //     'Address Book',
+  //     'Voicemail',
+  //     'Integrations',
+  //     'Lead Score',
+  //     'Agent Scripts',
+  //     'Audio Library',
+  //     'Affiliate',
+  //     'Lead Sheets',
+  //   ]);
+  // });
 
-  it('Verify User Setting Profile Elements', () => {
-    Dash.clickUserProfile();
-    Dash.clickProfile();
-    Dash.verifyUserSettingsProfileFields([
-      'firstname',
-      'lastname',
-      'email',
-      'address',
-      'city',
-      'zip',
-      'phone',
-      'phone2',
-    ]);
-    Dash.verifyProfileState();
-    Dash.verifyProfileTimeZone();
-    Dash.verifyProfilePasswordChangeButton();
-    Dash.verifyProfileAgentFeaturesEnable();
-    Dash.verifyProfileAgentFeaturesDisable();
-  });
+  // it('Verify User Setting Profile Elements', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickProfile();
+  //   Dash.verifyUserSettingsProfileFields([
+  //     'firstname',
+  //     'lastname',
+  //     'email',
+  //     'address',
+  //     'city',
+  //     'zip',
+  //     'phone',
+  //     'phone2',
+  //   ]);
+  //   Dash.verifyProfileState();
+  //   Dash.verifyProfileTimeZone();
+  //   Dash.verifyProfilePasswordChangeButton();
+  //   Dash.verifyProfileAgentFeaturesEnable();
+  //   Dash.verifyProfileAgentFeaturesDisable();
+  // });
 
-  it('Verify User settings Billing Elements', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.verifyBillingSingleLineDialer();
-    Dash.verifyBillingMultipleLineDialer();
-    Dash.verifyUsageStatus();
-    Dash.verifyPaymentMethod();
-    Dash.verifyBillingAddress();
-    Dash.verifyPauseAccount();
-    Dash.verifyCancelAccount();
-    Dash.verifyInvoice();
-  });
+  // it('Verify User settings Billing Elements', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.verifyBillingSingleLineDialer();
+  //   Dash.verifyBillingMultipleLineDialer();
+  //   Dash.verifyUsageStatus();
+  //   Dash.verifyPaymentMethod();
+  //   Dash.verifyBillingAddress();
+  //   Dash.verifyPauseAccount();
+  //   Dash.verifyCancelAccount();
+  //   Dash.verifyInvoice();
+  // });
 
-  it.skip('Add New Credit Card', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickAddNewCard();
-    Dash.enterCardName(fixtureData.cardHolderName);
-    Dash.enterCardNumber(fixtureData.cardNumber);
-    Dash.enterExpiryDate(fixtureData.cardExpiryDate);
-    Dash.enterCVC(fixtureData.cardCVC);
-    Dash.chooseCountry('United States');
-    Dash.enterBillingZip('43256');
-    Dash.clickContinue();
-    Dash.verifyAddedCard(cardLast4Digit);
-  });
+  // it.skip('Add New Credit Card', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickAddNewCard();
+  //   Dash.enterCardName(fixtureData.cardHolderName);
+  //   Dash.enterCardNumber(fixtureData.cardNumber);
+  //   Dash.enterExpiryDate(fixtureData.cardExpiryDate);
+  //   Dash.enterCVC(fixtureData.cardCVC);
+  //   Dash.chooseCountry('United States');
+  //   Dash.enterBillingZip('43256');
+  //   Dash.clickContinue();
+  //   Dash.verifyAddedCard(cardLast4Digit);
+  // });
 
-  it.skip('Verify the Default Credit Card Functionality', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickCardDefaultBtn(cardLast4Digit);
-    Dash.verifyCardDefault(cardLast4Digit);
-    Dash.clickCardDefaultBtn('0505');
-    Dash.verifyCardDefault('0505');
-  });
+  // it.skip('Verify the Default Credit Card Functionality', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickCardDefaultBtn(cardLast4Digit);
+  //   Dash.verifyCardDefault(cardLast4Digit);
+  //   Dash.clickCardDefaultBtn('0505');
+  //   Dash.verifyCardDefault('0505');
+  // });
 
-  it.skip('Delete the Added New Credit Card', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickDeleteCardBtn(cardLast4Digit);
-    Dash.verifyCardDelete();
-  });
+  // it.skip('Delete the Added New Credit Card', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickDeleteCardBtn(cardLast4Digit);
+  //   Dash.verifyCardDelete();
+  // });
 
-  it('Verifies monthly total should be greater when keeping phone', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickPauseAccountBtn();
-    cy.wait(2000);
-    Dash.compareBaseAndTotalPrice('keep phone');
-    Dash.clickClosePauseSubscriptionBox();
-  });
+  // it('Verifies monthly total should be greater when keeping phone', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickPauseAccountBtn();
+  //   cy.wait(2000);
+  //   Dash.compareBaseAndTotalPrice('keep phone');
+  //   Dash.clickClosePauseSubscriptionBox();
+  // });
 
-  it('Verifies monthly total should be equal when not keeping phone', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickPauseAccountBtn();
-    cy.wait(2000);
-    Dash.clickKeepPhoneCheckbox();
-    Dash.compareBaseAndTotalPrice('dont keep phone');
-    Dash.clickClosePauseSubscriptionBox();
-  });
+  // it('Verifies monthly total should be equal when not keeping phone', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickPauseAccountBtn();
+  //   cy.wait(2000);
+  //   Dash.clickKeepPhoneCheckbox();
+  //   Dash.compareBaseAndTotalPrice('dont keep phone');
+  //   Dash.clickClosePauseSubscriptionBox();
+  // });
 
-  it.skip('Pause Account while keeping the Phone Number', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickPauseAccountBtn();
-    cy.wait(2000);
-    Dash.clickPutSubscriptionOnHold();
-    Dash.clickStartBtn();
-    Dash.verifyAccountPauseMessage();
-  });
+  // it.skip('Pause Account while keeping the Phone Number', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickPauseAccountBtn();
+  //   cy.wait(2000);
+  //   Dash.clickPutSubscriptionOnHold();
+  //   Dash.clickStartBtn();
+  //   Dash.verifyAccountPauseMessage();
+  // });
 
-  it.skip('Unpause account by choosing any Plan', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
-    Dash.clickContinueBtn();
-    Dash.verifyPauseAccount();
-  });
+  // it.skip('Unpause account by choosing any Plan', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+  //   Dash.clickContinueBtn();
+  //   Dash.verifyPauseAccount();
+  // });
 
-  it.skip('Pause Account while not keeping the Phone Number', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.clickPauseAccountBtn();
-    cy.wait(2000);
-    Dash.clickKeepPhoneCheckbox();
-    Dash.clickPutSubscriptionOnHold();
-    Dash.clickStartBtn();
-    Dash.verifyAccountPauseMessage();
-  });
+  // it.skip('Pause Account while not keeping the Phone Number', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.clickPauseAccountBtn();
+  //   cy.wait(2000);
+  //   Dash.clickKeepPhoneCheckbox();
+  //   Dash.clickPutSubscriptionOnHold();
+  //   Dash.clickStartBtn();
+  //   Dash.verifyAccountPauseMessage();
+  // });
 
-  it.skip('Unpause account by choosing any Plan', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
-    Dash.clickContinueBtn();
-    Dash.verifyPauseAccount();
-  });
+  // it.skip('Unpause account by choosing any Plan', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.choosePlan('Multi-Line Dialer'); // Single Line Dialer
+  //   Dash.clickContinueBtn();
+  //   Dash.verifyPauseAccount();
+  // });
 
-  it.skip('Upgrade the Plan', () => {
-    Dash.clickUserProfile();
-    Dash.clickBilling();
-    Dash.upgradePlan('Multi-Line Dialer'); // Single Line Dialer
-    Dash.clickContinueBtn();
-  });
+  // it.skip('Upgrade the Plan', () => {
+  //   Dash.clickUserProfile();
+  //   Dash.clickBilling();
+  //   Dash.upgradePlan('Multi-Line Dialer'); // Single Line Dialer
+  //   Dash.clickContinueBtn();
+  // });
 
   it('Verify User settings Address Boook elements', () => {
     Dash.clickUserProfile();
@@ -272,6 +274,36 @@ describe('Dashboard Elements', function () {
     Dash.clickAddressBook();
     Dash.clickDeletebtn('DemoTesting');
     Dash.verifyContactDelete('DemoTesting');
+  });
+
+  it('Verify User Setting Lead Sheet Elements', () => {
+    Dash.clickLeadSheets();
+    Dash.verifysearchBox();
+    Dash.VerifyRadioBtn(['All', 'Active', 'Inactive']);
+    Dash.verifyAddNewLeadSheetBtn();
+  });
+
+  it('Verify the Table Headings of Lead Sheet', () => {
+    Dash.verifyLeadSheetTableHeadings(['Form Name', 'State', 'Added']);
+    Dash.verifyRefreshBtn();
+  });
+
+  it('Add a New Lead sheets', () => {
+    Dash.clickAddNewLeadSheet();
+    Dash.clickLeadSheetName();
+    Dash.enterLeadSheetName('Testing');
+    Dash.clickSaveFieldBtn();
+    Dash.selectLeadItem('Text');
+    Dash.clickLeadItemsNameField('text');
+    Dash.enterLeadItemsName('Test');
+    Dash.clickSaveFieldBtn();
+    Dash.clickLeadSaveBtn();
+    Dash.verifyAddedLeadSheet('Testing');
+  });
+
+  it('Delete the added Lead Sheet', () => {
+    Dash.clickDeleteLeadSheet('Testing');
+    Dash.verifyDeletedLeadSheet('Testing');
   });
 
   it('Verify User Setting Voicemail Elements', () => {

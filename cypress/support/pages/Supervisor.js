@@ -50,6 +50,7 @@ const dashboardElementsBox = (elementName) =>
   `//div[text()="${elementName}"]/ancestor::div[contains(@class,"col")]`;
 const dashboardGraphElements = (elementName) =>
   `//span[text()="${elementName}"]/ancestor::div[contains(@class,"col")]`;
+const addNewFloor = "//button[contains(text(),' Add New Floor')]";
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -271,5 +272,9 @@ export default class Suprevisor {
     for (let i = 0; i < elementsName.length; i++) {
       cy.xpath(dashboardGraphElements(elementsName[i])).should('be.visible');
     }
+  }
+
+  verifyAddNewFloorButton() {
+    cy.xpath(addNewFloor).should('be.visible');
   }
 }

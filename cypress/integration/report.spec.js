@@ -235,7 +235,7 @@ describe('Report Page', function () {
 
   it('Verify Floor Map Elements', () => {
     report.clickFloorMap();
-    report.verifyFloorMapViewDropdown();
+    // report.verifyFloorMapViewDropdown();
     report.verifyAddNewFloorButton();
   });
 });
