@@ -33,6 +33,17 @@ const heatMapStatus = '.reports-heat__statuses';
 const FloorMap = "//div[text()='Floormap']";
 const FloorViewDropdown = "//label[text()='Floor View']/parent::div//button";
 const addNewFloor = "//button[contains(text(),' Add New Floor')]";
+const floorName = '.form-control';
+const saveBtn = "//button[contains(text(), 'Save')]";
+const floor = "//button[contains(text(), 'Test')]";
+const deleteFloor = "//button[contains(text(), ' Delete Floor')]";
+const editFloor = "//button[contains(text(), 'Edit Floor')]";
+const addWall = '.floor-map--edit-btn .dropdown';
+const verticalWall = "//a[text()='Vertical']";
+const horizontalWall = "//a[text()='Horizontal']";
+const agentGroup = "//div[text()='AT']";
+const dropagent = '.floor-map--canvas';
+const successPopUp = '.mytoast-bottom';
 
 export default class Report {
   clickReportMenu() {
@@ -210,5 +221,52 @@ export default class Report {
 
   verifyAddNewFloorButton() {
     cy.xpath(addNewFloor).should('be.visible');
+  }
+
+  clickAddNewFloor() {
+    cy.xpath(addNewFloor).click();
+  }
+
+  EnterFloorName(name) {
+    cy.get(floorName).clear();
+    cy.get(floorName).type(name);
+  }
+
+  clickSaveButton() {
+    cy.xpath(saveBtn).click();
+  }
+
+  verifyFloor() {
+    cy.xpath(floor).should('be.visible');
+  }
+
+  clickDeleteFloor() {
+    cy.xpath(deleteFloor).click();
+  }
+
+  clickEditFloor() {
+    cy.xpath(editFloor).click();
+  }
+
+  clickAddWall() {
+    cy.get(addWall).click();
+  }
+
+  clickVerticalWall() {
+    cy.xpath(verticalWall).click();
+  }
+
+  clickHorizontalWall() {
+    cy.xpath(horizontalWall).click();
+  }
+
+  drapAndDropAgent() {
+    cy.xpath(agentGroup).trigger('mousedown', { which: 1 });
+
+    cy.get(dropagent).trigger('mousemove').trigger('mouseup', { force: true });
+  }
+
+  verifyDeleteFloor(text) {
+    cy.get(successPopUp).should('contain.text', text);
   }
 }

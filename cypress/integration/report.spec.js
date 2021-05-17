@@ -235,7 +235,31 @@ describe('Report Page', function () {
 
   it('Verify Floor Map Elements', () => {
     report.clickFloorMap();
-    report.verifyFloorMapViewDropdown();
+    //report.verifyFloorMapViewDropdown();
     report.verifyAddNewFloorButton();
+  });
+
+  it('Verify Admin is able to Add Floor Map', () => {
+    report.clickAddNewFloor();
+    report.EnterFloorName('Test');
+    report.clickSaveButton();
+    report.verifyFloor();
+  });
+
+  it('Verify user is able to edit Floor Map', () => {
+    report.clickEditFloor();
+    cy.wait(2000);
+    report.clickAddWall();
+    report.clickVerticalWall();
+    report.clickAddWall();
+    report.clickHorizontalWall();
+    report.drapAndDropAgent();
+    report.EnterFloorName('Test');
+    report.clickSaveButton();
+  });
+
+  it('Verify Admin is able to delete the created Floor', () => {
+    report.clickDeleteFloor();
+    report.verifyDeleteFloor('Floormap deleted successfully');
   });
 });
