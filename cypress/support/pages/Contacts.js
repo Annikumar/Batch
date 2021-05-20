@@ -126,6 +126,8 @@ const phoneEditBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//
 const phoneSaveBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"custom-input__buttons")]/*[name()="svg"][1]`;
 const fieldsSaveBtn = (fieldName) =>
   `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//td[@class="custom-input__buttons"]/*[name()="svg"][1]`;
+const contactsCampaign = '//button[text()="Campaigns"]';
+const recordingIcon = 'img[src*="listen"]';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -214,6 +216,10 @@ export default class Contacts {
 
   uploadFileForContact() {
     cy.get(dropBoxUpload).attachFile('contact-sample.csv');
+  }
+
+  clickRecordingIcon() {
+    cy.get(recordingIcon).first().click();
   }
 
   selectFirstNameDropdown() {
@@ -323,6 +329,10 @@ export default class Contacts {
     cy.get(newContactBtn).click();
     cy.xpath(createNewOption).should('be.visible');
     cy.xpath(uploadFileOption).should('be.visible');
+  }
+
+  clickContactsCamapign() {
+    cy.xpath(contactsCampaign).click();
   }
 
   verifyFirstNameField() {

@@ -17,8 +17,7 @@ const softphoneCloseBtn = '.stg-softphone-right-close';
 const softphone = '.stg-softphone-wrapper';
 const contactsMenu = 'a[title="Contacts"]';
 const contact = '.contacts__name';
-const phoneNumber =
-  "//tr[td[@class='contact-field' and contains(.,'Phone')]]//td[contains(@class,'contact-value')]//span";
+const phoneNumber = '.phone__a-wrapper';
 const callTransferBtn = 'div[title="Transfer"]';
 const callBtn = '.stg-softphone-callbutton';
 const callResultWindow = '.modal-content .call-disposition-title';
@@ -50,7 +49,6 @@ const deleteNoteBtn = (note) =>
   '//div[contains(@class,"comment-item-body") and span[p[text()="' +
   note +
   '"]]]/parent::div/preceding-sibling::div//span//*[name()="svg"][@data-icon="trash"]';
-
 const selectAgent =
   "//label[text()='Assign Agents']/ancestor::div[@class='card-body']//span[text()='Agents']";
 const clickAgent = "//div[text()='automation testing']";
@@ -258,7 +256,7 @@ export default class Agent {
   }
 
   clickPhoneNumber() {
-    cy.xpath(phoneNumber).first().click();
+    cy.get(phoneNumber).first().click();
   }
 
   clickCallTransferBtn() {

@@ -225,8 +225,6 @@ describe('Agent Profile', function () {
       'Mailing State',
       'Mailing Postal Code',
       'Contact List',
-      'Phone 1',
-      'Email',
     ]);
     //agent.verifySaveBtn();
   });
@@ -304,7 +302,7 @@ describe('Agent Profile', function () {
     ]);
   });
   it('Verify Elements Of Calendar On Dashboard', () => {
-    agent.clickOnDashboardBtn();
+    agent.clickDashboardMenu();
     agent.openCalenderOnDashBoard();
     agent.verifyCalenderSideBar([
       'Today',
@@ -376,6 +374,7 @@ describe('Agent Profile', function () {
 
   it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
     agent.clickingOnContactOption();
+    agent.clickCloseSoftphoneBtn();
     // agent.enterSearch('New User');
     agent.clickContactName();
     agent.clickPhoneNumber();

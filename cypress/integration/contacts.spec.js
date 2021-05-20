@@ -351,4 +351,12 @@ describe('Add Contact flow', () => {
     addCont.clickSavebtn();
     addCont.verifyAddedNote();
   });
+
+  it.skip('Verify the Elements of Recording Player', () => {
+    addCont.clickingOnContactOption();
+    addCont.enterSearch(testData.Contact);
+    addCont.clickContactName(testData.Contact);
+    addCont.clickContactsCamapign();
+    addCont.clickRecordingIcon();
+  });
 });
