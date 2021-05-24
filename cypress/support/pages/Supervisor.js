@@ -18,7 +18,7 @@ const backToSupervisor = '.nav-item a[href*="logout"]';
 const dashboard = 'a[title="Dashboard"]';
 const supervisor = '.supervisor';
 const reportsMenu = 'a[title="Reports"]';
-const reportsHeader = '.reports-top-bar span';
+const reportsHeader = (header) => '.subitem a[title="' + header + '"]';
 const accessDenied = '.card-title';
 const reportLiveBox = '.report-live-buttons .label';
 const inboundOutboundDropdown =
@@ -145,19 +145,12 @@ export default class Suprevisor {
 
   verifyReportsHeaderElements(header) {
     for (let i = 0; i < header.length; i++) {
-      cy.get(reportsHeader).should('contain.text', header[i]);
+      cy.get(reportsHeader(header[i])).should('exist');
     }
   }
 
   clickReportsHeader(header) {
-    cy.get(reportsHeader).then((heading) => {
-      for (let i = 0; i < heading.length; i++) {
-        if (heading[i].textContent.trim() === header) {
-          heading[i].click();
-          break;
-        }
-      }
-    });
+    cy.get(reportsHeader(header)).click({ force: true });
   }
 
   verifyFloorMapAccessDenied() {

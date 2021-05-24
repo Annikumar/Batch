@@ -92,7 +92,7 @@ describe('SuperVisor Flow', () => {
     suprevisor.verifySupervisorProfile();
   });
 
-  it('Verify the Reports Header Elements', () => {
+  it('Verify the Reports SubMenu Items', () => {
     suprevisor.clickReportsMenu();
     suprevisor.verifyReportsHeaderElements([
       'Live',
@@ -100,15 +100,9 @@ describe('SuperVisor Flow', () => {
       'Campaigns',
       'Agents',
       'Numbers',
-      'Agents Heat Map',
-      'Floormap',
+      'Heat Map',
+      'Floor Map',
     ]);
-  });
-
-  it(`Verifies the Floor Map Elements for Supervisor`, () => {
-    suprevisor.clickReportsMenu();
-    suprevisor.clickReportsHeader('Floormap');
-    suprevisor.verifyAddNewFloorButton();
   });
 
   it('Verify the Live section Elements of Report', () => {
@@ -269,9 +263,15 @@ describe('SuperVisor Flow', () => {
 
   it('Verify the Elements of Agent Heap Map in Reports Page', () => {
     suprevisor.clickReportsMenu();
-    suprevisor.clickReportsHeader('Agents Heat Map');
+    suprevisor.clickReportsHeader('Heat Map');
     suprevisor.verifyAllGroupsDropdown();
     suprevisor.verifyReportHeatRangePicker();
     suprevisor.verifyRangeSelectRadioBtns(['Day', 'Week', 'Month']);
+  });
+
+  it(`Verifies the Floor Map Elements for Supervisor`, () => {
+    suprevisor.clickReportsMenu();
+    suprevisor.clickReportsHeader('Floor Map');
+    suprevisor.verifyAddNewFloorButton();
   });
 });

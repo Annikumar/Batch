@@ -322,7 +322,7 @@ export default class PhoneNum {
   }
 
   closingDialog() {
-    cy.xpath(closeBtn, { timeout: 30000 }).should('be.enabled');
+    cy.xpath(closeBtn, { timeout: 60000 }).should('be.enabled');
     cy.xpath(closeBtn).click();
   }
 

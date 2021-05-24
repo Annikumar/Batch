@@ -122,10 +122,12 @@ const notesWindow = '.modal-content';
 const notesBullets = 'svg[data-icon="list-ul"]';
 const fieldsEditBtn = (fieldName) =>
   `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//*[name()="svg"]`;
-const phoneEditBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"contact__custom-input__edit")]/*[name()="svg"]`;
-const phoneSaveBtn = `//tr[td[@class="contact-field" and contains(.,"Phone")]]//td[contains(@class,"custom-input__buttons")]/*[name()="svg"][1]`;
+const phoneEditBtn = `//tr[td[div[contains(@class,"td__phone")]]]//td[contains(@class,"contact__custom-input__edit")]//*[name()="svg"][1]`;
+const EmailEditBtn = `//tr[td[div[contains(@class,"td__email")]]]//td[contains(@class,"contact__custom-input__edit")]//*[name()="svg"][1]`;
+const phoneSaveBtn = `//tr[td[input[contains(@class,"phone-input")]]]//td[@class="custom-input__buttons"]//*[name()="svg"][1]`;
+const emailSaveBtn = `//tr[td[input[@name="email"]]]//td[@class="custom-input__buttons"]//*[name()="svg"][1]`;
 const fieldsSaveBtn = (fieldName) =>
-  `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//td[@class="custom-input__buttons"]/*[name()="svg"][1]`;
+  `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//td[@class="custom-input__buttons"]//*[name()="svg"][1]`;
 const contactsCampaign = '//button[text()="Campaigns"]';
 const recordingIcon = 'img[src*="listen"]';
 
@@ -177,9 +179,9 @@ export default class Contacts {
   }
 
   enterEmail(email) {
-    cy.xpath(fieldsEditBtn('Email')).click();
+    cy.xpath(EmailEditBtn).click();
     cy.get(inputEmail).type(email);
-    cy.xpath(fieldsSaveBtn('Email')).click();
+    cy.xpath(emailSaveBtn).click();
   }
 
   enterPhoneNumber(num) {
@@ -346,7 +348,7 @@ export default class Contacts {
   }
 
   verifyEmailField() {
-    cy.xpath(fieldsEditBtn('Email')).click();
+    cy.xpath(EmailEditBtn).click();
     cy.get(inputEmail).should('be.visible');
   }
 
