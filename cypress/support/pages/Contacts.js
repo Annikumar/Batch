@@ -130,6 +130,13 @@ const fieldsSaveBtn = (fieldName) =>
   `//tr[td[contains(@class,"contact-field") and text()="${fieldName}"]]//td[@class="custom-input__buttons"]//*[name()="svg"][1]`;
 const contactsCampaign = '//button[text()="Campaigns"]';
 const recordingIcon = 'img[src*="listen"]';
+const listMenuIcon = 'img[src*="edit"]';
+const assignToCampaignBtn = '.table-responsive .show a.dropdown-item';
+const playerCampaignName = '.contacts-player__top-campaign';
+const playerControlBtn = '.contacts-player__controls svg';
+const playerVolumeBar = '.contacts-player__volume-bar';
+const playerProgressBar = '.contacts-player__progress-bar';
+const playerDownloadBtn = '.contacts-player__download';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -197,6 +204,10 @@ export default class Contacts {
     ).click();
   }
 
+  verifyPlayerVolumeBar() {
+    cy.get(playerVolumeBar).should('be.visible');
+  }
+
   clickSaveButton() {
     cy.get(saveButton).click({ force: true });
   }
@@ -216,8 +227,20 @@ export default class Contacts {
     ).should('be.visible');
   }
 
+  verifyPlayerProgressBar() {
+    cy.get(playerProgressBar).should('be.visible');
+  }
+
   uploadFileForContact() {
     cy.get(dropBoxUpload).attachFile('contact-sample.csv');
+  }
+
+  clickListMenuIcon() {
+    cy.get(listMenuIcon).first().click();
+  }
+
+  verifyPlayerDownloadBtn() {
+    cy.get(playerDownloadBtn).should('be.visible');
   }
 
   clickRecordingIcon() {
@@ -240,15 +263,27 @@ export default class Contacts {
     cy.xpath(phoneDrpdwn).click();
     cy.contains('Phone Number 1').click({ force: true });
   }
+
+  verifyPlayerCampaignName(name) {
+    cy.get(playerCampaignName).should('contain.text', name);
+  }
+
   clickNextButton() {
     cy.get(nextButton).click();
   }
+
+  verifyPlayerControlBtns() {
+    cy.get(playerControlBtn).should('have.length', 3);
+  }
+
   clickSubmitButton() {
     cy.xpath(submitButton).click({ force: true });
   }
+
   verifyImportStartedToast() {
     cy.xpath(contactImportToast, { timeout: 5000 }).should('be.visible');
   }
+
   verifyImportContactCompleteToast() {
     cy.contains('Import complete', { timeout: 5000 }).should('be.visible');
   }
@@ -264,6 +299,10 @@ export default class Contacts {
       .scrollIntoView()
       .click();
     cy.xpath(deletOption).click();
+  }
+
+  verifyAssignToCampaignBtn() {
+    cy.get(assignToCampaignBtn).should('contain.text', 'Assign To Campaign');
   }
 
   handleAlertForDelete() {

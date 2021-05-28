@@ -116,6 +116,7 @@ const status = "//div[text()='Status']";
 const recycleOption = '//a[@class="dropdown-item" and text()="Recycle"]';
 const recycleCampaignMenuBtn = (campaignName) =>
   '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
+const leadSheetDropdown = `//div[label[@class="form-label" and text()="Lead Sheet"]]/following-sibling::div[div[contains(.,"Select Lead Sheet")]]`
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -202,6 +203,10 @@ export default class Campaign {
 
   clickToSelectPasused(val) {
     cy.get(statusDrpdwn(val)).click();
+  }
+
+  verifyLeadSheetDropdown(){
+    cy.xpath(leadSheetDropdown).should('be.visible')
   }
 
   clickToSelectActive() {

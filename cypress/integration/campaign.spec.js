@@ -270,6 +270,7 @@ describe('Add Campaign flow', () => {
     addCamp.verifyAgentScript();
     addCamp.verifyAgentScriptCreateNewButton();
     addCamp.verifyAssignAgent();
+    addCamp.verifyLeadSheetDropdown();
     addCamp.verifyCancelButton();
   });
 

@@ -352,11 +352,23 @@ describe('Add Contact flow', () => {
     addCont.verifyAddedNote();
   });
 
-  it.skip('Verify the Elements of Recording Player', () => {
+  it('Verify the Elements of Recording Player', () => {
     addCont.clickingOnContactOption();
     addCont.enterSearch(testData.Contact);
     addCont.clickContactName(testData.Contact);
     addCont.clickContactsCamapign();
     addCont.clickRecordingIcon();
+    addCont.verifyPlayerCampaignName(testData.campaign);
+    addCont.verifyPlayerControlBtns();
+    addCont.verifyPlayerVolumeBar();
+    addCont.verifyPlayerProgressBar();
+    addCont.verifyPlayerDownloadBtn();
+  });
+
+  it('Verify the Assign to Campaign Option for Lists', () => {
+    addCont.clickingOnContactOption();
+    addCont.clickLists();
+    addCont.clickListMenuIcon();
+    addCont.verifyAssignToCampaignBtn();
   });
 });
