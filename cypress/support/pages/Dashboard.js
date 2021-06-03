@@ -1058,7 +1058,7 @@ export default class Dashboard {
   verifyContactSupportWindow() {
     cy.get('.modal-content p').should(
       'have.text',
-      'To proceed with your cancellation request, please contact support team.'
+      'Your cancellation request has been successfully submitted. We will reach out to you within 24-48 hours for an update.'
     );
   }
 

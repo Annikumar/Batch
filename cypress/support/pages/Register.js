@@ -26,6 +26,7 @@ const agreeCheckbox = '.custom_checkbox .checkmark';
 const subscribeBtn = '.card_form button[type="button"]';
 const couponField = 'input[name="coupon"]';
 const applyCouponBtn = '.summary .value1 button';
+const planPrice = '.summary .value:not(.long)';
 
 export default class Register {
   clickSignUpBtn() {
@@ -80,6 +81,12 @@ export default class Register {
     // cy.xpath(duplicateEmail).should('be.visible');
     cy.get('.Toastify__toast-body').then((toast) => {
       expect(toast.text().toLowerCase()).to.contain('email is already used');
+    });
+  }
+
+  verifyPlanPrice() {
+    cy.get(planPrice).then((price) => {
+      expect(price.text()).to.not.equal('$0.00');
     });
   }
 

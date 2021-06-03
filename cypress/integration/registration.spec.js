@@ -88,6 +88,7 @@ describe('Registration', () => {
     register.enterConfirmPassword('Fleek@2016');
     register.clickContinueToPlanBtn();
     register.choosePlan('Single Line Dialer'); //Multi-Line Dialer
+    register.verifyPlanPrice();
     register.enterCardDetailsForSignUp(
       Cypress.env('CardName'),
       Cypress.env('CardNumber'),
