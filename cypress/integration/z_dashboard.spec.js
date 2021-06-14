@@ -8,6 +8,7 @@ let testData;
 let cardLast4Digit;
 let randNum = Math.floor(Math.random() * 100000);
 const addCont = new Contacts();
+const message = (user) => `This is a testing message from ${user}`;
 
 describe('Dashboard Elements', function () {
   before(() => {
@@ -310,7 +311,12 @@ describe('Dashboard Elements', function () {
     Dash.clickVoicemail();
     Dash.verifyVoicemailHeading();
     Dash.verifyNewMailButton();
-    Dash.verifyVoicemailTableHeading(['Name', 'Email', 'Recording', 'Created']);
+    Dash.verifyVoicemailTableHeading([
+      'Voicemail',
+      'Email',
+      'Audio',
+      'Created',
+    ]);
   });
 
   it('Verify User Setting Lead Score elements', () => {
@@ -544,5 +550,69 @@ describe('Dashboard Elements', function () {
     addCont.clickingOnContactOption();
     Dash.clickHomeButton();
     Dash.verifyDashboardCalandar();
+  });
+
+  it('Verify that Chat Box should open when click on Chat Icon', () => {
+    Dash.clickDashboard();
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+  });
+
+  it('Send message to the agent', () => {
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.agent]);
+    Dash.enterMessage(message('Admin'));
+    Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that the Agent receive the message', () => {
+    Dash.clickLoginAs();
+    Dash.clickLoginAsPlusIcon();
+    Dash.clickAgentOrSupervisor(testData.agent);
+    Dash.verifyUserDashboardName(testData.agent);
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.selectChat(testData.AdminName);
+    Dash.verifyMessageText(message('Admin'));
+    Dash.enterMessage(message('Agent'));
+    Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
+    Dash.clickBackToAdmin();
+    Dash.verifyUserDashboardName(testData.AdminName);
+  });
+
+  it('Verify that the admin have recieved the message from Agent', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.selectChat(testData.agent);
+    Dash.verifyMessageText(message('Agent'));
+    Dash.clickChatCloseButton();
+  });
+
+  it('Send message to the supervisor', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.supervisor]);
+    Dash.enterMessage(message('Admin'));
+    Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that the supervisor have receiver message from Admin', () => {
+    Dash.clickLoginAs();
+    Dash.clickLoginAsPlusIcon();
+    Dash.clickAgentOrSupervisor(testData.supervisor);
+    Dash.verifyUserDashboardName(testData.supervisor);
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.selectChat(testData.AdminName);
+    Dash.verifyMessageText(message('Admin'));
+    Dash.enterMessage(message('Supervisor'));
+    Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
+    Dash.clickBackToAdmin();
+    Dash.verifyUserDashboardName(testData.AdminName);
   });
 });

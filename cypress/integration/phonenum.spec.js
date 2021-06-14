@@ -93,8 +93,8 @@ describe('Add Phone Number flow', () => {
     addNum.clickNewIvr();
     addNum.verifyNameField();
     addNum.verifyDescriptionField();
-    addNum.verifyExtensionsDropdown('Select Phone Group');
-    addNum.verifyExtensionsDropdown('Select Numbers');
+    addNum.verifyExtensionsDropdown('Select Extension');
+    // addNum.verifyExtensionsDropdown('Select Numbers');
     addNum.verifyAssignCampaignDropdown('Select Campaign');
     addNum.verifyIVRDropdown('After Hours', 'Hangup');
     addNum.verifyIVRDropdown('Timeout', 'Hangup');
@@ -182,9 +182,9 @@ describe('Add Phone Number flow', () => {
     addNum.clickInboundCallMenu();
     addNum.clickNewQueueBtn();
     addNum.verifyNameField();
-    addNum.verifyDescriptionField();
-    addNum.verifyExtensionsDropdown('Select Phone Group');
-    addNum.verifyExtensionsDropdown('Select Numbers');
+    // addNum.verifyDescriptionField();
+    addNum.verifyExtensionsDropdown('Select Extension');
+    // addNum.verifyExtensionsDropdown('Select Numbers');
     addNum.verifyAssignAgent('Agents');
     addNum.verifyAssignCampaignDropdown('Select Campaign');
     addNum.verifyRingStrategy(['Round Robin', 'Ring All']);
@@ -196,8 +196,8 @@ describe('Add Phone Number flow', () => {
 
   it('Fill Form to Create New Queue', () => {
     addNum.enterName('Demotesting');
-    addNum.enterDescription('testing');
-    addNum.selectExtensionDropdown('Select Numbers', fixtureData.Number);
+    // addNum.enterDescription('testing');
+    addNum.selectExtensionDropdown('Select Extension', fixtureData.Number);
     addNum.selectAssignAgent('Agents', 'Anil');
     addNum.selectAssignCampaignDropdown('Select Campaign', 'FirstCampaign');
     addNum.clickCreateQueueBtn();
@@ -282,154 +282,154 @@ describe('Add Phone Number flow', () => {
     addNum.handleAlertForDelete();
   });
 
-  it('Verifies Elements of Call Result Page', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.verifySearchBox();
-    addNum.verifyRadioBtn(['All', 'Active', 'Inactive']);
-    addNum.verifyAddNewCallResultBtn();
-    addNum.verifyTableHeaderName([
-      'Call Result',
-      'Number Group',
-      'Campaigns',
-      'State',
-      'Default',
-      'Global',
-      'Added',
-    ]);
-    addNum.verifyTableBodyElement([
-      'Abandoned',
-      'Answering Machine',
-      'Busy',
-      'Call Back',
-      'Disconnected Number',
-      'No Answer',
-      'Not Interested',
-      'Successful Sale',
-      'Unknown',
-      'Voicemail',
-    ]);
-  });
+  // it('Verifies Elements of Call Result Page', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.verifySearchBox();
+  //   addNum.verifyRadioBtn(['All', 'Active', 'Inactive']);
+  //   addNum.verifyAddNewCallResultBtn();
+  //   addNum.verifyTableHeaderName([
+  //     'Call Result',
+  //     'Number Group',
+  //     'Campaigns',
+  //     'State',
+  //     'Default',
+  //     'Global',
+  //     'Added',
+  //   ]);
+  //   addNum.verifyTableBodyElement([
+  //     'Abandoned',
+  //     'Answering Machine',
+  //     'Busy',
+  //     'Call Back',
+  //     'Disconnected Number',
+  //     'No Answer',
+  //     'Not Interested',
+  //     'Successful Sale',
+  //     'Unknown',
+  //     'Voicemail',
+  //   ]);
+  // });
 
-  it('Verifies Add New Call Result Elements', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickAddNewCallResultBtn();
-    addNum.verifyNameField();
-    addNum.verifyActiveInactive('Active');
-    addNum.verifyActiveInactive('Inactive');
-    addNum.verifyNumberGroupDropdown();
-    addNum.verifyButtonColorBox();
-    addNum.verifyAssignCampaignDropdown('Select Number Group');
-    addNum.verifyShowOnNewCompaignPage('Yes');
-    addNum.verifyShowOnNewCompaignPage('No');
-    addNum.verifyAddNewRuleBtn();
-    addNum.verifyRules([
-      'Do Not Redial Contact',
-      'Do Not Redial Number',
-      'Add Contact to DNC',
-      'Add Number to DNC',
-      'Mark as Lead',
-      'Send to Email',
-    ]);
-    addNum.verifyCallResultCancelBtn();
-    addNum.verifyCallResultSaveBtn();
-  });
+  // it('Verifies Add New Call Result Elements', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickAddNewCallResultBtn();
+  //   addNum.verifyNameField();
+  //   addNum.verifyActiveInactive('Active');
+  //   addNum.verifyActiveInactive('Inactive');
+  //   addNum.verifyNumberGroupDropdown();
+  //   addNum.verifyButtonColorBox();
+  //   addNum.verifyAssignCampaignDropdown('Select Number Group');
+  //   addNum.verifyShowOnNewCompaignPage('Yes');
+  //   addNum.verifyShowOnNewCompaignPage('No');
+  //   addNum.verifyAddNewRuleBtn();
+  //   addNum.verifyRules([
+  //     'Do Not Redial Contact',
+  //     'Do Not Redial Number',
+  //     'Add Contact to DNC',
+  //     'Add Number to DNC',
+  //     'Mark as Lead',
+  //     'Send to Email',
+  //   ]);
+  //   addNum.verifyCallResultCancelBtn();
+  //   addNum.verifyCallResultSaveBtn();
+  // });
 
-  it('Add New Call Result', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickAddNewCallResultBtn();
-    addNum.enterName('DemoTesting');
-    addNum.chooseShowOnNewCampaignPage('Yes');
-    addNum.chooseActiveInactive('Active');
-    addNum.selectCallResultCampaignDropdown('FirstCampaign');
-    addNum.clickCallResultSaveBtn();
-    cy.wait(3000);
-  });
+  // it('Add New Call Result', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickAddNewCallResultBtn();
+  //   addNum.enterName('DemoTesting');
+  //   addNum.chooseShowOnNewCampaignPage('Yes');
+  //   addNum.chooseActiveInactive('Active');
+  //   addNum.selectCallResultCampaignDropdown('FirstCampaign');
+  //   addNum.clickCallResultSaveBtn();
+  //   cy.wait(3000);
+  // });
 
-  it('Search the Call Results', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.enterSearchKeyword('Busy');
-    addNum.verifySearchResults('Busy');
-  });
+  // it('Search the Call Results', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.enterSearchKeyword('Busy');
+  //   addNum.verifySearchResults('Busy');
+  // });
 
-  it('Should Edit the existing Call Result', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickCallResultEditBtn('Busy');
-    addNum.verifyCallResultSaveBtn();
-    addNum.clickCallResultSaveBtn();
-    cy.wait(2000);
-  });
+  // it('Should Edit the existing Call Result', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickCallResultEditBtn('Busy');
+  //   addNum.verifyCallResultSaveBtn();
+  //   addNum.clickCallResultSaveBtn();
+  //   cy.wait(2000);
+  // });
 
-  it.skip('Should Delete the existing Call Result', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickCallResultDeleteBtn('Busy');
-    addNum.handleDeleteAlert('Delete call result?');
-    addNum.verifyCallResultDelete('Busy');
-  });
+  // it.skip('Should Delete the existing Call Result', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickCallResultDeleteBtn('Busy');
+  //   addNum.handleDeleteAlert('Delete call result?');
+  //   addNum.verifyCallResultDelete('Busy');
+  // });
 
-  it('Verify that the created call results is reflected in the create new campaign page Call Result', () => {
-    const addCamp = new Campaign();
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickAddNewCallResultBtn();
-    addNum.enterName('TestingCallResult');
-    addNum.chooseShowOnNewCampaignPage('Yes');
-    addNum.chooseActiveInactive('Active');
-    addNum.selectCallResultCampaignDropdown(testData.campaign);
-    addNum.clickCallResultSaveBtn();
-    cy.wait(3000);
-    addCamp.clickCampaignMenu();
-    cy.wait(3000);
-    addCamp.clickAddNewCampaign();
-    addCamp.enableAdvancedSwitchBar();
-    addCamp.enterName(fixtureData.campaignName + randNum.toString());
-    addCamp.selectCallerId('Individual Numbers', testData.Number);
-    addCamp.clickNextCircleArrow();
-    addNum.verifyCreatedCallResult('TestingCallResult');
-  });
+  // it('Verify that the created call results is reflected in the create new campaign page Call Result', () => {
+  //   const addCamp = new Campaign();
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickAddNewCallResultBtn();
+  //   addNum.enterName('TestingCallResult');
+  //   addNum.chooseShowOnNewCampaignPage('Yes');
+  //   addNum.chooseActiveInactive('Active');
+  //   addNum.selectCallResultCampaignDropdown(testData.campaign);
+  //   addNum.clickCallResultSaveBtn();
+  //   cy.wait(3000);
+  //   addCamp.clickCampaignMenu();
+  //   cy.wait(3000);
+  //   addCamp.clickAddNewCampaign();
+  //   addCamp.enableAdvancedSwitchBar();
+  //   addCamp.enterName(fixtureData.campaignName + randNum.toString());
+  //   addCamp.selectCallerId('Individual Numbers', testData.Number);
+  //   addCamp.clickNextCircleArrow();
+  //   addNum.verifyCreatedCallResult('TestingCallResult');
+  // });
 
-  it('Add New Rule while Creating Call Result', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickAddNewCallResultBtn();
-    addNum.enterName('Testing');
-    addNum.chooseShowOnNewCampaignPage('Yes');
-    addNum.chooseActiveInactive('Active');
-    addNum.selectCallResultCampaignDropdown(testData.campaign);
-    addNum.clickAddNewRuleBtn();
-    addNum.selectRule('Schedule a Callback');
-    addNum.clickCallResultSaveBtn();
-    cy.wait(3000);
-  });
+  // it('Add New Rule while Creating Call Result', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickAddNewCallResultBtn();
+  //   addNum.enterName('Testing');
+  //   addNum.chooseShowOnNewCampaignPage('Yes');
+  //   addNum.chooseActiveInactive('Active');
+  //   addNum.selectCallResultCampaignDropdown(testData.campaign);
+  //   addNum.clickAddNewRuleBtn();
+  //   addNum.selectRule('Schedule a Callback');
+  //   addNum.clickCallResultSaveBtn();
+  //   cy.wait(3000);
+  // });
 
-  it('Remove the added New Rule from Call Result', () => {
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickCallResultEditBtn('Testing');
-    addNum.clickDeleteRuleBtn('Schedule a callback');
-    addNum.clickCallResultSaveBtn();
-  });
+  // it('Remove the added New Rule from Call Result', () => {
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickCallResultEditBtn('Testing');
+  //   addNum.clickDeleteRuleBtn('Schedule a callback');
+  //   addNum.clickCallResultSaveBtn();
+  // });
 
-  it('Delete Added Call Result', () => {
-    cy.wait(1000);
-    addNum.clickPhoneNumberMenu();
-    addNum.clickCallResultMenu();
-    addNum.clickCallResultDeleteBtn('DemoTesting');
-    addNum.handleDeleteAlert('Delete call result?');
-    cy.wait(2000);
-    addNum.clickCallResultDeleteBtn('Testing');
-    addNum.handleDeleteAlert('Delete call result?');
-    addNum.clickCallResultDeleteBtn('TestingCallResult');
-    addNum.handleDeleteAlert('Delete call result?');
-    addNum.verifyCallResultDelete('DemoTesting');
-    addNum.verifyCallResultDelete('Testing');
-    addNum.verifyCallResultDelete('TestingCallResult');
-  });
+  // it('Delete Added Call Result', () => {
+  //   cy.wait(1000);
+  //   addNum.clickPhoneNumberMenu();
+  //   addNum.clickCallResultMenu();
+  //   addNum.clickCallResultDeleteBtn('DemoTesting');
+  //   addNum.handleDeleteAlert('Delete call result?');
+  //   cy.wait(2000);
+  //   addNum.clickCallResultDeleteBtn('Testing');
+  //   addNum.handleDeleteAlert('Delete call result?');
+  //   addNum.clickCallResultDeleteBtn('TestingCallResult');
+  //   addNum.handleDeleteAlert('Delete call result?');
+  //   addNum.verifyCallResultDelete('DemoTesting');
+  //   addNum.verifyCallResultDelete('Testing');
+  //   addNum.verifyCallResultDelete('TestingCallResult');
+  // });
 
   it('Verifies Number Group Elements', () => {
     addNum.clickPhoneNumberMenu();

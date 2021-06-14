@@ -173,10 +173,87 @@ const leadSaveBtn = 'button[type="submit"]';
 const leadItemsNameField = '.lead-edit__list .lead-edit__custom-input input';
 const leadSheetDeleteBtn = (sheetName) =>
   `//tr[td[text()="${sheetName}"]]//img[contains(@src,"delete")]`;
+const messageIcon = '.position-relative';
+const chatBox = '.chat__container';
+const chatCloseButton = '.chat__close';
+const receiverDropdown = '.chat__container .ss-select-control';
+const usersName = '.ss-select-option';
+const messageField = '.chat__input textarea';
+const chatName = '.chat__conversation__top-name';
+const messageText = '.chat__message__text';
 
 export default class Dashboard {
   clickDashboard() {
     cy.get(DashboardMenu).click({ force: true });
+  }
+
+  clickMessageIcon() {
+    cy.get(messageIcon).click();
+  }
+
+  verifyChatBox() {
+    cy.get(chatBox).should('be.visible');
+  }
+
+  clickStartChatButton() {
+    cy.get('button').then((button) => {
+      for (let i = 0; i < button.length; i++) {
+        if (button[i].textContent.trim() === 'Start chat') {
+          button[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  enterMessage(message) {
+    cy.get(messageField).type(message);
+  }
+
+  clickSendMessageButton() {
+    cy.get('button').then((button) => {
+      for (let i = 0; i < button.length; i++) {
+        if (button[i].textContent.trim() === 'Send') {
+          button[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickChatCloseButton() {
+    cy.get(chatCloseButton).click();
+  }
+
+  verifyMessageText(message) {
+    cy.get(messageText).should('contain.text', message);
+  }
+
+  selectChat(name) {
+    cy.get(chatName).then((chat) => {
+      for (let i = 0; i < chat.length; i++) {
+        if (chat[i].textContent.trim() === name) {
+          chat[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  selectUserToSendMessage(name) {
+    cy.get(receiverDropdown).click();
+    cy.get(usersName).then((users) => {
+      for (let i = 0; i < name.length; i++) {
+        cy.log(name[i]);
+        for (let j = 0; j < users.length; j++) {
+          if (users[j].textContent.trim() === name[i]) {
+            cy.log(users[j].textContent.trim());
+            users[j].click();
+            break;
+          }
+        }
+      }
+    });
   }
 
   verifyDashboardElements() {

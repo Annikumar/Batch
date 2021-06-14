@@ -23,7 +23,7 @@ const Name = 'input[name="name"]';
 const description = 'input[name="description"]';
 const clickselectCampaign = '//span[text()="Select Campaign"]';
 const selectFromDropdown = '.ss-select-dropdown';
-const phoneNumber = '//span[text()="Select Numbers"]';
+const phoneNumber = '//span[text()="Select Extension"]';
 const newWelcomePrompt = '//button[text()=" ADD NEW"]';
 const uploadedWelcomePrompt = (fileName) =>
   "//span[contains(@class,'ss-select-value-label')][text()='" + fileName + "']";
