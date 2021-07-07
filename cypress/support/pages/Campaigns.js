@@ -111,12 +111,12 @@ const successToast = '.Toastify__toast-body';
 const campaignTable = '.table tbody';
 const callresultValues = '.row-calldisposition  .ss-select-value';
 const delCallResult = (callResultName) =>
-  `.ss-select-value-label[title="${callResultName}"] + .ss-select-value-delete`;
+  `//span[span[text()="${callResultName}"]]/following-sibling::span[@class="ss-select-value-delete"]`;
 const status = "//div[text()='Status']";
 const recycleOption = '//a[@class="dropdown-item" and text()="Recycle"]';
 const recycleCampaignMenuBtn = (campaignName) =>
   '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
-const leadSheetDropdown = `//div[label[@class="form-label" and text()="Lead Sheet"]]/following-sibling::div[div[contains(.,"Select Lead Sheet")]]`
+const leadSheetDropdown = `//div[label[@class="form-label" and text()="Lead Sheet"]]/following-sibling::div[div[contains(.,"Select Lead Sheet")]]`;
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -205,8 +205,8 @@ export default class Campaign {
     cy.get(statusDrpdwn(val)).click();
   }
 
-  verifyLeadSheetDropdown(){
-    cy.xpath(leadSheetDropdown).should('be.visible')
+  verifyLeadSheetDropdown() {
+    cy.xpath(leadSheetDropdown).should('be.visible');
   }
 
   clickToSelectActive() {
@@ -646,7 +646,7 @@ export default class Campaign {
 
   deleteCallResults(callRslt) {
     for (let i = 0; i < callRslt.length; i++) {
-      cy.get(delCallResult(callRslt[i])).scrollIntoView().click();
+      cy.xpath(delCallResult(callRslt[i])).scrollIntoView().click();
     }
   }
 

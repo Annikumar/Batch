@@ -88,11 +88,11 @@ describe('Agent Profile', function () {
   it('Verify Recent Contact dropdowns should be visible', () => {
     agent.clickRecentContact();
     agent.verifyRecentContactDropdown([
-      'Inbound+Outbound',
+      'All Calls',
       'Call Results',
-      'All Campaigns',
+      'Campaigns',
       'All Durations',
-      '',
+      'Mood',
     ]);
   });
 
@@ -109,13 +109,13 @@ describe('Agent Profile', function () {
     ]);
   });
 
-  it('Verify Table In Header Calender and Export should be Visible', () => {
+  it.skip('Verify Table In Header Calender and Export should be Visible', () => {
     agent.clickTimeInStatusButton();
     agent.verifyTableInStatusCalender();
     agent.verifyTableInStatusExport();
   });
 
-  it('Verify Table In Status Table Header Elements', () => {
+  it.skip('Verify Table In Status Table Header Elements', () => {
     agent.verifyTableInStatusTableHeader([
       'Agent',
       'Logged Time',
@@ -137,9 +137,10 @@ describe('Agent Profile', function () {
     ]);
   });
 
-  it('Verify Table In Status Table Data should be visible', () => {
+  it.skip('Verify Table In Status Table Data should be visible', () => {
     agent.verifyTableInStatusTableData();
   });
+
   it('Verify Elements On Contact Page', () => {
     agent.clickOnContactButton();
     agent.verifySearchBox();
@@ -149,6 +150,7 @@ describe('Agent Profile', function () {
     agent.clickOnSelfMadeButton();
     agent.selectAllRoundBtn();
   });
+
   it('Verify Table In Contact Table Header Elements', () => {
     agent.veirifyConatactTableHeader([
       'Full Name',
@@ -327,7 +329,7 @@ describe('Agent Profile', function () {
     agent.verifyMonthChangeBnts();
     agent.verifyMonthYearStatusBar();
   });
-  it('Verify The Summary Of Agent In Time In Status Of Recent Contacts', () => {
+  it.skip('Verify The Summary Of Agent In Time In Status Of Recent Contacts', () => {
     agent.clickRecentContact();
     agent.clickTimeInStatusButton();
     agent.clickOnAgentDetailsPlusBtn([

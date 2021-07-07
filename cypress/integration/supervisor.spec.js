@@ -127,13 +127,15 @@ describe('SuperVisor Flow', () => {
   it('Verify the Recent Contact Elements of Report Page', () => {
     suprevisor.clickReportsMenu();
     suprevisor.clickReportsHeader('Recent Contacts');
-    suprevisor.verifyInboundOutboundDropdown();
-    suprevisor.verifyAllAgentsDropdown();
-    suprevisor.verifyCallResultsDropdown();
-    suprevisor.verifyAllDurationsDropdown();
-    suprevisor.verifyAllCampaignsDropdown();
+    suprevisor.verifyRecentContactsDropdown([
+      'All Calls',
+      'Call Results',
+      'Agents',
+      'Campaigns',
+      'All Durations',
+      'Mood',
+    ]);
     suprevisor.verifyDatePicker();
-    suprevisor.verifyExportButton();
   });
 
   it('Verify the Recent Contacts Table Headings', () => {
@@ -158,7 +160,7 @@ describe('SuperVisor Flow', () => {
     suprevisor.verifyDepartmentsDropdown();
     suprevisor.verifyAllCampaignsDropdown();
     suprevisor.verifyDatePicker();
-    suprevisor.verifyExportButton();
+    suprevisor.verifyExportButton('Agents');
   });
 
   it('Verify the Agents Table Headings', () => {
@@ -220,7 +222,7 @@ describe('SuperVisor Flow', () => {
     suprevisor.clickReportsHeader('Campaigns');
     suprevisor.verifyAllStatusDropdown();
     suprevisor.verifyAllAgentsDropdown();
-    suprevisor.verifyExportButton();
+    suprevisor.verifyExportButton('Campaigns');
     suprevisor.verifyDatePicker();
   });
 
@@ -246,7 +248,6 @@ describe('SuperVisor Flow', () => {
     suprevisor.clickReportsHeader('Numbers');
     suprevisor.verifySearchBox();
     suprevisor.verifyDatePicker();
-    suprevisor.verifyExportButton();
   });
 
   it('Verify the Table headings og Number section in Reports Page', () => {

@@ -46,7 +46,7 @@ const BillingSingleLineDialer = "//div[text()='Single Line Dialer']";
 const BillingMultiLineDialer = "//div[text()='Multi-Line Dialer']";
 const BillingUsageStatus = "//div[text()='Usage Stats']";
 const BillingPaymentMethods = "//div[text()='Payment Methods']";
-const BillingAddress = "//div[text()='Billing Address']";
+const BillingAddress = "//div//span[text()='Billing Info']";
 const BillingPauseAccount = "//button[text()='Pause Account']";
 const BillingCancelAccount = "//button[text()='Cancel Account']";
 const BillingInvoicing = '.profile-invoices1';
@@ -230,7 +230,7 @@ export default class Dashboard {
   }
 
   selectChat(name) {
-    cy.get(chatName).then((chat) => {
+    cy.get(chatName, { timeout: 30000 }).then((chat) => {
       for (let i = 0; i < chat.length; i++) {
         if (chat[i].textContent.trim() === name) {
           chat[i].click();
@@ -309,7 +309,7 @@ export default class Dashboard {
   }
 
   clickLeadSaveBtn() {
-    cy.get(leadSaveBtn).click();
+    cy.get(leadSaveBtn).click({ force: true });
   }
 
   clickAddNewLeadSheet() {
@@ -528,7 +528,7 @@ export default class Dashboard {
   }
 
   clickLeadSheets() {
-    cy.get(UserSettingOptions).contains('Lead Sheets').click();
+    cy.get(UserSettingOptions).contains('Lead Sheets').click({ force: true });
   }
 
   verifyVoicemailHeading() {
@@ -637,7 +637,9 @@ export default class Dashboard {
   }
 
   clickRuleRemoveBtn(rule) {
-    cy.xpath(ruleRemoveBtn(rule)).click({ force: true, multiple: true });
+    cy.xpath(ruleRemoveBtn(rule))
+      .scrollIntoView()
+      .click({ force: true, multiple: true });
   }
 
   verifyRuleRemoved(rule) {

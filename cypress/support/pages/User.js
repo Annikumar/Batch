@@ -27,8 +27,8 @@ const CancelButton = "//button[text()=' CANCEL']";
 const cancelBtn = "//button[contains(text(),'CANCEL')]";
 const SecondPhone = 'input[name=phone2]';
 const userTableHeading = '.users thead';
-const userEditButton = "img[src*='icon-edit']";
-const userDeleteButton = "img[src*='icon-delete']";
+const userEditButton = ".users svg[data-icon='pencil-alt']";
+const userDeleteButton = '.users svg[data-icon="trash"]';
 const addAgentStatus =
   "//div[contains(@class,'card-title')][.='Agent Statuses']//img[contains(@src,'add')]";
 const agentStatusName = "tbody input[type='text']";
@@ -126,7 +126,7 @@ export default class User {
         fstaName +
         '") and contains(.,"' +
         lstName +
-        '")]]//img[contains(@src,"delete")]'
+        '")]]//span/*[name()="svg"][@data-icon="trash"]'
     )
       .first()
       .click();
@@ -144,7 +144,7 @@ export default class User {
   }
 
   verifySearchBox() {
-    cy.get(searchBox).should('be.visible');
+    cy.get(searchBox).scrollIntoView().should('be.visible');
   }
 
   searchUser(user) {

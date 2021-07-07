@@ -31,8 +31,9 @@ const allAgentsDropdown =
 const allCampaignsDropdown =
   '//div[contains(@class,"ss-select-control")][span[text()="All Campaigns"]]';
 const datePicker = '.date-picker';
-const exportBtn = '//button[text()="Export"]';
+const exportBtn = '.reportCdrs__button';
 const tableHeader = '.table thead';
+const ReportContactsDropdowns = '.search_bar';
 const departmentsDropdown =
   '//span[text()="Departments"]/parent::div[contains(@class,"ss-select-control")]';
 const agentsName = '.reports-agents__agent-name';
@@ -81,6 +82,12 @@ export default class Suprevisor {
         }
       }
     });
+  }
+
+  verifyRecentContactsDropdown(element) {
+    for (let i = 0; i < element.length; i++) {
+      cy.get(ReportContactsDropdowns).should('contain.text', element[i]);
+    }
   }
 
   verifySupervisorProfile() {
@@ -163,8 +170,12 @@ export default class Suprevisor {
     }
   }
 
-  verifyExportButton() {
-    cy.xpath(exportBtn).should('be.visible');
+  verifyRecentContactsExportButton() {
+    cy.get(exportBtn).should('be.visible');
+  }
+
+  verifyExportButton(name) {
+    cy.get(`.report${name}Form__button`).should('be.visible');
   }
 
   verifyDatePicker() {

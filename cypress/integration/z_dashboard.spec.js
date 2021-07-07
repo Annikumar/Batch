@@ -44,10 +44,6 @@ describe('Dashboard Elements', function () {
     Dash.verifyDashboardElements();
   });
 
-  it('verify elements in Dashboard Header', function () {
-    Dash.verifyDashboardHeaderElement();
-  });
-
   it('Login As Button Functionality', function () {
     Dash.clickLoginAs();
     Dash.searchUser('automation');
@@ -58,6 +54,10 @@ describe('Dashboard Elements', function () {
     Dash.clickStatusButton();
     Dash.selectAvailable('Available', testData.campaign);
     Dash.clickConfirmButton();
+  });
+
+  it('verify elements in Dashboard Header', function () {
+    Dash.verifyDashboardHeaderElement();
   });
 
   it('Verify functionality of Dialer button', function () {
@@ -600,7 +600,7 @@ describe('Dashboard Elements', function () {
     Dash.clickChatCloseButton();
   });
 
-  it('Verify that the supervisor have receiver message from Admin', () => {
+  it('Verify that the supervisor have receive message from Admin', () => {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);
@@ -609,10 +609,21 @@ describe('Dashboard Elements', function () {
     Dash.verifyChatBox();
     Dash.selectChat(testData.AdminName);
     Dash.verifyMessageText(message('Admin'));
+  });
+
+  it('Verify that supervisor can send message to Admin', () => {
     Dash.enterMessage(message('Supervisor'));
     Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
     Dash.clickBackToAdmin();
     Dash.verifyUserDashboardName(testData.AdminName);
+  });
+
+  it('Verify that Admin have received message from Supervisor', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.selectChat(testData.supervisor);
+    Dash.verifyMessageText(message('Supervisor'));
+    Dash.clickChatCloseButton();
   });
 });

@@ -3,6 +3,7 @@ const reportMenu = "a[title='Reports']";
 const reportLive = '.report-live-buttons-left';
 const tableHeader = '.table thead';
 const ReportContactsDropdowns = '.search_bar';
+const reportsHeader = (header) => '.subitem a[title="' + header + '"]';
 const ReportContactButton = "//div[text()='Recent Contacts']";
 const campaignDropdown = '.reportCampaignsForm';
 const reportCampaignsButton = "//div[text()='Campaigns']";
@@ -55,6 +56,10 @@ export default class Report {
     for (let i = 0; i < element.length; i++) {
       cy.get(tableHeader).should('contain.text', element[i]);
     }
+  }
+
+  clickReportsHeader(header) {
+    cy.get(reportsHeader(header)).click({ force: true });
   }
 
   verifyRecentContactsDropdown(element) {

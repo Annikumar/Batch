@@ -32,20 +32,9 @@ describe('Report Page', function () {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
   });
 
-  it('verify report header element', function () {
-    report.clickReportMenu();
-    report.reportHeaderElement([
-      'Live',
-      'Recent Contacts',
-      'Campaigns',
-      'Agents',
-      'Numbers',
-      'Agents Heat Map',
-      'Floormap',
-    ]);
-  });
-
   it('verify report live elements', function () {
+    report.clickReportMenu();
+    report.clickReportsHeader('Live');
     report.verifyReportLiveElements([
       'Talking Time',
       'Active Calls',
@@ -74,18 +63,19 @@ describe('Report Page', function () {
   });
 
   it('Verify dropdowns of Report contacts', function () {
-    report.clickRecentContactButton();
+    report.clickReportMenu();
+    report.clickReportsHeader('Recent Contacts');
     report.verifyRecentContactsDropdown([
-      'Inbound+Outbound',
+      'All Calls',
       'Call Results',
-      'All Agents',
-      'All Campaigns',
+      'Agents',
+      'Campaigns',
       'All Durations',
-      'Export',
+      'Mood',
     ]);
   });
 
-  it('verify report table header element for Report Contact', function () {
+  it('verify report table header element for Recent Contact', function () {
     report.verifyReportTableHeaderElements([
       'Call Type',
       'Date/Time',
@@ -100,7 +90,8 @@ describe('Report Page', function () {
   });
 
   it('verify Dropdowns on Report Campaign', function () {
-    report.clickReportCampaignsButton();
+    report.clickReportMenu();
+    report.clickReportsHeader('Campaigns');
     report.VerifyDropdownsReportCampaign([
       'All Statuses',
       'All Agents',
@@ -122,7 +113,8 @@ describe('Report Page', function () {
   });
 
   it('Verify dropdowns of Report Agent', function () {
-    report.clickAgentButton();
+    report.clickReportMenu();
+    report.clickReportsHeader('Agents');
     report.verifyAgentsDropdowns(['Departments', 'All Campaigns', 'Export']);
   });
 
@@ -149,7 +141,8 @@ describe('Report Page', function () {
   });
 
   it('verify report table header element for Report Agent', function () {
-    report.clickNumberButton();
+    report.clickReportMenu();
+    report.clickReportsHeader('Numbers');
     report.verifyReportTableHeaderElements([
       'Phone Number',
       'Destination',
@@ -165,7 +158,8 @@ describe('Report Page', function () {
   });
 
   it('Verify All status dropdown should show statuses', () => {
-    report.clickReportCampaignsButton();
+    report.clickReportMenu();
+    report.clickReportsHeader('Campaigns');
     report.clickCampaignStatusDropdown();
     report.verifyStatusDropdownElements([
       'All Statuses',
@@ -206,13 +200,14 @@ describe('Report Page', function () {
 
   it.skip('Verifies the Export Functionality of Recent Contact', () => {
     report.clickReportMenu();
-    report.clickRecentContactButton();
+    report.clickReportsHeader('Recent Contacts');
     report.getDialedContactNumbers();
     report.clickExportBtn();
   });
 
   it('Verify Agent Heat Map Elements', () => {
-    report.clickAgentHeatMap();
+    report.clickReportMenu();
+    report.clickReportsHeader('Heat Map');
     report.verifyAgentHeatMapDropdown();
     report.verifyHeatMapRadioButtons(['Day', 'Week', 'Month']);
     report.verifyHeatMapDatePicker();
@@ -234,7 +229,8 @@ describe('Report Page', function () {
   });
 
   it('Verify Floor Map Elements', () => {
-    report.clickFloorMap();
+    report.clickReportMenu();
+    report.clickReportsHeader('Floor Map');
     // report.verifyFloorMapViewDropdown();
     report.verifyAddNewFloorButton();
   });

@@ -16,7 +16,7 @@ const userEditBtn = (firstName, lastName) =>
   firstName +
   '"][text()="' +
   lastName +
-  '"]]//img[contains(@src,"edit")]';
+  '"]]//span/*[name()="svg"][@data-icon="pencil-alt"]';
 const emailField = 'input[name="email"]';
 const cancelBtn = '//button[contains(text(),"CANCEL")]';
 const passwordChangeBtn = '.changebt';
