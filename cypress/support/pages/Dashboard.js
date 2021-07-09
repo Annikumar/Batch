@@ -147,7 +147,7 @@ const cancelAccountReason = (reason) =>
 const confirmDelete = '.security input';
 const dialogCloseBtn = '.modal-body svg[data-icon="times"]';
 const popUpHeader = '.modal-header';
-const taskLeftArrow = "img[src*='left.svg']";
+const taskLeftArrow = '.daypicker__month-form svg:nth-of-type(1)';
 const DashboardCalender = '.fakeinput__overflow';
 const CalenderMonth = '.daypicker__month-select';
 const filterStartDate = "(//div[@class='date-input-field'])[1]";

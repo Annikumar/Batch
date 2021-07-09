@@ -81,7 +81,9 @@ const importContactSelectCompaignDropdown =
 const importContactOptionsCheckbox = '.radio_cstm';
 const tableBody = '.table tbody';
 const contactCheckbox = (number) =>
-  '(//table[@class="table"]//span[@class="checkmark"])[' + number + ']';
+  '(//table[contains(@class,"table")]//span[@class="checkmark"])[' +
+  number +
+  ']';
 
 const lists = 'a[title="Lists"]';
 const actionCampaign = '//a[text()="Add to Campaign"]';

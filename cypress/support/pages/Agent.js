@@ -130,8 +130,7 @@ const calenderOnDashBoard =
 const calenderSideBar = '.links';
 const calenderFromDateToDate = "[placeholder='MM/DD/YYYY']";
 const daysOfCalender = '.DayPicker-WeekdaysRow';
-const monthChangeBnts =
-  "//*[@id='root']/section/div/div/div[1]/div[2]/div/div/div/div/div[2]/div[2]/div/div/div/div/form/div/img";
+const monthChangeBnts = '.svg-stroke';
 const monthYearStatusBar = '.daypicker__month-select';
 const agentDetailsPlusBtn = "[data-icon='plus']";
 const agentCallDetails = '.reports-agents__summary';
@@ -566,7 +565,7 @@ export default class Agent {
     }
   }
   verifyMonthChangeBnts() {
-    cy.xpath(monthChangeBnts).should('be.visible');
+    cy.get(monthChangeBnts).should('be.visible').should('have.length', 2);
   }
   verifyMonthYearStatusBar() {
     cy.get(monthYearStatusBar).should('be.visible');
