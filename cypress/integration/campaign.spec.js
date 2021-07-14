@@ -405,6 +405,7 @@ describe('Add Campaign flow', () => {
     addCamp.clickRecycleOption();
     addCamp.selectRecycleCallResult('Busy');
     addCamp.enterNewCampaignName('RecycledCampaign');
+    addCamp.removeCheckBox();
     addCamp.clickRecycleSaveCampaign();
     addCamp.verifySuccessToast('Recycled campaign created');
     addCamp.verifyAddedRecycleCampaign('RecycledCampaign');

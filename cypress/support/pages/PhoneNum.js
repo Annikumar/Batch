@@ -84,21 +84,22 @@ const ivrDropdown = (title, dropdown) =>
   "']";
 const newDigitBtn = '//button[contains(text(),"NEW DIGIT")]';
 const addNewBtn = '//button[contains(text(),"ADD NEW")]';
-const addNewCallResult = '.form-group button[type="button"]';
-const tableBody = '.table tbody';
+const addNewCallResult = '//button[contains(text(),"New Call Result")]';
+const newGroupBtn = '//button[contains(text(),"New Group")]';
+const tableBody = '.group-inner .disposition';
 const callResultMenu = 'a[title="Call Results"]';
 const customRadioBtn = (x) =>
   "//label[@class='radio_cstm'][contains(.,'" + x + "')]";
-const buttonColorBox = '.form-label+.disposition';
+const buttonColorBox = '.disposition-color';
+const groupNameField = '.group-row input';
 const addNewRuleBtn = '//button[contains(text(),"ADD NEW RULE")]';
 const newRuleOptions = (option) =>
   "//a[@class='dropdown-item'][text()='" + option + "']";
 const callResultSaveBtn = '//button[contains(text(),"Save")]';
 const callResultCancelBtn = '//button[contains(text(),"Cancel")]';
-const callResultDeleteBtn = (callResult) =>
-  "//tr[td[div[text()='" + callResult + "']]]//img[contains(@src,'delete')]";
+const callResultDeleteBtn = '.disposition-controls .fa-trash';
 const callResultEditBtn = (callResult) =>
-  "//tr[td[div[text()='" + callResult + "']]]//img[contains(@src,'edit')]";
+  `//tr[@class="group-inner"]//li[div[text()="${callResult}"]]`;
 const addPhoneGroup = '.card-title img[src*="add"]';
 const destinationDropdown = '.modal-content .ss-select';
 const destinationOptions = (option) =>
@@ -141,16 +142,36 @@ const editForm = '.edit-form';
 const edit = (editName) =>
   '//tr[td[text()="' + editName + '"]]//img[contains(@src,"edit")]';
 const saveQueueBtn = '.save_btn';
+const groupNameText = '.group-title';
+const callResultsName = '.dropdown-item';
+const campaignCallResultGroup = `//div[contains(@class,"ss-select-option")]//span[contains(@class,"campaign__status")]/parent::span`;
+const callResultsDropdown = '.group-row + .group-inner button.dropdown-toggle';
+const saveFieldIcon = '.group-row input + span .fa-check';
+const openCallResultGroup = (groupName) =>
+  `//td[@class="group-title" and text()="${groupName}"]/preceding-sibling::td[@class="group-opener"]`;
+const deleteCallResultGroupIcon = (groupName) =>
+  `//td[@class="group-title" and text()="${groupName}"]/parent::tr[@class="group-row"]//span/*[name()="svg"][contains(@class,"fa-trash")]`;
+const editCallResultGroupIcon = (groupName) =>
+  `//td[@class="group-title" and text()="${groupName}"]/parent::tr[@class="group-row"]//span/*[name()="svg"][contains(@class,"fa-pencil")]`;
 
 export default class PhoneNum {
-  clickCallResultDeleteBtn(callResult) {
-    cy.xpath(callResultDeleteBtn(callResult)).click({ force: true });
+  clickCallResultDeleteBtn() {
+    cy.get(callResultDeleteBtn).then((del) => {
+      for (let i = 0; i < del.length; i++) {
+        cy.get(del[i]).click();
+      }
+    });
   }
 
   verifyCreatedCallResult(callResult) {
     // cy.get(callresultDropdown).click();
     // cy.get(dropdownOptions).contains(callResult).should('be.visible');
     cy.get('.ss-select-value-label').contains(callResult).should('be.visible');
+  }
+
+  verifyCreatedCallResultGroup(groupName) {
+    cy.get('.row-calldisposition .ss-select-control').click();
+    cy.xpath(campaignCallResultGroup).should('contain.text', groupName);
   }
 
   clickCallResultEditBtn(callResult) {
@@ -191,8 +212,24 @@ export default class PhoneNum {
     cy.xpath(destinationOptions(destination)).click();
   }
 
+  clickSaveFieldIcon() {
+    cy.get(saveFieldIcon).click();
+  }
+
+  VerifyAddedGroupName(name) {
+    cy.get(groupNameText).should('contain.text', name);
+  }
+
+  VerifyDeleteGroup(name) {
+    cy.get(groupNameText).should('not.contain.text', name);
+  }
+
   verifyDestinationDropdown() {
     cy.get(destinationDropdown).should('be.visible');
+  }
+
+  clickDeleteCallResultGroupIcon(groupName) {
+    cy.xpath(deleteCallResultGroupIcon(groupName)).click();
   }
 
   verifyAddedPhoneGroup(group) {
@@ -201,6 +238,10 @@ export default class PhoneNum {
 
   clickDeletePhoneGroup(group) {
     cy.xpath(addedPhoneGroup(group)).click();
+  }
+
+  clickEditCallResultGroupIcon(groupName) {
+    cy.xpath(editCallResultGroupIcon(groupName)).click();
   }
 
   clickUploadFileBtn() {
@@ -215,12 +256,27 @@ export default class PhoneNum {
     cy.xpath(uploadBtn).click();
   }
 
+  selectCallResultsFromDropdown(callResultName) {
+    cy.get(callResultsDropdown).click();
+    cy.get(callResultsName).then((results) => {
+      for (let i = 0; i < results.length; i++) {
+        if (results[i].textContent.trim() === callResultName) {
+          results[i].click();
+        }
+      }
+    });
+  }
+
   clickCloseBtn() {
     cy.xpath(closeBtn, { timeout: 5000 }).click();
   }
 
   verifyUploadDncFile(fileName) {
     cy.xpath(uploadedFile(fileName)).should('be.visible');
+  }
+
+  enterCallResutlGroupName(name) {
+    cy.get(groupNameField).type(name);
   }
 
   verifyDncFileDownloadBtn(fileName) {
@@ -237,6 +293,10 @@ export default class PhoneNum {
 
   verifySearchResult(result) {
     cy.xpath(uploadedFile(result)).should('be.visible');
+  }
+
+  clickOpenCallResultGroup(groupName) {
+    cy.xpath(openCallResultGroup(groupName)).click();
   }
 
   chooseActiveInactive(choice) {
@@ -287,6 +347,10 @@ export default class PhoneNum {
 
   verifyNumberGroupDropdown() {
     cy.xpath(selectDropdown('Select Number Group')).should('be.visible');
+  }
+
+  verifyCallResultGroupDropdown() {
+    cy.xpath(selectDropdown('Select Call Results Group')).should('be.visible');
   }
 
   verifyActiveInactive(choice) {
@@ -699,14 +763,22 @@ export default class PhoneNum {
   }
 
   verifyAddNewCallResultBtn() {
-    cy.get(addNewCallResult).should('be.visible');
+    cy.xpath(addNewCallResult).should('be.visible');
   }
 
   clickAddNewCallResultBtn() {
-    cy.get(addNewCallResult).click();
+    cy.xpath(addNewCallResult).click();
   }
 
-  verifyTableBodyElement(body) {
+  verifyAddNewGroupBtn() {
+    cy.xpath(newGroupBtn).should('be.visible');
+  }
+
+  clickAddNewGroupBtn() {
+    cy.xpath(newGroupBtn).click();
+  }
+
+  verifyDefaultCallResults(body) {
     for (let i = 0; i < body.length; i++) {
       cy.get(tableBody).should('contain.text', body[i]);
     }

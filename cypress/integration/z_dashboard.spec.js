@@ -558,7 +558,23 @@ describe('Dashboard Elements', function () {
     Dash.verifyChatBox();
   });
 
+  it('Verify that clicking the close button should close the chat window', () => {
+    Dash.clickChatCloseButton();
+    Dash.verifyChatBoxClose();
+  });
+
+  it('Verify that one can not send blank message', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.agent]);
+    Dash.VerifySendMessageButton('be.disabled');
+    Dash.clickChatCloseButton();
+  });
+
   it('Send message to the agent', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
     Dash.clickStartChatButton();
     Dash.selectUserToSendMessage([testData.agent]);
     Dash.enterMessage(message('Admin'));

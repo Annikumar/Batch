@@ -628,8 +628,17 @@ export default class Campaign {
     cy.get(newCampaignName).type(name);
   }
 
+  removeCheckBox() {
+    cy.get('.checkmark').then((el) => {
+      for (let i = 0; i < el.length; i++) {
+        el[i].click();
+        cy.wait(1000);
+      }
+    });
+  }
+
   clickRecycleSaveCampaign() {
-    cy.get(saveCampaign).click();
+    cy.get(saveCampaign, { timeout: 20000 }).should('be.enabled').click();
   }
 
   verifySuccessToast(message) {

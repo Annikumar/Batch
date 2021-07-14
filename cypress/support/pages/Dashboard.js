@@ -195,6 +195,10 @@ export default class Dashboard {
     cy.get(chatBox).should('be.visible');
   }
 
+  verifyChatBoxClose() {
+    cy.get(chatBox).should('not.exist');
+  }
+
   clickStartChatButton() {
     cy.get('button').then((button) => {
       for (let i = 0; i < button.length; i++) {
@@ -215,6 +219,17 @@ export default class Dashboard {
       for (let i = 0; i < button.length; i++) {
         if (button[i].textContent.trim() === 'Send') {
           button[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  VerifySendMessageButton(condition) {
+    cy.get('button').then((button) => {
+      for (let i = 0; i < button.length; i++) {
+        if (button[i].textContent.trim() === 'Send') {
+          cy.get(button[i]).should(condition);
           break;
         }
       }
