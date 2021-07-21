@@ -572,6 +572,31 @@ describe('Dashboard Elements', function () {
     Dash.clickChatCloseButton();
   });
 
+  it('Verify the limit of message that user can not send more than 160 words', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.agent]);
+    Dash.enterMessageMoreThan160Words('b');
+    Dash.verifyMessageLimit();
+  });
+
+  it('Verify that Emoji Window should open when click Emoji Icon', () => {
+    Dash.clickEmojiIcon();
+    Dash.verifyEmojiWindow();
+    Dash.clickEmojiIcon();
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that user can create group and send message', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.agent, testData.supervisor]);
+    Dash.enterMessage(message('Admin'));
+    Dash.clickSendMessageButton();
+  });
+
   it('Send message to the agent', () => {
     Dash.clickMessageIcon();
     Dash.verifyChatBox();

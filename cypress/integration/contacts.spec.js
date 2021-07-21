@@ -1,10 +1,12 @@
 import Contacts from '../support/pages/Contacts';
 import { selectAgentStatus } from '../support/Utils';
+import Dashboard from '../support/pages/Dashboard';
 
 let fixtureData;
 let testData;
 let randNum = Math.floor(Math.random() * 100);
 const addCont = new Contacts();
+const dashboard = new Dashboard();
 
 describe('Add Contact flow', () => {
   before(() => {
@@ -363,6 +365,44 @@ describe('Add Contact flow', () => {
     addCont.verifyPlayerVolumeBar();
     addCont.verifyPlayerProgressBar();
     addCont.verifyPlayerDownloadBtn();
+  });
+
+  it('Verify that the authorized user is able to play/pause the recorded call', () => {
+    addCont.clickingOnContactOption();
+    addCont.enterSearch(testData.Contact);
+    addCont.clickContactName(testData.Contact);
+    addCont.clickContactPhoneNumber();
+    addCont.clickDialerCallButton();
+    cy.wait(10000);
+    addCont.clickDialerCallButton();
+    addCont.selectCallResult('Call Back');
+    addCont.clickContinueBtn();
+    addCont.clickContactsCamapign();
+    addCont.clickRecordingIcon();
+    addCont.clickPlayerPlayBtn();
+    cy.wait(1000);
+    addCont.clickPlayerPauseBtn();
+  });
+
+  it('Verify that the authorized user is able to Forward/Rewind the recorded call', () => {
+    addCont.clickPlayerForwardBtn();
+    cy.wait(1000);
+    addCont.clickPlayerRewindBtn();
+  });
+
+  it.skip('Verify that the authorized user is able to download the call recording', () => {
+    addCont.downloadRecording();
+  });
+
+  it('Verify that agent user is able to dial a valid phone number which is not in the contacts', () => {
+    dashboard.clickDashboard();
+    addCont.ClickToOpenSoftphone();
+    addCont.dialPhoneNumber('7209834562');
+    addCont.clickDialerCallButton();
+    cy.wait(3000);
+    addCont.clickDialerCallButton();
+    addCont.selectCallResult('Call Back');
+    addCont.clickContinueBtn();
   });
 
   it('Verify the Assign to Campaign Option for Lists', () => {

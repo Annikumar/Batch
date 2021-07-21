@@ -13,11 +13,6 @@ describe('Registration', () => {
     cy.readFile('cypress/fixtures/testData.json').then(
       (data) => (testData = data)
     );
-    // Cypress.Cookies.defaults({
-    //   preserve: (cookies) => {
-    //     return true;
-    //   },
-    // });
   });
 
   after(() => {
@@ -77,29 +72,35 @@ describe('Registration', () => {
   });
 
   it('Register User', () => {
-    register.clickSignUpBtn();
-    register.enterFirstName('Demo');
-    register.enterLastName('testing');
-    register.enterCompanyName('Fleek+' + randomNumber + '');
-    register.selectIndustry('Other');
-    register.enterPhoneNumber('9999999999');
-    register.enterEmail('testing+' + randomNumber + '@test.com');
-    register.enterPassword('Fleek@2016');
-    register.enterConfirmPassword('Fleek@2016');
-    register.clickContinueToPlanBtn();
-    register.choosePlan('Single Line Dialer'); //Multi-Line Dialer
-    register.verifyPlanPrice();
-    register.enterCardDetailsForSignUp(
-      Cypress.env('CardName'),
-      Cypress.env('CardNumber'),
-      Cypress.env('ExpiryDate'),
-      Cypress.env('CVC'),
-      Cypress.env('Country'),
-      Cypress.env('BillingZip'),
-      Cypress.env('Coupon')
-    );
-    register.clickAgreeCheckbox();
-    register.clickSubscribeBtn();
-    login.verifySuccessfullLogin();
+    cy.url().then((url) => {
+      if (url.includes('app.batchdialer.com')) {
+        cy.log('Not Registering user on Prod');
+      } else {
+        register.clickSignUpBtn();
+        register.enterFirstName('Demo');
+        register.enterLastName('testing');
+        register.enterCompanyName('Fleek+' + randomNumber + '');
+        register.selectIndustry('Other');
+        register.enterPhoneNumber('9999999999');
+        register.enterEmail('testing+' + randomNumber + '@test.com');
+        register.enterPassword('Fleek@2016');
+        register.enterConfirmPassword('Fleek@2016');
+        register.clickContinueToPlanBtn();
+        register.choosePlan('Single Line Dialer'); //Multi-Line Dialer
+        register.verifyPlanPrice();
+        register.enterCardDetailsForSignUp(
+          Cypress.env('CardName'),
+          Cypress.env('CardNumber'),
+          Cypress.env('ExpiryDate'),
+          Cypress.env('CVC'),
+          Cypress.env('Country'),
+          Cypress.env('BillingZip'),
+          Cypress.env('Coupon')
+        );
+        register.clickAgreeCheckbox();
+        register.clickSubscribeBtn();
+        login.verifySuccessfullLogin();
+      }
+    });
   });
 });

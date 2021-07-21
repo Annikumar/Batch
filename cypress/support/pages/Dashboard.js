@@ -181,6 +181,8 @@ const usersName = '.ss-select-option';
 const messageField = '.chat__input textarea';
 const chatName = '.chat__conversation__top-name';
 const messageText = '.chat__message__text';
+const emojiIcon = '.emoji-icon';
+const emojiWindow = '.emoji-mart';
 
 export default class Dashboard {
   clickDashboard() {
@@ -212,6 +214,18 @@ export default class Dashboard {
 
   enterMessage(message) {
     cy.get(messageField).type(message);
+  }
+
+  enterMessageMoreThan160Words(message) {
+    for (let i = 0; i < 165; i++) {
+      cy.get(messageField).type(message);
+    }
+  }
+
+  verifyMessageLimit() {
+    cy.get(messageField).then((message) => {
+      expect(message.text().split('').length).to.equal(160);
+    });
   }
 
   clickSendMessageButton() {
@@ -259,16 +273,15 @@ export default class Dashboard {
     cy.get(receiverDropdown).click();
     cy.get(usersName).then((users) => {
       for (let i = 0; i < name.length; i++) {
-        cy.log(name[i]);
         for (let j = 0; j < users.length; j++) {
           if (users[j].textContent.trim() === name[i]) {
-            cy.log(users[j].textContent.trim());
             users[j].click();
             break;
           }
         }
       }
     });
+    cy.get(receiverDropdown).click();
   }
 
   verifyDashboardElements() {
@@ -1222,5 +1235,13 @@ export default class Dashboard {
   }
   verifyDashboardCalandar() {
     cy.get(DashboardCalender).should('be.visible');
+  }
+
+  clickEmojiIcon() {
+    cy.get(emojiIcon).click();
+  }
+
+  verifyEmojiWindow() {
+    cy.get(emojiWindow).should('be.visible');
   }
 }

@@ -1,6 +1,6 @@
 import promisify from 'cypress-promise';
 
-const contactsMenu = 'a[title="Contacts"]';
+const contactsMenu = 'a[title="Contacts"] .menu_cricle';
 const addNewContact = '//button[contains(text(),"NEW CONTACT")]';
 const createNewOption =
   '//div[contains(@class,"show")]/a[contains(text(),"Create New")]';
@@ -85,7 +85,7 @@ const contactCheckbox = (number) =>
   number +
   ']';
 
-const lists = 'a[title="Lists"]';
+const lists = 'a[title="Contact Lists"]';
 const actionCampaign = '//a[text()="Add to Campaign"]';
 const selectCampaign = '//div[text()="FirstCampaign"]';
 const CampaignDropdown = '.modal-content .ss-select-value';
@@ -139,6 +139,17 @@ const playerControlBtn = '.contacts-player__controls svg';
 const playerVolumeBar = '.contacts-player__volume-bar';
 const playerProgressBar = '.contacts-player__progress-bar';
 const playerDownloadBtn = '.contacts-player__download';
+const playerPlayPauseBtn = '.contacts-player__controls svg:nth-of-type(2)';
+const playerForwardBtn = '.contacts-player__controls svg:nth-of-type(3)';
+const playerRewindBtn = '.contacts-player__controls svg:nth-of-type(1)';
+const contactPhoneNumber =
+  '.phone-table tbody tr:nth-child(1) .phone__a-wrapper';
+const callButton = '.stg-softphone-callbutton';
+const callResults = '.disposition-cell .disposition';
+const doneBtn = "//button[text()='Done']";
+const openSoftphone = '.stg-softphone-wide';
+const softphoneIcon = '.nav-item img[src*="softphone"]';
+const softphoneNumPad = '.stg-softphone-keyboard-button';
 
 export default class Contacts {
   clickingOnContactOption() {
@@ -155,6 +166,10 @@ export default class Contacts {
 
   selectUploadFileOption() {
     cy.xpath(uploadFileOption).click();
+  }
+
+  clickContinueBtn() {
+    cy.xpath(doneBtn).click();
   }
 
   enterFirstName(fstName) {
@@ -187,10 +202,60 @@ export default class Contacts {
     cy.xpath(fieldsSaveBtn('Postal Code')).click();
   }
 
+  clickDialerCallButton() {
+    cy.get(callButton).click();
+  }
+
+  selectCallResult(result) {
+    cy.get(callResults).then(($el) => {
+      for (let i = 0; i < $el.length; i++) {
+        if ($el[i].textContent === result) {
+          $el[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  dialPhoneNumber(num) {
+    const number = num.split('');
+    for (let i = 0; i < number.length; i++) {
+      cy.get(softphoneNumPad).then((numPad) => {
+        for (let j = 0; j < numPad.length; j++) {
+          // cy.log(numPad[1].textContent);
+          if (numPad[j].textContent.includes(number[i])) {
+            cy.get(numPad[j]).click();
+            break;
+          }
+        }
+      });
+    }
+  }
+
   enterEmail(email) {
     cy.xpath(EmailEditBtn).click();
     cy.get(inputEmail).type(email);
     cy.xpath(emailSaveBtn).click();
+  }
+
+  clickPlayerPlayBtn() {
+    cy.get(playerPlayPauseBtn).click();
+  }
+
+  clickPlayerPauseBtn() {
+    cy.get(playerPlayPauseBtn).click();
+  }
+
+  clickPlayerForwardBtn() {
+    cy.get(playerForwardBtn).click();
+  }
+
+  clickContactPhoneNumber() {
+    cy.get(contactPhoneNumber).click();
+  }
+
+  clickPlayerRewindBtn() {
+    cy.get(playerRewindBtn).click();
   }
 
   enterPhoneNumber(num) {
@@ -247,6 +312,16 @@ export default class Contacts {
 
   clickRecordingIcon() {
     cy.get(recordingIcon).first().click();
+  }
+
+  ClickToOpenSoftphone() {
+    cy.get('body').then(($body) => {
+      if ($body.find(openSoftphone).length) {
+        cy.log('Softphone is already Opened');
+      } else {
+        cy.get(softphoneIcon).click();
+      }
+    });
   }
 
   selectFirstNameDropdown() {
@@ -578,6 +653,14 @@ export default class Contacts {
 
   clickContinueButton() {
     cy.xpath(ContinueButton).click();
+  }
+
+  downloadRecording() {
+    cy.get(playerDownloadBtn).then((btn) => {
+      const recording = btn[0].getAttribute('href');
+      cy.downloadFile(recording, 'cypress/fixtures/Download', 'Recording.mp3');
+      // cy.readFile('cypress/fixtures/Download/Recording').should('be.visible');
+    });
   }
 
   verifyAddedCampaign() {
