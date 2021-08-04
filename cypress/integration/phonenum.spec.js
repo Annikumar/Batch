@@ -387,7 +387,7 @@ describe('Add Phone Number flow', () => {
     addNum.clickCallResultMenu();
     addNum.clickAddNewCallResultBtn();
     addNum.enterName('DemoTesting');
-    addNum.chooseShowOnNewCampaignPage('Yes');
+    // addNum.chooseShowOnNewCampaignPage('Yes');
     addNum.chooseActiveInactive('Active');
     addNum.selectCallResultCampaignDropdown(testData.campaign);
     addNum.clickCallResultSaveBtn();
@@ -438,87 +438,87 @@ describe('Add Phone Number flow', () => {
     addNum.verifyCallResultDelete('DemoTesting');
   });
 
-    it('Verifies Number Group Elements', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickAddPhoneGroup();
-      addNum.verifyNameField();
-      addNum.verifyDestinationDropdown();
-      addNum.verifySaveBtn();
-      addNum.verifyCancelBtn();
-    });
+  it('Verifies Number Group Elements', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickAddPhoneGroup();
+    addNum.verifyNameField();
+    addNum.verifyDestinationDropdown();
+    addNum.verifySaveBtn();
+    addNum.verifyCancelBtn();
+  });
 
-    it('Add a Number Group', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickAddPhoneGroup();
-      addNum.enterName('DemoTesting');
-      addNum.SelectDestination('Agent');
-      addNum.clickSaveBtn();
-    });
+  it('Add a Number Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickAddPhoneGroup();
+    addNum.enterName('DemoTesting');
+    addNum.SelectDestination('Agent');
+    addNum.clickSaveBtn();
+  });
 
-    it('Verifies Added Phone Group', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.verifyAddedPhoneGroup('DemoTesting');
-    });
+  it('Verifies Added Phone Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.verifyAddedPhoneGroup('DemoTesting');
+  });
 
-    it('Delete Added Phone Group', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDeletePhoneGroup('DemoTesting');
-      addNum.handleDeleteAlert('Delete?');
-    });
+  it('Delete Added Phone Group', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDeletePhoneGroup('DemoTesting');
+    addNum.handleDeleteAlert('Delete?');
+  });
 
-    it('Upload DNC File', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      addNum.clickUploadFileBtn();
-      addNum.uploadFile('contact-sample.csv');
-      addNum.clickUploadBtn();
-      addNum.clickCloseBtn();
-    });
+  it('Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.clickUploadFileBtn();
+    addNum.uploadFile('contact-sample.csv');
+    addNum.clickUploadBtn();
+    addNum.clickCloseBtn();
+  });
 
-    it('Verifies Upload DNC File', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      addNum.verifyUploadDncFile('contact-sample.csv');
-    });
+  it('Verifies Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.verifyUploadDncFile('contact-sample.csv');
+  });
 
-    it('Verifies the Search Results', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      addNum.enterFileNameToSearch('contact');
-      addNum.verifySearchResult('contact');
-    });
+  it('Verifies the Search Results', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.enterFileNameToSearch('contact');
+    addNum.verifySearchResult('contact');
+  });
 
-    it('Verifies the File Download Button', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      addNum.verifyDncFileDownloadBtn('contact-sample.csv');
-    });
+  it('Verifies the File Download Button', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.verifyDncFileDownloadBtn('contact-sample.csv');
+  });
 
-    it('Delete the Upload DNC File', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      addNum.clickDeleteDncFile('contact-sample.csv');
-      addNum.handleDeleteAlert('Delete?');
-    });
+  it('Delete the Upload DNC File', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    addNum.clickDeleteDncFile('contact-sample.csv');
+    addNum.handleDeleteAlert('Delete?');
+  });
 
-    it('Add a contact Phone to DNC', async () => {
-      addCont.clickingOnContactOption();
-      addCont.enterKeywordToSearch('random');
-      cy.wait(1000);
-      phone = await promisify(addCont.getPhoneNumber());
-    });
-    it('Check for Added contact in DNC Page', () => {
-      addNum.clickContactMenu('random', 'Contact');
-      addNum.clickAddToDNC();
-      addNum.clickPhoneNumberMenu();
-      addNum.clickDncMenu();
-      cy.wait(1000);
-      addNum.verifyAddedDNCNumber(phone);
-    });
-    it('Search phone number using search box', () => {
-      addNum.clickPhoneNumberMenu();
-      addNum.enterSearchKeyword(testData.Number);
-      addNum.verifySearchedNumber(testData.Number);
-      addNum.verifyNumberNotVisible();
-    });
+  it('Add a contact Phone to DNC', async () => {
+    addCont.clickingOnContactOption();
+    addCont.enterKeywordToSearch('random');
+    cy.wait(1000);
+    phone = await promisify(addCont.getPhoneNumber());
+  });
+  it('Check for Added contact in DNC Page', () => {
+    addNum.clickContactMenu('random', 'Contact');
+    addNum.clickAddToDNC();
+    addNum.clickPhoneNumberMenu();
+    addNum.clickDncMenu();
+    cy.wait(1000);
+    addNum.verifyAddedDNCNumber(phone);
+  });
+  it('Search phone number using search box', () => {
+    addNum.clickPhoneNumberMenu();
+    addNum.enterSearchKeyword(testData.Number);
+    addNum.verifySearchedNumber(testData.Number);
+    addNum.verifyNumberNotVisible();
+  });
 });

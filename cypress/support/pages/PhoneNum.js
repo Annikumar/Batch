@@ -145,7 +145,7 @@ const saveQueueBtn = '.save_btn';
 const groupNameText = '.group-title';
 const callResultsName = '.dropdown-item';
 const campaignCallResultGroup = `//div[contains(@class,"ss-select-option")]//span[contains(@class,"campaign__status")]/parent::span`;
-const callResultsDropdown = '.group-row + .group-inner button.dropdown-toggle';
+const callResultsDropdown = '.group-inner div.dropdown';
 const saveFieldIcon = '.group-row input + span .fa-check';
 const openCallResultGroup = (groupName) =>
   `//td[@class="group-title" and text()="${groupName}"]/preceding-sibling::td[@class="group-opener"]`;
@@ -153,6 +153,7 @@ const deleteCallResultGroupIcon = (groupName) =>
   `//td[@class="group-title" and text()="${groupName}"]/parent::tr[@class="group-row"]//span/*[name()="svg"][contains(@class,"fa-trash")]`;
 const editCallResultGroupIcon = (groupName) =>
   `//td[@class="group-title" and text()="${groupName}"]/parent::tr[@class="group-row"]//span/*[name()="svg"][contains(@class,"fa-pencil")]`;
+const showOnCampaignPage = `//label[@class="radio_cstm"][text()="Display on New Campaign Page"]//span[@class="checkmark"]`;
 
 export default class PhoneNum {
   clickCallResultDeleteBtn() {
@@ -328,7 +329,7 @@ export default class PhoneNum {
   }
 
   verifyShowOnNewCompaignPage(choice) {
-    cy.xpath(customRadioBtn(choice)).should('be.visible');
+    cy.xpath(showOnCampaignPage).should('be.visible');
   }
 
   verifyRules(rules) {

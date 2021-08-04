@@ -183,6 +183,12 @@ const chatName = '.chat__conversation__top-name';
 const messageText = '.chat__message__text';
 const emojiIcon = '.emoji-icon';
 const emojiWindow = '.emoji-mart';
+const chatSearchBox = '.chat__container .search-box';
+const emojiSearchBox = '.emoji-mart-search input';
+const searchedEmojiList = (emojiName) =>
+  'div[data-name="Search"] + .emoji-mart-category-list li button[aria-label*="' +
+  emojiName +
+  '"]';
 
 export default class Dashboard {
   clickDashboard() {
@@ -228,6 +234,14 @@ export default class Dashboard {
     });
   }
 
+  enterUserToSearch(name) {
+    cy.get(chatSearchBox).type(name);
+  }
+
+  verifySearchedEmoji(name) {
+    cy.get(searchedEmojiList(name)).should('be.visible');
+  }
+
   clickSendMessageButton() {
     cy.get('button').then((button) => {
       for (let i = 0; i < button.length; i++) {
@@ -237,6 +251,10 @@ export default class Dashboard {
         }
       }
     });
+  }
+
+  enterEmojiName(name) {
+    cy.get(emojiSearchBox).type(name);
   }
 
   VerifySendMessageButton(condition) {
@@ -269,6 +287,10 @@ export default class Dashboard {
     });
   }
 
+  verifySearchedChatName(name) {
+    cy.get(chatName).should('contain.text', name);
+  }
+
   selectUserToSendMessage(name) {
     cy.get(receiverDropdown).click();
     cy.get(usersName).then((users) => {
@@ -297,7 +319,7 @@ export default class Dashboard {
   verifyDashboardHeaderElement() {
     cy.xpath(ButtonLoginAs).should('be.visible');
     cy.get(StatusDropDown).should('be.visible');
-    cy.get(Dialer).should('be.visible');
+    cy.get(Dialer).should('exist');
     cy.get(Task).should('be.visible');
     cy.get(UserProfile).should('be.visible');
   }

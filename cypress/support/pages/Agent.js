@@ -186,7 +186,7 @@ export default class Agent {
   }
 
   clickRecentContact() {
-    cy.get(recentContact).click({ force: true });
+    cy.get(recentContact).first().click({ force: true });
   }
 
   verifyRecentContactPage() {

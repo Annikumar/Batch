@@ -202,6 +202,8 @@ describe('Agent Profile', function () {
   });
   it('Verify The Elements On The Page Of View Contact On Contact Page', () => {
     agent.clickingOnContactOption();
+    agent.enterSearch('random Contact');
+    cy.wait(1000);
     agent.clickContactName();
     agent.vierifyTheHeaderOfViewContact(['Address', 'Phone']);
     agent.verifyContactViewBtn();
@@ -376,11 +378,12 @@ describe('Agent Profile', function () {
 
   it('Verify it Open the Dialing Keypad when we click on Phone number in Contact View Page', () => {
     agent.clickingOnContactOption();
-    agent.clickCloseSoftphoneBtn();
-    // agent.enterSearch('New User');
+    agent.enterSearch('random Contact');
+    cy.wait(1000);
     agent.clickContactName();
     agent.clickPhoneNumber();
     agent.verifySoftphoneOpen();
+    agent.clickCloseSoftphoneBtn();
   });
 
   it('Open the Call Result Window when Agent disconnect the Call', () => {
@@ -459,7 +462,8 @@ describe('Agent Profile', function () {
     agent.clickDashboardMenu();
     agent.getTotalCallsCount();
     agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
+    agent.enterSearch('random Contact');
+    cy.wait(1000);
     agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();
@@ -485,7 +489,8 @@ describe('Agent Profile', function () {
   it('Verifies the Call transfer Continue and Cancel Button', () => {
     agent.ChooseCallResult('Call Back');
     agent.clickingOnContactOption();
-    // agent.enterSearch('New User');
+    agent.enterSearch('random Contact');
+    cy.wait(1000);
     agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();

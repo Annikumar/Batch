@@ -572,6 +572,14 @@ describe('Dashboard Elements', function () {
     Dash.clickChatCloseButton();
   });
 
+  it('Verify that one can search other user chat using search box', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.enterUserToSearch(testData.agent);
+    Dash.verifySearchedChatName(testData.agent);
+    Dash.clickChatCloseButton();
+  });
+
   it('Verify the limit of message that user can not send more than 160 words', () => {
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
@@ -584,6 +592,11 @@ describe('Dashboard Elements', function () {
   it('Verify that Emoji Window should open when click Emoji Icon', () => {
     Dash.clickEmojiIcon();
     Dash.verifyEmojiWindow();
+  });
+
+  it('Verify user can Search emoji in Emoji window', () => {
+    Dash.enterEmojiName('cake');
+    Dash.verifySearchedEmoji('cake');
     Dash.clickEmojiIcon();
     Dash.clickChatCloseButton();
   });
@@ -595,6 +608,7 @@ describe('Dashboard Elements', function () {
     Dash.selectUserToSendMessage([testData.agent, testData.supervisor]);
     Dash.enterMessage(message('Admin'));
     Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
   });
 
   it('Send message to the agent', () => {
