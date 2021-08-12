@@ -5,6 +5,7 @@ let testData;
 const randNum = Math.floor(Math.random() * 1000);
 const agentEmail = 'random' + randNum + '@email.com';
 const supervisorEmail = 'random' + randNum + 1 + '@email.com';
+const adminWithoutCallingEmail = 'random' + randNum + 2 + '@test.com';
 
 describe('Setup Account for Testing', () => {
   before(() => {
@@ -26,10 +27,11 @@ describe('Setup Account for Testing', () => {
   });
   it('Setup Account', () => {
     const [agentFirstName, agentlastName] = testData.agent.split(' ');
-    const [supervisorFirstName, supervisorlastName] = testData.supervisor.split(
-      ' '
-    );
+    const [supervisorFirstName, supervisorlastName] =
+      testData.supervisor.split(' ');
     const [contactFirstName, contactlastName] = testData.Contact.split(' ');
+    const [adminFirstName, adminlastName] =
+      testData.adminWithoutCalling.split(' ');
 
     setup.addNewAgent(
       agentFirstName,
@@ -44,6 +46,13 @@ describe('Setup Account for Testing', () => {
       supervisorEmail,
       testData.password,
       '0123456789'
+    );
+    setup.addNewAdminWithoutCalling(
+      adminFirstName,
+      adminlastName,
+      adminWithoutCallingEmail,
+      testData.password,
+      '9999999999'
     );
     setup.getAdminName();
     cy.readFile('cypress/fixtures/testData.json').then((data) => {

@@ -517,7 +517,7 @@ describe('Add Phone Number flow', () => {
   });
   it('Search phone number using search box', () => {
     addNum.clickPhoneNumberMenu();
-    addNum.enterSearchKeyword(testData.Number);
+    addNum.enterPhoneToSearchKeyword(testData.Number);
     addNum.verifySearchedNumber(testData.Number);
     addNum.verifyNumberNotVisible();
   });

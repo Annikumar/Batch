@@ -187,6 +187,16 @@ export default class PhoneNum {
     cy.get(searchBox).type(search);
   }
 
+  enterPhoneToSearchKeyword(search) {
+    cy.log(search);
+    const num = search.split('');
+    for (let i = 0; i < num.length; i++) {
+      if (num[i] != '(' && num[i] != ')' && num[i] != ' ' && num[i] != '-') {
+        cy.get(searchBox).type(num[i]);
+      }
+    }
+  }
+
   clickAddNewRuleBtn() {
     cy.xpath(addNewBtn).click();
   }

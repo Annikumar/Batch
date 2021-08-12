@@ -76,7 +76,51 @@ describe('Dashboard Elements', function () {
 
   it('Verify Task Button Functionality', () => {
     Dash.clickTaskButton();
-    Dash.verifyTask();
+    Dash.verifyTodayButton();
+    Dash.verifyPastButton();
+    Dash.verifyFutureButton();
+    Dash.verifyCompletedCheckbox();
+    Dash.verifyCalendarEventTypesBox();
+    Dash.verifyAddEventTypeButton();
+    Dash.verifyCalendarMonthPickerBox();
+  });
+
+  it('Add New Event Type in Tasks', () => {
+    Dash.clickAddEventTypeButton();
+    Dash.typeEventTypeName('Test');
+    Dash.clickSaveEventTypeNameField();
+    Dash.verifyAddedEventTypeName('Test');
+  });
+
+  it('Verify that Duplicate Event Type give Error', () => {
+    Dash.clickAddEventTypeButton();
+    Dash.typeEventTypeName('Test');
+    Dash.clickSaveEventTypeNameField();
+    Dash.verifyErrorMessage('Duplicate task type name');
+  });
+
+  it('Delete the Added Event Type', () => {
+    Dash.clickDeleteEventTypeBtn('Test');
+    Dash.verifyDeletedEventTypeName('Test');
+  });
+
+  it('create a new Today Event for a Contact', () => {
+    Dash.clickTaskAddNewButton();
+    Dash.chooseContactToAddEvent(testData.Contact);
+    Dash.enterEventDescription('For Testing');
+    Dash.clickEventSaveButton();
+  });
+
+  it('Edit the created Event for a Contact', () => {
+    Dash.clickEventThreeDotMenuBtn(testData.Contact);
+    Dash.selectDropdownItemToClick('Edit Appointment');
+    Dash.enterEventDescription(' Edited');
+    Dash.clickEventSaveButton();
+  });
+
+  it('Delete the Added Event', () => {
+    Dash.clickEventThreeDotMenuBtn(testData.Contact);
+    Dash.selectDropdownItemToClick('Delete Appointment');
   });
 
   it('Verify on click user profile show options', () => {
@@ -572,14 +616,6 @@ describe('Dashboard Elements', function () {
     Dash.clickChatCloseButton();
   });
 
-  it('Verify that one can search other user chat using search box', () => {
-    Dash.clickMessageIcon();
-    Dash.verifyChatBox();
-    Dash.enterUserToSearch(testData.agent);
-    Dash.verifySearchedChatName(testData.agent);
-    Dash.clickChatCloseButton();
-  });
-
   it('Verify the limit of message that user can not send more than 160 words', () => {
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
@@ -598,16 +634,6 @@ describe('Dashboard Elements', function () {
     Dash.enterEmojiName('cake');
     Dash.verifySearchedEmoji('cake');
     Dash.clickEmojiIcon();
-    Dash.clickChatCloseButton();
-  });
-
-  it('Verify that user can create group and send message', () => {
-    Dash.clickMessageIcon();
-    Dash.verifyChatBox();
-    Dash.clickStartChatButton();
-    Dash.selectUserToSendMessage([testData.agent, testData.supervisor]);
-    Dash.enterMessage(message('Admin'));
-    Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
   });
 
@@ -679,6 +705,34 @@ describe('Dashboard Elements', function () {
     Dash.verifyChatBox();
     Dash.selectChat(testData.supervisor);
     Dash.verifyMessageText(message('Supervisor'));
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that one can search other user chat using search box', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.enterUserToSearch(testData.agent);
+    Dash.verifySearchedChatName(testData.agent);
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that admin can send message to another admin', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.adminWithoutCalling]);
+    Dash.enterMessage(message('Admin'));
+    Dash.clickSendMessageButton();
+    Dash.clickChatCloseButton();
+  });
+
+  it('Verify that user can create group and send message', () => {
+    Dash.clickMessageIcon();
+    Dash.verifyChatBox();
+    Dash.clickStartChatButton();
+    Dash.selectUserToSendMessage([testData.agent, testData.supervisor]);
+    Dash.enterMessage(message('Admin'));
+    Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
   });
 });

@@ -77,7 +77,7 @@ export default class Setup {
     cy.get('a[title="Phone System"]').click({ force: true });
     cy.wait(2000);
     cy.get('body').then(($body) => {
-      if ($body.find('.dispositions.table tbody tr td').length > 1) {
+      if ($body.find('.dids.table tbody tr').length > 1) {
         cy.xpath(
           '(//td[span[contains(@class,"reputation")]]/preceding-sibling::td[1])[1]'
         ).then((el) => {
@@ -137,7 +137,9 @@ export default class Setup {
 
   getAdminName() {
     user.clickingOnUserOption();
-    cy.xpath('//tr[td[text()="Administrator"]]//td[1]').then((el) => {
+    cy.xpath(
+      '//*[name()="svg" and @data-icon="phone"]/parent::td[text()="Administrator"]/parent::tr//td[1]'
+    ).then((el) => {
       const adminName = el[0].textContent.trim();
       cy.readFile('cypress/fixtures/testData.json', (err, data) => {
         if (err) {
@@ -248,6 +250,58 @@ export default class Setup {
           }
         }).then((data) => {
           data.SupervisorEmail = email;
+          cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
+        });
+      }
+    });
+  }
+
+  addNewAdminWithoutCalling(firstName, lastName, email, password, phone) {
+    cy.wait(1000);
+    user.clickingOnUserOption();
+    cy.wait(3000);
+    cy.get('.table-responsive tbody tr td:nth-child(1)').then((el) => {
+      if (
+        el
+          .text()
+          .trim()
+          .includes(firstName + ' ' + lastName)
+      ) {
+        cy.log('Admin already exist');
+        cy.xpath(userEditBtn(firstName, lastName)).click();
+        cy.get(emailField).then((el) => {
+          const value = el.val();
+          cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+            if (err) {
+              return console.error(err);
+            }
+          }).then((data) => {
+            data.adminWithoutCallingEmail = value;
+            cy.writeFile(
+              'cypress/fixtures/testData.json',
+              JSON.stringify(data)
+            );
+          });
+        });
+        cy.get(passwordChangeBtn).click();
+        cy.get(passwordField).type(password);
+        cy.xpath(saveBtn).click();
+      } else {
+        user.clickAddNewUserButton();
+        user.clickAddAdmin();
+        user.enterFirstName(firstName);
+        user.enterLastName(lastName);
+        user.enterEmail(email);
+        user.enterPassword(password);
+        user.enterPhoneNumber(phone);
+        user.clickSaveButton();
+        user.verifySuccessToast();
+        cy.readFile('cypress/fixtures/testData.json', (err, data) => {
+          if (err) {
+            return console.error(err);
+          }
+        }).then((data) => {
+          data.adminWithoutCallingEmail = email;
           cy.writeFile('cypress/fixtures/testData.json', JSON.stringify(data));
         });
       }

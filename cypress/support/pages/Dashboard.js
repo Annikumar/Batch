@@ -21,6 +21,9 @@ const DialpadCallButton = '.stg-softphone-callbutton';
 const CallTimerContactButton = '.stg-softphone-contact';
 const AnsweringMachine = "//div[text()='Busy']";
 const calander = '.calendar';
+const todayButton = 'button[value="today"]';
+const pastButton = 'button[value="past"]';
+const futureButton = 'button[value="future"]';
 const UserProfileOptions = '.dropdown-menu.show';
 const UserSettingOptions = '.profile-buttons';
 const SettingsButton = 'div[href*="settings"]';
@@ -189,6 +192,24 @@ const searchedEmojiList = (emojiName) =>
   'div[data-name="Search"] + .emoji-mart-category-list li button[aria-label*="' +
   emojiName +
   '"]';
+const completedCheckbox = `//label[@class="radio_cstm" and text()="Completed"]//span[@class="checkmark"]`;
+const taskAddNewBtn = '//button[span[text()="ADD NEW"]]';
+const calendarEventTypesBox = '.calendar-event-types';
+const calendarMonthPicker = '.calendar-month-selector';
+const addEventTypeButton = '.calendar-event-types span[role="button"]';
+const deleteEventTypeBtn = (eventName) =>
+  `//div[span[contains(@class,"calendar-event-input") and text()="${eventName}"]]/following-sibling::div/*[name()="svg"][@class="calendar-delete-btn"]`;
+const eventTypeNameField = 'input[placeholder="Event Name"]';
+const saveEventTypeNameField = '.calendar-event-controls svg:nth-of-type(1)';
+const eventTypeNames = '.calendar-event-input';
+const contactsDropdown =
+  '//span[@class="ss-select-placeholder"]/parent::div[contains(@class,"ss-select-control")]';
+const contactsSearch = '.modal-content .search-box';
+const contactsSearchResult = '.ss-select-option';
+const descriptionField = 'input[name="description"]';
+const eventThreeDotMenuBtn = (contactName) =>
+  `//a[text()="${contactName}"]/ancestor::td[contains(@class,"contactfield")]/following-sibling::td[contains(@class,"dropdownfield")]`;
+const dropdownItems = '.dropdown-item';
 
 export default class Dashboard {
   clickDashboard() {
@@ -1265,5 +1286,125 @@ export default class Dashboard {
 
   verifyEmojiWindow() {
     cy.get(emojiWindow).should('be.visible');
+  }
+
+  verifyTodayButton() {
+    cy.get(todayButton).should('be.visible');
+  }
+
+  verifyPastButton() {
+    cy.get(pastButton).should('be.visible');
+  }
+
+  verifyFutureButton() {
+    cy.get(futureButton).should('be.visible');
+  }
+
+  clickTodayButton() {
+    cy.get(todayButton).click();
+  }
+
+  clickPastButton() {
+    cy.get(pastButton).click();
+  }
+
+  clickFutureButton() {
+    cy.get(futureButton).click();
+  }
+
+  verifyCompletedCheckbox() {
+    cy.xpath(completedCheckbox).should('be.visible');
+  }
+
+  clickCompletedCheckbox() {
+    cy.xpath(completedCheckbox).click();
+  }
+
+  verifyTaskAddNewButton() {
+    cy.xpath(taskAddNewBtn).should('be.visible');
+  }
+
+  clickTaskAddNewButton() {
+    cy.xpath(taskAddNewBtn).click();
+  }
+
+  verifyCalendarEventTypesBox() {
+    cy.get(calendarEventTypesBox).should('be.visible');
+  }
+
+  verifyCalendarMonthPickerBox() {
+    cy.get(calendarMonthPicker).should('be.visible');
+  }
+
+  verifyAddEventTypeButton() {
+    cy.get(addEventTypeButton).should('be.visible');
+  }
+
+  clickAddEventTypeButton() {
+    cy.get(addEventTypeButton).click();
+  }
+
+  clickDeleteEventTypeBtn(name) {
+    cy.xpath(deleteEventTypeBtn(name)).click();
+  }
+
+  typeEventTypeName(name) {
+    cy.get(eventTypeNameField).type(name);
+  }
+
+  clickSaveEventTypeNameField() {
+    cy.get(saveEventTypeNameField).click();
+  }
+
+  verifyAddedEventTypeName(name) {
+    cy.get(eventTypeNames).should('contain.text', name);
+  }
+
+  verifyDeletedEventTypeName(name) {
+    cy.get(eventTypeNames).should('not.contain.text', name);
+  }
+
+  clickEventSaveButton() {
+    cy.get('button').then((btn) => {
+      for (let i = 0; i < btn.length; i++) {
+        if (btn[i].textContent.trim() === 'Save') {
+          cy.get(btn[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickEventThreeDotMenuBtn(name) {
+    cy.xpath(eventThreeDotMenuBtn(name)).click();
+  }
+
+  selectDropdownItemToClick(menu) {
+    cy.get(dropdownItems).then((items) => {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].textContent.trim() === menu) {
+          cy.get(items[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  enterEventDescription(description) {
+    cy.get(descriptionField).type(description);
+  }
+
+  chooseContactToAddEvent(contact) {
+    cy.xpath(contactsDropdown).first().click();
+    cy.get(contactsSearch).type(contact);
+    cy.wait(1000);
+    cy.get(contactsSearchResult).then((result) => {
+      for (let i = 0; i < result.length; i++) {
+        if (result[i].textContent.trim() === contact) {
+          cy.get(result[i]).click();
+          break;
+        }
+      }
+    });
   }
 }

@@ -117,7 +117,7 @@ const saveBtn = '//button[contains(text(),"Save")]';
 const scheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';
 const notes = "//button[text()='Notes']";
-const addNewNotes = "//button[text()='Add New Note']";
+const addNewNotes = "//span[contains(text(),'Add New Note')]/ancestor::button";
 const notesTextBox = '.ProseMirror';
 const AddedNote = '.comment-item-body';
 const notesWindow = '.modal-content';

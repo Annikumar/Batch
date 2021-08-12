@@ -43,7 +43,8 @@ const saveBtn = 'button svg[data-icon="save"]';
 const savedScheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';
 const notesBtn = '//button[text()="Notes"]';
-const addNewNoteBtn = '//button[text()="Add New Note"]';
+const addNewNoteBtn =
+  "//span[contains(text(),'Add New Note')]/ancestor::button";
 const noteTextField = 'div.ProseMirror';
 const deleteNoteBtn = (note) =>
   '//div[contains(@class,"comment-item-body") and span[p[text()="' +

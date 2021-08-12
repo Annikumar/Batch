@@ -292,7 +292,7 @@ describe('Agent Profile', function () {
     agent.verifyAgentPasswordChangeBtn();
   });
 
-  it('Verify The Header Of Calender', () => {
+  it.skip('Verify The Header Of Calender', () => {
     agent.openCalender();
     agent.verifyDateChangeBar();
     agent.verifyDaysOfcalender([
