@@ -1,5 +1,5 @@
 import Dashboard from '../support/pages/Dashboard';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 import Contacts from '../support/pages/Contacts';
 
 const Dash = new Dashboard();
@@ -37,6 +37,8 @@ describe('Dashboard Elements', function () {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('verify elements in Dashboard', function () {
@@ -106,6 +108,7 @@ describe('Dashboard Elements', function () {
 
   it('create a new Today Event for a Contact', () => {
     Dash.clickTaskAddNewButton();
+    Dash.enterEventTitle('Test');
     Dash.chooseContactToAddEvent(testData.Contact);
     Dash.enterEventDescription('For Testing');
     Dash.clickEventSaveButton();
@@ -113,9 +116,30 @@ describe('Dashboard Elements', function () {
 
   it('Edit the created Event for a Contact', () => {
     Dash.clickEventThreeDotMenuBtn(testData.Contact);
-    Dash.selectDropdownItemToClick('Edit Appointment');
+    Dash.selectDropdownItemToClick('Edit Event');
     Dash.enterEventDescription(' Edited');
     Dash.clickEventSaveButton();
+  });
+
+  it('Verify that tasks of TODAY is displayed by default on page load', () => {
+    Dash.clickDashboard();
+    Dash.clickTaskButton();
+    Dash.verifyTodayButtonIsSelected();
+    Dash.verifyPastButtonNotSelected();
+    Dash.verifyFutureButtonNotSelected();
+  });
+
+  it('Mark the created event Completed', () => {
+    Dash.clickEventStatusCheckbox(testData.Contact, 'Pending');
+  });
+
+  it('Verify that if event is marked as completed then it should disappear from list', () => {
+    Dash.verifyCompletedEventDisappear(testData.Contact);
+  });
+
+  it('Mark the Completed Event as Pending Event', () => {
+    Dash.clickCompletedCheckbox();
+    Dash.clickEventStatusCheckbox(testData.Contact, 'Completed');
   });
 
   it('Delete the Added Event', () => {
@@ -575,8 +599,12 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.agent);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.agent);
     Dash.clickBackToAdmin();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 
@@ -585,8 +613,12 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.supervisor);
     Dash.clickBackToAdmin();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 
@@ -620,7 +652,7 @@ describe('Dashboard Elements', function () {
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
     Dash.clickStartChatButton();
-    Dash.selectUserToSendMessage([testData.agent]);
+    // Dash.selectUserToSendMessage([testData.agent]);
     Dash.enterMessageMoreThan160Words('b');
     Dash.verifyMessageLimit();
   });
@@ -651,6 +683,8 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.agent);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.agent);
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
@@ -660,6 +694,8 @@ describe('Dashboard Elements', function () {
     Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
     Dash.clickBackToAdmin();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 
@@ -685,6 +721,8 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.supervisor);
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
@@ -697,6 +735,8 @@ describe('Dashboard Elements', function () {
     Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
     Dash.clickBackToAdmin();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 

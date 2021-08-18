@@ -1,5 +1,5 @@
 import Login from '../support/pages/Login';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 const login = new Login();
 let testData;
@@ -47,5 +47,7 @@ describe('Login Flow', () => {
     login.clickTermsCheckBox();
     login.clickSigninButton();
     login.verifySuccessfullLogin();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 });

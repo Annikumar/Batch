@@ -1,3 +1,5 @@
+import { ignoreSpeedTestPopup } from '../Utils';
+
 const DashboardMenu = 'a[title="Dashboard"]';
 const CallSummery = 'Calls Summary';
 const Responsiveness = 'Responsiveness';
@@ -203,13 +205,16 @@ const eventTypeNameField = 'input[placeholder="Event Name"]';
 const saveEventTypeNameField = '.calendar-event-controls svg:nth-of-type(1)';
 const eventTypeNames = '.calendar-event-input';
 const contactsDropdown =
-  '//span[@class="ss-select-placeholder"]/parent::div[contains(@class,"ss-select-control")]';
+  '//div[@class="modal-content"]//span[@class="ss-select-placeholder"]/parent::div[contains(@class,"ss-select-control")]';
 const contactsSearch = '.modal-content .search-box';
 const contactsSearchResult = '.ss-select-option';
 const descriptionField = 'input[name="description"]';
+const eventTitle = 'input[name="title"]';
 const eventThreeDotMenuBtn = (contactName) =>
   `//a[text()="${contactName}"]/ancestor::td[contains(@class,"contactfield")]/following-sibling::td[contains(@class,"dropdownfield")]`;
 const dropdownItems = '.dropdown-item';
+const eventStatusCheckbox = (contactName, eventStatus) =>
+  `//a[text()="${contactName}"]/ancestor::td[contains(@class,"contactfield")]/parent::tr//img[@alt='${eventStatus}']`;
 
 export default class Dashboard {
   clickDashboard() {
@@ -240,7 +245,7 @@ export default class Dashboard {
   }
 
   enterMessage(message) {
-    cy.get(messageField).type(message);
+    cy.get(messageField).type(message, { force: true });
   }
 
   enterMessageMoreThan160Words(message) {
@@ -267,7 +272,7 @@ export default class Dashboard {
     cy.get('button').then((button) => {
       for (let i = 0; i < button.length; i++) {
         if (button[i].textContent.trim() === 'Send') {
-          button[i].click();
+          cy.get(button[i]).click({ force: true });
           break;
         }
       }
@@ -275,7 +280,7 @@ export default class Dashboard {
   }
 
   enterEmojiName(name) {
-    cy.get(emojiSearchBox).type(name);
+    cy.get(emojiSearchBox).type(name, { delay: 200 });
   }
 
   VerifySendMessageButton(condition) {
@@ -324,7 +329,7 @@ export default class Dashboard {
         }
       }
     });
-    cy.get(receiverDropdown).click();
+    // cy.get(receiverDropdown).click();
   }
 
   verifyDashboardElements() {
@@ -635,7 +640,7 @@ export default class Dashboard {
   }
 
   clickNewRuleBtn() {
-    cy.xpath(newRuleButton).click();
+    cy.xpath(newRuleButton).scrollIntoView().click();
   }
 
   verifyLeadScoreExample() {
@@ -882,12 +887,16 @@ export default class Dashboard {
 
   choosePlan(planName) {
     cy.reload();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     this.clickStartBtn();
     cy.xpath(plans(planName)).click();
   }
 
   upgradePlan(planName) {
     cy.reload();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     // this.clickStartBtn();
     cy.get('.rc-slider-step').first().click();
     cy.xpath(plans(planName)).click();
@@ -1292,6 +1301,18 @@ export default class Dashboard {
     cy.get(todayButton).should('be.visible');
   }
 
+  verifyTodayButtonIsSelected() {
+    cy.get(todayButton + '[class*="btn-primary"]').should('be.visible');
+  }
+
+  verifyPastButtonNotSelected() {
+    cy.get(pastButton + '[class*="btn-primary"]').should('not.exist');
+  }
+
+  verifyFutureButtonNotSelected() {
+    cy.get(futureButton + '[class*="btn-primary"]').should('not.exist');
+  }
+
   verifyPastButton() {
     cy.get(pastButton).should('be.visible');
   }
@@ -1376,7 +1397,11 @@ export default class Dashboard {
   }
 
   clickEventThreeDotMenuBtn(name) {
-    cy.xpath(eventThreeDotMenuBtn(name)).click();
+    cy.xpath(eventThreeDotMenuBtn(name)).first().click();
+  }
+
+  verifyCompletedEventDisappear(name) {
+    cy.xpath(eventThreeDotMenuBtn(name)).should('not.exist');
   }
 
   selectDropdownItemToClick(menu) {
@@ -1406,5 +1431,17 @@ export default class Dashboard {
         }
       }
     });
+  }
+
+  clickEventStatusCheckbox(contactName, eventStatus) {
+    cy.xpath(eventStatusCheckbox(contactName, eventStatus)).then((checkBox) => {
+      for (let i = 0; i < checkBox.length; i++) {
+        cy.get(checkBox[i]).click();
+      }
+    });
+  }
+
+  enterEventTitle(title) {
+    cy.get(eventTitle).type(title);
   }
 }

@@ -1,5 +1,6 @@
 import Login from '../support/pages/Login';
 import Register from '../support/pages/Register';
+import { ignoreSpeedTestPopup } from '../support/Utils';
 
 const register = new Register();
 const login = new Login();
@@ -99,7 +100,11 @@ describe('Registration', () => {
         );
         register.clickAgreeCheckbox();
         register.clickSubscribeBtn();
+        cy.waitFor(cy.get('.main_sec', { timeout: 15000 }));
+        ignoreSpeedTestPopup();
         login.verifySuccessfullLogin();
+        cy.wait(2000);
+        ignoreSpeedTestPopup();
       }
     });
   });

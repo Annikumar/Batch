@@ -1,4 +1,5 @@
 import Setup from '../support/pages/Setup';
+import { ignoreSpeedTestPopup } from '../support/Utils';
 
 const setup = new Setup();
 let testData;
@@ -24,8 +25,11 @@ describe('Setup Account for Testing', () => {
 
   it('login successfully', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
   });
+
   it('Setup Account', () => {
+    ignoreSpeedTestPopup();
     const [agentFirstName, agentlastName] = testData.agent.split(' ');
     const [supervisorFirstName, supervisorlastName] =
       testData.supervisor.split(' ');

@@ -38,7 +38,7 @@ const contactName = (firstName, lastname) =>
   '//span[text()="' + firstName + '" and text()="' + lastname + '"]';
 const month = '.month-selector .title';
 const nextButton = '.fa-chevron-right';
-const day = '.day .title';
+const day = (date) => `.day[data-day="${date}"]`;
 const saveBtn = 'button svg[data-icon="save"]';
 const savedScheduledCall = '.day .item';
 const closeBtn = '//button[contains(text(),"Close")]';
@@ -113,7 +113,7 @@ const agentStateDropDown =
 const agentZipCodeInputBox = "[name='zip']";
 const agentMobileNumber = "[name='phone']";
 const agentLandLineNumber = "[name='phone2']";
-const agentTimeZone = "[title='(UTC-05:00) Eastern Time']";
+const agentTimeZone = "[title='(GMT-05:00) Eastern Time']";
 const agentProfilePicChangeBtn =
   "//*[@id='root']/section/div/div/div[1]/div[5]/div/div/button";
 const agentPasswordChangeBtn =
@@ -661,17 +661,7 @@ export default class Agent {
         }
       });
     }
-    cy.get(day).then(($day) => {
-      for (let i = 0; i < $day.length; i++) {
-        if ($day[i].textContent.trim() === date.toString()) {
-          cy.wait(1000);
-          cy.log($day[i].textContent.trim());
-          cy.log(date);
-          $day[i].click();
-          break;
-        }
-      }
-    });
+    cy.get(day(date.toString())).click();
   }
 
   clickSaveButton() {

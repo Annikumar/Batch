@@ -1,4 +1,5 @@
 import Suprevisor from '../support/pages/Supervisor';
+import { ignoreSpeedTestPopup } from '../support/Utils';
 
 let testData;
 const suprevisor = new Suprevisor();
@@ -23,6 +24,8 @@ describe('SuperVisor Flow', () => {
 
   it('Supervisor Should Login Successfully', () => {
     cy.Login(testData.SupervisorEmail, testData.password);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('Verify the Dashboard Elements', () => {
@@ -86,9 +89,13 @@ describe('SuperVisor Flow', () => {
     suprevisor.clickLoginAsBtn();
     suprevisor.clickOpenUser();
     suprevisor.loginWithUser(testData.agent);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     suprevisor.verifyLogin(testData.agent);
     suprevisor.clickOnProfile();
     suprevisor.clickBackToSupervisor();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     suprevisor.verifySupervisorProfile();
   });
 

@@ -1,6 +1,6 @@
 import User from '../support/pages/User';
 import Dashboard from '../support/pages/Dashboard';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let testData;
@@ -42,6 +42,8 @@ describe('Login Successfully and Add User', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     addUser.getPhoneNumber();
   });
 

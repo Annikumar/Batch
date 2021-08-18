@@ -1,4 +1,5 @@
 import promisify from 'cypress-promise';
+import { ignoreSpeedTestPopup } from '../Utils';
 
 const userMenu = 'a[title="Users"]';
 const addNewUser = '//button[contains(text(),"ADD NEW USER")]';
@@ -263,6 +264,8 @@ export default class User {
 
   verifyUserEditButton() {
     cy.reload();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     cy.get(userEditButton).should('be.visible');
   }
 

@@ -1,12 +1,12 @@
 const signUpBtn = 'a[href*="register"]';
-const firstName = 'input[name="firstname"]';
-const lastName = 'input[name="lastname"]';
-const companyName = 'input[name="companyname"]';
-const industry = 'select[name="industry"]';
-const phoneNumber = 'input[name="phonenumber"]';
-const email = 'input[name="email"]';
-const password = 'input[name="password"]';
-const confirmPassword = 'input[name="password2"]';
+const firstName = 'input[name="firstname"].form-control';
+const lastName = 'input[name="lastname"].form-control';
+const companyName = 'input[name="companyname"].form-control';
+const industry = 'select[name="industry"].form-control';
+const phoneNumber = 'input[name="phonenumber"].form-control';
+const email = 'input[name="email"].form-control';
+const password = 'input[name="password"].form-control';
+const confirmPassword = 'input[name="password2"].form-control';
 const continueToPlan = 'button[type="submit"]';
 const dialerPlan = (x) =>
   "//div[@class='plan'][contains(.,'" + x + "')]//button";

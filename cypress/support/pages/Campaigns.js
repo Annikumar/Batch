@@ -1,3 +1,5 @@
+import { ignoreSpeedTestPopup } from '../Utils';
+
 const campaignsMenu = 'a[title="Campaigns"]';
 const addCampaign = '//button[contains(text(),"CREATE NEW CAMPAIGN")]';
 const inputName = 'input[name="name"]';
@@ -195,6 +197,8 @@ export default class Campaign {
 
   verifyUnarchievedCampaign(camp) {
     cy.reload();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     cy.xpath(
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]',
       { timeout: 10000 }

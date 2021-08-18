@@ -1,5 +1,5 @@
 import Report from '../support/pages/Report';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 const report = new Report();
 let fixtureData;
@@ -30,6 +30,8 @@ describe('Report Page', function () {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('verify report live elements', function () {

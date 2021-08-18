@@ -2,7 +2,7 @@ import promisify from 'cypress-promise';
 import Campaign from '../support/pages/Campaigns';
 import Contacts from '../support/pages/Contacts';
 import PhoneNum from '../support/pages/PhoneNum';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let testData;
@@ -37,6 +37,8 @@ describe('Add Phone Number flow', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup()
   });
 
   it('Should Buy Phone number successfully ', () => {

@@ -1,5 +1,5 @@
 import Contacts from '../support/pages/Contacts';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 import Dashboard from '../support/pages/Dashboard';
 
 let fixtureData;
@@ -32,6 +32,8 @@ describe('Add Contact flow', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   //fixed test case on 5 March according to BAT-635

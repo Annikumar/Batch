@@ -1,5 +1,5 @@
 import Campaign from '../support/pages/Campaigns';
-import { selectAgentStatus } from '../support/Utils';
+import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let testData;
@@ -30,6 +30,8 @@ describe('Add Campaign flow', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('Campaign header element should visible', function () {
@@ -111,6 +113,8 @@ describe('Add Campaign flow', () => {
     addCamp.changeCampaignStatusByDrpdwn('Active');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     cy.reload();
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('Edit the Added Campaign', () => {
@@ -236,7 +240,7 @@ describe('Add Campaign flow', () => {
     addCamp.clickAddNewCampaign();
     addCamp.enableAdvancedSwitchBar();
     addCamp.enterName(fixtureData.campaignName + randNum.toString() + '1');
-    addCamp.selectDialingModeOption('Preview Dialer');
+    addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.verifyCampaignNameField();
     addCamp.verifyDialModeDropdown();
     addCamp.newCampaignDropdown(['Time Zone']);

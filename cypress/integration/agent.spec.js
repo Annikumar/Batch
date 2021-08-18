@@ -1,5 +1,6 @@
 import Agent from '../support/pages/Agent';
 import Campaign from '../support/pages/Campaigns';
+import { ignoreSpeedTestPopup } from '../support/Utils';
 
 let testData;
 let randNum = Math.floor(Math.random() * 100000);
@@ -28,6 +29,8 @@ describe('Agent Profile', function () {
 
   it('Agent Should Login Successfully', () => {
     cy.Login(testData.AgentEmail, testData.password);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
   });
 
   it('Verifies the Dashboard Elements', () => {
@@ -56,7 +59,7 @@ describe('Agent Profile', function () {
     agent.enterSearch(testData.Contact);
     agent.clickOnContactName(testData.Contact);
     agent.clickFollowUpCall();
-    agent.selectDateToFollowUpCall('10,July 2021');
+    agent.selectDateToFollowUpCall();
     cy.wait(1000);
     agent.clickSaveButton();
     cy.wait(1000);
@@ -372,7 +375,8 @@ describe('Agent Profile', function () {
   it('Verify the Active Campaign count when Agent become available', () => {
     agent.clickDashboardMenu();
     cy.reload();
-    cy.wait(1000);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     agent.verifyActiveCampaignCount();
   });
 
@@ -474,7 +478,8 @@ describe('Agent Profile', function () {
     agent.clickContinueBtn();
     agent.clickDashboardMenu();
     cy.reload();
-    cy.wait(1000);
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     agent.clickingOnContactOption();
     cy.wait(2000);
     agent.clickRecentContact();
@@ -494,6 +499,7 @@ describe('Agent Profile', function () {
     agent.clickContactName();
     agent.clickPhoneNumber();
     agent.clickCallBtn();
+    cy.wait(2000);
     agent.clickCallTransferBtn();
     agent.verifyContinueBtn();
     agent.verifyCancelBtn();
