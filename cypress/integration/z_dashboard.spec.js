@@ -610,6 +610,8 @@ describe('Dashboard Elements', function () {
 
   // Fixed according to the BAT-747
   it('verify Admin is able to switch to Supervisor Account', () => {
+    cy.wait(2000);
+    ignoreSpeedTestPopup();
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);

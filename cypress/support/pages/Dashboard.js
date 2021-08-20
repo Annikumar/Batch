@@ -200,7 +200,7 @@ const calendarEventTypesBox = '.calendar-event-types';
 const calendarMonthPicker = '.calendar-month-selector';
 const addEventTypeButton = '.calendar-event-types span[role="button"]';
 const deleteEventTypeBtn = (eventName) =>
-  `//div[span[contains(@class,"calendar-event-input") and text()="${eventName}"]]/following-sibling::div/*[name()="svg"][@class="calendar-delete-btn"]`;
+  `//div[span[contains(@class,"calendar-event-input") and text()="${eventName}"]]/following-sibling::div//*[name()="svg"][2]`;
 const eventTypeNameField = 'input[placeholder="Event Name"]';
 const saveEventTypeNameField = '.calendar-event-controls svg:nth-of-type(1)';
 const eventTypeNames = '.calendar-event-input';
