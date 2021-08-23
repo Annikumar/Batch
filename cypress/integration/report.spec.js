@@ -167,8 +167,8 @@ describe('Report Page', function () {
       'All Statuses',
       'Active',
       'Paused',
-      'Complete',
-      'Deleted',
+      'Completed',
+      'Archived',
     ]);
   });
 

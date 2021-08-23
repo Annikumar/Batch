@@ -98,6 +98,7 @@ describe('Add Campaign flow', () => {
 
   it('Verify Campaign Status is applied correctly', () => {
     addCamp.clickCampaignMenu();
+    addCamp.clickTableRefreshBtn();
     addCamp.changesCampaignStatus(
       fixtureData.campaignName + randNum.toString(),
       'active'

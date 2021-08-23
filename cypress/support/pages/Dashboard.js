@@ -215,6 +215,7 @@ const eventThreeDotMenuBtn = (contactName) =>
 const dropdownItems = '.dropdown-item';
 const eventStatusCheckbox = (contactName, eventStatus) =>
   `//a[text()="${contactName}"]/ancestor::td[contains(@class,"contactfield")]/parent::tr//img[@alt='${eventStatus}']`;
+const eventTimeDropdown = `//div[label[text()="Event Time"]]//div[contains(@class,"ss-select-control")]`;
 
 export default class Dashboard {
   clickDashboard() {
@@ -1443,5 +1444,17 @@ export default class Dashboard {
 
   enterEventTitle(title) {
     cy.get(eventTitle).type(title);
+  }
+
+  selectEventTime() {
+    cy.xpath(eventTimeDropdown).click();
+    cy.get('.ss-select-option').then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === '11:30 PM') {
+          opt[i].click();
+          break;
+        }
+      }
+    });
   }
 }

@@ -75,8 +75,7 @@ const undialedBtn =
   "//*[@id='root']/section/div/div[1]/form/div[1]/div[2]/label[3]/span";
 const contactTable = '.table thead';
 const refreshBtn = "[title='Refresh']";
-const allListBtn =
-  "//*[@id='root']/section/div/div[1]/form/div[1]/div[4]/div/div";
+const allListBtn = `//span[text()="All Lists"]/ancestor::div[contains(@class,"ss-select-control")]`;
 const equityBox = '.equity_box';
 const statusBtn = "[title='Status']";
 const agentBtn = "[title='Agent']";

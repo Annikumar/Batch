@@ -24,7 +24,8 @@ const searchBox = '.search-box-wrapper';
 const Agent = 'span[title="Agent"]';
 const contactsCountSlider = '.slider-control';
 const campaignHeadings = '.table thead';
-const archiveCampaignButton = "//a[text()='Archive']";
+const archiveCampaignButton =
+  "//div[contains(@class,'show')]//a[text()='Archive']";
 const statusArchived = "//div[text()='Archived']";
 const recycleMenu = "a[title='Recycle']";
 const timeZoneDropDown = "span[title*='Eastern Time']";
@@ -119,6 +120,7 @@ const recycleOption = '//a[@class="dropdown-item" and text()="Recycle"]';
 const recycleCampaignMenuBtn = (campaignName) =>
   '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
 const leadSheetDropdown = `//div[label[@class="form-label" and text()="Lead Sheet"]]/following-sibling::div[div[contains(.,"Select Lead Sheet")]]`;
+const tableRefreshBtn = 'span[title="Refresh"]';
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -235,8 +237,11 @@ export default class Campaign {
         campName +
         '")]]]//td//div[contains(@class,"progress-status") and contains(@class,"' +
         status +
-        '")]'
-    ).click();
+        '")]',
+      { timeout: 30000 }
+    )
+      .scrollIntoView()
+      .click();
   }
 
   verifyCampaignNotVisible(camp) {
@@ -278,6 +283,10 @@ export default class Campaign {
     }
   }
 
+  clickTableRefreshBtn() {
+    cy.get(tableRefreshBtn).click();
+  }
+
   clickEditCampaign(campaignName) {
     cy.xpath(
       '//span[text()="' +
@@ -306,7 +315,7 @@ export default class Campaign {
   }
 
   clickArchiveCampaignButton() {
-    cy.wait(500).xpath(archiveCampaignButton).click();
+    cy.wait(500).xpath(archiveCampaignButton).first().click();
   }
 
   handleAlertForDelete() {

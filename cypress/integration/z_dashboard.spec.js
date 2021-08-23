@@ -111,6 +111,7 @@ describe('Dashboard Elements', function () {
     Dash.enterEventTitle('Test');
     Dash.chooseContactToAddEvent(testData.Contact);
     Dash.enterEventDescription('For Testing');
+    Dash.selectEventTime();
     Dash.clickEventSaveButton();
   });
 
@@ -133,11 +134,11 @@ describe('Dashboard Elements', function () {
     Dash.clickEventStatusCheckbox(testData.Contact, 'Pending');
   });
 
-  it('Verify that if event is marked as completed then it should disappear from list', () => {
+  it.skip('Verify that if event is marked as completed then it should disappear from list', () => {
     Dash.verifyCompletedEventDisappear(testData.Contact);
   });
 
-  it('Mark the Completed Event as Pending Event', () => {
+  it.skip('Mark the Completed Event as Pending Event', () => {
     Dash.clickCompletedCheckbox();
     Dash.clickEventStatusCheckbox(testData.Contact, 'Completed');
   });
@@ -625,23 +626,27 @@ describe('Dashboard Elements', function () {
   });
 
   it('Verify on Click of Home Button Admin should Redirect to Dashboard', () => {
+    ignoreSpeedTestPopup();
     addCont.clickingOnContactOption();
     Dash.clickHomeButton();
     Dash.verifyDashboardCalandar();
   });
 
   it('Verify that Chat Box should open when click on Chat Icon', () => {
+    ignoreSpeedTestPopup();
     Dash.clickDashboard();
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
   });
 
   it('Verify that clicking the close button should close the chat window', () => {
+    ignoreSpeedTestPopup();
     Dash.clickChatCloseButton();
     Dash.verifyChatBoxClose();
   });
 
   it('Verify that one can not send blank message', () => {
+    ignoreSpeedTestPopup();
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
     Dash.clickStartChatButton();

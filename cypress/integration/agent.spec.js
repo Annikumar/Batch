@@ -147,11 +147,11 @@ describe('Agent Profile', function () {
   it('Verify Elements On Contact Page', () => {
     agent.clickOnContactButton();
     agent.verifySearchBox();
-    agent.checkRoundAndCheckBtns();
-    agent.selectAllRoundBtn();
-    agent.clickOnAppointmentMadeOnlyBtn();
-    agent.clickOnSelfMadeButton();
-    agent.selectAllRoundBtn();
+    // agent.checkRoundAndCheckBtns();
+    // agent.selectAllRoundBtn();
+    // agent.clickOnAppointmentMadeOnlyBtn();
+    // agent.clickOnSelfMadeButton();
+    // agent.selectAllRoundBtn();
   });
 
   it('Verify Table In Contact Table Header Elements', () => {
