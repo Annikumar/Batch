@@ -17,6 +17,13 @@ const countIncreasingFields = `//label[text()="Simultaneous Dials Per Agent"]/fo
 const callResultsDropdown = '.row-calldisposition .ss-select-control';
 const agentsDropdown =
   '//div[contains(@class,"ss-select-control")]/span[contains(text(),"Agents")]';
+const successToastMessage = `.Toastify__toast-body`;
+const threeDotMenuBtn = (CampName) =>
+  `//tr[td[.="${CampName}"]]//div[contains(@class,"dropdown")]`;
+const dropdownItems = '.show .dropdown-item';
+const warningTitle = '.warning__modal .modal-content .warning__modal-title';
+const warningGotItBtn = '.warning__modal .modal-content button';
+const simultaneousDialsPerAgent = `//label[text()="Simultaneous Dials Per Agent"]/parent::div//div[contains(@class,"number-editor")]//input[@type="text"]`;
 
 export default class Dialer {
   selectStatus(statusName) {
@@ -130,5 +137,38 @@ export default class Dialer {
       }
     });
     // cy.xpath(agentsDropdown).click();
+  }
+
+  verifySuccessToastMessage(message) {
+    cy.get(successToastMessage)
+      .should('be.visible')
+      .should('contain.text', message);
+  }
+
+  clickThreeDotMenuBtn(campName) {
+    cy.xpath(threeDotMenuBtn(campName)).click();
+  }
+
+  clickOnDropdownItem(itemName) {
+    cy.get(dropdownItems).then((items) => {
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].textContent.trim() === itemName) {
+          cy.get(items[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  verifyWarningTitle() {
+    cy.get(warningTitle).should('be.visible').should('have.text', 'Warning');
+  }
+
+  clickWarningGotItBtn() {
+    cy.get(warningGotItBtn).click();
+  }
+
+  enterSimultaneousDialsPerAgent(number) {
+    cy.xpath(simultaneousDialsPerAgent).clear().type(number);
   }
 }
