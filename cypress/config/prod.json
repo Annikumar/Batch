@@ -9,6 +9,8 @@
     "CVC": "2410",
     "Country": "United States",
     "BillingZip": "85326",
-    "Coupon": "QA999"
+    "Coupon": "QA999",
+    "twilioSID": "AC7fae00f484e55b5b840ac171bf7a735a",
+    "twilioAuthToken": "fd1a59ccfcfb68bfc7f8ed068034c2e0"
   }
 }

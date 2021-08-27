@@ -64,6 +64,9 @@ describe('Setup Account for Testing', () => {
     });
     setup.getPhoneNumber();
     cy.readFile('cypress/fixtures/testData.json').then((data) => {
+      setup.assignNumberToAgent(data.Number, data.AdminName);
+    });
+    cy.readFile('cypress/fixtures/testData.json').then((data) => {
       setup.createCampaign(
         testData.campaign,
         [

@@ -26,6 +26,12 @@ const listSaveBtn =
   '//div[@class="modal-dialog"]//button[contains(text(),"SAVE")]';
 const addNewbTN = '//button[contains(text(),"ADD NEW")]';
 const nameField = 'input[name="name"]';
+const phoneEditButton = (number) =>
+  `//tr[td[text()="${number}"]]//*[name()="svg"][@data-icon="pencil-alt"]`;
+const numberGroupDropdown = `//div[label[text()="Number Group"]]/following-sibling::div//div[contains(@class,"ss-select-control")]`;
+const options = '.ss-select-option';
+const destinationDropdown = `//div[label[text()="Destination"]]/following-sibling::div[1]//div[contains(@class,"ss-select-control")]`;
+const assignDropdown = `//div[label[text()="Destination"]]/following-sibling::div[2]//div[contains(@class,"ss-select-control")]`;
 
 const dashboard = new Dashboard();
 const campaign = new Campaign();
@@ -355,5 +361,65 @@ export default class Setup {
 
   uploadFileForContact() {
     cy.get('.dropbox input').attachFile('testing.csv');
+  }
+
+  clickPhoneEditButton(number) {
+    cy.xpath(phoneEditButton(number)).click();
+  }
+
+  selectNumberGroup(numberGroup) {
+    cy.xpath(numberGroupDropdown).click();
+    cy.get(options).then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === numberGroup) {
+          opt[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  chooseDestination(destination) {
+    cy.xpath(destinationDropdown).click();
+    cy.get(options).then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === destination) {
+          opt[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  chooseAssignee(assignee) {
+    cy.xpath(assignDropdown).click();
+    cy.get(options).then((opt) => {
+      for (let i = 0; i < opt.length; i++) {
+        if (opt[i].textContent.trim() === assignee) {
+          opt[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  clickOnButton(btnName) {
+    cy.get('button').then((btn) => {
+      for (let i = 0; i < btn.length; i++) {
+        if (btn[i].textContent.trim() === btnName) {
+          btn[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  assignNumberToAgent(number, agentName) {
+    phone.clickPhoneNumberMenu();
+    this.clickPhoneEditButton(number);
+    this.selectNumberGroup('None');
+    this.chooseDestination('Agent');
+    this.chooseAssignee(agentName);
+    this.clickOnButton('SAVE');
   }
 }
