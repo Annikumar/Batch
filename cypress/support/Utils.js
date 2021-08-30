@@ -32,7 +32,8 @@ export function call(toNumber, fromNumber) {
       To: toNumber,
       From: fromNumber,
       Twiml:
-        '<Response><Say voice="man" >Hello, how may i help you. this call is only for testing purpose. Enjoy the music</Say> <Play>http://demo.twilio.com/docs/classic.mp3</Play> </Response>',
+        '<Response><Say voice="man" >Hello, how may i help you. this call is only for testing purpose. Enjoy the music</Say>' +
+        '<Play>http://demo.twilio.com/docs/classic.mp3</Play> </Response>',
     },
     auth: {
       username: accountSID,

@@ -260,6 +260,8 @@ export default class Dialer {
     cy.get('body').then(($body) => {
       if ($body.find(endCallButton).length) {
         cy.get(endCallButton).click();
+      }
+      if ($body.find(callDispositionWindow).length) {
         this.selectCallDisposition(disposition);
         this.clickOnButton('Done');
       }

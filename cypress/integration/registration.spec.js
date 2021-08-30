@@ -105,6 +105,57 @@ describe('Registration', () => {
         login.verifySuccessfullLogin();
         cy.wait(2000);
         ignoreSpeedTestPopup();
+        cy.Logout();
+      }
+    });
+  });
+
+  it('Cancel the Account from the Super Admin Panel', () => {
+    cy.url().then((url) => {
+      if (url.includes('app.batchdialer.com')) {
+        cy.log('Not performing Account Reactivation on Production');
+      } else {
+        cy.Login('god', 'god');
+        register.clickUserTreeDropdown();
+        register.clickOnUser('First Tenant');
+        register.clickOnUser('Reseller 1');
+        register.clickOnResellerUser();
+        register.handleAlertWindow();
+        register.clickClientsMenu();
+        register.enterUserToSearch('testing@test.com');
+        register.clickDeleteUserButton();
+        cy.Logout();
+        cy.Logout();
+      }
+    });
+  });
+
+  it('Reactivate the Cancelled Account', () => {
+    cy.url().then((url) => {
+      if (url.includes('app.batchdialer.com')) {
+        cy.log('Not performing Account Reactivation on Production');
+      } else {
+        login.enterEmailtoSignin('testing@test.com');
+        login.enterPasswordToSignin('Fleek@2016');
+        login.clickTermsCheckBox();
+        login.clickSigninButton();
+        register.verifyAccountReactivationPage();
+        register.choosePlan('Multi-Line Dialer'); //Single Line Dialer
+        register.verifyPlanPrice();
+        register.enterCardDetailsForSignUp(
+          Cypress.env('CardName'),
+          Cypress.env('CardNumber'),
+          Cypress.env('ExpiryDate'),
+          Cypress.env('CVC'),
+          Cypress.env('Country'),
+          Cypress.env('BillingZip'),
+          Cypress.env('Coupon')
+        );
+        register.clickAgreeCheckbox();
+        register.clickSubscribeBtn();
+        cy.waitFor(cy.get('.main_sec', { timeout: 15000 }));
+        ignoreSpeedTestPopup();
+        login.verifySuccessfullLogin();
       }
     });
   });

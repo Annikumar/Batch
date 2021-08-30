@@ -27,6 +27,14 @@ const subscribeBtn = '.card_form button[type="button"]';
 const couponField = 'input[name="coupon"]';
 const applyCouponBtn = '.summary .value1 button';
 const planPrice = '.summary .value:not(.long)';
+const userTreeDropdown = '.dropdown-usertree';
+const resellerUserTree = (user) =>
+  `//span[@class="role-title"][text()="${user}"]/following-sibling::span//*[name()="svg"][@data-icon="plus"]`;
+const reseller = `//span[@class="roletitle"][contains(text(),"First Tenant Reseller 1")]`;
+const clientsMenu = 'a[title="Clients"]';
+const searchBox = 'input[placeholder*="Search"]';
+const deleteUserButton = 'img[src*="delete"]';
+const accountReactivationPage = '.main_signuparia.reactivation';
 
 export default class Register {
   clickSignUpBtn() {
@@ -180,5 +188,40 @@ export default class Register {
 
   clickApplyCouponBtn() {
     cy.get(applyCouponBtn).click();
+  }
+
+  clickUserTreeDropdown() {
+    cy.get(userTreeDropdown).click();
+  }
+
+  clickOnUser(user) {
+    cy.xpath(resellerUserTree(user)).click();
+  }
+
+  clickOnResellerUser() {
+    cy.xpath(reseller).click();
+  }
+
+  handleAlertWindow() {
+    cy.on('	window:alert', (str) => {
+      expect(str).to.equal('Login?');
+    });
+    cy.on('window:confirm', () => true);
+  }
+
+  clickClientsMenu() {
+    cy.get(clientsMenu).click({ force: true });
+  }
+
+  enterUserToSearch(user) {
+    cy.get(searchBox).type(user);
+  }
+
+  clickDeleteUserButton() {
+    cy.get(deleteUserButton).click();
+  }
+
+  verifyAccountReactivationPage() {
+    cy.get(accountReactivationPage).should('be.visible');
   }
 }
