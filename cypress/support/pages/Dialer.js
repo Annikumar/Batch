@@ -1,3 +1,5 @@
+import { covertNumberToNormal } from '../Utils';
+
 const statusDropdown = '.nav-item.auth__agent-presence .ss-select';
 const statusNames = `.ss-select-group-items .ss-select-option .agent__presence-name`;
 const selectCampaignHeading = '.select__campaign-title';
@@ -6,7 +8,7 @@ const campaignNames = '.ss-select-option span + span';
 const confirmButton = '.modal-content button';
 const menu = (menuName) => `li:not(.subitem) a[title="${menuName}"]`;
 const advanceSwitch = '.campaign-wizard .switch';
-const campaignNameField = 'input[name="name"]';
+const nameField = 'input[name="name"]';
 const radioButtons = (radioButtonName) =>
   `//label[@class="radio_cstm"][contains(.,"${radioButtonName}")]//span[@class="checkmark"]`;
 const nextButton = '.collapse.show button.circle';
@@ -38,6 +40,16 @@ const campaignAnsweredCount = (campaignName) =>
 const reportsMenu = 'a[title="Reports"]';
 const subMenu = (subMenuName) => `.subitem a[title="${subMenuName}"]`;
 const softPhoneOpen = '.stg-softphone-wide';
+const inqueuePhoneNumber = `//div[@class="table-responsive"]//tr[td[text()="INQUEUE"]]//td[3]`;
+const callingHoursDropdown = `//label[text()="Calling Hours"]/following-sibling::div//div`;
+const timeFromDropdown = `(//div[text()="Sunday"]/following-sibling::div//div[contains(@class,"ss-select-control")])[1]`;
+const timeToDropdown = `(//div[text()="Sunday"]/following-sibling::div//div[contains(@class,"ss-select-control")])[2]`;
+const applyToAllButton = `//span[text()="Apply to all"]`;
+const assignCampaignDropdown = `//span[text()="Select Campaign"]/parent::div[contains(@class,"ss-select-control")]`;
+const extensionsDropdown = `//span[text()="Select Extension"]/parent::div[contains(@class,"ss-select-control")]`;
+const assignAgentsDropdown = `//span[text()="Agents"]/parent::div[contains(@class,"ss-select-control")]`;
+const queueDeleteButton = (queueName) =>
+  `//tr[td[.="${queueName}"]]//td//img[contains(@src,"delete")]`;
 
 export default class Dialer {
   selectStatus(statusName) {
@@ -95,7 +107,7 @@ export default class Dialer {
   }
 
   enterCampaignName(name) {
-    cy.get(campaignNameField).type(name);
+    cy.get(nameField).type(name);
   }
 
   clickOnRadioButton(radioButtonName) {
@@ -257,6 +269,7 @@ export default class Dialer {
   }
 
   verifyCallEnd(disposition) {
+    cy.wait(3000);
     cy.get('body').then(($body) => {
       if ($body.find(endCallButton).length) {
         cy.get(endCallButton).click();
@@ -266,5 +279,70 @@ export default class Dialer {
         this.clickOnButton('Done');
       }
     });
+  }
+
+  verifyInqueueCall(num) {
+    cy.xpath(inqueuePhoneNumber, { timeout: 120000 }).then((phoneNumber) => {
+      const number = covertNumberToNormal(phoneNumber.text());
+      expect(number).to.equal(num);
+    });
+  }
+
+  clickCallingHoursDropdown() {
+    cy.xpath(callingHoursDropdown).click();
+  }
+
+  selectOption(option) {
+    cy.get(options).then((Opt) => {
+      for (let i = 0; i < Opt.length; i++) {
+        if (Opt[i].textContent.trim() === option) {
+          Opt[i].click();
+          break;
+        }
+      }
+    });
+  }
+
+  selectFromTime(time) {
+    cy.xpath(timeFromDropdown).click();
+    this.selectOption(time);
+  }
+
+  selectToTime(time) {
+    cy.xpath(timeToDropdown).click();
+    this.selectOption(time);
+  }
+
+  clickApplyToAllButton() {
+    cy.xpath(applyToAllButton).click();
+  }
+
+  enterQueueName(name) {
+    cy.get(nameField).type(name);
+  }
+
+  chooseAssignCampaign(campaign) {
+    cy.xpath(assignCampaignDropdown).click();
+    this.selectOption(campaign);
+  }
+
+  chooseExtension(no) {
+    cy.xpath(extensionsDropdown).click();
+    this.selectOption(no);
+    this.clickQuestionTooltip();
+  }
+
+  chooseAssignAgents(agentName) {
+    cy.xpath(assignAgentsDropdown).click();
+    this.selectOption(agentName);
+    this.clickQuestionTooltip();
+  }
+
+  clickDeleteQueueButton(queueName) {
+    cy.xpath(queueDeleteButton(queueName)).click();
+  }
+
+  clickQuestionTooltip() {
+    cy.get(questionToolTip).first().click();
   }
 }

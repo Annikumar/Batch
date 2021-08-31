@@ -6,8 +6,7 @@ const dashboardProfilePic = '.profile_pic';
 const logoutBtn = 'span[href*="logout"] div';
 const forgetPassword = '.login-forgot-link';
 const signUpBtn = 'a[href*="register"]';
-const errorMessage = (message) =>
-  "//div[@class='Toastify__toast-body'][contains(.,'" + message + "')]";
+const errorMessage = '.Toastify__toast--error';
 
 export default class Login {
   enterEmailtoSignin(email) {
@@ -61,10 +60,6 @@ export default class Login {
     cy.visit('/logout/');
   }
 
-  verifyErrorMessage(message) {
-    cy.xpath(errorMessage(message)).should('be.visible');
-  }
-
   clickForgetPassword() {
     cy.get(forgetPassword).click();
   }
@@ -99,5 +94,9 @@ export default class Login {
 
   verifyForgetPassword() {
     cy.get(forgetPassword).should('be.visible');
+  }
+
+  verifyErrorMessage(message) {
+    cy.get(errorMessage).should('contain.text', message);
   }
 }

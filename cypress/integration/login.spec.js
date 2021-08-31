@@ -41,6 +41,23 @@ describe('Login Flow', () => {
     login.verifySignUpPage();
   });
 
+  it('Verify that Locked account should give error when trying to Login', () => {
+    cy.url().then((url) => {
+      if (url.includes('qa.int.batchdialer.com')) {
+        const lockedAccount = 'anil+4@test.com';
+        login.enterEmailtoSignin(lockedAccount);
+        login.enterPasswordToSignin(Cypress.env('password'));
+        login.clickTermsCheckBox();
+        login.clickSigninButton();
+        login.verifyErrorMessage(
+          'This client account is locked. Please contact support'
+        );
+      } else {
+        cy.log('It will be done after Locking account on Production');
+      }
+    });
+  });
+
   it('SuccessFully Login', () => {
     login.enterEmailtoSignin(Cypress.env('username'));
     login.enterPasswordToSignin(Cypress.env('password'));
