@@ -60,6 +60,7 @@ const dialedCountSlider =
 const leadScoreSlider =
   '//div[text()="Lead Score"]/ancestor::div[@class="slider-control"]';
 const contactsListHeader = '.table thead';
+const filterButton = '.modal-filter-btn';
 const phoneNumberFields =
   "input[placeholder='Phone Number'][name='phonenumber1']";
 const leadSourceField = 'input[placeholder="Lead Source"]';
@@ -204,6 +205,10 @@ export default class Contacts {
 
   clickDialerCallButton() {
     cy.get(callButton).click();
+  }
+
+  clickFilterButton() {
+    cy.get(filterButton).first().click();
   }
 
   selectCallResult(result) {

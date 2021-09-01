@@ -67,6 +67,7 @@ describe('Report Page', function () {
   it('Verify dropdowns of Report contacts', function () {
     report.clickReportMenu();
     report.clickReportsHeader('Recent Contacts');
+    report.clickFilterButton();
     report.verifyRecentContactsDropdown([
       'All Calls',
       'Call Results',

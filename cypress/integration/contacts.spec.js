@@ -41,15 +41,17 @@ describe('Add Contact flow', () => {
     addCont.clickingOnContactOption();
     cy.wait(1000);
     addCont.verifySearchBox();
+    addCont.verifyAllListDropdown();
+    addCont.clickFilterButton();
     addCont.verifyDialedRadioBtn(['All', 'Dialed', 'Undialed']);
     addCont.verifyDialedCountSlider();
-    addCont.verifyAllListDropdown();
     addCont.verifyLeadScoreSlider();
     addCont.verifyNewContactBtn();
-    addCont.verifySelectionCountCheckbox();
-    addCont.verifyActionsDropdown();
     addCont.verifySaleMadeCheckbox();
     addCont.verifyAppointmentMadeCheckbox();
+    addCont.clickFilterButton();
+    addCont.verifySelectionCountCheckbox();
+    addCont.verifyActionsDropdown();
     addCont.verifyContactListHeaderElements([
       'Full Name',
       'Score',
@@ -210,13 +212,18 @@ describe('Add Contact flow', () => {
 
   it.skip('Verify Dialed/Undialed Radio Button Functionality', () => {
     addCont.clickingOnContactOption();
+    addCont.clickFilterButton();
     addCont.clickDialedUndialedButton('Dialed');
+    addCont.clickFilterButton();
     addCont.verifyContact('Testing', 'User', 'not.exist');
     addCont.verifyContact('Automation', 'Contact', 'not.exist');
+    addCont.clickFilterButton();
     addCont.clickDialedUndialedButton('Undialed');
+    addCont.clickFilterButton();
     addCont.enterSearch('User');
     addCont.verifyContact('Testing', 'User', 'be.visible');
     addCont.verifyContact('Automation', 'Contact', 'not.exist');
+    addCont.clickFilterButton();
     addCont.clickDialedUndialedButton('All');
   });
 

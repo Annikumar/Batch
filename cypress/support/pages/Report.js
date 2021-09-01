@@ -2,7 +2,7 @@ const reportHeader = '.reports-top-bar';
 const reportMenu = "a[title='Reports']";
 const reportLive = '.report-live-buttons-left';
 const tableHeader = '.table thead';
-const ReportContactsDropdowns = '.search_bar';
+const ReportContactsDropdowns = '.modal-filter-body .ss-select';
 const reportsHeader = (header) => '.subitem a[title="' + header + '"]';
 const ReportContactButton = "//div[text()='Recent Contacts']";
 const campaignDropdown = '.reportCampaignsForm';
@@ -34,6 +34,7 @@ const heatMapStatus = '.reports-heat__statuses';
 const FloorMap = "//div[text()='Floormap']";
 const FloorViewDropdown = "//label[text()='Floor View']/parent::div//button";
 const addNewFloor = "//button[contains(text(),' Add New Floor')]";
+const filtersButton = '.modal-filter-btn';
 
 export default class Report {
   clickReportMenu() {
@@ -215,5 +216,9 @@ export default class Report {
 
   verifyAddNewFloorButton() {
     cy.xpath(addNewFloor).should('be.visible');
+  }
+
+  clickFilterButton() {
+    cy.get(filtersButton).click();
   }
 }
