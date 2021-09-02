@@ -50,6 +50,7 @@ const extensionsDropdown = `//span[text()="Select Extension"]/parent::div[contai
 const assignAgentsDropdown = `//span[text()="Agents"]/parent::div[contains(@class,"ss-select-control")]`;
 const queueDeleteButton = (queueName) =>
   `//tr[td[.="${queueName}"]]//td//img[contains(@src,"delete")]`;
+const recentContactsDisposition = '.disposition';
 
 export default class Dialer {
   selectStatus(statusName) {
@@ -200,11 +201,11 @@ export default class Dialer {
   }
 
   verifyContactViewPage() {
-    cy.get(contactProfile, { timeout: 120000 }).should('be.visible');
+    cy.get(contactProfile, { timeout: 60000 }).should('be.visible');
   }
 
   verifySoftphone() {
-    cy.get(softphone, { timeout: 120000 }).should('be.visible');
+    cy.get(softphone, { timeout: 60000 }).should('be.visible');
   }
 
   clickEndCallButton() {
@@ -344,5 +345,13 @@ export default class Dialer {
 
   clickQuestionTooltip() {
     cy.get(questionToolTip).first().click();
+  }
+
+  verifyRecentContactDisposition(disposition) {
+    cy.get(recentContactsDisposition)
+      .first()
+      .then((dispositionName) => {
+        expect(dispositionName.text()).to.equal(disposition);
+      });
   }
 }

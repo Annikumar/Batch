@@ -2,6 +2,7 @@ import Dialer from '../support/pages/Dialer';
 import Setup from '../support/pages/Setup';
 import {
   call,
+  callWithHangup,
   covertNumberToNormal,
   ignoreSpeedTestPopup,
   selectAgentStatus,
@@ -334,6 +335,20 @@ describe('Inbound Call Scenarios', () => {
       Dial.verifySuccessToastMessage('Saved');
     });
 
+    it('Verify that if agent is in offline status then call should appear in reports live section as Inqueue call', () => {
+      cy.url().then((url) => {
+        if (url.includes('app.batchdialer.com')) {
+          selectAgentStatus('Offline');
+          callWithHangup(callNumber, +15202010331);
+          Dial.clickOnMenu('Reports');
+          Dial.verifyInqueueCall('5202010331');
+          cy.wait(8000);
+        } else {
+          cy.log('Inbound calls are not working in QA');
+        }
+      });
+    });
+
     it('Verify that if Agent is in Available status then agent should recieve call', () => {
       cy.url().then((url) => {
         if (url.includes('app.batchdialer.com')) {
@@ -357,19 +372,6 @@ describe('Inbound Call Scenarios', () => {
       });
     });
 
-    it('Verify that if agent is in offline status then call should appear in reports live section as Inqueue call', () => {
-      cy.url().then((url) => {
-        if (url.includes('app.batchdialer.com')) {
-          selectAgentStatus('Offline');
-          call(callNumber, +15202010331);
-          Dial.clickOnMenu('Reports');
-          Dial.verifyInqueueCall('5202010331');
-        } else {
-          cy.log('Inbound calls are not working in QA');
-        }
-      });
-    });
-
     it('Delete the Created Campaign and Queue', () => {
       Dial.clickOnMenu('Campaigns');
       Dial.clickThreeDotMenuBtn(campaignName);
@@ -379,6 +381,48 @@ describe('Inbound Call Scenarios', () => {
       Dial.clickOnSubMenu('Inbound Calls');
       Dial.clickDeleteQueueButton(queueName);
       Dial.verifySuccessToastMessage('Queue deleted');
+    });
+  });
+
+  describe('Phone Number Destinations', () => {
+    let callNumber = '+1';
+    before(() => {
+      cy.visit('/');
+      cy.readFile('cypress/fixtures/testData.json').then((data) => {
+        testData = data;
+        callNumber = callNumber + covertNumberToNormal(testData.Number);
+      });
+      Cypress.Cookies.defaults({
+        preserve: (cookies) => {
+          return true;
+        },
+      });
+    });
+
+    after(() => {
+      selectAgentStatus('Offline');
+      cy.Logout();
+    });
+
+    it('Login To Application', () => {
+      cy.Login(Cypress.env('username'), Cypress.env('password'));
+      cy.wait(2000);
+      ignoreSpeedTestPopup();
+    });
+
+    it('change the Destination of the Number to Hangup', () => {
+      Dial.clickOnMenu('Phone System');
+      setup.clickPhoneEditButton(testData.Number);
+      setup.selectNumberGroup('None');
+      setup.chooseDestination('Hangup');
+      Dial.clickOnButton('SAVE');
+    });
+
+    it('Verify if the Number is destinationed to Hangup then call should show as Abandoned in Recent Contacts', () => {
+      call(callNumber, +15202010331);
+      Dial.clickOnMenu('Reports');
+      Dial.clickOnSubMenu('Recent Contacts');
+      Dial.verifyRecentContactDisposition('Abandoned');
     });
   });
 });
