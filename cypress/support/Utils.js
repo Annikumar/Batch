@@ -14,11 +14,7 @@ export function selectAgentStatus(status) {
 }
 
 export function ignoreSpeedTestPopup() {
-  cy.get('body').then((body) => {
-    if (body.find(speedTestPopup).length) {
-      cy.get(speedtestIgnoreButton).click();
-    }
-  });
+  cy.get(speedtestIgnoreButton, { timeout: 20000 }).first().click();
 }
 
 export function call(toNumber, fromNumber) {

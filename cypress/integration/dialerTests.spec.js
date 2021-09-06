@@ -36,12 +36,10 @@ describe('Inbound Call Scenarios', () => {
 
     it('Login To Application', () => {
       cy.Login(Cypress.env('username'), Cypress.env('password'));
-      cy.wait(2000);
       ignoreSpeedTestPopup();
     });
 
     it('create new Predictive Dialer Campaign with Auto Answer Mode', () => {
-      ignoreSpeedTestPopup();
       setup.assignNumberToAgent(testData.Number, testData.AdminName);
       Dial.clickOnMenu('Campaigns');
       Dial.clickOnButton('CREATE NEW CAMPAIGN');
@@ -113,7 +111,6 @@ describe('Inbound Call Scenarios', () => {
           Dial.clickReportsMenu();
           Dial.clickOnSubMenu('Campaigns');
           cy.reload();
-          cy.wait(2000);
           ignoreSpeedTestPopup();
           Dial.verifyCampaignDialsCount(campaignName, 1);
           Dial.verifyCampaignAnsweredCount(campaignName, 1);
@@ -154,12 +151,10 @@ describe('Inbound Call Scenarios', () => {
 
     it('Login To Application', () => {
       cy.Login(Cypress.env('username'), Cypress.env('password'));
-      cy.wait(2000);
       ignoreSpeedTestPopup();
     });
 
     it('create new Predictive Dialer Campaign with Auto Answer Mode', () => {
-      ignoreSpeedTestPopup();
       Dial.clickOnMenu('Campaigns');
       Dial.clickOnButton('CREATE NEW CAMPAIGN');
       Dial.clickAdvanceSwitch();
@@ -239,7 +234,6 @@ describe('Inbound Call Scenarios', () => {
           Dial.clickReportsMenu();
           Dial.clickOnSubMenu('Campaigns');
           cy.reload();
-          cy.wait(2000);
           ignoreSpeedTestPopup();
           Dial.verifyCampaignDialsCount(campaignName, 1);
           Dial.verifyCampaignAnsweredCount(campaignName, 1);
@@ -281,12 +275,10 @@ describe('Inbound Call Scenarios', () => {
 
     it('Login To Application', () => {
       cy.Login(Cypress.env('username'), Cypress.env('password'));
-      cy.wait(2000);
       ignoreSpeedTestPopup();
     });
 
     it('Create a campaign for the Queue', () => {
-      ignoreSpeedTestPopup();
       Dial.clickOnMenu('Campaigns');
       Dial.clickOnButton('CREATE NEW CAMPAIGN');
       Dial.clickAdvanceSwitch();
@@ -406,7 +398,6 @@ describe('Inbound Call Scenarios', () => {
 
     it('Login To Application', () => {
       cy.Login(Cypress.env('username'), Cypress.env('password'));
-      cy.wait(2000);
       ignoreSpeedTestPopup();
     });
 

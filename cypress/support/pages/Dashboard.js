@@ -166,7 +166,7 @@ const backToAdmin = '.nav-item a[href*="logout"]';
 const homeButton = '.breadcrumb-item .active';
 const radioBtn = (btnName) =>
   `//label[text()="${btnName}"]//span[@class="checkmark"]`;
-const addNewBtn = '//button[contains(text(),"Add New")]';
+const addNewBtn = '//button//div[contains(text(),"Add New")]';
 const refreshBtn = 'span[title="Refresh"]';
 const leadItems = '.lead-item .lead-item__label';
 const leadSheetName = '.lead-edit__header .custom-input__text';
@@ -583,7 +583,7 @@ export default class Dashboard {
   }
 
   verifyInvoice() {
-    cy.get(BillingInvoicing, { timeout: 30000 }).should('be.visible');
+    cy.get(BillingInvoicing, { timeout: 60000 }).should('be.visible');
   }
 
   verifyAddressBookingHeading() {
@@ -888,7 +888,6 @@ export default class Dashboard {
 
   choosePlan(planName) {
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     this.clickStartBtn();
     cy.xpath(plans(planName)).click();
@@ -896,7 +895,6 @@ export default class Dashboard {
 
   upgradePlan(planName) {
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     // this.clickStartBtn();
     cy.get('.rc-slider-step').first().click();

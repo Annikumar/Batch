@@ -30,7 +30,6 @@ describe('Add Campaign flow', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 
@@ -114,7 +113,6 @@ describe('Add Campaign flow', () => {
     addCamp.changeCampaignStatusByDrpdwn('Active');
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 

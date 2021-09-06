@@ -25,7 +25,6 @@ describe('Setup Account for Testing', () => {
 
   it('login successfully', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
-    cy.wait(2000);
   });
 
   it('Setup Account', () => {

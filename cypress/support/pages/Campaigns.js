@@ -199,7 +199,6 @@ export default class Campaign {
 
   verifyUnarchievedCampaign(camp) {
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     cy.xpath(
       '//table[contains(@class,"table")]//td[contains(.,"' + camp + '")]',

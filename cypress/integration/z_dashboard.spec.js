@@ -37,7 +37,6 @@ describe('Dashboard Elements', function () {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 
@@ -600,53 +599,42 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.agent);
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.agent);
     Dash.clickBackToAdmin();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 
   // Fixed according to the BAT-747
   it('verify Admin is able to switch to Supervisor Account', () => {
-    cy.wait(2000);
-    ignoreSpeedTestPopup();
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);
-    cy.wait(2000);
-    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.supervisor);
     Dash.clickBackToAdmin();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
 
   it('Verify on Click of Home Button Admin should Redirect to Dashboard', () => {
-    ignoreSpeedTestPopup();
     addCont.clickingOnContactOption();
     Dash.clickHomeButton();
     Dash.verifyDashboardCalandar();
   });
 
   it('Verify that Chat Box should open when click on Chat Icon', () => {
-    ignoreSpeedTestPopup();
     Dash.clickDashboard();
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
   });
 
   it('Verify that clicking the close button should close the chat window', () => {
-    ignoreSpeedTestPopup();
     Dash.clickChatCloseButton();
     Dash.verifyChatBoxClose();
   });
 
   it('Verify that one can not send blank message', () => {
-    ignoreSpeedTestPopup();
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
     Dash.clickStartChatButton();
@@ -690,7 +678,6 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.agent);
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.agent);
     Dash.clickMessageIcon();
@@ -701,7 +688,6 @@ describe('Dashboard Elements', function () {
     Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
     Dash.clickBackToAdmin();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });
@@ -728,8 +714,6 @@ describe('Dashboard Elements', function () {
     Dash.clickLoginAs();
     Dash.clickLoginAsPlusIcon();
     Dash.clickAgentOrSupervisor(testData.supervisor);
-    cy.wait(2000);
-    ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.supervisor);
     Dash.clickMessageIcon();
     Dash.verifyChatBox();
@@ -742,7 +726,6 @@ describe('Dashboard Elements', function () {
     Dash.clickSendMessageButton();
     Dash.clickChatCloseButton();
     Dash.clickBackToAdmin();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     Dash.verifyUserDashboardName(testData.AdminName);
   });

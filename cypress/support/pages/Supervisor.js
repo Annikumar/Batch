@@ -52,6 +52,7 @@ const dashboardElementsBox = (elementName) =>
 const dashboardGraphElements = (elementName) =>
   `//span[text()="${elementName}"]/ancestor::div[contains(@class,"col")]`;
 const addNewFloor = "//button[contains(text(),' Add New Floor')]";
+const filterButton = 'button.modal-filter-btn';
 
 export default class Suprevisor {
   clickingOnContactOption() {
@@ -280,5 +281,9 @@ export default class Suprevisor {
 
   verifyAddNewFloorButton() {
     cy.xpath(addNewFloor).should('be.visible');
+  }
+
+  clickFilterButton() {
+    cy.get(filterButton).click();
   }
 }

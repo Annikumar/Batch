@@ -264,7 +264,6 @@ export default class User {
 
   verifyUserEditButton() {
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     cy.get(userEditButton).should('be.visible');
   }

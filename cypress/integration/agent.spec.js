@@ -29,7 +29,6 @@ describe('Agent Profile', function () {
 
   it('Agent Should Login Successfully', () => {
     cy.Login(testData.AgentEmail, testData.password);
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 
@@ -90,6 +89,7 @@ describe('Agent Profile', function () {
 
   it('Verify Recent Contact dropdowns should be visible', () => {
     agent.clickRecentContact();
+    agent.clickFilterButton();
     agent.verifyRecentContactDropdown([
       'All Calls',
       'Call Results',
@@ -375,7 +375,6 @@ describe('Agent Profile', function () {
   it('Verify the Active Campaign count when Agent become available', () => {
     agent.clickDashboardMenu();
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     agent.verifyActiveCampaignCount();
   });
@@ -478,7 +477,6 @@ describe('Agent Profile', function () {
     agent.clickContinueBtn();
     agent.clickDashboardMenu();
     cy.reload();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     agent.clickingOnContactOption();
     cy.wait(2000);

@@ -51,7 +51,7 @@ export default class Login {
     //     cy.get(dashboardProfilePic, { timeout: 10000 }).should('be.visible');
     //   }
     // });
-    cy.get(dashboardProfilePic, { timeout: 10000 }).should('be.visible');
+    cy.get(dashboardProfilePic, { timeout: 20000 }).should('be.visible');
   }
 
   logout() {

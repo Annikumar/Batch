@@ -24,8 +24,6 @@ describe('SuperVisor Flow', () => {
 
   it('Supervisor Should Login Successfully', () => {
     cy.Login(testData.SupervisorEmail, testData.password);
-    cy.wait(2000);
-    ignoreSpeedTestPopup();
   });
 
   it('Verify the Dashboard Elements', () => {
@@ -89,13 +87,10 @@ describe('SuperVisor Flow', () => {
     suprevisor.clickLoginAsBtn();
     suprevisor.clickOpenUser();
     suprevisor.loginWithUser(testData.agent);
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     suprevisor.verifyLogin(testData.agent);
     suprevisor.clickOnProfile();
     suprevisor.clickBackToSupervisor();
-    cy.wait(2000);
-    ignoreSpeedTestPopup();
     suprevisor.verifySupervisorProfile();
   });
 
@@ -134,6 +129,7 @@ describe('SuperVisor Flow', () => {
   it('Verify the Recent Contact Elements of Report Page', () => {
     suprevisor.clickReportsMenu();
     suprevisor.clickReportsHeader('Recent Contacts');
+    suprevisor.clickFilterButton();
     suprevisor.verifyRecentContactsDropdown([
       'All Calls',
       'Call Results',

@@ -100,11 +100,9 @@ describe('Registration', () => {
         );
         register.clickAgreeCheckbox();
         register.clickSubscribeBtn();
-        cy.waitFor(cy.get('.main_sec', { timeout: 15000 }));
+        cy.waitFor(cy.get('.main_sec', { timeout: 30000 }));
         ignoreSpeedTestPopup();
         login.verifySuccessfullLogin();
-        cy.wait(2000);
-        ignoreSpeedTestPopup();
         cy.Logout();
       }
     });
@@ -153,7 +151,7 @@ describe('Registration', () => {
         );
         register.clickAgreeCheckbox();
         register.clickSubscribeBtn();
-        cy.waitFor(cy.get('.main_sec', { timeout: 15000 }));
+        cy.waitFor(cy.get('.main_sec', { timeout: 30000 }));
         ignoreSpeedTestPopup();
         login.verifySuccessfullLogin();
       }

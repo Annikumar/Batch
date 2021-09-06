@@ -64,7 +64,6 @@ describe('Login Flow', () => {
     login.clickTermsCheckBox();
     login.clickSigninButton();
     login.verifySuccessfullLogin();
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 });

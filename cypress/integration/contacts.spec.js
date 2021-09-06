@@ -32,7 +32,6 @@ describe('Add Contact flow', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
-    cy.wait(2000);
     ignoreSpeedTestPopup();
   });
 

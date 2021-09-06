@@ -42,7 +42,6 @@ describe('Login Successfully and Add User', () => {
 
   it('Should Login', () => {
     cy.Login(Cypress.env('username'), Cypress.env('password'));
-    cy.wait(2000);
     ignoreSpeedTestPopup();
     addUser.getPhoneNumber();
   });

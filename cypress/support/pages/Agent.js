@@ -143,6 +143,7 @@ const notesBtnOnViewContact =
 const addNewNotePage = '.modal-content';
 const addNoteCloseBtn = "//button[contains(text(),' Close')]";
 const activitiesPage = '.userSedit';
+const filterButton = 'button.modal-filter-btn';
 
 export default class Agent {
   clickCampaignMenu() {
@@ -696,5 +697,9 @@ export default class Agent {
 
   verifyAddedNote(note, condition) {
     cy.xpath(deleteNoteBtn(note)).should(condition);
+  }
+
+  clickFilterButton() {
+    cy.get(filterButton).click();
   }
 }
