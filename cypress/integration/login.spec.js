@@ -43,18 +43,22 @@ describe('Login Flow', () => {
 
   it('Verify that Locked account should give error when trying to Login', () => {
     cy.url().then((url) => {
+      let lockedAccount;
+      let password;
       if (url.includes('qa.int.batchdialer.com')) {
-        const lockedAccount = 'anil+4@test.com';
-        login.enterEmailtoSignin(lockedAccount);
-        login.enterPasswordToSignin(Cypress.env('password'));
-        login.clickTermsCheckBox();
-        login.clickSigninButton();
-        login.verifyErrorMessage(
-          'This client account is locked. Please contact support'
-        );
+        lockedAccount = 'anil+4@test.com';
+        password = Cypress.env('password');
       } else {
-        cy.log('It will be done after Locking account on Production');
+        lockedAccount = 'martinj@test.com';
+        password = 'Test@123';
       }
+      login.enterEmailtoSignin(lockedAccount);
+      login.enterPasswordToSignin(password);
+      login.clickTermsCheckBox();
+      login.clickSigninButton();
+      login.verifyErrorMessage(
+        'This client account is locked. Please contact support'
+      );
     });
   });
 

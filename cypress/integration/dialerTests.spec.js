@@ -325,6 +325,8 @@ describe('Inbound Call Scenarios', () => {
       Dial.chooseAssignAgents(testData.AdminName);
       Dial.clickOnButton('CREATE QUEUE');
       Dial.verifySuccessToastMessage('Saved');
+      cy.reload();
+      ignoreSpeedTestPopup();
     });
 
     it('Verify that if agent is in offline status then call should appear in reports live section as Inqueue call', () => {
@@ -350,6 +352,7 @@ describe('Inbound Call Scenarios', () => {
           Dial.selectCampaign(campaignName);
           Dial.clickConfirmButton();
           Dial.verifySoftPhoneOpen();
+          cy.wait(5000);
           call(callNumber, +15202010331);
           Dial.verifySoftphone();
           Dial.verifyContactViewPage();

@@ -1,10 +1,12 @@
 import Campaign from '../support/pages/Campaigns';
+import Dialer from '../support/pages/Dialer';
 import { ignoreSpeedTestPopup, selectAgentStatus } from '../support/Utils';
 
 let fixtureData;
 let testData;
 let randNum = Math.floor(Math.random() * 100);
 const addCamp = new Campaign();
+const Dial = new Dialer();
 
 describe('Add Campaign flow', () => {
   before(() => {
@@ -79,6 +81,11 @@ describe('Add Campaign flow', () => {
     addCamp.selectDialingModeOption('Predictive Dialer');
     addCamp.selectCallerId('Individual Numbers', testData.Number);
     addCamp.clickNextCircleArrow();
+    Dial.clickCallingHoursDropdown();
+    Dial.selectFromTime('12:00 am');
+    Dial.selectToTime('11:30 pm');
+    Dial.clickApplyToAllButton();
+    Dial.clickOnButton('APPLY');
     addCamp.selectCallResultsOption([
       'Answering Machine',
       'No Answer',
@@ -93,6 +100,13 @@ describe('Add Campaign flow', () => {
   it('Should show added Campaign in table', () => {
     addCamp.clickCampaignMenu();
     addCamp.verifyAddedCampaign(fixtureData.campaignName + randNum.toString());
+  });
+
+  it('Verify that status should be Out of Leads', () => {
+    addCamp.verifyCampaignStatus(
+      fixtureData.campaignName + randNum.toString(),
+      'Out of Leads'
+    );
   });
 
   it('Verify Campaign Status is applied correctly', () => {
@@ -193,6 +207,13 @@ describe('Add Campaign flow', () => {
     addCamp.clickCampaignMenu();
     addCamp.verifyAddedCampaign(
       fixtureData.campaignName + randNum.toString() + '1'
+    );
+  });
+
+  it('verify that campaign status should be Manual Mode for Preview Dialer', () => {
+    addCamp.verifyCampaignStatus(
+      fixtureData.campaignName + randNum.toString() + '1',
+      'Manual Mode'
     );
   });
 

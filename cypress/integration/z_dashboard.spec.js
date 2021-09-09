@@ -40,6 +40,34 @@ describe('Dashboard Elements', function () {
     ignoreSpeedTestPopup();
   });
 
+  it('Verify the Status Timer is Visible Against the Status', () => {
+    Dash.verifyStatusTimerVisible();
+  });
+
+  it('Verify the Call Graph Elements', () => {
+    Dash.clickHardwareTestButton();
+    Dash.verifyCallGraph();
+    Dash.verifyButtonsVisible('Test Network');
+    Dash.verifyButtonsVisible('Test Microphone');
+  });
+
+  it('Verify the Speed Test Functionality', () => {
+    Dash.clickOnButton('Test Network');
+    Dash.verifyModalTitle('SPEED TEST');
+    Dash.clickOnButton('Start test');
+    Dash.verifySpeedTestCompletion();
+    ignoreSpeedTestPopup();
+  });
+
+  it('Verify the Microphone test Functionality', () => {
+    Dash.clickOnButton('Test Microphone');
+    Dash.verifyModalTitle('MICROPHONE TEST');
+    Dash.clickMicTestStartButton();
+    Dash.verifyMicTestCompletion();
+    Dash.clickOnButton('Done');
+    Dash.clickCallGraphCloseBtn();
+  });
+
   it('verify elements in Dashboard', function () {
     Dash.clickDashboard();
     Dash.verifyDashboardElements();
@@ -346,6 +374,8 @@ describe('Dashboard Elements', function () {
   });
 
   it('Verify User Setting Lead Sheet Elements', () => {
+    Dash.clickUserProfile();
+    Dash.clickSettingsButton();
     Dash.clickLeadSheets();
     Dash.verifysearchBox();
     Dash.VerifyRadioBtn(['All', 'Active', 'Inactive']);
@@ -360,6 +390,7 @@ describe('Dashboard Elements', function () {
   it('Add a New Lead sheets', () => {
     Dash.clickAddNewLeadSheet();
     Dash.clickLeadSheetName();
+    cy.wait(1000);
     Dash.enterLeadSheetName('Testing');
     Dash.clickSaveFieldBtn();
     Dash.selectLeadItem('Text');
@@ -367,6 +398,25 @@ describe('Dashboard Elements', function () {
     Dash.enterLeadItemsName('Test');
     Dash.clickSaveFieldBtn();
     Dash.clickLeadSaveBtn();
+    Dash.verifyAddedLeadSheet('Testing');
+  });
+
+  it('Give error when enter the Duplicate Leadsheet name', () => {
+    Dash.clickAddNewLeadSheet();
+    Dash.clickLeadSheetName();
+    Dash.enterLeadSheetName('Testing');
+    Dash.clickSaveFieldBtn();
+    Dash.selectLeadItem('Text');
+    Dash.clickLeadItemsNameField('text');
+    Dash.enterLeadItemsName('Test');
+    Dash.clickSaveFieldBtn();
+    Dash.clickLeadSaveBtn();
+    Dash.verifyErrorMessage('Duplicate leadsheet name');
+    Dash.clickOnButton('CANCEL');
+  });
+
+  it('Verify the search functionality for LeadSheet', () => {
+    Dash.enterNameToSearch('Testing');
     Dash.verifyAddedLeadSheet('Testing');
   });
 

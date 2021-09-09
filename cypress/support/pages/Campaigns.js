@@ -121,6 +121,8 @@ const recycleCampaignMenuBtn = (campaignName) =>
   '//tr[td[text()="' + campaignName + '"]]//img[contains(@src,"edit")]';
 const leadSheetDropdown = `//div[label[@class="form-label" and text()="Lead Sheet"]]/following-sibling::div[div[contains(.,"Select Lead Sheet")]]`;
 const tableRefreshBtn = 'span[title="Refresh"]';
+const campaignStatus = (campaignName) =>
+  `//tr[td[span[text()="${campaignName}"]]]//td//div[@class="campaign__status"]`;
 
 export default class Campaign {
   clickCampaignMenu() {
@@ -684,5 +686,12 @@ export default class Campaign {
 
   clickStatus() {
     cy.xpath(status).click();
+  }
+
+  verifyCampaignStatus(campaignName, status) {
+    cy.xpath(campaignStatus(campaignName), { timeout: 20000 }).should(
+      'contain.text',
+      status
+    );
   }
 }

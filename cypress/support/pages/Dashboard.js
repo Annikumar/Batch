@@ -216,6 +216,12 @@ const dropdownItems = '.dropdown-item';
 const eventStatusCheckbox = (contactName, eventStatus) =>
   `//a[text()="${contactName}"]/ancestor::td[contains(@class,"contactfield")]/parent::tr//img[@alt='${eventStatus}']`;
 const eventTimeDropdown = `//div[label[text()="Event Time"]]//div[contains(@class,"ss-select-control")]`;
+const hardwareTestButton = '.main_sec button';
+const callGraph = '.flex-fill .recharts-responsive-container';
+const callGraphCloseBtn = 'button img[src*="close"]';
+const modalTitle = '.modal-title';
+const micTestStartBtn = '.recorder-buttons svg';
+const statusTimer = '.agent__presence-time';
 
 export default class Dashboard {
   clickDashboard() {
@@ -514,7 +520,7 @@ export default class Dashboard {
   }
 
   enterLeadSheetName(name) {
-    cy.get(leadSheetNameField).type(name);
+    cy.get(leadSheetNameField).clear().type(name);
   }
 
   verifyUserSettingOptions(element) {
@@ -1454,5 +1460,62 @@ export default class Dashboard {
         }
       }
     });
+  }
+
+  clickHardwareTestButton() {
+    cy.get(hardwareTestButton).should('be.visible').click();
+  }
+
+  verifyCallGraph() {
+    cy.get(callGraph).should('have.length', 2).should('be.visible');
+  }
+
+  verifyButtonsVisible(buttonName) {
+    cy.get('button').then((Btn) => {
+      for (let i = 0; i < Btn.length; i++) {
+        if (Btn[i].textContent.trim() === buttonName) {
+          cy.get(Btn[i], { timeout: 60000 }).should('be.visible');
+        }
+      }
+    });
+  }
+
+  clickCallGraphCloseBtn() {
+    cy.get(callGraphCloseBtn).first().click();
+  }
+
+  clickOnButton(buttonName) {
+    cy.get('button').then((Btn) => {
+      for (let i = 0; i < Btn.length; i++) {
+        if (Btn[i].textContent.trim() === buttonName) {
+          cy.get(Btn[i]).click();
+          break;
+        }
+      }
+    });
+  }
+
+  verifyModalTitle(title) {
+    cy.get(modalTitle).should('have.text', title);
+  }
+
+  verifySpeedTestCompletion() {
+    cy.xpath('//button[contains(text(),"Done")]', { timeout: 60000 }).should(
+      'be.visible'
+    );
+  }
+
+  clickMicTestStartButton() {
+    cy.get(micTestStartBtn).click();
+  }
+
+  verifyMicTestCompletion() {
+    cy.xpath('//button[contains(text(),"Done")]', { timeout: 60000 }).should(
+      'be.enabled'
+    );
+  }
+
+  verifyStatusTimerVisible() {
+    cy.get(statusTimer).should('contain.text', '0:00');
   }
 }
